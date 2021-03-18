@@ -11,7 +11,7 @@ This app requires the following library:
 
 ## Installation
 
-You can find separate folder for each framework. To install the app, follow these steps:
+You can find separate folder for each framework. To install the app go to specific folder and use the following commands:
 
 
 ### Angular
