@@ -11,6 +11,12 @@ This app requires the following library:
 
 ## Installation
 
+Install the repository by running
+
+```bash
+npm install https://github.com/lidorsystems/integralui-web-quickstart.git
+```
+
 You can find separate folder for each framework. To install the app go to specific folder and use the following commands:
 
 
