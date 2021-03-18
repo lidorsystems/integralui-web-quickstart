@@ -1,4 +1,4 @@
-# QuickStart App - IntegralUI Web for Angular, AngularJS, React and Vanilla JavaScript
+# IntegralUI Web - QuickStart
 
 This application contains samples for each component included in the [IntegralUI Web](http://www.lidorsystems.com/products/web/studio/) product package. It can help you to get started quickly with learning about the components and write tests immediatelly.
 
