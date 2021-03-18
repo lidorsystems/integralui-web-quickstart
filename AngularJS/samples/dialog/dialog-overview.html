@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.dlg-ovw-container {
+			    float: left;
+			    width: 200px;
+			}
+			.dlg-ovw-content {
+			    margin-top: 200px;
+			    text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Dialog / Overview</h2>
+		<div class="sample-block">
+            <div class="dlg-ovw-container">
+                <button id="button">Show Dialog</button>
+				<iui-dialog id="dialog-overview" allow-animation="true" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+                    <div class="dlg-ovw-content">Add your content here</div>
+				</iui-dialog>
+            </div>
+            <br/>
+			<div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Dialog</strong> is a native Web Component that displays a modal window. When dialog is visible, user interaction with all other elements on the page is suspended, except for the dialog content.</p>
+                <p><span class="initial-space"></span>You can add custom content to the dialog consisting of HTML elements or other web components. If you click on the gray area outside of the dialog, the dialog will close firing events.</p>
+                <p><span class="initial-space"></span>The following properties and events are supported:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">closeButton</span> - Determines whether the close button inside the dialog is visible or not</li>
+                    <li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+                    <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+                    <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+                    <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+                    <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+                    <li><span class="code-name">visible</span> - Determines whether dialog is visible or hidden</li>
+                    <br/>
+                    <li><span class="code-name">closed</span> - Occurs after dialog is closed</li>
+                    <li><span class="code-name">closing</span> - Occurs when dialog starts to close</li>
+                    <li><span class="code-name">opened</span> - Occurs after dialog is opened</li>
+                    <li><span class="code-name">opening</span> - Occurs when dialog starts to open</li>
+                </ul>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.dialog.js"></script>
+	<script type="module">
+		const btn = document.querySelector('#button');
+		const ctrl = document.querySelector('#dialog-overview');
+
+        ctrl.closeButton = true;
+        ctrl.visible = false;
+
+		// Events --------------------------------------------------------------------------------
+
+		btn.addEventListener("click", (e) => showDialog(e));
+		ctrl.addEventListener("closed", (e) => onDialogClosed(e));
+
+	    let onDialogClosed = function(){
+	        ctrl.visible = false;
+	    }
+
+	    let showDialog = function(){
+	        ctrl.visible = true;
+	    }
+	</script>
+</html>

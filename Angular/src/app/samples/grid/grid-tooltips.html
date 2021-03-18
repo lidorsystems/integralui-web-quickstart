@@ -1,0 +1,17 @@
+<h2 class="feature-title">Grid / Tooltips</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-tooltips"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this sample you can see how to add a tooltip to each column and row in the Grid component.</p>
+        <p><span class="initial-space"></span>Whenever a mouse cursor enters the space of column or row cell, a tooltip will appear. To simplify this example, the default tooltip settings are used and only the tooltip title is set.</p>
+        <p><span class="initial-space"></span>We are using the <strong>IntegralUI Tooltip</strong> component to apply a tooltip to Grid cells. The tooltip is applied by creating a custom cell template.</p>
+    </div>
+</div>

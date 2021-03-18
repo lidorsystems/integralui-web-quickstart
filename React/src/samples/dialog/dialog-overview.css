@@ -1,0 +1,8 @@
+.dlg-ovw-container {
+    float: left;
+    width: 200px;
+}
+.dlg-ovw-content {
+    margin-top: 200px;
+    text-align: center;
+}

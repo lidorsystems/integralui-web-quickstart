@@ -1,0 +1,25 @@
+<h2>TabStrip / Tabs with Close Button</h2>
+<div class="sample-block">
+    <div *ngIf="this.tabs.length > 0">
+        <iui-tabstrip #tabstrip id="tabstrip-close-button"
+            [allowAnimation]="true"
+            [animation]="currentAnimation"
+            [customStyle]="customStyle"
+            [tabs]="tabs"
+            [resourcePath]="currentResourcePath"
+            [selectedTab]="currentSelection"
+            [size]="ctrlSize"
+            [tabSpacing]="currentTabSpacing"
+        > 
+            <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [icon]="tab.icon" [text]="tab.text">
+                <div class="tbs-cbtn-tab-content">{{tab.body}}</div>
+            </iui-tab>
+        </iui-tabstrip>
+    </div>
+    <div *ngIf="this.tabs.length === 0" class="empty-block">All Tabs are Deleted.</div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows tabs with close button in their header. You can delete tabs by clicking this button.</p>
+        <p><span class="initial-space"></span>Whenever you need to add custom content to the tab header, you can use custom template. This template can be shared between all tabs, or you can specify a different template for each tab separately.</p>
+        <p><span class="initial-space"></span>In this case, the template contains an icon, text and a close button, represented by an 'X' icon.</p>
+    </div>
+</div>

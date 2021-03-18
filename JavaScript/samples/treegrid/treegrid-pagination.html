@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - TreeGrid / Pagination</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            .pagesize-block {
+                --select-display: inline-block;
+            }
+            .pagesize-block span {
+                display: inline-block;
+                padding: 10px 5px 5px 0;
+                vertical-align: top;    
+            }
+            .sample-block-panel iui-button {
+                --button-margin: 0 5px;
+            }
+            .sample-block-panel iui-numeric {
+                --numeric-display: inline-block;
+                --numeric-margin: 0 25px 0 0;
+            }
+            .sample-block-panel span {
+                display: inline-block;
+                margin-top: 3px;
+                vertical-align: top;
+            }   
+		</style>
+	</head>
+	<body>
+		<h2>TreeGrid / Pagination</h2>
+		<div class="sample-block">
+            <div class="pagesize-block">
+                <span class="pagesize-label">Rows per page: </span>
+                <iui-select id="page-select"
+                    allow-animation="true"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                > 
+                </iui-select>
+            </div>
+            <iui-treegrid id="treegrid-pagination"
+                allow-animation="true"
+				resource-path="../../node_modules/integralui-web/icons"
+				selection-mode="MultiExtended"
+				theme="Office"
+			> 
+			</iui-treegrid>
+            <br/>
+            <div class="sample-block-panel" align="center">
+                <span>Max columns:</span> <iui-numeric id="num-columns" min="1" max="250" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-numeric>
+                <span>Max rows:</span> <iui-numeric id="num-rows" min="1" max="100000" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-numeric>
+                <span>Levels:</span> <iui-numeric id="num-levels" min="0" max="100" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-numeric>
+                <br /><br />
+                <iui-button id="add" allow-animation="true" theme="Office">Add</iui-button>
+                <iui-button id="clear" allow-animation="true" theme="Office">Clear</iui-button>
+                <iui-button id="expand" allow-animation="true" theme="Office">Expand All</iui-button>
+                <iui-button id="collapse" allow-animation="true" theme="Office">Collapse All</iui-button>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This example shows how to divide the data set in multiple pages.</p>
+                <p><span class="initial-space"></span>Using options above the grid, you can choose the size of the page. The page size determines the maximum number of root rows per page. If you have rows with children, child rows are excluded from this number.</p>
+                <p><span class="initial-space"></span>For demonstration purposes only, a limit is set to 250 columns and 100,000 rows with maximum depth of 100 tree levels. In real scenario, the only limit is how much data the browser can handle. By clicking on the 'Add' button, the treegrid is populated with custom data.</p>
+                <p><span class="initial-space"></span>The pagination panel is fully customizable, even you can create your own pagination controls by using these built-in methods and events:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">currentPage</span> - Gets or sets the number of page currently visible in grid view</li>
+                    <li><span class="code-name">firstPage</span> - the first page is shown in the grid view</li>
+                    <li><span class="code-name">lastPage</span> - the last page is shown in the grid view</li>
+                    <li><span class="code-name">nextPage</span> - moves to the next page</li>
+                    <li><span class="code-name">prevPage</span> - moves to the previous page</li><br/>
+                    <li><span class="code-name">pageChanged</span> - occurs when current page changes</li>
+                </ul>
+            </div>
+		</div>
+	</body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.numeric.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.treegrid.js"></script>
+	<script type="module">
+		import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import IntegralUICommonService from '../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditorType, IntegralUISelectionMode, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let _commonService = new IntegralUICommonService();
+
+		//
+		// Panel settings
+		//
+
+        let buttonSize = { width: 100 };
+        let inputSize = { width: 100 };
+        let rowCount = 0;
+
+		const inputColumns = document.querySelector('#num-columns');
+        inputColumns.size = inputSize;
+        inputColumns.value = 25;
+
+		const inputRows = document.querySelector('#num-rows');
+        inputRows.size = { width: 125 };
+        inputRows.value = 10000;
+
+		const inputLevels = document.querySelector('#num-levels');
+        inputLevels.size = inputSize;
+        inputLevels.value = 2;
+
+		const btnAdd = document.querySelector('#add');
+        btnAdd.size = buttonSize;
+        btnAdd.addEventListener("click", () => add());
+
+		const btnClear = document.querySelector('#clear');
+        btnClear.size = buttonSize;
+        btnClear.addEventListener("click", () => clear());
+
+		const btnExpand = document.querySelector('#expand');
+        btnExpand.size = buttonSize;
+        btnExpand.addEventListener("click", () => expandAll());
+
+		const btnCollapse = document.querySelector('#collapse');
+        btnCollapse.size = buttonSize;
+        btnCollapse.addEventListener("click", () => collapseAll());
+
+		//
+		// Paging settings
+		//
+
+		const ctrlSelect = document.querySelector('#page-select');
+        ctrlSelect.items = [
+            { text: "2" },
+            { text: "10" },
+            { text: "25" },
+            { text: "50" },
+            { text: "100" },
+            { text: "250" },
+            { text: "500" },
+            { text: "1000" },
+            { text: "2500" },
+            { text: "5000" }
+        ];
+
+        ctrlSelect.selectedItem = ctrlSelect.items[4];
+		ctrlSelect.size = { width: 100 }
+
+        ctrlSelect.addEventListener("selectionChanged", (e) => pageSizeChanged(e));
+
+		//
+		// TreeGrid settings
+		//
+
+		const treegrid = document.querySelector('#treegrid-pagination');
+
+		treegrid.columns = [];
+        treegrid.rows = [];
+        treegrid.showFooter = false;
+		treegrid.size = { height: 350 }
+
+        //
+        // Methods -----------------------------------------------------------------------------------
+        //
+        
+        let addColumns = function(){
+            for (let j = 1; j <= inputColumns.value; j++)
+                treegrid.addColumn({ id: j, headerText: 'Header' + j });
+        }
+
+        let addRows = function(parentRow, level){
+            if (level > inputLevels.value)
+                return;
+                
+            let numChilds = getRandomNumber(level);    
+            for (let i = 0; i < numChilds; i++){
+                if (rowCount < inputRows.value){
+                    let row = {
+                        id: rowCount + 1,
+                        text: 'Item' + (rowCount + 1).toString(),
+                        expanded : false,
+                        cells: []
+                    };
+                        
+                    treegrid.columns.forEach((column, j) => 
+                        row.cells.push({
+                            cid: j + 1,
+                            colName: column.headerText,
+                            text: 'Item' + (rowCount + 1).toString() + (j + 1).toString()
+                        })
+                    );
+
+                    treegrid.addRow(row, parentRow);
+                    rowCount++;
+                
+                    addRows(row, level + 1);
+                }
+            }
+        }
+                
+        // Make sure each row has a random set of child rows
+        let getRandomNumber = function(level){
+            let nCount = 1 + Math.floor(Math.random() * 10);
+            
+            if (level === 0){
+                if (inputLevels.value === 0)
+                    nCount = inputRows.value;
+                else {
+                    let derivative = 1;
+                    for (var k = 1; k <= inputLevels.value; k++)
+                        derivative = (derivative * nCount) + 1;
+
+                    nCount = inputRows.value / derivative + 1;
+                    if (nCount < 1000)
+                        nCount = 1000;
+                }
+            }
+            
+            return nCount;
+        }
+
+        let add = function(){
+            if (treegrid){
+                treegrid.suspendLayout();
+            
+                clear();
+
+                addColumns();
+                addRows(null, 0);
+
+                treegrid.resumeLayout();
+            }
+        }
+
+        let clear = function(){
+            rowCount = 0;
+
+            treegrid.clearColumns();
+            treegrid.clearRows();
+
+            treegrid.updateLayout();
+        }
+
+        let expandAll = function(){
+            treegrid.expand();
+        }
+
+        let collapseAll = function(){
+            treegrid.collapse();
+        }
+
+        // Events ------------------------------------------------------------------------------------
+
+        let getPaging = function(){
+            return  { enabled: true, pageSize: ctrlSelect.selectedItem ? parseInt(ctrlSelect.selectedItem.text) : parseInt(ctrlSelect.items[4].text) };
+        }
+
+        let pageSizeChanged = function(e){
+            if (e.detail.item)
+                treegrid.paging = getPaging();
+        }
+
+        //
+        // Initialization ------------------------------------------------------------------------
+        //
+
+        treegrid.paging = getPaging();
+
+        add();
+
+	</script>
+</html>

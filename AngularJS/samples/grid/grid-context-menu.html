@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / ContextMenu</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+		<h2>Grid / ContextMenu</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-contextmenu"
+                allow-animation="true"
+                ng-prop-columns="columns"
+                ng-prop-custom_style="gridStyle"
+                ng-prop-header_template="currentHeaderTemplate"
+				resource-path="../../node_modules/integralui-web/icons"
+                ng-prop-rows="rows"
+                ng-prop-row_template="currentRowTemplate"
+                ng-prop-size="ctrlSize"
+				theme="Office"
+			> 
+			</iui-grid>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>In this sample you can see how to add a <strong>ContextMenu</strong> to columns and rows in Grid component. To open the context menu, right-click anywhere inside a coumn header or a row.</p>
+                <p><span class="initial-space"></span>The Context Menu for columns and rows is different, in general consists of these options:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">Add</span> - adds a new column or row at the end</li>
+                    <li><span class="code-name">Insert Before</span> - inserts a new column or row before selected one</li>
+                    <li><span class="code-name">Insert After</span> - inserts a new column or row after selected one</li>
+                    <li><span class="code-name">Remove</span> - deletes the selected column or row</li>
+                </ul>
+                <p><span class="initial-space"></span>You can also add a context menu to the column footer, but in this sample this is excluded.</p>
+            </div>
+		</div>
+	</body>
+    <script type="text/javascript" src="../../angular.min.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module">
+        import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { styleMap } from '../../node_modules/integralui-web/external/style-map.js';
+
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridContextMenuStyle } from './grid-context-menu.style.js';
+
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                let columnMenu = {
+                    items: [
+                        { id: 3, text: "Add Column" },
+                        { id: 4, text: "Insert Column Before" },
+                        { id: 5, text: "Insert Column After" },
+                        { id: 6, type: "separator" },
+                        { id: 7, text: "Remove Column" }
+                    ]
+                }
+
+                let rowMenu = {
+                    items: [
+                        { id: 3, text: "Add Row" },
+                        { id: 4, text: "Insert Row Before" },
+                        { id: 5, text: "Insert Row After" },
+                        { id: 6, type: "separator" },
+                        { id: 7, text: "Remove Row" }
+                    ]
+                }
+                    
+                let columnCount = 3;
+                let rowCount = 3;
+
+                //
+                // Grid settings
+                //
+
+                const grid = document.querySelector('#grid-contextmenu');
+
+                $scope.columns = [
+                    { id: 1, headerText: "Header1", footerText: "Footer1", width: 200 },
+                    { id: 2, headerText: "Header2", footerText: "Footer2", width: 250 },
+                    { id: 3, headerText: "Header3", footerText: "Footer3", width: 120 }
+                ];
+
+                $scope.gridStyle = iuiGridContextMenuStyle;
+
+                $scope.rows = [
+                    { id: 1, text: "Row1", cells: [{ cid: 1, text: "Item11" }, { cid: 2, text: "Item12" }, { cid: 3, text: "Item13" }] },
+                    { id: 2, text: "Row2", cells: [{ cid: 1, text: "Item21" }, { cid: 2, text: "Item22" }, { cid: 3, text: "Item23" }] }
+                ];
+
+                $scope.ctrlSize = { width: 800, height: 250 }
+
+                //
+                // Currently when using templates, the LitElement binding syntax is required
+                // for properties, methods and events
+                //
+                $scope.currentHeaderTemplate = (column) => { 
+                    return html`
+                        <div>
+                            <iui-contextmenu
+                                .customStyle=${iuiGridContextMenuStyle}
+                                .enabled=${true}
+                                .settings=${columnMenu}
+                                theme="Office"
+                                @menuClick="${(e) => columnMenuClick(e)}"
+                                @menuOpening="${() => columnMenuOpening(column)}"
+                            >
+                                <span>${column.headerText}</span>
+                            </iui-contextmenu>
+                        </div>
+                    `;
+                };
+
+                $scope.currentRowTemplate = (row, cell) => { 
+                    return html`
+                        <div style=${styleMap({ display: 'inline-block', padding: '2px 0 0 0' })}>
+                            <iui-contextmenu
+                                .customStyle=${iuiGridContextMenuStyle}
+                                .enabled=${true}
+                                .settings=${rowMenu}
+                                theme="Office"
+                                @menuClick="${(e) => rowMenuClick(e)}"
+                                @menuOpening="${() => rowMenuOpening(row)}"
+                            >
+                                <span>${cell.text}</span>
+                            </iui-contextmenu>
+                        </div>
+                    `;
+                };
+
+                //
+                // Methods -----------------------------------------------------------------------------------
+                //
+
+                // Add Columns ----------------------------------------------------------------
+                            
+                let createNewColumn = function(){
+                    columnCount++;
+
+                    return { id: columnCount, headerText: "Header" + columnCount, footerText: "Footer" + columnCount };
+                }
+
+                // Add Rows ----------------------------------------------------------------
+                            
+                let createNewRow = function(){
+                    rowCount++;
+
+                    let newRow = {
+                        text: "Row" + rowCount,
+                        cells: []
+                    }
+
+                    for (let j = 1; j <= grid.columns.length; j++){
+                        let colId = grid.columns[j-1].id;
+
+                        newRow.cells.push({ cid: colId, text: "Item" + rowCount + colId });
+                    }
+
+                    return newRow;
+                }
+
+                // ContextMenu events ----------------------------------------------------------------
+
+                let columnMenuClick = function(e){
+                    if (e.detail.item){
+                        // Action depends on selected menu option
+                        switch (e.detail.item.id){
+                            case 3:
+                                grid.addColumn(createNewColumn());
+                                break;
+
+                            case 4:
+                                grid.insertColumnBefore(createNewColumn(), grid.selectedColumn);
+                                break;
+
+                            case 5:
+                                grid.insertColumnAfter(createNewColumn(), grid.selectedColumn);
+                                break;
+
+                            case 7:
+                                grid.removeColumn(grid.selectedColumn);
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        grid.updateLayout();
+                    }
+                }
+
+                let columnMenuOpening = function(column){
+                    grid.selectedColumn = column;
+                }
+
+                let rowMenuClick = function(e){
+                    if (e.detail.item){
+                        // Action depends on selected menu option
+                        switch (e.detail.item.id){
+                            case 3:
+                                grid.addRow(createNewRow());
+                                break;
+
+                            case 4:
+                                grid.insertRowBefore(createNewRow(), grid.selectedRow);
+                                break;
+
+                            case 5:
+                                grid.insertRowAfter(createNewRow(), grid.selectedRow);
+                                break;
+
+                            case 7:
+                                grid.removeRow(grid.selectedRow);
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        grid.updateLayout();
+                    }
+                }
+                
+                let rowMenuOpening = function(row){
+                    grid.selectedRow = row;
+                }
+            }]);
+	</script>
+</html>

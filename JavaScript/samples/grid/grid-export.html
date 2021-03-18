@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Export</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            [id="grid-export"] {
+                --grid-display: inline-block;
+            }
+            .sbp-trg-expt {
+                display: inline-block;
+                vertical-align: top;
+                width: 150px;
+            }
+
+            .sbp-trg-expt iui-button {
+                --button-display: block;
+                --button-margin: 5px 0;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Export</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-export"
+                allow-animation="true"
+				resource-path="../../node_modules/integralui-web/icons"
+				theme="Office"
+			> 
+			</iui-grid>
+            <div class="sbp-trg-expt" align="center">
+                <iui-button id="export-csv" allow-animation="true" theme="Office">Export as CSV</iui-button>
+                <iui-button id="export-json" allow-animation="true" theme="Office">Export as JSON</iui-button>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This example presents how to export the Grid data to Excel CSV file or a JSON formatted string. When exporting to JSON, the final result is shown in console window.</p>
+                <p><span class="initial-space"></span>To export data, the following methods are used:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">exportToCSV()</span> - exports data to Excel CSV format</li>
+                    <li><span class="code-name">exportToJSON(columnFields, rowFields, spacing, flat)</span> - exports data to a JSON formatted string</li>
+                </ul>
+                <p><span class="initial-space"></span>When exporting to a CSV file, only display values are exported for each column cell. On the other hand, when exporting to JSON, all or specified fields are exported.</p> 
+            </div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module">
+        import { IntegralUISortOrder, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+		//
+		// Button settings
+		//
+		const btnExportCSV = document.querySelector('#export-csv');
+        btnExportCSV.addEventListener("click", () => exportCSV());
+
+        // Adds a new row as root
+        let exportCSV = function(){
+            let data = grid.exportToCSV();
+            downloadCSV(data, 'grid');
+        }
+
+		const btnExportJSON = document.querySelector('#export-json');
+        btnExportJSON.addEventListener("click", () => exportJSON());
+
+        // Adds a new row as child
+        let exportJSON = function(){
+            let data = grid.exportToJSON();
+            console.log(data);
+        }
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-export');
+
+		grid.columns = [
+            { id: 2, headerText: "Continent/Country", width: 150 },
+            { 
+                id: 3, 
+                headerText: "Population", 
+                format: { options: { style: 'decimal' } }, 
+                headerAlignment: "center", 
+                contentAlignment: "right", width: 125
+            },
+            { 
+                id: 4, 
+                headerText: "Date", 
+                format: { options: { year: 'numeric', month: 'short', day: '2-digit' } }, 
+                headerAlignment: "center", 
+                contentAlignment: "center", 
+                width: 140
+            },
+            { 
+                id: 6, 
+                headerText: "Land in km2", 
+                format: { options: { style: 'unit', unit: 'kilometer', unitDisplay: 'short' } }, 
+                headerAlignment: "center", 
+                contentAlignment: "right", 
+                width: 120
+            },
+            { id: 7, headerText: "Capital", headerAlignment: "center", width: 100 }
+		];
+        
+        grid.rows = [
+            { id: 11, pid: 1, text: "Egypt", cells: [{ cid: 2, text: "Egypt" }, { cid: 3, value: 88311000 }, { cid: 4, value: new Date(2015, 3, 6) }, { cid: 6, value: 995450 }, { cid: 7, text: "Cairo" }] },
+            { id: 12, pid: 1, text: "Nigeria", cells: [{ cid: 2, text: "Nigeria" }, { cid: 3, value: 185043000 }, { cid: 4, value: new Date(2015, 6, 1) }, { cid: 6, value: 910768 }, { cid: 7, text: "Abuja" }] },
+            { id: 13, pid: 1, text: "South Africa", cells: [{ cid: 2, text: "South Africa" }, { cid: 3, value: 54002000 }, { cid: 4, value: new Date(2014, 6, 1) }, { cid: 6, value: 1214470 }, { cid: 7, text: "Pretoria" }] },
+            { id: 21, pid: 2, text: "China", cells: [{ cid: 2, text: "China" }, { cid: 3, value: 1369140000 }, { cid: 4, value: new Date(2015, 3, 6) }, { cid: 6, value: 9326410 }, { cid: 7, text: "Beijing" }] },
+            { id: 22, pid: 2, text: "India", cells: [{ cid: 2, text: "India" }, { cid: 3, value: 1269545000 }, { cid: 4, value: new Date(2015, 6, 1) }, { cid: 6, value: 2864021 }, { cid: 7, text: "New Delhi" }] },
+            { id: 23, pid: 2, text: "Japan", cells: [{ cid: 2, text: "Japan" }, { cid: 3, value: 126910000 }, { cid: 4, value: new Date(2015, 2, 1) }, { cid: 6, value: 364485 }, { cid: 7, text: "Tokyo" }] },
+            { id: 24, pid: 2, text: "Saudi Arabia", cells: [{ cid: 2, text: "Saudi Arabia" }, { cid: 3, value: 31521418 }, { cid: 4, value: new Date(2015, 6, 1) }, { cid: 6, value: 2149690 }, { cid: 7, text: "Riyadh" }] },
+            { id: 25, pid: 2, text: "South Korea", cells: [{ cid: 2, text: "South Korea" }, { cid: 3, value: 51342881 }, { cid: 4, value: new Date(2015, 0, 1) }, { cid: 6, value: 100032 }, { cid: 7, text: "Seoul" }] },
+            { id: 31, pid: 3, text: "France", cells: [{ cid: 2, text: "France" }, { cid: 3, value: 66109000 }, { cid: 4, value: new Date(2015, 2, 1) }, { cid: 6, value: 640427 }, { cid: 7, text: "Paris" }] },
+            { id: 32, pid: 3, text: "Germany", cells: [{ cid: 2, text: "Germany" }, { cid: 3, value: 80925000 }, { cid: 4, value: new Date(2014, 5, 30) }, { cid: 6, value: 348672 }, { cid: 7, text: "Berlin" }] },
+            { id: 33, pid: 3, text: "Italy", cells: [{ cid: 2, text: "Italy" }, { cid: 3, value: 60788845 }, { cid: 4, value: new Date(2014, 10, 30) }, { cid: 6, value: 294140 }, { cid: 7, text: "Rome" }] },
+            { id: 34, pid: 3, text: "Macedonia", cells: [{ cid: 2, text: "Macedonia" }, { cid: 3, value: 2065769 }, { cid: 4, value: new Date(2013, 11, 31) }, { cid: 6, value: 25433}, { cid: 7, text: "Skopje" }] },
+            { id: 41, pid: 4, text: "Canada", cells: [{ cid: 2, text: "Canada" }, { cid: 3, value: 35702707 }, { cid: 4, value: new Date(2015, 0, 1) }, { cid: 6, value: 9093507 }, { cid: 7, text: "Ottawa" }] },
+            { id: 42, pid: 4, text: "Mexico", cells: [{ cid: 2, text: "Mexico" }, { cid: 3, value: 121005815 }, { cid: 4, value: new Date(2015, 6, 1) }, { cid: 6, value: 1943945 }, { cid: 7, text: "Mexico City" }] },
+            { id: 43, pid: 4, text: "USA", cells: [{ cid: 2, text: "USA" }, { cid: 3, value: 320651000 }, { cid: 4, value: new Date(2015, 3, 7) }, { cid: 6, value: 9161966 }, { cid: 7, text: "Washington" }] },
+            { id: 51, pid: 5, text: "Argentina", cells: [{ cid: 2, text: "Argentina" }, { cid: 3, value: 43131966 }, { cid: 4, value: new Date(2015, 6, 1) }, { cid: 6, value: 2736690 }, { cid: 7, text: "Buenos Aires" }] },
+            { id: 52, pid: 5, text: "Brazil", cells: [{ cid: 2, text: "Brazil" }, { cid: 3, value: 204134000 }, { cid: 4, value: new Date(2015, 3, 8) }, { cid: 6, value: 8460415 }, { cid: 7, text: "Brasília" }] }
+        ];
+
+        grid.showFooter = false;
+		grid.size = { width: 725, height: 400 }
+
+        let prevColumn = null;
+        let sortColumn = null;
+        let sorting = IntegralUISortOrder.None;
+
+        //
+        // Methods -----------------------------------------------------------------------------------
+        //
+        
+        let getCellValue = function(row){
+            let cellValue = null;
+
+            if (sortColumn && row.cells){
+                for (let j = 0; j < row.cells.length; j++){
+                    if (row.cells[j].cid === sortColumn.id){
+                        cellValue = row.cells[j].value;
+                        break;
+                    }
+                }
+            }
+
+            return cellValue;
+        }
+
+        let comparer = (firstRow, secondRow) => {
+            let x = getCellValue(firstRow);
+            let y = getCellValue(secondRow);
+
+            x = x ? x.valueOf() : null;
+            y = y ? y.valueOf() : null;
+
+            switch (sorting){
+                case IntegralUISortOrder.Ascending:
+                    if (x < y)
+                        return -1;
+                    else if (x > y)
+                        return 1;
+                    break;
+
+                case IntegralUISortOrder.Descending:
+                    if (x > y)
+                        return -1;
+                    else if (x < y)
+                        return 1;
+                    break;
+                    
+                // no default
+            }
+
+            return 0;
+        }
+
+        // Export ----------------------------------------------------------------------------
+
+        let downloadCSV = function(data, fileName){
+            let blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+
+            let link = document.createElement("a");
+            if (link.download !== undefined) {
+                let url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", generateFileName(fileName));
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        let generateFileName = function(fileName){
+            let date = new Date();
+
+            return fileName + date.toLocaleDateString() + "_" +  date.toLocaleTimeString() + '.csv';
+        }
+
+        //
+        // Events --------------------------------------------------------------------------------
+        //
+
+        grid.addEventListener("columnClick", (e) => onColumnClick(e));
+
+        let onColumnClick = function(e){
+            if (e.detail.column){
+                if (e.detail.column !== prevColumn){
+                    if (sorting === IntegralUISortOrder.None)
+                        sorting = IntegralUISortOrder.Ascending;
+                }
+                else {
+                    if (sorting === IntegralUISortOrder.Ascending)
+                        sorting = IntegralUISortOrder.Descending;
+                    else
+                        sorting = IntegralUISortOrder.Ascending;
+                }
+
+                sortColumn = e.detail.column;
+                prevColumn = e.detail.column;
+
+                if (e.detail.column.id === 4)
+                    grid.sort(e.detail.column, sorting, comparer);
+                else
+                    grid.sort(e.detail.column, sorting);
+            }
+        }
+
+        //
+        // Initialization ------------------------------------------------------------------------
+        //
+
+        let init = function(){
+            sortColumn = grid.columns[0];
+        
+            sorting = IntegralUISortOrder.Ascending;
+            grid.sort(sortColumn, sorting);
+
+            prevColumn = sortColumn;
+
+            grid.selectedColumn = sortColumn;
+        }
+
+        init();
+	</script>
+</html>

@@ -1,0 +1,10 @@
+.tbs-cbtn-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+
+[id="tabstrip-close-button"]{
+    --tab-header-hovered-background: #d9edfd;
+    --tab-header-hovered-border-color: #8cb1d1;
+}

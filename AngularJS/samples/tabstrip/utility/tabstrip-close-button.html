@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>TabStrip / Tabs with Close Button</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+            .empty-block {
+                border: thin solid #cecece; 
+                font-size: 2rem;
+                padding: 125px 20px;
+                width: 500px;
+                text-align: center;
+            }
+            .tbs-cbtn-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+
+            [id="tabstrip-close-button"]{
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+            }
+		</style>
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+		<h2>TabStrip / Tabs with Close Button</h2>
+		<div class="sample-block">
+            <div ng-style="{ display: tabs.length > 0 ? 'block' : 'none'}" id="tabstrip-block">
+                <iui-tabstrip id="tabstrip-close-button"
+                    allow-animation="true"
+                    ng-prop-animation="animation"
+                    ng-prop-custom_style="ctrlStyle"
+                    resource-path="../../../node_modules/integralui-web/icons"
+                    ng-prop-size="ctrlSize"
+                    tab-spacing="3"
+                    ng-prop-tabs="tabs"
+                    ng-prop-tab_template="currentTabTemplate"
+                    > 
+                    <iui-tab ng-repeat="tab in tabs" 
+                        ng-prop-data="tab"
+                        ng-prop-icon="tab.icon"
+                        ng-prop-text="tab.text"
+                        ng-prop-theme="theme"
+                    >
+                        <div class="tbs-cbtn-tab-content">{{tab.body}}</div>
+                    </iui-tab>
+                </iui-tabstrip>
+            </div>
+            <div class="empty-block" ng-style="{ display: tabs.length === 0 ? 'block' : 'none'}">All Tabs are Deleted.</div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample shows tabs with close button in their header. You can delete tabs by clicking this button.</p>
+                <p><span class="initial-space"></span>Whenever you need to add custom content to the tab header, you can use custom template. This template can be shared between all tabs, or you can specify a different template for each tab separately.</p>
+                <p><span class="initial-space"></span>In this case, the template contains an icon, text and a close button, represented by an 'X' icon.</p>
+            </div>
+		</div>
+	</body>
+    <script type="text/javascript" src="../../../angular.min.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUIObjectState, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTabStripCloseButtonStyle } from './tabstrip-close-button.style.js';
+       
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                const ctrl = document.querySelector('#tabstrip-close-button');
+
+                $scope.animation = IntegralUIAnimationType.Fade;
+                $scope.ctrlSize = { width: 600, height: 300 };
+                $scope.ctrlStyle = iuiTabStripCloseButtonStyle;
+                ctrl.selectedTab = null;
+
+                $scope.tabs = [
+                    { 
+                        id: 1,
+                        icon: 'library',
+                        text: 'Books',
+                        body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+                    },
+                    { 
+                        id: 2,
+                        icon: 'album',
+                        text: 'Music',
+                        body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+                    },
+                    { 
+                        id: 3,
+                        icon: 'star-empty',
+                        text: 'Favorites',
+                        body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+                    }
+                ];
+
+                // Templates -----------------------------------------------------------------------------
+
+                //
+                // Currently when using templates, the LitElement binding syntax is required
+                // for properties, methods and events
+                //
+
+                $scope.currentTabTemplate = (tab) => { 
+                    let btnIcon = tab.state & IntegralUIObjectState.Hovered || tab.state & IntegralUIObjectState.Selected ? '../../../node_modules/integralui-web/icons/close.ico' : '../../../node_modules/integralui-web/icons/close-gray.ico';
+
+                    return html`
+                        <div>
+                            <span class="tbs-cbtn-icons ${tab.icon}"></span>
+                            <span>${tab.text}</span>
+                            <img class="tab-close-button" src=${btnIcon} @mousedown="${(e) => closeButtonClicked(e, tab)}" />
+                        </div>
+                    `;
+                };
+
+                // Events --------------------------------------------------------------------------------
+
+                let closeButtonClicked = function(e, tab){
+                    // Delete tabs only when left mouse button is clicked
+                    if (e.which === 1){
+                        let tabIndex = $scope.tabs.indexOf(tab.data);
+                        $scope.tabs.splice(tabIndex, 1);
+
+                        $timeout(function(){
+                            // Set selection to a new tab 
+                            let newSelTab = ctrl.selectedTab;
+                            if (tab.state & IntegralUIObjectState.Selected){
+                                let newSelIndex = tabIndex < $scope.tabs.length ? tabIndex : $scope.tabs.length - 1;
+                                newSelTab = newSelIndex >= 0 && newSelIndex < $scope.tabs.length  ? $scope.tabs[newSelIndex] : null;
+                            }
+
+                            ctrl.selectedTab = newSelTab;
+                        }, 1);
+                    }
+
+                    e.stopPropagation();
+                }
+            }]);
+	</script>
+</html>

@@ -1,0 +1,15 @@
+<h2>GroupBox / Overview</h2>
+<div class="sample-block">
+    <iui-groupbox [allowAnimation]="true" [size]="ctrlSize" [text]="title" [expandBoxType]="expandBoxType" [theme]="currentTheme">
+        <div class="grbox-ovw-group-content">
+            <span>User name:</span><input type="text" /><br/>
+            <span>Password:</span><input type="password" /><br/>
+            <button (click)="submitClicked()">Submit</button>
+        </div>
+    </iui-groupbox>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> GroupBox</strong> is a native Web Component that represents a collapsible panel. It consists of a header and content panel. Header displays the group title and in content panel you can place any custom HTML elements or other components.</p>
+        <p><span class="initial-space"></span>The demonstration above is simple, there is a group box with icon and title and content panel that by default is hidden. Whenever the group header is clicked, the content panel will expand and become visible. In this example, the content panel contains labels, input elements and a button.</p>
+        <p><span class="initial-space"></span>This component is also used as part of <a routerLink="/accordion-overview">Accordion</a> component.</p> 
+    </div>
+</div>

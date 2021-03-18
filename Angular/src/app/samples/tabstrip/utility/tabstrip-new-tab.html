@@ -1,0 +1,25 @@
+<h2>TabStrip / Add New Tab on Demand</h2>
+<div class="sample-block">
+    <iui-tabstrip #tabstrip id="tabstrip-new-tab"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [customStyle]="customStyle"
+        [scrollMode]="currentScrollMode"
+        [selectedTab]="currentSelection"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabs]="tabs"
+        [tabSpacing]="currentTabSpacing"
+        (beforeSelect)="beforeTabSelection($event)"
+        > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text">
+            <div class="tbs-ntb-tab-content">Content of {{tab.text}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows how to create new tabs on demand, using a custom button set at the end of the tabstrip.</p>
+        <p><span class="initial-space"></span>The button is actually a Tab, where its content is modified so that tab border and background is hidden. For this purpose a custom template is used where the tab shows only a '+' icon.</p>
+        <p><span class="initial-space"></span>In this case, whenever the '+' button is clicked a new tab is added and tabstrip is scrolled to show it into the view.</p>
+        <p><span class="initial-space"></span>When adding tabs from a remote data source, instead of a '+', you can show a custom loading icon.</p>
+    </div>
+</div>

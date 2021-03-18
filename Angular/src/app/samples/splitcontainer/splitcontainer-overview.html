@@ -1,0 +1,25 @@
+<h2>SplitContainer / Overview</h2>
+<div class="sample-block">
+    <iui-splitcontainer
+        [panel1]="panel1Data"
+        [panel2]="panel2Data"
+        [resourcePath]="currentResourcePath"
+        [splitterDistance]="currentSplitterDistance"
+        [showButtons]="showSplitterButons"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (splitterMoving)="onSplitterMoving($event)"
+    >
+        <div slot="iui-panel1">
+            <span class="spltc-ovw-panel-content">{{panel1Data.content}}</span>
+        </div>
+        <div slot="iui-panel2">
+            <span class="spltc-ovw-panel-content">{{panel2Data.content}}</span>
+        </div>
+    </iui-splitcontainer>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SplitContainer</strong> is a native Web Component that consists of two resizable panels separated by a splitter with tabs and command buttons. It allows you to place different content in two panels and change their size during run-time.</p>
+        <p><span class="initial-space"></span>The demonstration above shows a SplitContainer component, with option to change its orientation to horizontal or vertical. Each panel is represented by a tab with icon and title, also there is a swap button that when clicked will swap panels on demand. By left click and hold the splitter handle, you can change the size of panels.</p>
+        <p><span class="initial-space"></span>You may also notice that the top/left panel has condition set to prevent its height/width go below 100px. This is done by handling the <span class="code-name">splitterMoving</span> event in your code and set the condition there.</p>
+    </div>
+</div>

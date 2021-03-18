@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - TreeView / Load on Demand</title>
+		<link rel="stylesheet" href="../../../index.css" />
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+		<h2>TreeView / Load on Demand</h2>
+		<div class="sample-block">
+            <iui-treeview 
+                id="treeview-load-on-demand" 
+                ng-prop-items="items"
+                resource-path="../../../node_modules/integralui-web/icons" 
+                ng-prop-size="ctrlSize"
+                theme="Office"
+                ng-on-before_expand="onBeforeExpand($event)"
+            ></iui-treeview>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>In above demo, when you click on expanding icon, a new random data is created and then inserted into the expanding item as its children. This process is accompanied with loading animation represented by custom loading icon that replaces the expanding icon for specified item. You can expand multiple items at once and new data will be added accordingly.</p>
+                <p><span class="initial-space"></span>You can load new data from a remote JSON file or a database into a specified item. Because this sample is offline, this functionality is not presented here.</p> 
+            </div>
+        </div>
+	</body>
+    <script type="text/javascript" src="../../../angular.min.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+	<script type="module">
+
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                //
+                // Sample settings
+                //
+                    
+                // TreeView
+                const treeview = document.querySelector('#treeview-load-on-demand');
+                
+                $scope.items = [
+                    { id: 1, text: "Item 1", expanded: false, items: [], hasChildren: true },
+                    { id: 2, text: "Item 2", expanded: false, items: [], hasChildren: true },
+                    { id: 3, text: "Item 3", expanded: false, items: [], hasChildren: true }
+                ];
+                
+                $scope.ctrlSize = { width: 350, height: 300 }
+
+                // Make sure each node has a random set of child items
+                let getChildCount = function(){
+                    return 1 + Math.floor(Math.random() * 5);
+                }
+
+                // Make sure that some child items can have children
+                let itemHasChildren = function(){
+                    let num = 2 + Math.floor(Math.random() * 3);
+
+                    return num % 2 == 0 ? true : false;
+                }
+
+                // Handle the beforeExpand event to populate the expanding item with new data
+                $scope.onBeforeExpand = function(e){
+                    if (e.detail.item.items && e.detail.item.items.length === 0){
+                        // Replace the expanding icon with a loading icon
+                        treeview.beginLoad(e.detail.item);
+
+                        let loadTimer = setTimeout(function(){
+                            // Get random number of child items
+                            let count = getChildCount();
+                            for (let i = 1; i <= count; i++){
+                                // Create a child item
+                                let childItem = {
+                                    expanded: false, 
+                                    hasChildren: itemHasChildren(), 
+                                    items: [],
+                                    text: e.detail.item.text + i
+                                }
+
+                                // Add the child item to the expanding item
+                                e.detail.item.items.push(childItem);
+                            }
+
+                            // Restore the expanding icon
+                            treeview.endLoad(e.detail.item);
+
+                            // Update the appareance of the TreeView
+                            treeview.refresh();
+
+                            clearTimeout(loadTimer);
+                        }, 1000);
+
+                    }
+                }
+            }]);
+	</script>
+</html>

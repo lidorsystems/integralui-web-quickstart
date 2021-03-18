@@ -1,0 +1,13 @@
+<h2>ListGroup / Overview</h2>
+<div class="sample-block">
+    <iui-listgroup [allowAnimation]="true" [size]="ctrlSize" [text]="title" [expandBoxType]="expandBoxType" [theme]="currentTheme">
+        <iui-item *ngFor="let item of groupItems; let i = index" [theme]="currentTheme">
+            <span>{{item.text}}</span>
+        </iui-item>
+    </iui-listgroup>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ListGroup</strong> is a native Web Component that represents a collapsible panel with list of items. It consists of a header and content list. Header displays the group title and in content list you can add custom items.</p>
+        <p><span class="initial-space"></span>The demonstration above is simple, there is a group box with icon and title and content list that by default is hidden. Whenever the group header is clicked, the content list will expand and become visible. In this example, the content list contains text only items.</p>
+        <p><span class="initial-space"></span>This component is also used as part of <a routerLink="/listbar-overview">ListBar</a> component.</p> 
+    </div>
+</div>

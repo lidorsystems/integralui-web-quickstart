@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			[id="button-overview"] iui-button {
+			    --button-margin: 3px;
+				--button-padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Button / Overview</h2>
+		<div class="sample-block" id="button-overview">
+			<iui-button allow-animation="true" theme="Office">Button 1</iui-button>
+			<iui-button allow-animation="true" theme="Office">Button 2</iui-button>
+			<iui-button allow-animation="true" theme="Office">Button 3</iui-button>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Button</strong> is a native Web Component that represents a button. It is fully customizable via CSS.</p>
+				<p><span class="initial-space"></span>The following properties and events are supported:</p>
+				<ul class="feature-points">
+					<li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+					<li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+					<li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+					<li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+					<li><span class="code-name">name</span> - Uniquely identifies the component</li>
+					<li><span class="code-name">pressed</span> - Specifies whether Button is pressed or not: true or false</li>
+					<li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+					<br/>
+					<li><span class="code-name">pressedChanged</span> - Occurs when pressed property changes</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+	<script type="module">
+		const btns = document.querySelectorAll('iui-button');
+
+		btns.forEach((btn, index) => btn.addEventListener("click", () => onButtonClicked(index)));
+
+		let onButtonClicked = function(index){
+			console.log("Button with index: " + index + " is clicked");
+		}
+	</script>
+</html>

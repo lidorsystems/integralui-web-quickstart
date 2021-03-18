@@ -1,0 +1,22 @@
+<h2>ListView / Overview</h2>
+<div class="sample-block">
+    <iui-listview #listview id="listview-overview"
+        [allowAnimation]="true"
+        [allowDrag]="true"
+        [customStyle]="customStyle"
+        [items]="items"
+        [itemSize]="itemSize"
+        [resourcePath]="currentResourcePath"
+        [scrollMode]="currentScrollMode"
+        [selectionMode]="currentSelectionMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-listview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ListView</strong> is a native Web Component that displays list of items either in horizontal or vertical layout. Items can be reordered using advanced drag drop operations. You can load data on demand during run-time from local or remote data sources, and add custom HTML content in each item.</p>
+        <p><span class="initial-space"></span>Above demonstration shows vertical layout where items are arranged from left to right with vertical scrolling. You can also arrange items horizontally where items are displayed from top to bottom with horizontal scrolling.</p>
+        <p><span class="initial-space"></span>In addition, item content is arranged differently: horizontal layout shows item content in single line, while vertical layout shows item content in a box. To display ratings the <a routerLink="/rating-overview">Rating</a> component is used.</p>
+        <p><span class="initial-space"></span>You can reorder items by click and drag over specific item. A dragging window will appear, stating the target item and position at which item can be dropped. During drag drop operations, you can also create a copy of an item by holding the SHIFT key. The dragging window will change its icon, showing a + sign next to position marker.</p>
+    </div>
+</div>

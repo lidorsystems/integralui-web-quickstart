@@ -1,0 +1,60 @@
+.tbs-tool-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+.tbs-toolbar {
+    background: white;
+}
+.tbs-toolbar-button {
+    border: thin solid transparent;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 0 0 1px;
+    opacity: 0.5;
+    padding: 2px;
+}
+.tbs-toolbar-button:hover {
+    border: thin solid #ccdce8;
+    border-radius : 3px;
+    background: #ebf6ff;
+    opacity: 1;
+}
+.tbs-toolbar-button span {
+    background-image: url(src/assets/integralui-web/resources/icons-x24.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 24px;
+    padding: 0;
+    margin: 3px;
+    vertical-align: middle;
+    width: 24px;
+}
+.tbs-tool-charts span {
+    background-position: -24px -72px;
+}
+.tbs-tool-favorite span {
+    background-position: -144px -72px;
+}
+.tbs-tool-watch span {
+    background-position: -72px -72px;
+}
+.tbs-toolbar-separator {
+    display: inline-block;
+    margin: 0 0 0 1px;
+    padding: 2px 7px;
+}
+.tbs-toolbar-separator span {
+    background: #cecece;
+    display: inline-block;
+    height: 24px;
+    width: 1px;
+    vertical-align: middle;
+}
+
+[id="tabstrip-toolbar"]{
+    --tab-header-border-radius: 7px 7px 0 0;
+    --tab-header-hovered-background: #d9edfd;
+    --tab-header-hovered-border-color: #8cb1d1;
+    --tab-header-padding: 9px;
+}

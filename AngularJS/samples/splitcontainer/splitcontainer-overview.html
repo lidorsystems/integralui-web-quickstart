@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.spltc-ovw-panel-content
+			{
+				display: block;
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>SplitContainer / Overview</h2>
+		<div class="sample-block">
+			<iui-splitcontainer id="splitcontainer-overview"
+				resource-path="../../node_modules/integralui-web/icons"
+				show-buttons="true"
+				theme="Office"
+			>
+				<div slot="iui-panel1">
+					<span class="spltc-ovw-panel-content" id="iui-panel1-content"></span>
+				</div>
+				<div slot="iui-panel2">
+					<span class="spltc-ovw-panel-content" id="iui-panel2-content"></span>
+				</div>
+			</iui-splitcontainer>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SplitContainer</strong> is a native Web Component that consists of two resizable panels separated by a splitter with tabs and command buttons. It allows you to place different content in two panels and change their size during run-time.</p>
+				<p><span class="initial-space"></span>The demonstration above shows a SplitContainer component, with option to change its orientation to horizontal or vertical. Each panel is represented by a tab with icon and title, also there is a swap button that when clicked will swap panels on demand. By left click and hold the splitter handle, you can change the size of panels.</p>
+				<p><span class="initial-space"></span>You may also notice that the top/left panel has condition set to prevent its height/width go below 100px. This is done by handling the <span class="code-name">splitterMoving</span> event in your code and set the condition there.</p>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.splitcontainer.js"></script>
+	<script type="module">
+        const ctrl = document.querySelector('#splitcontainer-overview');
+
+		ctrl.panel1 = {
+			icon: 'tab-icon library',
+			text: 'Books',
+			content: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+		};
+
+		ctrl.panel2 = {
+			icon: 'tab-icon album',
+			text: 'Music',
+			content: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+		};
+
+		ctrl.splitterDistance = 180;
+		ctrl.size = { width: 700, height: 400 };
+		
+		// 
+		// SplitContainer Content
+		//
+
+        const panel1Content = document.querySelector('#iui-panel1-content');
+		panel1Content.textContent = ctrl.panel1.content;
+
+        const panel2Content = document.querySelector('#iui-panel2-content');
+		panel2Content.textContent = ctrl.panel2.content;
+
+		// 
+		// SplitContainer Events
+		//
+
+		ctrl.addEventListener("splitterMoving", (e) => onSplitterMoving(e));
+
+		let onSplitterMoving = function(e){
+			if (e.detail.value < 100)
+				e.detail.cancel = true;
+		}
+
+	</script>
+</html>

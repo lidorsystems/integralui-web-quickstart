@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Pagination</title>
+		<link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .pagesize-block {
+                --select-display: inline-block;
+            }
+            .pagesize-block span {
+                display: inline-block;
+                padding: 10px 5px 5px 0;
+                vertical-align: top;    
+            }
+            .sample-block-panel iui-button {
+                --button-margin: 0 5px;
+            }
+            .sample-block-panel iui-numeric {
+                --numeric-display: inline-block;
+                --numeric-margin: 0 25px 0 0;
+            }
+            .sample-block-panel span {
+                display: inline-block;
+                margin-top: 3px;
+                vertical-align: top;
+            }  
+		</style>
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+        <h2>Grid / Pagination</h2>
+		<div class="sample-block">
+            <div class="pagesize-block">
+                <span class="pagesize-label">Rows per page: </span>
+                <iui-select
+                    allow-animation="true"
+                    ng-prop-items="pageSize"
+                    ng-prop-selected_item="currentPageSize"
+                    ng-prop-size="selectSize"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                    ng-on-selection_changed="pageSizeChanged($event)"
+                ></iui-select>
+            </div>
+            <iui-grid id="grid-pagination"
+                allow-animation="true"
+                ng-prop-columns="columns"
+                ng-prop-rows="rows"
+                ng-prop-size="ctrlSize"
+                ng-prop-paging="currentPaging"
+				resource-path="../../node_modules/integralui-web/icons"
+                selection-mode="MultiExtended"
+				theme="Office"
+			></iui-grid>
+            <br/>
+            <div class="sample-block-panel" align="center">
+                <span>Max columns:</span> <iui-numeric min="1" max="250" resource-path="../../node_modules/integralui-web/icons" ng-prop-size="inputSize" ng-prop-value="numColumns" theme="Office" ng-on-value_changed="numColumnsChanged($event)""></iui-numeric>
+                <span>Max rows:</span> <iui-numeric min="1" max="100000" resource-path="../../node_modules/integralui-web/icons" ng-prop-size="inputLargeSize" ng-prop-value="numRows" theme="Office" ng-on-value_changed="numRowsChanged($event)"></iui-numeric>
+                <br /><br />
+                <iui-button allowAnimation={this.state.isAnimationAllowed} ng-prop-size="buttonSize" theme="Office" ng-on-click="add()">Add</iui-button>
+                <iui-button allowAnimation={this.state.isAnimationAllowed} ng-prop-size="buttonSize" theme="Office" ng-on-click="clear()">Clear</iui-button>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This example shows how to divide the data set in multiple pages.</p>
+                <p><span class="initial-space"></span>Using options above the grid, you can choose the size of the page. The page size determines the maximum number of root rows per page.</p>
+                <p><span class="initial-space"></span>For demonstration purposes only, a limit is set to 250 columns and 100,000 rows. In real scenario, the only limit is how much data the browser can handle. By clicking on the 'Add' button, the grid is populated with custom data.</p>
+                <p><span class="initial-space"></span>The pagination panel is fully customizable, even you can create your own pagination controls by using these built-in methods and events:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">currentPage</span> - Gets or sets the number of page currently visible in grid view</li>
+                    <li><span class="code-name">firstPage</span> - the first page is shown in the grid view</li>
+                    <li><span class="code-name">lastPage</span> - the last page is shown in the grid view</li>
+                    <li><span class="code-name">nextPage</span> - moves to the next page</li>
+                    <li><span class="code-name">prevPage</span> - moves to the previous page</li><br/>
+                    <li><span class="code-name">pageChanged</span> - occurs when current page changes</li>
+                </ul>
+			</div>
+		</div>
+	</body>
+    <script type="text/javascript" src="../../angular.min.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.numeric.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module">
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                //
+                // Grid settings
+                //
+
+                const grid = document.querySelector('#grid-pagination');
+
+                $scope.ctrlSize = { height: 600 }
+
+                $scope.columns = [];
+                $scope.rows = [];
+
+                $scope.buttonSize = { width: 100 };
+                $scope.inputSize = { width: 100 };
+                $scope.inputLargeSize = { width: 125 };
+                $scope.pageSize = [
+                    { text: "2" },
+                    { text: "10" },
+                    { text: "25" },
+                    { text: "50" },
+                    { text: "100" },
+                    { text: "250" },
+                    { text: "500" },
+                    { text: "1000" },
+                    { text: "2500" },
+                    { text: "5000" }
+                ];
+                $scope.selectSize = { width: 100 };
+                $scope.currentPageSize = $scope.pageSize[4];
+                $scope.currentPaging = { enabled: true, pageSize: parseInt($scope.currentPageSize.text) }
+
+                $scope.numColumns = 25;
+                $scope.numRows = 10000;
+                let rowCount = 0;
+
+    
+                let addColumns = function(){
+                    $scope.columns.length = 0;
+                    for (let j = 1; j <= $scope.numColumns; j++)
+                        $scope.columns.push({ id: j, headerText: 'Header' + j });
+                }
+
+                let addRows = function(){
+                    for (let i = 0; i < $scope.numRows; i++){
+                        let row = {
+                            id: rowCount + 1,
+                            text: 'Item' + (rowCount + 1).toString(),
+                            expanded : false,
+                            cells: [],
+                            rows: []
+                        };
+                            
+                        $scope.columns.forEach((column, j) => 
+                            row.cells.push({
+                                cid: j + 1,
+                                colName: column.headerText,
+                                text: 'Item' + (rowCount + 1).toString() + (j + 1).toString()
+                            })
+                        );
+
+                        grid.addRow(row);
+                        rowCount++;
+                    }
+                }
+
+                $scope.add = function(){
+                    if (grid){
+                        grid.suspendLayout();
+                    
+                        $scope.clear();
+
+                        addColumns();
+                        addRows();
+
+                        grid.resumeLayout();
+                    }
+                }
+
+                $scope.clear = function(){
+                    rowCount = 0;
+
+                    grid.clearColumns();
+                    grid.clearRows();
+
+                    grid.updateLayout();
+                }
+
+                // Events ------------------------------------------------------------------------------------
+
+                $scope.numColumnsChanged = function(e){
+                    $scope.numColumns = e.detail.value;
+                }
+
+                $scope.numRowsChanged = function(e){
+                    $scope.numRows = e.detail.value;
+                }
+
+                $scope.pageSizeChanged = function(e){
+                    if (e.detail.item){
+                        $scope.currentPageSize = e.detail.item;
+                        $scope.currentPaging = { enabled: true, pageSize: parseInt($scope.currentPageSize.text) }
+                    }
+                }
+
+				var initTimer = $timeout(function(){
+                    $scope.add();
+
+					$timeout.cancel(initTimer);
+				}, 1);
+        }]);
+	</script>
+</html>

@@ -1,0 +1,6 @@
+.lscrl-ovw-item-normal {
+    opacity: 0.5;
+}
+.lscrl-ovw-item-hovered, .lscrl-ovw-item-selected {
+    opacity: 1;
+}

@@ -1,0 +1,33 @@
+<h2>Calendar / Overview</h2>
+<div class="sample-block">
+    <iui-calendar
+        [allowAnimation]="isAnimationAllowed"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme" 
+        (dateChanged)="this.onDateChanged($event)"
+    >
+    </iui-calendar>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Calendar</strong> is a native Web Component that enables the user to calendar a date using a visual monthly calendar display. This component is fully customizable via CSS.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">firstDayOfWeek</span> - Specifies the first day of the week</li>
+            <li><span class="code-name">locales</span> - Specifies the current localization string in use</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">calendaredDate</span> - The date that is calendared</li>
+            <li><span class="code-name">showToday</span> - Indicates whether the today date is visible</li>
+            <li><span class="code-name">size</span> - Specifies the component width and height in pixels.</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <li><span class="code-name">todayDate</span> - The current day</li>
+            <br/>
+            <li><span class="code-name">dateChanged</span> - Occurs when calendared date property changes</li>
+            <li><span class="code-name">enabledChanged</span> - Occurs when enabled property changes</li>
+            <li><span class="code-name">sizeChanged</span> - Occurs when size property changes</li>
+            <li><span class="code-name">stateChanged</span> - Occurs when component state changes</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+.sample-block {
+    width: 800px;
+    height: 400px;
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.sample-panel {
+    display: inline-block;
+    margin-left: 20px;
+    width: calc(60% - 25px);
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.tree-block {
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+
+iui-button {
+    --button-margin: 10px 0 0 3px;
+    --button-padding: 5px;
+    --button-vertical-align: top;
+    --button-width: 100px;
+
+}
+iui-select {
+    --select-display: inline-block;
+    --select-margin: 10px 2px 0 2px;
+    --select-width: 200px;
+}
+
+/* Changes to the tree item layout*/
+[id="treeview-checkboxes"] {
+    --treeitem-content-padding: 5px;
+    --treeitem-expand-box-margin: 4px 5px 0 0;
+}

@@ -1,0 +1,13 @@
+[id="grid-export"] {
+    --grid-display: inline-block;
+}
+.sbp-grd-expt {
+    display: inline-block;
+    vertical-align: top;
+    width: 150px;
+}
+
+.sbp-grd-expt iui-button {
+    --button-display: block;
+    --button-margin: 5px 0;
+}

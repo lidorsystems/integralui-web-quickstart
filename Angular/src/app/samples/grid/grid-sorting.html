@@ -1,0 +1,26 @@
+<h2 class="feature-title">Grid / Sorting</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-sorting"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectedColumn]="currentSelectedColumn"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (columnClick)="onColumnClick($event)"
+    > 
+    </iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample demonstrates basic and custom sorting operations in the Grid component.</p>
+        <p><span class="initial-space"></span>If column cells contain a String or a Number as their value, a basic sorting is executed, using built-in sort operations, for which you only need to specify by which column rows will be sorted and the sort order.</p>
+        <p><span class="initial-space"></span>For columns which cells contains custom values, a <span class="code-name">comparer</span> function is required. In case of this example, 3rd column contains date values, and a custom comparer function is created and applied to the Grid.</p>
+        <p>The following properties and methods are presented:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">sorting</span> a property which determines the sort order</li>
+            <li><span class="code-name">sort</span> a method which sorts the Grid rows based on applied order for specified column</li>
+        </ul>
+        <p><span class="initial-space"></span>In addition, some of columns use data formatting, for numbers to appear with commas, dates in standard format and metrics for column 'Land in km2'. All data formatting comes with standard settings, which you can easily change.</p>
+    </div>
+</div>

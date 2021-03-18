@@ -1,0 +1,51 @@
+<h2 class="feature-title">TreeView / Drag Drop Between TreeViews</h2>
+<div class="feature-content">
+    <div class="sample-block">
+        <iui-treeview
+            [allowDrag]="allowDrag"
+            [allowDrop]="allowDrop"
+            [autoExpand]="autoExpand"
+            [customStyle]="customStyle"
+            [items]="data"
+            [name]="'TreeView 1'"
+            [resourcePath]="currentResourcePath"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        > 
+        </iui-treeview>
+        <iui-treeview
+            [allowDrag]="allowDrag2"
+            [allowDrop]="allowDrop2"
+            [autoExpand]="autoExpand"
+            [customStyle]="customStyle"
+            [items]="data2"
+            [name]="'TreeView 2'"
+            [resourcePath]="currentResourcePath"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        > 
+        </iui-treeview>
+        <br style="clear:both;"/>
+        <div style="display:inline-block; margin-top:20px">
+            <div style="float:left;width:350px;margin-right:30px" align="center">
+                <label style="margin-right:30px"><input type="checkbox" [(ngModel)]="allowDrag" checked="checked" /> Allow Drag</label>
+                <label><input type="checkbox" [(ngModel)]="allowDrop" checked="checked" /> Allow Drop</label>
+            </div>
+            <div style="float:left;width:350px;" align="center">
+                <label style="margin-right:30px"><input type="checkbox" [(ngModel)]="allowDrag2" checked="checked" /> Allow Drag</label>
+                <label><input type="checkbox" [(ngModel)]="allowDrop2" checked="checked" /> Allow Drop</label>
+            </div>
+            <br style="clear:both;"/>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this sample you can drag drop items within the same TreeView or from left TreeView to the right TreeView and vice versa. When item is dragged a drop marker is displayed showing the exact location at which dragged item can drop. If the marker is not shown, the drop position is not allowed.</p>
+        <p><span class="initial-space"></span>You can reorder items by click and drag over specific item. A dragging window will appear, stating the target item and position at which item can be dropped. During drag drop operations, you can also create a copy of an item by holding the SHIFT key. The dragging window will change its icon, showing a <span style="color:#c60d0d;font-weight:bold">+</span> sign next to the position marker.</p>
+        <p><span class="initial-space"></span>While dragging an item over middle space of some target item, when dropped the item will be added as a child of the target item. If the <span class="code-name">autoExpand</span> property is set to true, the target item will expand, after a short delay of 500ms.</p>
+        <p><span class="initial-space"></span>By clicking on check boxes, you can change the built-in properties:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowDrag</span> - determines whether items can be dragged</li>
+            <li><span class="code-name">allowDrop</span> - determines whether items can be dropped</li>
+       </ul>
+    </div>
+</div>

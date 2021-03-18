@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.grbox-ovw-group-content
+			{
+				padding: 10px;
+				border-top-color: transparent;
+				font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+			}
+			.grbox-ovw-group-content span
+			{
+				display: inline-block;
+				margin: 2px 5px 5px 2px;
+				width: 80px;
+				text-align: right;
+			}
+			.grbox-ovw-group-content button
+			{
+				background: #dddddd;
+				border: thin solid #aaaaaa;
+				margin: 10px 0 0 185px;
+				padding: 5px;
+				width: 75px;
+			}
+			.grbox-ovw-group-content button:hover
+			{
+				background: #e5e5e5;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>GroupBox / Overview</h2>
+		<div class="sample-block">
+			<iui-groupbox id="groupbox-overview" allow-animation="true" text="Login" expandbox-type="arrow" theme="Office">
+				<div class="grbox-ovw-group-content">
+					<span>User name:</span><input type="text" /><br/>
+					<span>Password:</span><input type="password" /><br/>
+					<button onClick="submitClicked()">Submit</button>
+				</div>
+			</iui-groupbox>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> GroupBox</strong> is a native Web Component that represents a collapsible panel. It consists of a header and content panel. Header displays the group title and in content panel you can place any custom HTML elements or other components.</p>
+				<p><span class="initial-space"></span>The demonstration above is simple, there is a group box with icon and title and content panel that by default is hidden. Whenever the group header is clicked, the content panel will expand and become visible. In this example, the content panel contains labels, input elements and a button.</p>
+				<p><span class="initial-space"></span>This component is also used as part of <a href="../accordion/accordion-overview.html">Accordion</a> component.</p> 
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.groupbox.js"></script>
+	<script type="module">
+		const ctrl = document.querySelector('#groupbox-overview');
+		ctrl.size = { width: 290 };
+	</script>
+	<script>
+		function submitClicked(){
+			alert("Submit button was clicked.");
+		}
+	</script>
+</html>

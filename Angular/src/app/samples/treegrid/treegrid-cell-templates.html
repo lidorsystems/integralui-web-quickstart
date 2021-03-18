@@ -1,0 +1,25 @@
+<h2 class="feature-title">TreeGrid / Cell Templates</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-cell-templates"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [rowHeight]="30"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-treegrid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of a TreeGrid where some of the cells are using custom template for their content:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">Cells with a check box</span> - When check box in column header is clicked, it will update all cells in that column.</li>
+            <li><span class="code-object">Cells with price indicator</span> - represented by up/down icons algned on left side with price on right.</li>
+            <li><span class="code-object">Cells with change indicator</span> - represented by a progress bar on the right side.</li>
+            <li><span class="code-object">Cells with button</span> - when clicked will remove the row.</li>
+        </ul>
+    </div>
+</div>

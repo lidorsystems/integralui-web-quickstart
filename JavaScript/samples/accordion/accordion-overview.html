@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.acc-ovw-group-content {
+				border-top-color: transparent;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Accordion / Overview</h2>
+		<div class="sample-block">
+			<iui-accordion id="accordion-overview" allow-animation="true" resourcePath="node_modules/integralui-web/icons" theme="Office"> 
+				<iui-groupbox allow-animation="true" text="Books" theme="Office" expandbox-type="arrow">
+					<div class="acc-ovw-group-content">Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.</div>
+				</iui-groupbox>
+				<iui-groupbox allow-animation="true" text="Music" theme="Office" expandbox-type="arrow">
+					<div class="acc-ovw-group-content">Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.</div>
+				</iui-groupbox>
+				<iui-groupbox allow-animation="true" text="Favorites" theme="Office" expandbox-type="arrow">
+					<div class="acc-ovw-group-content">Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.</div>
+				</iui-groupbox>
+			</iui-accordion>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Accordion</strong> is a native Web Component that represents a list of expandable panels arranged vertically.</p>
+				<p><span class="initial-space"></span>The demonstration above shows only the basic features available in Accordion component. There are few <Link to="/groupbox">group boxes</Link> each with a header and a content panel.</p>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.accordion.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.groupbox.js"></script>
+	<script type="module">
+		import { iuiAccordionOverviewStyle } from './accordion-overview.style.js';
+
+		const ctrl = document.querySelector('#accordion-overview');
+		ctrl.groups = [
+			{ 
+				icon: 'icons library',
+				text: 'Books',
+				body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+			},
+			{ 
+				icon: 'icons album',
+				text: 'Music',
+				body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+			},
+			{ 
+				icon: 'icons star-empty',
+				text: 'Favorites',
+				body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+			}
+		];
+
+		ctrl.selectedGroup = ctrl.groups[0];
+		ctrl.size = { width: 400 }
+
+		const children = ctrl.querySelectorAll('iui-groupbox');
+		children.forEach((group, index) => {
+			group.customStyle = iuiAccordionOverviewStyle;
+			group.data = ctrl.groups[index];
+			group.icon = ctrl.groups[index].icon;
+			group.size = ctrl.size;
+
+			group.refresh();
+		});
+	</script>
+</html>

@@ -1,0 +1,50 @@
+<h2 class="feature-title">Grid / Pagination</h2>
+<div class="feature-content" #application>
+    <div class="pagesize-block">
+        <span class="pagesize-label">Rows per page: </span>
+        <iui-select
+            [allowAnimation]="true"
+            [items]="pageSize"
+            [resourcePath]="currentResourcePath"
+            [selectedItem]="currentPageSize"
+            [size]="{ width: 100 }"
+            [theme]="currentTheme"
+            (selectionChanged)="pageSizeChanged($event)"
+        > 
+        </iui-select>
+    </div>
+    <iui-grid #grid id="grid-pagination"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [paging]="getPaging()"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-grid>
+    <br/>
+    <div class="sample-block-panel" align="center">
+        <span>Max columns:</span> <iui-numeric [min]="1" [max]="250" [resourcePath]="currentResourcePath" [size]="inputSize" [value]="numColumns" [theme]="currentTheme" (valueChanged)="numColumnsChanged($event)"></iui-numeric>
+        <span>Max rows:</span> <iui-numeric [min]="1" [max]="100000" [resourcePath]="currentResourcePath" [size]="{ width: 125 }" [value]="numRows" [theme]="currentTheme" (valueChanged)="numRowsChanged($event)"></iui-numeric>
+        <br /><br />
+        <iui-button [allowAnimation]="true" [size]="buttonSize" [theme]="currentTheme" (click)="this.add()">Add</iui-button>
+        <iui-button [allowAnimation]="true" [size]="buttonSize" [theme]="currentTheme" (click)="this.clear()">Clear</iui-button>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This example shows how to divide the data set in multiple pages.</p>
+        <p><span class="initial-space"></span>Using options above the grid, you can choose the size of the page. The page size determines the maximum number of root rows per page. If you have rows with children, child rows are excluded from this number.</p>
+        <p><span class="initial-space"></span>For demonstration purposes only, a limit is set to 250 columns and 100,000 rows with maximum depth of 100 tree levels. In real scenario, the only limit is how much data the browser can handle. By clicking on the 'Add' button, the grid is populated with custom data.</p>
+        <p><span class="initial-space"></span>The pagination panel is fully customizable, even you can create your own pagination controls by using these built-in methods and events:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">currentPage</span> - Gets or sets the number of page currently visible in grid view</li>
+            <li><span class="code-name">firstPage</span> - the first page is shown in the grid view</li>
+            <li><span class="code-name">lastPage</span> - the last page is shown in the grid view</li>
+            <li><span class="code-name">nextPage</span> - moves to the next page</li>
+            <li><span class="code-name">prevPage</span> - moves to the previous page</li><br/>
+            <li><span class="code-name">pageChanged</span> - occurs when current page changes</li>
+        </ul>
+    </div>
+</div>

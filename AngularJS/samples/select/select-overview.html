@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			[id="select-overview"] {
+			    --header-expand-box-margin: 7px 5px 5px 5px;
+			    --header-label-empty-height: 24px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Select / Overview</h2>
+		<div class="sample-block">
+			<iui-select id="select-overview" allow-animation="true" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+			<div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Select</strong> is a native Web Component that replaces the standard &lt;select&gt; HTML element. It has advanced features like options to set the width and height of dropdown window, custom styles for header and dropdown list, sorting, choosing item that is currently selected in the combo box etc.</p>
+                <p><span class="initial-space"></span>The demonstration above shows only the basic features available in ComboBox component. There are several items present in the combo box. Opening or closing of dropdown list is animated.</p>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module">
+		import { iuiSelectOverviewStyle } from './select-overview.style.js';
+
+		const ctrl = document.querySelector('#select-overview');
+
+        ctrl.customStyle = iuiSelectOverviewStyle;
+        ctrl.dropDownSize = { width: 350 };
+        ctrl.maxDropDownItems = 5;
+		ctrl.size = { width: 300 }
+        ctrl.items = [
+            { id: 1, icon: "cmb-ovw-icons library", text: "Books" },
+            { id: 2, icon: "cmb-ovw-icons-empty", text: "Computers" },
+            { id: 3, icon: "cmb-ovw-icons-empty", text: "Electronics" },
+            { id: 4, icon: "cmb-ovw-icons album", text: "Music" },
+            { id: 5, icon: "cmb-ovw-icons software", text: "Software" },
+            { id: 6, icon: "cmb-ovw-icons sports", text: "Sports" },
+            { id: 7, icon: "cmb-ovw-icons-empty", text: "Video Games" },
+            { id: 8, icon: "cmb-ovw-icons clock", text: "Watches" }
+        ];
+
+        ctrl.selectedItem = ctrl.items[3];
+	</script>
+</html>

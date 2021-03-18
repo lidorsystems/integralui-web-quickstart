@@ -1,0 +1,12 @@
+.sample-block-panel iui-button {
+    --button-margin: 0 5px;
+}
+.sample-block-panel iui-numeric {
+    --numeric-display: inline-block;
+    --numeric-margin: 0 25px 0 0;
+}
+.sample-block-panel span {
+    display: inline-block;
+    margin-top: 3px;
+    vertical-align: top;
+}

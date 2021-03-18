@@ -1,0 +1,29 @@
+{
+  "name": "integralui-web-quickstart",
+  "version": "21.1.0",
+  "description": "IntegralUI Web Quick Start - A demo application that contains samples for each component included in the IntegralUI Web library",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lidorsystems/integralui-web-quickstart.git"
+  },
+  "keywords": [
+    "components",
+    "integralui",
+    "ui",
+    "web",
+    "web-components",
+    "javascript",
+    "angular",
+    "react",
+    "vue"
+  ],
+  "author": "Lidor Systems",
+  "license": "SEE LICENSE in LICENSE.md",
+  "homepage": "https://github.com/lidorsystems/integralui-web-quickstart",
+  "bugs": {
+    "url": "https://github.com/lidorsystems/integralui-web-quickstart/issues"
+  }
+}

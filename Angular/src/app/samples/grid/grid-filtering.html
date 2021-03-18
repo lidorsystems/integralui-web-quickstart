@@ -1,0 +1,28 @@
+<h2 class="feature-title">Grid / Filtering</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-filtering"
+        [allowAnimation]="true"
+        [allowFilter]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectedColumn]="currentSelectedColumn"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows how to filter the Grid content using multiple different conditions in different combinations for each column separately.</p>
+        <p><span class="initial-space"></span>By clicking on the filter button in column header, a pop-up window will appear with filtering options for that column. In this example, each column has a different filtering options, which are created using custom templates.</p>
+        <p>The following properties and methods are presented:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowFilter</span> - a property which determines whether filtering is allowed</li>
+            <li><span class="code-name">filter</span> - a method which filters the content of Grid using specified column and filtering parameters</li>
+        </ul>
+        <p><span class="initial-space"></span>By default, filtering is executed using the cell's value field to match the specified criteria. If this field value is empty, then the value of cell's text field is used.</p>
+        <p><span class="initial-space"></span>For filtering operations we are using the <strong>IntegralUIFilterService</strong>, which provides many ways to set string, numeric or custom filtering using multiple conditions with AND / OR combinations.</p>
+    </div>
+</div>

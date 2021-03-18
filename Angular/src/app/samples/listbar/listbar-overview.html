@@ -1,0 +1,21 @@
+<h2>ListBar / Overview</h2>
+<div class="sample-block">
+    <iui-listbar
+        [allowAnimation]="true"
+        [groups]="groups"
+        [resourcePath]="currentResourcePath"
+        [selectedGroup]="currentSelection"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+        <iui-listgroup *ngFor="let group of groups" [allowAnimation]="true" [text]="group.text" [expandBoxType]="expandBoxType" [theme]="currentTheme">
+            <iui-item *ngFor="let item of group.items" [theme]="currentTheme">
+                <span>{{item.text}}</span>
+            </iui-item>
+        </iui-listgroup>
+    </iui-listbar>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ListBar</strong> is a native Web Component that displays a list of expandable groups, in vertical layout. Each group contains a list of items created using custom HTML elements or components. When the current view cannot display all groups in whole, scroll buttons will appear on each side that will allow you to navigate among groups.</p>
+        <p><span class="initial-space"></span>Above demonstration shows several groups with different number of items. Each group can expand/collapse, but only one group can become selected. Whenever more groups are expanded and they overflow the current view, a set of scroll buttons will appear on top and bottom side. By pressing these buttons, you can scroll the current view and navigate among presented groups.</p>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<h2>AutoComplete / Overview</h2>
+<div class="sample-block">
+    <iui-autocomplete
+        [allowAnimation]="true"
+        [dataFields]="dataFields"
+        [dropDownSize]="dropDownSize"
+        [list]="sampleList"
+        [placeHolder]="placeHolder"
+        [size]="ctrlSize"
+        [text]="textValue"
+        [theme]="currentTheme"
+        (valueChanged)="onValueChanged($event)"
+    >
+    </iui-autocomplete>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> AutoComplete</strong> is a native Web Component that represents a text box with a dropdown list where you can choose among suggested options. You can modify the component appearance via CSS.</p>
+        <p><span class="initial-space"></span>In this example, whenever you enter a text, a dropdown list will appear showing city names that match the entered text. You can navigate through the list using keyboard and choose an option either by pressing the ENTER key, mouse button or touch. The list is loaded from a JSON file and sorted in ascending order.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowAnimation</span> - Specifies whether animations are enabled or not</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">dataFields</span> - Specifies an object that map the fields names of list items from your data source to the ones used by the component</li>
+            <li><span class="code-name">dropDownSize</span> - Specifies the width and height of the dropdown list in pixels</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">list</span> - Gets or sets a list of items that is assigned to the component</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">placeHolder</span> - A string that appears in text box as place holder</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <li><span class="code-name">text</span> - Specifies the input text value</li>
+            <br/>
+            <li><span class="code-name">valueChanged</span> - Occurs when a input text changes or an option is selected from a dropdown list</li>
+            <li><span class="code-name">enabledChanged</span> - Occurs when enabled property changes</li>
+            <li><span class="code-name">stateChanged</span> - Occurs when component state changes</li>
+        </ul>
+    </div>
+</div>

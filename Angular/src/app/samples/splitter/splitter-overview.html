@@ -1,0 +1,22 @@
+<h2>Splitter / Overview</h2>
+<div class="spt-ovw-block">
+    <iui-splitter id="splitter-1" [splitterDistance]="currentSplitterDistance" [theme]="currentTheme" (splitterMoving)="onSplitterMoving($event)" (splitterMoved)="onSplitterMoved($event)">
+        <div slot="iui-panel1">
+            <p class="spt-ovw-panel-content">{{panel1Data.content}}</p>
+        </div>
+        <div slot="iui-panel2" class="spt-ovw-block-2">
+            <iui-splitter #splitter2 id="splitter-2" [orientation]="spliiterOrientation" [theme]="currentTheme">
+                <div slot="iui-panel1">
+                    <p class="spt-ovw-panel-content">{{panel2Data.content}}</p>
+                </div>
+                <div slot="iui-panel2" class="spt-ovw-block-2">
+                    <p class="spt-ovw-panel-content">{{panel3Data.content}}</p>
+                </div>
+            </iui-splitter>
+        </div>
+    </iui-splitter>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Splitter</strong> is a native Web Component that allows you to resize two different blocks or elements during run-time.</p>
+    <p><span class="initial-space"></span>The demonstration above shows two Splitter components, the first one is horizontal and second one is vertical. By click and hold of the left mouse button you can move the splitter and the panels will resize based on moving direction. The splitter cannot move past the end of each panel.</p>
+</div>

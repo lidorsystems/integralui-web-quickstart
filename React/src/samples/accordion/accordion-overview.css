@@ -1,0 +1,10 @@
+.acc-ovw-group-content
+{
+    border-top-color: transparent;
+    padding: 10px;
+}
+[id="accordion-overview"] {
+    --header-expand-box-top: 2px;
+    --header-expand-box-right: 2px;
+}
+

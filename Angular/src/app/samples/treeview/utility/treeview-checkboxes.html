@@ -1,0 +1,30 @@
+<h2 class="feature-title">TreeView / CheckBoxes</h2>
+<div class="feature-content">
+    <div class="sample-block">
+        <div class="tree-block">
+            <iui-treeview #treeview id="treeview-checkboxes"
+                [allowAnimation]="true"
+                [customStyle]="customStyle"
+                [itemDisplay]="displayMode"
+                [items]="items"
+                [resourcePath]="currentResourcePath"
+                [size]="ctrlSize"
+                [theme]="currentTheme"
+            > 
+            </iui-treeview>
+        </div>
+        <div class="sample-panel">
+            <label>List of items depending on their check state: </label><br />
+            <label style="display:inline-block;margin: 20px 3px 0 5px;vertical-align:top;">State: </label>
+            <iui-select [allowAnimation]="true" [maxDropDownItems]="3" [items]="options" [selectedIndex]="2" [theme]="currentTheme" (afterSelect)="onDropDownItemSelected($event)"></iui-select>
+            <iui-button [theme]="currentTheme" (click)="showCheckList()">Show</iui-button><br />
+            <iui-list [theme]="currentTheme" [size]="listSize" #list></iui-list>
+            <br style="clear:both;"/>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example each TreeView item has a check box, shown before its label. Check boxes are added to the TreeView using the &lt;span&gt; element with custom check box image as background.</p>
+        <p><span class="initial-space"></span>The demo simulates cascading changes to the checkbox. Whenever item's check box value changes, all parent and child items updates their check box value.</p>
+        <p><span class="initial-space"></span>In addition, from DropDown on the right, you can select which items are displayed in the right list: unchecked, indeterminated or checked.</p>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<h2 class="feature-title">TreeView / Load Data from JSON</h2>
+<div class="feature-content">
+    <div class="sample-block">
+        <iui-treeview #treeview id="treeview-load-json"
+            [customStyle]="customStyle"
+            [dataFields]="treeFields"
+            [items]="data"
+            [resourcePath]="currentResourcePath"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        > 
+        </iui-treeview>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows how to populate the TreeView using JSON file as a data source. The data source has custom data fields, which are mapped to the ones used by the tree view.</p>
+        <p><span class="initial-space"></span>For data binding, use the <strong>dataFields</strong> property of the TreeView component. This property accepts an object that replaces the default field names with your own.</p>
+        <p><span class="initial-space"></span>You can find the JSON data file under /assets subfolder in this project.</p>
+    </div>
+</div>

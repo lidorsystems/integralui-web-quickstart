@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.tbs-ovw-tab-content {
+				padding: 5px;
+				font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+				font-size: 1.1em;
+			}
+		</style>
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+		<h2>TabStrip / Overview</h2>
+		<div class="sample-block">
+			<iui-tabstrip id="tabstrip-overview"
+				allow-animation="true"
+				allow-drag="true"
+                animation="Slide"
+                ng-prop-custom_style="ctrlStyle"
+				resource-path="../../node_modules/integralui-web/icons"
+                ng-prop-scroll_mode="scrollMode"
+                ng-prop-selected_tab="selectedTab"
+                ng-prop-size="ctrlSize"
+				tab-spacing="3"
+                ng-prop-tabs="tabs"
+                ng-prop-tab_strip_placement="tabStripPlacement"
+                ng-prop-theme="theme"
+                ng-on-tab_order_changed="tabOrderChanged($event)"
+			>
+                <iui-tab ng-repeat="tab in tabs" 
+                    allow-drag="true" 
+                    ng-prop-data="tab"
+                    ng-prop-icon="tab.icon"
+                    ng-prop-text="tab.text"
+                    ng-prop-theme="theme"
+                >
+                    <div class="tbs-ovw-tab-content">{{tab.body}}</div>
+                </iui-tab>
+            </iui-tabstrip>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> TabStrip</strong> is a native Web Component that allows you to create tabbed content using tabs placed in different orientations.</p>
+				<p><span class="initial-space"></span>When you have many tabs that cannot appear in the TabStrip space all at the same time, it is best to enable scrolling. By default, scrolling is disabled.</p>
+				<p><span class="initial-space"></span>There are three scrolling modes:</p>
+				<ul class="feature-points">
+					<li><span class="code-object">None</span> - scrolling disabled, scroll buttons will not appear</li>
+					<li><span class="code-object">InBound</span> - scrolling enabled, scroll buttons appear next to each other</li>
+					<li><span class="code-object">OutBound</span> - scrolling enabled, scroll buttons appear on left/right or up/down side</li>
+				</ul>
+				<p><span class="initial-space"></span>To reorder tabs, you can use drag drop. Just select a tab and drag it over other tabs. An empty space will appear showing the target position.</p>
+			</div>
+		</div>
+	</body>
+    <script type="text/javascript" src="../../angular.min.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+	<script type="module">
+        import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUITabDisplayMode, IntegralUITabScrollMode, IntegralUITabStripPlacement, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+		import { iuiTabStripOverviewStyle } from './tabstrip-overview.style.js';
+     
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                const ctrl = document.querySelector('#tabstrip-overview');
+
+                $scope.ctrlStyle = iuiTabStripOverviewStyle;
+                $scope.scrollMode = IntegralUITabScrollMode.InBound;
+                $scope.selectedTab = null;
+                $scope.ctrlSize = { width: 600, height: 300 };
+                $scope.tabStripPlacement = IntegralUITabStripPlacement.Top;
+                $scope.theme = IntegralUITheme.Office;
+
+                $scope.tabs = [
+                    { 
+                        id: 1,
+                        icon: 'tab-icon library',
+                        text: 'Books',
+                        body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+                    },
+                    { 
+                        id: 2,
+                        icon: 'tab-icon album',
+                        text: 'Music',
+                        body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+                    },
+                    { 
+                        id: 3,
+                        icon: 'tab-icon star-empty',
+                        text: 'Favorites',
+                        body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+                    },
+                    { 
+                        id: 4,
+                        icon: 'tab-icon notes',
+                        text: 'Notes',
+                        body: 'Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum.'
+                    },
+                    { 
+                        id: 5,
+                        icon: 'tab-icon sports',
+                        text: 'Sports',
+                        body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+                    }
+                ];
+
+                //
+                // TabStrip Events
+                //
+
+                $scope.tabOrderChanged = function(e){
+                    $scope.selectedTab = e.detail.tab;
+                    $scope.tabs = e.detail.list;
+                }
+            }]);
+	</script>
+</html>

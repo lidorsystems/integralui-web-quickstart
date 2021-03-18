@@ -1,0 +1,17 @@
+.ttp-ovw-panel
+{
+    background: white;
+    border: thin solid gray;
+    display: inline-block;
+    width: 400px;
+    height: 250px;
+    vertical-align: top;
+}
+.ttp-ovw-panel span
+{
+    color: #808080;
+    cursor: default;
+    display: block;
+    margin: 120px auto;
+    text-align: center;
+}

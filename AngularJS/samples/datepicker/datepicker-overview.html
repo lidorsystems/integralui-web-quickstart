@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+	</head>
+	<body>
+		<h2>DatePicker / Overview</h2>
+		<div class="sample-block">
+			<iui-datepicker id="datepicker-overview" allow-animation="true" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-datepicker>
+			<div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> DatePicker</strong> is a native Web Component that allows the user to select a date by using a drop-down <Link to="/calendar">Calendar</Link> component. This component is fully customizable via CSS.</p>
+                <p><span class="initial-space"></span>The following properties and events are supported:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+                    <li><span class="code-name">firstDayOfWeek</span> - Specifies the first day of the week in the calendar</li>
+                    <li><span class="code-name">calendarSize</span> - Specifies the calendar width and height in pixels.</li>
+                    <li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+                    <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+                    <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+                    <li><span class="code-name">format</span> - Determines whether dates are displayed using standard or custom formatting</li>
+                    <li><span class="code-name">formatOptions</span> - An object that describes the date components in custom formatting</li>
+                    <li><span class="code-name">locales</span> - Specifies the current localization string in use</li>
+                    <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+                    <li><span class="code-name">selectedDate</span> - The date that is selected</li>
+                    <li><span class="code-name">size</span> - Specifies the component width and height in pixels.</li>
+                    <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+                    <br/>
+                    <li><span class="code-name">dateChanged</span> - Occurs when selected date property changes</li>
+                    <li><span class="code-name">enabledChanged</span> - Occurs when enabled property changes</li>
+                    <li><span class="code-name">sizeChanged</span> - Occurs when size property changes</li>
+                    <li><span class="code-name">stateChanged</span> - Occurs when component state changes</li>
+                </ul>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
+	<script type="module">
+		const ctrl = document.querySelector('#datepicker-overview');
+		ctrl.size = { width: 200 }
+	</script>
+</html>

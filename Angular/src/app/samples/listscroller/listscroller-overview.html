@@ -1,0 +1,40 @@
+<h2>ListScroller / Overview</h2>
+<div class="sample-block">
+    <iui-listscroller #listscroller
+        [customStyle]="customStyle"
+        [items]="items"
+        [itemSize]="currentItemSize"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    >
+    </iui-listscroller>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ListScroller</strong> is a native Web Component that displays a scrollable item list in horizontal or vertical layout. You can specify the item size and add any custom HTML elements or Angular components in each item. In addition, using different CSS styles you can customize the component overall appearance.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">items</span> - Gets or sets the collection of items that are assigned to the component</li>
+            <li><span class="code-name">itemSize</span> - Specifies the width and height of items</li>
+            <li><span class="code-name">mouseWheelSpeed</span> - Specifies the scrolling speed of the mouse wheel</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">scrollMode</span> - Specifies whether the view is scrolled horizontally or vertically</li>
+            <li><span class="code-name">selectedItem</span> - An object that points to the currently selected item</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <br/>
+            <li><span class="code-name">afterSelect</span> - Occurs after item is selected</li>
+            <li><span class="code-name">beforeSelect</span> - Occurs before item is selected</li>
+            <li><span class="code-name">clear</span> - Occurs when all items are removed</li>
+            <li><span class="code-name">itemAdded</span> - Occurs after item is added to the collection</li>
+            <li><span class="code-name">itemAdding</span> - Occurs before item is added to the collection</li>
+            <li><span class="code-name">itemRemoved</span> - Occurs after item is removed from the collection</li>
+            <li><span class="code-name">itemRemoving</span> - Occurs before item is removed from the collection</li>
+            <li><span class="code-name">scrollModeChanged</span> - Occurs when scrollMode property changes</li>
+            <li><span class="code-name">scrollPosChanged</span> - Occurs when current scroll position changes</li>
+            <li><span class="code-name">selectionChanged</span> - Occurs whenever selection changes from one item to another</li>
+            <li><span class="code-name">updateComplete</span> - Occurs when updating of component layout is completed</li>
+        </ul>
+    </div>
+</div>

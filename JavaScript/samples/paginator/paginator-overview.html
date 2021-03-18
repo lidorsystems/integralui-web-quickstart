@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.pgr-ovw-container {
+				position: relative;
+				width: 500px;
+			}
+			.pgr-ovw-page-container {
+				height: 302px;
+				margin-bottom: 7px;
+			}
+			.pgr-ovw-page-block {
+				background: white;
+				border: thin solid gray;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 500px;
+				height: 300px;
+			}
+			.pgr-ovw-page-block span {
+				display: block;
+				font-size: 1.5em;
+				text-align: center;
+				margin-top: 140px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Paginator / Overview</h2>
+		<div class="sample-block">
+			<div class="pgr-ovw-container">
+				<div class="pgr-ovw-page-container" id="paginator-container"></div>
+				<div style="text-align:center">
+					<iui-paginator id="paginator-overview" max-pages="5" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-paginator>
+				</div>
+			</div>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Paginator</strong> is a native Web Component that allows you to add pagination to your application. You can divide your content in multiple pages, by using Paginator you can select a page number and corresponding content will appear in current view.</p>
+				<p><span class="initial-space"></span>The demonstration above shows five pages showing single text line. By using buttons from Paginator you can navigate between pages, or you can set a number in the input box to go directly to specified page.</p>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.paginator.js"></script>
+	<script type="module">
+		const container = document.querySelector('#paginator-container');
+		const ctrl = document.querySelector('#paginator-overview');
+
+		ctrl.pages = [
+			{ text: "Page 1" },
+			{ text: "Page 2" },
+			{ text: "Page 3" },
+			{ text: "Page 4" },
+			{ text: "Page 5" }
+		];
+		ctrl.selectedPage = 0;
+		
+		// 
+		// Paginator Events
+		//
+
+		ctrl.addEventListener("pageChanged", (e) => onPageChanged(e));
+
+		let onPageChanged = function(e){
+			ctrl.selectedPage = e.detail.value;
+
+			const children = container.querySelectorAll('div');
+			children.forEach((page, index) => {
+				page.style.zIndex = index === ctrl.selectedPage - 1 ? 2 : 1;
+			});
+		}
+
+
+		// 
+		// Add Pages to Paginator
+		//
+
+        let addPages = function(){
+            ctrl.pages.map((page, index) => {
+				var ctrlPage = document.createElement('div');
+				ctrlPage.classList.add("pgr-ovw-page-block");
+				ctrlPage.style.zIndex = index === ctrl.selectedPage - 1 ? 2 : 1;
+				
+                var pageContent = document.createElement('span');
+                pageContent.textContent = page.text;
+                ctrlPage.appendChild(pageContent);
+
+                container.appendChild(ctrlPage);
+            });
+        }
+
+		addPages();
+		
+	</script>
+</html>

@@ -1,0 +1,21 @@
+<h2 class="feature-title">Grid / Overview</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-overview"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [expandColumnIndex]="1"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Grid</strong> is a native Web Component that displays hierarchical data structures in multiple columns. You can load data on demand during run-time from local or remote data sources, and add custom HTML content or other components in each grid cell.</p>
+        <p><span class="initial-space"></span>In above demo, the grid has columns with different content: <strong>checkbox</strong>, <strong>rating</strong> and label. In this example, check boxes can have 2 values: checked or unchecked, but you can change this easily by providing three values.</p>
+        <p><span class="initial-space"></span>Some columns have their content aligned to center, while others have their alignment set to left.</p>
+        <p><span class="initial-space"></span>To select multiple rows, hold SHIFT or CTRL key and click on specific row.</p>
+    </div>
+</div>

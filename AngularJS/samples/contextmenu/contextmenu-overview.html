@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.cmnu-ovw-block {
+			    background: white;
+			    border: thin solid gray;
+			    width: 800px;
+			    height: 300px;
+			}
+			.cmnu-ovw-block span {
+			    color: #808080;
+			    cursor: default;
+			    display: block;
+			    margin: 140px auto;
+			    text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>ContextMenu / Overview</h2>
+		<div class="sample-block">
+			<iui-contextmenu id="contextmenu-overview" theme="Office"> 
+                <div class="cmnu-ovw-block" id="menu-block">
+                    <span>Right click to open the context menu</span>
+                </div>
+			</iui-contextmenu>
+			<div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ContextMenu</strong> is a native Web Component that allows you to attach a custom context menu to any HTML element or Angular component. Whenever element is right-clicked, a context menu will popup showing data provided on your side.</p>
+                <p><span class="initial-space"></span>In this example, whenever the block is right-clicked, a context menu will appear with options from where you can change the font style of the block content. These options are divided in two groups using a separator. Options in the first group have a checkbox, while in the second have a radio button. Depending on which option is active, the font style of the block content changes accordingly.</p>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+	<script type="module">
+		import { iuiContextMenuOverviewStyle } from './contextmenu-overview.style.js';
+
+		const ctrl = document.querySelector('#contextmenu-overview');
+		const block = document.querySelector('#menu-block');
+
+        let fontWeight = 'bold';
+        let fontStyle = 'normal';
+        let fontSize = '1';
+        let textDecoration = 'none';
+
+        ctrl.customStyle = iuiContextMenuOverviewStyle;
+        ctrl.settings = {
+            items: [
+                { id: 2, text: "Bold", icon: 'cmnu-icons-medium check-mark', checked: true },
+                { id: 3, text: "Italic", icon: 'cmnu-icons-medium empty' },
+                { id: 4, text: "Strikethrough", icon: 'cmnu-icons-medium empty' },
+                { id: 5, type: "separator" },
+                { id: 6, text: "x1", icon: 'cmnu-icons-medium radio-mark-filled' },
+                { id: 7, text: "x1.5", icon: 'cmnu-icons-medium radio-mark-empty' },
+                { id: 8, text: "x2", icon: 'cmnu-icons-medium radio-mark-empty' }
+            ]
+        }
+
+		// Events --------------------------------------------------------------------------------
+
+		ctrl.addEventListener("menuClick", (e) => menuItemClick(e));
+
+	    let menuItemClick = function(e){
+	        let currentItem = e.detail.item;
+
+	        if (currentItem){
+	            if (currentItem.id < 5)
+	                currentItem.checked = currentItem.checked !== undefined ? !currentItem.checked : true;
+	            else
+	                currentItem.checked = true;
+
+	            switch (currentItem.id){
+	                case 2: 
+	                    fontWeight = currentItem.checked !== false ? 'bold' : 'normal';
+	                    break;
+	                case 3: 
+	                    fontStyle = currentItem.checked !== false ? 'italic' : 'normal';
+	                    break;
+	                case 4: 
+	                    textDecoration = currentItem.checked !== false ? 'line-through' : 'none';
+	                    break;
+	                case 6: 
+	                    fontSize = currentItem.checked !== false ? '1' : '1';
+	                    break;
+	                case 7: 
+	                    fontSize = currentItem.checked !== false ? '1.5' : '1';
+	                    break;
+	                case 8: 
+	                    fontSize = currentItem.checked !== false ? '2' : '1';
+	                    break;
+
+	                default:
+	                    break;
+	            }
+
+	            if (block){
+					block.style.fontSize = fontSize + 'em';
+					block.style.fontStyle = fontStyle;
+					block.style.fontWeight = fontWeight;
+					block.style.textDecoration = textDecoration;
+	            }
+
+	            if (currentItem.id < 5)
+	                currentItem.icon = currentItem.checked !== false ? 'cmnu-icons-medium check-mark' : 'cmnu-icons-medium empty';
+	            else {
+	                let list = ctrl.settings.items;
+	                for (let i = 4; i < list.length; i++){
+	                    if (list[i] !== currentItem)
+	                        list[i].checked = false;
+
+	                    list[i].icon = list[i].checked !== false ? 'cmnu-icons-medium radio-mark-filled' : 'cmnu-icons-medium radio-mark-empty';
+	                }
+	            }
+	        }
+	    }
+	</script>
+</html>

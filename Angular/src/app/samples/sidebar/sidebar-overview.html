@@ -1,0 +1,20 @@
+<h2>SideBar / Overview</h2>
+<div class="sample-block">
+    <iui-sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [resourcePath]="currentResourcePath"
+        [selectedTab]="currentSelection"
+        [size]="ctrlSize"
+        [tabSpacing]="currentTabSpacing"
+        [theme]="currentTheme" 
+        [expanded]="true"
+    >
+        <iui-tab *ngFor="let tab of data" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdb-ovw-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SideBar</strong> is a native Web Component that allows you to add custom content panel that appears by sliding from page side.</p>
+    </div>
+</div>

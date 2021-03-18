@@ -1,0 +1,30 @@
+<h2 class="feature-title">Grid / Dynamic Grouping</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-dynamic-grouping"
+        [allowAnimation]="true"
+        [allowColumnReorder]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [grouping]="groupSettings"
+        [groups]="groups"
+        [rowHeight]="26"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of Grid where data is arranged dynamically by different groups.</p>
+        <p><span class="initial-space"></span>Initially, there is one group present, the 'Genre' group. But you can create other groups by:</p>
+        <ul class="feature-points">
+            <li>Dragging the column title and drop it in the grouping panel above</li>
+        </ul>
+        <p><span class="initial-space"></span>Once a group is created, the corresponding column is removed from the view. And vice versa, once group is removed, the column will re-appear in the view. This is customizable and handled in sample code by <span class="code-name">groupAdded</span> and <span class="code-name">groupRemoved</span> events.</p>
+        <p><span class="initial-space"></span>When you have more than one group present, you can reorder them by click and drag over the group title. The grid data will auto-update based on current group order. This allows you to dynamically change the Grid data.</p>
+        <p><span class="initial-space"></span>Depending on data in each column, a different template for group data is used. This is customizable in HTML, depending on group.valueID field, which corresponds to the column id value. In combination with group.value, you can create different templates for each group separatelly.</p>
+        <p><span class="initial-space"></span>Rating is displayed using the <strong>IntegralUI Rating</strong> component. By changing a rating value in rows, grouping will also change, based on new values.</p>
+        <p><span class="initial-space"></span>Some columns like 'Title' and 'Released' are excluded from grouping functionality. This is determined in sample code by <span class="code-name">allowGrouping</span> field of column object, which for these columns is set to <span class="code-lang">false</span>.</p>
+    </div>
+</div>

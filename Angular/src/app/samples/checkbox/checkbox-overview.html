@@ -1,0 +1,28 @@
+<h2>CheckBox / Overview</h2>
+<div class="sample-block" id="checkbox-overview">
+    <iui-checkbox [resourcePath]="currentResourcePath" [threeState]="true" (checkStateChanged)="onCheckStateChanged($event)">CheckBox 1</iui-checkbox><br/>
+    <iui-checkbox id="checkbox-ovw-2" check-state="Checked" [threeState]="true" (checkStateChanged)="onCheckStateChanged($event)">CheckBox 2</iui-checkbox><br/>
+    <iui-checkbox id="checkbox-ovw-3" (checkedChanged)="onCheckedChanged($event)">CheckBox 3</iui-checkbox><br/>
+    <iui-checkbox id="checkbox-ovw-4" (checkedChanged)="onCheckedChanged($event)">CheckBox 4</iui-checkbox><br/>
+    <iui-checkbox id="checkbox-ovw-5" [checked]="true" (checkedChanged)="onCheckedChanged($event)">CheckBox 5</iui-checkbox>
+    <div class="feature-help">
+    <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> CheckBox</strong> is a native Web Component that represents a check box. It is fully customizable via CSS.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+            <li><span class="code-name">checked</span> - Specifies whether CheckBox is checked or not: true or false</li>
+            <li><span class="code-name">checkState</span> - Specifies one of the three state values: unchecked, indeterminate or checked</li>
+            <li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <li><span class="code-name">threeState</span> - Determines whether the CheckBox uses three or two state values</li>
+            <li><span class="code-name">value</span> - Holds the current checkbox value</li>
+            <br/>
+            <li><span class="code-name">checkedChanged</span> - Occurs when checked property changes</li>
+            <li><span class="code-name">checkStateChanged</span> - Occurs when checkState property changes</li>
+            <li><span class="code-name">valueChanged</span> - Occurs when value property changes</li>
+        </ul> 
+   </div>
+</div>

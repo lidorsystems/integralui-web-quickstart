@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>TabStrip / Add New Tab on Demand</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+            .tbs-ntb-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+
+            [id="tabstrip-new-tab"]{
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+            }
+		</style>
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+		<h2>TabStrip / Add New Tab on Demand</h2>
+		<div class="sample-block">
+			<iui-tabstrip id="tabstrip-new-tab"
+                allow-animation="true"
+                ng-prop-animation="animation"
+                ng-prop-custom_style="ctrlStyle"
+                resource-path="../../../node_modules/integralui-web/icons"
+                ng-prop-scroll_mode="scrollMode"
+                ng-prop-size="ctrlSize"
+				tab-spacing="3"
+                ng-prop-tabs="tabs"
+                ng-prop-tab_template="currentTabTemplate"
+                ng-on-before_select="beforeTabSelection($event)"
+            > 
+                <iui-tab ng-repeat="tab in tabs" 
+                    ng-prop-data="tab"
+                    ng-prop-text="tab.text"
+                    ng-prop-theme="theme"
+                >
+                    <div class="tbs-ntb-tab-content">Content of {{tab.text}}</div>
+                </iui-tab>
+            </iui-tabstrip>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>This sample shows how to create new tabs on demand, using a custom button set at the end of the tabstrip.</p>
+                <p><span class="initial-space"></span>The button is actually a Tab, where its content is modified so that tab border and background is hidden. For this purpose a custom template is used where the tab shows only a '+' icon.</p>
+                <p><span class="initial-space"></span>In this case, whenever the '+' button is clicked a new tab is added and tabstrip is scrolled to show it into the view.</p>
+                <p><span class="initial-space"></span>When adding tabs from a remote data source, instead of a '+', you can show a custom loading icon.</p>
+            </div>
+		</div>
+	</body>
+    <script type="text/javascript" src="../../../angular.min.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { styleMap } from '../../../node_modules/integralui-web/external/style-map.js';
+
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUITabScrollMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTabStripNewTabStyle } from './tabstrip-new-tab.style.js';
+       
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                const ctrl = document.querySelector('#tabstrip-new-tab');
+
+                $scope.animation = IntegralUIAnimationType.Fade;
+                $scope.ctrlSize = { width: 450, height: 300 };
+                $scope.ctrlStyle = iuiTabStripNewTabStyle;
+                $scope.scrollMode = IntegralUITabScrollMode.OutBound;
+                ctrl.selectedTab = null;
+
+                $scope.tabs = [
+                    { id: 1, text: 'Tab 1' },
+                    { id: 999, tag: 'NEW' }
+                ];
+
+                // Templates -----------------------------------------------------------------------------
+
+                let isLoading = false;
+        
+                //
+                // Currently when using templates, the LitElement binding syntax is required
+                // for properties, methods and events
+                //
+                $scope.currentTabTemplate = (tab) => { 
+                    if (tab.data && tab.data.tag === 'NEW'){
+                        let btnIcon = isLoading ? '../../../node_modules/integralui-web/icons/load.gif' : '../../../node_modules/integralui-web/icons/plus-24.png';
+                        let btnClass = isLoading ? 'new-tab-button-loading' : 'new-tab-button';
+
+                        return html`
+                            <div class="new-tab-block">
+                                <img class=${btnClass} src=${btnIcon} @mousedown="${(e) => addNewTab(e, tab)}" />
+                            </div>
+                        `;
+                    }
+                    else
+                        return html`<div><span style=${styleMap({ display: 'inline-block', padding: '4px 2px 2px 2px'})}>${tab.text}</span></div>`;
+                };
+
+                // Methods -------------------------------------------------------------------------------
+
+                let addNewTab = function(e, tab){
+                    // Add new tab only when left mouse button is clicked
+                    if (e.which === 1){
+                        // Replace the '+' icon with a loading icon
+                        isLoading = true;
+
+                        // Once the loading animation is active you can load tab from a custom data source (local or remote), like a JSON file
+                        $timeout(function(){
+                            let newTabIndex = $scope.tabs.indexOf(tab.data);
+                            let newTab = { id: $scope.tabs.length, text: "Tab " + $scope.tabs.length }
+
+                            // Add the new Tab object to the TabStrip
+                            $scope.tabs.splice(newTabIndex, 0, newTab);
+
+                            ctrl.selectedTab = newTab;
+                            isLoading = false;
+
+                            // Scroll tabs and show the newly added tab in the TabStrip
+                            $timeout(function(){
+                                ctrl.scrollPos(999);
+                            }, 1);
+
+                        }, 1000);
+                    }
+
+                    e.stopPropagation();
+                }
+
+                // Events --------------------------------------------------------------------------------
+
+                // Cancel selection if an user clicks in space between '+' icon and the tab border
+                // This is because of default style settings that provide small padding between custom content and tab header space
+                // If this padding is zero, this event is not required
+                $scope.beforeTabSelection = function(e){
+                    if (e.detail.tab && e.detail.tab.tag === 'NEW')
+                        e.detail.cancel = true; 
+                }
+            }]);
+	</script>
+</html>

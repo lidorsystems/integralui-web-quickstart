@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+			.spt-ovw-panel-content {
+				margin: 0;
+				padding: 5px;
+			}
+			.spt-ovw-block {
+				width: 700px;
+				height: 400px;
+			}
+			.spt-ovw-block-2 {
+				height: 100%;
+			}
+
+			[id="splitter-2"] {
+				--splitter-panel-border: thin solid transparent;
+				--splitter-panel-z-index: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Splitter / Overview</h2>
+		<div class="spt-ovw-block">
+			<iui-splitter id="splitter-1" theme="Office">
+				<div slot="iui-panel1">
+					<p class="spt-ovw-panel-content"">Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.</p>
+				</div>
+				<div slot="iui-panel2" class="spt-ovw-block-2">
+					<iui-splitter id="splitter-2" orientation="Vertical" theme="Office">
+						<div slot="iui-panel1">
+							<p class="spt-ovw-panel-content">Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.</p>
+						</div>
+						<div slot="iui-panel2" class="spt-ovw-block-2">
+							<p class="spt-ovw-panel-content">Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.</p>
+						</div>
+					</iui-splitter>
+				</div>
+			</iui-splitter>
+		</div>
+		<div class="feature-help">
+			<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Splitter</strong> is a native Web Component that allows you to resize two different blocks or elements during run-time.</p>
+			<p><span class="initial-space"></span>The demonstration above shows two Splitter components, the first one is horizontal and second one is vertical. By click and hold of the left mouse button you can move the splitter and the panels will resize based on moving direction. The splitter cannot move past the end of each panel.</p>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.splitter.js"></script>
+	<script type="module">
+        const splitter1 = document.querySelector('#splitter-1');
+        const splitter2 = document.querySelector('#splitter-2');
+
+		splitter1.spliterDistance = 180;
+
+		// Events --------------------------------------------------------------------------------
+
+		splitter1.addEventListener("splitterMoving", (e) => onSplitterMoving(e));
+		splitter1.addEventListener("splitterMoved", (e) => onSplitterMoved(e));
+
+		let onSplitterMoving = function(e){
+			if (e.detail.value < 100)
+				e.detail.cancel = true;
+			else if (splitter2)
+				splitter2.updateLayout();
+		}
+
+		let onSplitterMoved = function(e){
+			if (splitter2)
+				splitter2.updateLayout();
+		}
+
+		splitter1.updateLayout();
+	</script>
+</html>

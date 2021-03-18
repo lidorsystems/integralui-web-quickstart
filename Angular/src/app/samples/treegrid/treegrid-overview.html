@@ -1,0 +1,21 @@
+<h2 class="feature-title">TreeGrid / Overview</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-overview"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [expandColumnIndex]="1"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-treegrid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> TreeGrid</strong> is a native Web Component that displays hierarchical data structures in multiple columns. You can load data on demand during run-time from local or remote data sources, and add custom HTML content or other components in each treegrid cell.</p>
+        <p><span class="initial-space"></span>In above demo, the treegrid has columns with different content: <strong>checkbox</strong>, <strong>rating</strong> and label. In this example, check boxes can have 2 values: checked or unchecked, but you can change this easily by providing three values.</p>
+        <p><span class="initial-space"></span>Some columns have their content aligned to center, while others have their alignment set to left. You may also notice that expand icon is shown in second column. This is customizable, you can set which column has the expand box in your code.</p>
+        <p><span class="initial-space"></span>To select multiple rows, hold SHIFT or CTRL key and click on specific row.</p>
+    </div>
+</div>

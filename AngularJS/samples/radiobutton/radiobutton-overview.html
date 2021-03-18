@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>RadioButton / Overview</h2>
+		<div class="sample-block">
+			<iui-radiogroup id="radiobutton-overview" resource-path="../../node_modules/integralui-web/icons" theme="Office">
+				<iui-radiobutton checked="true">Radio 1</iui-radiobutton>
+				<iui-radiobutton>Radio 2</iui-radiobutton>
+				<iui-radiobutton>Radio 3</iui-radiobutton>
+			</iui-radiogroup>
+			<div class="feature-help">
+				<p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> RadioButton</strong> is a native Web Component that represents a radio button. It works in relation with <strong><span class="code-name">IntegralUI</span> RadioGroup</strong> for creating different sets of radio buttons. It is fully customizable via CSS.</p>
+				<p><span class="initial-space"></span>The following properties and events are supported:</p>
+				<ul class="feature-points">
+					<li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+					<li><span class="code-name">checked</span> - Specifies whether RadioButton is checked or not: true or false</li>
+					<li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+					<li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+					<li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+					<li><span class="code-name">name</span> - Uniquely identifies the component</li>
+					<li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+					<br/>
+					<li><span class="code-name">checkedChanged</span> - Occurs when checked property changes</li>
+				</ul>
+				<br/>
+				<p><span class="initial-space"></span>RadioGroup has similar properties and events. In this example, whenever RadioButton is checked, the <span class="code-name">buttonChecked</span> event is fired.</p>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+	<script type="module">
+		const ctrl = document.querySelector('#radiobutton-overview');
+
+		ctrl.addEventListener("buttonChecked", (e) => onButtonChecked(e));
+
+		let onButtonChecked = function(e){
+			console.log("RadioButton with index: " + e.detail.index + " is checked");
+		}
+	</script>
+</html>

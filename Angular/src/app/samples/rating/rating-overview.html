@@ -1,0 +1,24 @@
+<h2>Rating / Overview</h2>
+<div class="sample-block">
+    <iui-rating id="rating-1" [max]="ctrlMaxValue" [resourcePath]="currentResourcePath" [value]="ctrlValue"></iui-rating><br/>
+    <iui-rating id="rating-2" [increment]="brickIncrementMode" [max]="ctrlMaxValue2" [resourcePath]="currentResourcePath" [stepSize]="ctrlStepSize2" [value]="ctrlValue2"></iui-rating>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Rating</strong> is a native Web Component that visualizes ratings. You can change the rating by left-click and drag the mouse cursor, by clicking the left mouse button or using touch. In addition, you can customize its appearance using different images via CSS.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">division</span> - Specifies a number by which rating values are divided, used to display large values within small component size</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">increment</span> - Determines how the rating value changes: Free, Partial or Full</li>
+            <li><span class="code-name">max</span> - Specifies the maximum value</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">stepSize</span> - Determines the width of one rating image in pixels</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <li><span class="code-name">value</span> - Holds the current rating value</li>
+            <br/>
+            <li><span class="code-name">valueChanged</span> - Occurs when value property changes</li>
+        </ul>
+        <p><span class="initial-space"></span>In this example, the Rating component with stars uses Free increment mode, which allows smooth changes to the rating value (in decimals). As comparision, the Rating component with bricks uses Full increment mode, and the rating changes in integer values.</p>
+    </div>
+</div>

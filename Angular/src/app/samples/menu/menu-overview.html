@@ -1,0 +1,16 @@
+<h2>Menu / Overview</h2>
+<div class="sample-block">
+    <iui-menu #menu id="menu-overview"
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [items]="items"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (menuClick)="menuItemClick($event)"
+    >
+    </iui-menu>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Menu</strong> is a native Web Component that allows you to create static and dynamic menus. You can populate the menu directly in your HTML or using a custom data source, either locally or remotely.</p>
+        <p><span class="initial-space"></span>In this example, we have a menu with four root menu items. Each menu has an icon, label and expand mark if there are child items. Whenever mouse cursor hovers over a menu item, an animation will start showing a window with child items. By clicking on menu item, a message box will appear, stating the menu item that was clicked.</p>
+    </div>
+</div>

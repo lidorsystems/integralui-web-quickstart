@@ -1,0 +1,30 @@
+<h2 class="feature-title">TreeGrid / Built-in Editors</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-builtin-editors"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [rowHeight]="22"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (valueChanging)="beforeValueChange($event)"
+    > 
+    </iui-treegrid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of a Grid cells with editors: DropDown List, Numeric and Date. These editors are fully customizable via CSS and other property settings.</p>
+        <p><span class="initial-space"></span>In this demo, you can change the Ship Mode, Quantity and Ship Date. For demonstration purposes, the second row with customer 'Barry French' only accepts a Ship Mode set to 'Express Air'. If a different value is chosen from the dropdown list, the change is cancelled.</p>
+        <p><span class="initial-space"></span>To enable the editors, in <strong>column object</strong> you need to set the following fields:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">editorType</span> - determines the editor type in use, there are different editor types to choose from based on <span class="code-object">IntegralUIEditorType</span> enumeration</li>
+            <li><span class="code-name">editorSettings</span> - specifies different editor settings, depends on the editor type</li>
+        </ul>
+        <p><span class="initial-space"></span>When editor is set in this way, all cells that belong to specified column will display the chosen editor. You can modify the editor visibility in the cell object using the editorSettings field. In addition, you can also set whether the editor is enabled or disabled. The <strong>cell object</strong> has the following editorSettings fields:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">enabled</span> - determines whether the editor is enabled or disabled, by default is set to true</li>
+            <li><span class="code-name">visible</span> - determines whether the editor is visible (on Hover, Click or Both) or hidden, by default is set to <span class="code-object">IntegralUIVisibility</span>.Hover</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+.ppo-ovw-panel {
+    background: white;
+    border: thin solid gray;
+    display: inline-block;
+    width: 400px;
+    height: 250px;
+    vertical-align: top;
+}
+.ppo-ovw-panel span {
+    color: #808080;
+    cursor: default;
+    display: block;
+    margin: 120px auto;
+    text-align: center;
+}
+.ppo-ovw-feature-panel {
+    display: inline-block;
+    padding-left: 20px;
+    width: 350px;
+    vertical-align: top;
+}
+.ppo-ovw-feature-panel label {
+    display: inline-block;
+    text-align: center;
+    width: 200px;
+}
+.ppo-ovw-feature-panel span {
+    display: inline-block;
+    margin-right: 5px;
+    text-align: right;
+    width: 120px;
+}
+.ppo-ovw-feature-panel input {
+    margin: 7px 3px;
+    width: 50px;
+}
+.ppo-ovw-feature-panel select {
+    padding: 2px 0;
+    width: 100px;
+}
