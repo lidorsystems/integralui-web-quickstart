@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - PivotGrid / Label Filters</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            [id="pivotgrid-label-filter"] {
+                --pivotgrid-display: inline-block;
+                --pivotgrid-width: calc(100% - 280px);
+            }
+
+            .sbp-pgrd-lbl-flt {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 250px;
+            }
+            .sbp-pgrd-lbl-flt label {
+                display: block;
+                margin: 10px 0 5px 0;
+            }
+            .sbp-pgrd-lbl-flt label:first-of-type {
+                margin-top: 0;
+            }
+            .sbp-pgrd-lbl-flt input {
+                border: thin solid #d9d9d9;
+                padding: 5px;
+                width: calc(100% - 13px);
+            }
+            .sbp-pgrd-lbl-flt iui-button {
+                --button-display: block;
+                --button-margin: 20px 0 0 0;
+            }
+		</style>
+	</head>
+	<body ng-app="appModule" ng-controller="appCtrl">
+		<h2>PivotGrid / Label Filters</h2>
+        <div class="sample-block-pgrd-lbl-fltr">
+            <iui-pivotgrid id="pivotgrid-label-filter"
+                allow-animation="true"
+                ng-prop-columns="columns"
+                ng-prop-rows="rows"
+                ng-prop-row_template="currentRowCellTemplate"
+                ng-prop-size="ctrlSize"
+                ng-prop-values="values"
+                resource-path="../../node_modules/integralui-web/icons"
+                theme="Office"
+            > 
+            </iui-pivotgrid>
+            <div class="sbp-pgrd-lbl-flt">
+                <label>Field</label>
+                <iui-select id="select-field"
+                    allow-animation="true"
+                    ng-prop-items="fields"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                    ng-on-selection_changed="fieldChanged($event)"
+                > 
+                </iui-select>
+                <label>Condition</label>
+                <iui-select id="select-condition"
+                    allow-animation="true"
+                    ng-prop-items="conditions"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                    ng-on-selection_changed="conditionChanged($event)"
+                > 
+                </iui-select>
+                <label>Value</label>
+                <input id="filter-value" type="text" />
+                <iui-button id="apply" allow-animation="true" theme="Office" ng-on-click="applyFilter()">Apply</iui-button>
+            </div>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In this sample you can filter the grid data by specified field using a string filtering conditions. You can choose one of available options:</p>
+            <ul class="feature-points">
+                <li><span class="code-object">begins with</span> - data is filtered so that field have value that begins with specified label</li>
+                <li><span class="code-object">contains</span> - data is filtered so that field have value that contains the specified label</li>
+                <li><span class="code-object">ends with</span> - data is filtered so that field have value that ends with specified label</li>
+                <li><span class="code-object">equals</span> - data is filtered so that field have value that equals with specified label</li>
+                <li><span class="code-object">does not begin with</span> - data is filtered so that field have value that does not begin with specified label</li>
+                <li><span class="code-object">does not contain</span> - data is filtered so that field have value that does not contain the specified label</li>
+                <li><span class="code-object">does not end with</span> - data is filtered so that field have value that does not end with specified label</li>
+                <li><span class="code-object">does not equal</span> - data is filtered so that field have value that does not equal with specified label</li>
+            </ul>
+            <p><span class="initial-space"></span>In this sample, all conditions are not case sensitive. This can be set in code, by specifying filtering conditions.</p>
+        </div>
+	</body>
+    <script type="text/javascript" src="../../angular.min.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.pivotgrid.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module">
+		import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+        angular
+           .module("appModule", [])
+           .controller("appCtrl", ["$scope", "$timeout", function($scope, $timeout){
+
+                //
+                // Grid settings
+                //
+
+                const grid = document.querySelector('#pivotgrid-label-filter');
+
+                $scope.columns = [
+                    { name: 'Country', expanded: true, width: 150 },
+                    { 
+                        name: "Year", 
+                        contentAlignment: 'right', 
+                        footerAlignment: 'right', 
+                        format: {
+                            options: { 
+                                style: 'decimal'
+                            }
+                        },
+                        headerAlignment: 'center', 
+                        sorting: 'Ascending',
+                        width: 110
+                    }
+                ];
+
+                grid.footerHeight = 22;
+                grid.rowHeight = 22;
+
+                $scope.rows = [
+                    { name: 'Category', width: 175 }
+                ];
+
+                $scope.ctrlSize = { height: 500 }
+
+                $scope.values = [
+                    { 
+                        name: "Quantity", 
+                        contentAlignment: 'right', 
+                        footerAlignment: 'right', 
+                        format: {
+                            options: { 
+                                style: 'decimal'
+                            }
+                        },
+                        formula: "SUM",
+                        headerAlignment: 'center'
+                    }
+                ];
+
+                //
+                // Panel settings
+                //
+
+                const ctrlFields = document.querySelector('#select-field');
+                $scope.fields = [
+                    { text: 'Category' },
+                    { text: 'Country' }
+                ];
+
+                const ctrlConditions = document.querySelector('#select-condition');
+                $scope.conditions = [
+                    { text: 'none' },
+                    { text: 'begins with' },
+                    { text: 'contains' },
+                    { text: 'ends with' },
+                    { text: 'equals' },
+                    { text: 'does not begin with' },
+                    { text: 'does not contain' },
+                    { text: 'does not end with' },
+                    { text: 'does not equal' }
+                ];
+
+                let currentFilters = [];
+                let filterValues = {
+                    Category: { condition: null, value: '' },
+                    Country: { condition: null, value: '' }
+                }
+        
+                const ctrlInputValue = document.querySelector('#filter-value');
+                ctrlInputValue.value = '';
+                
+                // General -------------------------------------------------------------------------------
+
+                let getOperation = function(option){
+                    let index = $scope.conditions.indexOf(option);
+
+                    switch (index){
+                        case 1: //begins with
+                            return '->';
+
+                        case 2: //contains
+                            return '[]';
+
+                        case 3: //ends with
+                            return '<-';
+
+                        case 4: //equals
+                            return '=';
+
+                        case 5: //does not begin with
+                            return '->';
+
+                        case 6: //does not contain
+                            return '[]';
+
+                        case 7: //does not end with
+                            return '<-';
+
+                        case 8: //does not equal
+                            return '!=';
+                    }
+
+                    return '';
+                }
+
+                // Events --------------------------------------------------------------------------------
+
+                $scope.applyFilter = function(){
+                    if (ctrlFields.selectedItem){
+                        let currentOperation = getOperation(ctrlConditions.selectedItem);
+                        let filtered = currentFilters.filter(obj => obj.name === ctrlFields.selectedItem.text);
+
+                        if (currentOperation !== '' && ctrlInputValue.value !== ''){
+                            if (filtered.length > 0){
+                                filtered[0].conditions.value = ctrlInputValue.value;
+                                filtered[0].conditions.operation = currentOperation;
+                                filtered[0].conditions.negative = $scope.conditions.indexOf(ctrlConditions.selectedItem) > 4 ? true : false;
+                            }
+                            else 
+                                currentFilters.push({ 
+                                    name: ctrlFields.selectedItem.text,
+                                    caseSensitive: false,
+                                    conditions: { value: ctrlInputValue.value, operation: currentOperation, negative: false }
+                                });
+                        }
+                        else if (filtered.length > 0)
+                            currentFilters.splice(grid.filters.indexOf(filtered[0]), 1);
+
+                        grid.filters = currentFilters;
+                    }
+                }
+
+                $scope.conditionChanged = function(e){
+                    if (e.detail.item && ctrlFields.selectedItem)
+                        filterValues[ctrlFields.selectedItem.text].condition = e.detail.item;
+                }
+
+                $scope.fieldChanged = function(e){
+                    if (e.detail.item){
+                        ctrlConditions.selectedItem = filterValues[e.detail.item.text].condition;
+                        ctrlInputValue.value = filterValues[e.detail.item.text].value;
+                    }
+                }
+
+                $scope.valueChanged = function(e){
+                    if (ctrlFields.selectedItem)
+                        filterValues[ctrlFields.selectedItem.text].value = e.target.value;
+                }
+        
+                // Templates -----------------------------------------------------------------------------
+
+                //
+                // Currently when using templates, the LitElement binding syntax is required
+                // for properties, methods and events
+                //
+                $scope.currentRowCellTemplate = (row, cell) => { 
+                    return cell.value === 0 ? html`` : null;
+                }
+
+                // Initialization ------------------------------------------------------------------------
+
+                fetch("pivotgrid-data.json") 
+                    .then(response => response.json()) 
+                    .then(data => {
+                        // Suspend the grid layout from updates, to increase performance
+                        grid.suspendLayout();
+
+                        // Load data into the grid
+                        grid.data = data;
+
+                        // Resume and update the grid layout
+                        grid.resumeLayout();
+                    });
+        }]);
+	</script>
+</html>

@@ -1,0 +1,66 @@
+<h2 class="feature-title">PivotGrid / Value Filters</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-pgrd-val-fltr">
+        <iui-pivotgrid #grid id="pivotgrid-value-filter"
+            [allowAnimation]="true"
+            [columns]="columns"
+            [data]="gridData"
+            [filters]="filters"
+            [footerHeight]="22"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="22"
+            [rows]="rows"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            [values]="values"
+        > 
+        </iui-pivotgrid>
+        <div class="sbp-pgrd-val-flt">
+            <label>Field</label>
+            <iui-select
+                [allowAnimation]="true"
+                [items]="fields"
+                [resourcePath]="currentResourcePath"
+                [selectedItem]="currentField"
+                [theme]="currentTheme"
+                (selectionChanged)="fieldChanged($event)"
+            > 
+            </iui-select>
+            <label>Measure</label>
+            <iui-select
+                [allowAnimation]="true"
+                [items]="measures"
+                [resourcePath]="currentResourcePath"
+                [selectedItem]="currentMeasure"
+                [theme]="currentTheme"
+                (selectionChanged)="measureChanged($event)"
+            > 
+            </iui-select>
+            <label>Condition</label>
+            <iui-select
+                [allowAnimation]="true"
+                [items]="conditions"
+                [resourcePath]="currentResourcePath"
+                [selectedItem]="currentCondition"
+                [theme]="currentTheme"
+                (selectionChanged)="conditionChanged($event)"
+            > 
+            </iui-select>
+            <label>Value</label>
+            <input type="text" [value]="currentValue" (change)="valueChanged($event)" />
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="applyFilter()">Apply</iui-button>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this sample you can filter the grid data by specified field using a numeric filtering conditions. You can choose the data value that you want to filter with one of available options:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">equals</span> - data is filtered so that field with data value equals the specified value</li>
+            <li><span class="code-object">greater than</span> - data is filtered so that field with data value is greater than specified value</li>
+            <li><span class="code-object">greater than or equal to</span> - data is filtered so that field with data value is greater than or equal to specified value</li>
+            <li><span class="code-object">less than</span> - data is filtered so that field with data value is less than specified value</li>
+            <li><span class="code-object">less than or equal to</span> - data is filtered so that field with data value is less than or equal to specified value</li>
+            <li><span class="code-object">does not equal</span> - data is filtered so that field with data value does not equal to specified value</li>
+        </ul>
+        <p><span class="initial-space"></span>All set conditions are preserved. To reset a condition, select a field, the measured value and then change the condition to none.</p>
+    </div>
+</div>

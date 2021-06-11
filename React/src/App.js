@@ -39,6 +39,14 @@ import ListViewOverview from './samples/listview/listview-overview.js';
 import MenuOverview from './samples/menu/menu-overview.js';
 import NumericOverview from './samples/numeric/numeric-overview.js';
 import PaginatorOverview from './samples/paginator/paginator-overview.js';
+
+import PivotGridOverview from './samples/pivotgrid/pivotgrid-overview.js';
+import PivotGridExport from './samples/pivotgrid/pivotgrid-export.js';
+import PivotGridInclusiveFilters from './samples/pivotgrid/pivotgrid-inclusive-filters.js';
+import PivotGridLabelFilters from './samples/pivotgrid/pivotgrid-label-filters.js';
+import PivotGridSorting from './samples/pivotgrid/pivotgrid-sorting.js';
+import PivotGridValueFilters from './samples/pivotgrid/pivotgrid-value-filters.js';
+
 import PopOverOverview from './samples/popover/popover-overview.js';
 import ProgressBarOverview from './samples/progressbar/progressbar-overview.js';
 import RadioButtonOverview from './samples/radiobutton/radiobutton-overview.js';
@@ -136,6 +144,18 @@ class App extends Component {
                 { text: 'Menu', link: '/menu' },
                 { text: 'Numeric', link: '/numeric' },
                 { text: 'Paginator', link: '/paginator' },
+                { 
+                    id: 'prgd',
+                    text: 'PivotGrid', 
+                    items: [
+                        { id: 'prgd-ovw', pid: 'prgd', text: 'Overview', link: '/pivotgrid/overview' },
+                        { id: 'prgd-expt', pid: 'prgd', text: 'Export', link: '/pivotgrid/export' },
+                        { id: 'prgd-incl-filters', pid: 'prgd', text: 'Inclusive Filters', link: '/pivotgrid/inclusive-filters' },
+                        { id: 'prgd-lbl-filters', pid: 'prgd', text: 'Label Filters', link: '/pivotgrid/label-filters' },
+                        { id: 'prgd-sort', pid: 'prgd', text: 'Sorting', link: '/pivotgrid/sorting' },
+                        { id: 'prgd-val-filters', pid: 'prgd', text: 'Value Filters', link: '/pivotgrid/value-filters' }
+                    ]
+                },
                 { text: 'PopOver', link: '/popover' },
                 { text: 'ProgressBar', link: '/progressbar' },
                 { text: 'RadioButton', link: '/radiobutton' },
@@ -306,6 +326,12 @@ class App extends Component {
                             <Route path="/menu"><MenuOverview /></Route>
                             <Route path="/numeric"><NumericOverview /></Route>
                             <Route path="/paginator"><PaginatorOverview /></Route>
+                            <Route path="/pivotgrid/overview"><PivotGridOverview /></Route>
+                            <Route path="/pivotgrid/export"><PivotGridExport /></Route>
+                            <Route path="/pivotgrid/inclusive-filters"><PivotGridInclusiveFilters /></Route>
+                            <Route path="/pivotgrid/label-filters"><PivotGridLabelFilters /></Route>
+                            <Route path="/pivotgrid/sorting"><PivotGridSorting /></Route>
+                            <Route path="/pivotgrid/value-filters"><PivotGridValueFilters /></Route>
                             <Route path="/popover"><PopOverOverview /></Route>
                             <Route path="/progressbar"><ProgressBarOverview /></Route>
                             <Route path="/radiobutton"><RadioButtonOverview /></Route>

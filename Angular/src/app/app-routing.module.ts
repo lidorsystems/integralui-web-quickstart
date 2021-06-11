@@ -38,6 +38,14 @@ import { ListViewOverviewSample } from './samples/listview/listview-overview';
 import { MenuOverviewSample } from './samples/menu/menu-overview';
 import { NumericOverviewSample } from './samples/numeric/numeric-overview';
 import { PaginatorOverviewSample } from './samples/paginator/paginator-overview';
+
+import { PivotGridOverview } from './samples/pivotgrid/pivotgrid-overview';
+import { PivotGridExport } from './samples/pivotgrid/pivotgrid-export.js';
+import { PivotGridInclusiveFilters } from './samples/pivotgrid/pivotgrid-inclusive-filters.js';
+import { PivotGridLabelFilters } from './samples/pivotgrid/pivotgrid-label-filters.js';
+import { PivotGridSorting } from './samples/pivotgrid/pivotgrid-sorting.js';
+import { PivotGridValueFilters } from './samples/pivotgrid/pivotgrid-value-filters.js';
+
 import { PopOverOverviewSample } from './samples/popover/popover-overview';
 import { ProgressBarOverviewSample } from './samples/progressbar/progressbar-overview';
 import { RadioButtonOverviewSample } from './samples/radiobutton/radiobutton-overview';
@@ -116,6 +124,12 @@ import { TreeViewCheckBoxesSample } from './samples/treeview/utility/treeview-ch
                     { path: 'menu-overview', component: MenuOverviewSample },
                     { path: 'numeric-overview', component: NumericOverviewSample },
                     { path: 'paginator-overview', component: PaginatorOverviewSample },
+                    { path: 'pivotgrid/overview', component: PivotGridOverview },
+                    { path: 'pivotgrid/export', component: PivotGridExport },
+                    { path: 'pivotgrid/inclusive-filters', component: PivotGridInclusiveFilters },
+                    { path: 'pivotgrid/label-filters', component: PivotGridLabelFilters },
+                    { path: 'pivotgrid/sorting', component: PivotGridSorting },
+                    { path: 'pivotgrid/value-filters', component: PivotGridValueFilters },
                     { path: 'popover-overview', component: PopOverOverviewSample },
                     { path: 'progressbar-overview', component: ProgressBarOverviewSample },
                     { path: 'radiobutton-overview', component: RadioButtonOverviewSample },
@@ -187,6 +201,12 @@ import { TreeViewCheckBoxesSample } from './samples/treeview/utility/treeview-ch
         MenuOverviewSample,
         NumericOverviewSample,
         PaginatorOverviewSample,
+        PivotGridOverview,
+        PivotGridExport,
+        PivotGridInclusiveFilters,
+        PivotGridLabelFilters,
+        PivotGridSorting,
+        PivotGridValueFilters,
         PopOverOverviewSample,
         ProgressBarOverviewSample,
         RadioButtonOverviewSample,

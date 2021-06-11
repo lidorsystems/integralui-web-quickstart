@@ -1,0 +1,31 @@
+<h2 class="feature-title">PivotGrid / Export</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-grd-expt">
+        <iui-pivotgrid #grid id="pivotgrid-export"
+            [allowAnimation]="true"
+            [columns]="columns"
+            [data]="gridData"
+            [footerHeight]="22"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="22"
+            [rows]="rows"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            [values]="values"
+        > 
+        </iui-pivotgrid>
+        <div class="sbp-pgrd-expt" align="center">
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="exportCSV()">Export as CSV</iui-button>
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="exportJSON()">Export as JSON</iui-button>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This example presents how to export the PivotGrid data to Excel CSV file or a JSON formatted string. When exporting to JSON, the final result is shown in console window.</p>
+        <p><span class="initial-space"></span>To export data, the following methods are used:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">exportToCSV()</span> - exports data to Excel CSV format</li>
+            <li><span class="code-name">exportToJSON(columnFields, rowFields, spacing)</span> - exports data to a JSON formatted string</li>
+        </ul>
+        <p><span class="initial-space"></span>When exporting to a CSV file, only display values are exported for each column cell. On the other hand, when exporting to JSON, all or only specified fields are exported.</p> 
+    </div>
+</div>

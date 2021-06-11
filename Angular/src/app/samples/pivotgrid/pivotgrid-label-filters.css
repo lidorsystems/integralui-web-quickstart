@@ -1,0 +1,27 @@
+[id="pivotgrid-label-filter"] {
+    --pivotgrid-display: inline-block;
+    --pivotgrid-width: calc(100% - 280px);
+}
+
+.sbp-pgrd-lbl-flt {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 250px;
+}
+.sbp-pgrd-lbl-flt label {
+    display: block;
+    margin: 10px 0 5px 0;
+}
+.sbp-pgrd-lbl-flt label:first-of-type {
+    margin-top: 0;
+}
+.sbp-pgrd-lbl-flt input {
+    border: thin solid #d9d9d9;
+    padding: 5px;
+    width: calc(100% - 13px);
+}
+.sbp-pgrd-lbl-flt iui-button {
+    --button-display: block;
+    --button-margin: 20px 0 0 0;
+}

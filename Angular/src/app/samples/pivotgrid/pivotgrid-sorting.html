@@ -1,0 +1,47 @@
+<h2 class="feature-title">PivotGrid / Sorting</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-pgrd-sort">
+        <iui-pivotgrid #grid id="pivotgrid-sorting"
+            [allowAnimation]="true"
+            [columns]="columns"
+            [data]="gridData"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="22"
+            [rows]="rows"
+            [selectedColumn]="currentSelectedColumn"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            [values]="values"
+            (columnClick)="onColumnClick($event)"
+        > 
+        </iui-pivotgrid>
+        <div class="sbp-pgrd-sort">
+            <label>Field</label>
+            <iui-select
+                [allowAnimation]="true"
+                [items]="fields"
+                [resourcePath]="currentResourcePath"
+                [selectedItem]="currentField"
+                [theme]="currentTheme"
+                (selectionChanged)="fieldChanged($event)"
+            > 
+            </iui-select>
+            <label>Sort order</label>
+            <iui-select
+                [allowAnimation]="true"
+                [items]="sortList"
+                [resourcePath]="currentResourcePath"
+                [selectedItem]="currentSorting"
+                [theme]="currentTheme"
+                (selectionChanged)="sortingChanged($event)"
+            > 
+            </iui-select>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample demonstrates sorting in PivotGrid per field or column.</p>
+        <p><span class="initial-space"></span>You can sort the grid data per each field in ascending or descending order, separately. In addition, when column is clicked the grid data is sorted per column values.</p>
+        <p><span class="initial-space"></span>PivotGrid includes built-in sorting methods for string and numeric values, but you can also add your own custom sort functionality.</p>
+    </div>
+</div>

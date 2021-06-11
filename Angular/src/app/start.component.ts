@@ -80,6 +80,18 @@ export class StartComponent {
             { text: 'Menu', link: '/menu-overview' },
             { text: 'Numeric', link: '/numeric-overview' },
             { text: 'Paginator', link: '/paginator-overview' },
+            { 
+                id: 'prgd',
+                text: 'PivotGrid', 
+                items: [
+                    { id: 'prgd-ovw', pid: 'prgd', text: 'Overview', link: '/pivotgrid/overview' },
+                    { id: 'prgd-expt', pid: 'prgd', text: 'Export', link: '/pivotgrid/export' },
+                    { id: 'prgd-incl-filters', pid: 'prgd', text: 'Inclusive Filters', link: '/pivotgrid/inclusive-filters' },
+                    { id: 'prgd-lbl-filters', pid: 'prgd', text: 'Label Filters', link: '/pivotgrid/label-filters' },
+                    { id: 'prgd-sort', pid: 'prgd', text: 'Sorting', link: '/pivotgrid/sorting' },
+                    { id: 'prgd-val-filters', pid: 'prgd', text: 'Value Filters', link: '/pivotgrid/value-filters' }
+                ]
+            },
             { text: 'PopOver', link: '/popover-overview' },
             { text: 'ProgressBar', link: '/progressbar-overview' },
             { text: 'RadioButton', link: '/radiobutton-overview' },

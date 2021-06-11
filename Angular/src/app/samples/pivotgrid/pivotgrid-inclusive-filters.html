@@ -1,0 +1,45 @@
+<h2 class="feature-title">PivotGrid / Inclusive Filters</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-pgrd-incl-fltr">
+        <iui-pivotgrid #grid id="pivotgrid-inclusive-filter"
+            [allowAnimation]="true"
+            [columns]="columns"
+            [data]="gridData"
+            [filters]="filters"
+            [footerHeight]="22"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="22"
+            [rows]="rows"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            [values]="values"
+        > 
+        </iui-pivotgrid>
+        <div class="sbp-pgrd-incl-flt">
+            <label>Field</label>
+            <iui-select
+                [allowAnimation]="true"
+                [items]="fields"
+                [resourcePath]="currentResourcePath"
+                [selectedItem]="currentField"
+                [theme]="currentTheme"
+                (selectionChanged)="fieldChanged($event)"
+            > 
+            </iui-select>
+            <label>Values</label>
+            <iui-listbox #listbox
+                [allowAnimation]="true"
+                [customStyle]="customStyle"
+                [items]="items"
+                [resourcePath]="currentResourcePath"
+                [size]="listSize"
+                [theme]="currentTheme"
+            > 
+            </iui-listbox>
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="applyFilter()">Apply</iui-button>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this sample you can filter the grid data per column and row fields. The filter includes or excludes all specified values, which you can select from control panel on the right side.</p>
+    </div>
+</div>

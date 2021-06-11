@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - PivotGrid / Overview</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>PivotGrid / Overview</h2>
+		<div class="sample-block">
+            <iui-pivotgrid id="pivotgrid-overview"
+                allow-animation="true"
+				resource-path="../../node_modules/integralui-web/icons"
+				theme="Office"
+            > 
+            </iui-pivotgrid>
+			<div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> PivotGrid</strong> is a native Web Component that summarizes the data of a more extensive table. You can load data on demand during run-time from local or remote data sources, and summarize it using built-in or custom aggregation functions. Custom Filtering and Sorting is also included.</p>
+                <p><span class="initial-space"></span>In addition, some of columns use data formatting, where numbers appear with commas or with preset currency. All data formatting comes with standard settings, which you can easily change.</p>
+            </div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.pivotgrid.js"></script>
+	<script type="module">
+		import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../node_modules/integralui-web/external/class-map.js';
+        import { styleMap } from '../../node_modules/integralui-web/external/style-map.js';
+
+        import IntegralUICommonService from '../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiPivotGridOverviewStyle } from './pivotgrid-overview.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#pivotgrid-overview');
+
+		grid.columns = [
+            { name: "Year", headerAlignment: 'center', sorting: "Ascending" }
+		];
+
+		grid.customStyle = iuiPivotGridOverviewStyle;
+
+        grid.footerHeight = 22;
+        grid.rowHeight = 22;
+
+        grid.rows = [
+            { name: 'Country', expanded: true, width: 150 },
+            { name: 'Category' }
+        ];
+
+		grid.size = { height: 500 }
+
+        grid.values = [
+            { 
+                name: "Quantity", 
+                contentAlignment: 'right',
+                footerAlignment: 'right', 
+                format: {
+                    options: { 
+                        style: 'decimal'
+                    }
+                },
+                formula: "SUM", 
+                headerAlignment: 'center'
+            }, 
+            { 
+                name: "Cost", 
+                contentAlignment: 'right', 
+                footerAlignment: 'right', 
+                format: {
+                    options: { 
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                },
+                formula: "SUM", 
+                headerAlignment: 'center', 
+                width: 120
+            }
+        ];
+        
+        // Templates -----------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+        let currentRowCellTemplate = (row, cell) => { 
+            if (cell.value === 0){
+                return html``;
+            }
+            else if ((cell.value < 200) || (cell.value > 1000 && cell.value < 9999)){
+                let textColor = cell.value < 200 
+                    ? '#db4c39'
+                    : (cell.value > 1000 && cell.value < 9999 ? '#326de3' : 'black');
+
+                return html`<div>
+                        <span class=${classMap(getIndicatorClass(cell))}></span>
+                        <span class="iui-editor-label" style=${styleMap({ color: textColor })}>${getCellDisplayValue(cell)}</span>
+                    </div>`;
+            }
+
+            return null;
+        }
+
+        let getCellDisplayValue = function(cell){
+            let currentFormat = null;
+            let filtered = grid.values.filter(obj => obj.name === cell.colName);
+            
+            if (filtered.length > 0)
+                currentFormat = filtered[0].format;
+
+            return _commonService.convertValue(cell.value, currentFormat);
+        }
+
+        let getIndicatorClass = function(cell){
+            let classList = { 'indicator-icons': true }
+
+            if (cell.value < 100)
+                classList['indicator-down'] = true;
+            else if (cell.value > 1000 && cell.value < 9999)
+                classList['indicator-up'] = true;
+
+            return classList;
+        }
+
+		grid.rowTemplate = currentRowCellTemplate;
+
+        // Initialize ----------------------------------------------------------------------------
+
+		fetch("pivotgrid-data.json") 
+			.then(response => response.json()) 
+			.then(data => {
+                // Suspend the grid layout from updates, to increase performance
+                grid.suspendLayout();
+
+                // Load data into the grid
+                grid.data = data;
+
+                // Resume and update the grid layout
+                grid.resumeLayout();
+            });
+
+	</script>
+</html>

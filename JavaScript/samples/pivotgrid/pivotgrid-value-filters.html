@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - PivotGrid / Value Filters</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            [id="pivotgrid-value-filter"] {
+                --pivotgrid-display: inline-block;
+                --pivotgrid-width: calc(100% - 280px);
+            }
+
+            .sbp-pgrd-val-flt {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 250px;
+            }
+            .sbp-pgrd-val-flt label {
+                display: block;
+                margin: 10px 0 5px 0;
+            }
+            .sbp-pgrd-val-flt label:first-of-type {
+                margin-top: 0;
+            }
+            .sbp-pgrd-val-flt input {
+                border: thin solid #d9d9d9;
+                padding: 5px;
+                width: calc(100% - 13px);
+            }
+            .sbp-pgrd-val-flt iui-button {
+                --button-display: block;
+                --button-margin: 20px 0 0 0;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>PivotGrid / Value Filters</h2>
+        <div class="sample-block-pgrd-val-fltr">
+            <iui-pivotgrid id="pivotgrid-value-filter"
+                allow-animation="true"
+                resource-path="../../node_modules/integralui-web/icons"
+                theme="Office"
+            > 
+            </iui-pivotgrid>
+            <div class="sbp-pgrd-val-flt">
+                <label>Field</label>
+                <iui-select id="select-field"
+                    allow-animation="true"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                > 
+                </iui-select>
+                <label>Measure</label>
+                <iui-select id="select-measure"
+                    allow-animation="true"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                > 
+                </iui-select>
+                <label>Condition</label>
+                <iui-select id="select-condition"
+                    allow-animation="true"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    theme="Office"
+                >
+                </iui-select>
+                <label>Value</label>
+                <input id="filter-value" type="number" />
+                <iui-button id="apply" allow-animation="true" theme="Office">Apply</iui-button>
+            </div>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In this sample you can filter the grid data by specified field using a numeric filtering conditions. You can choose the data value that you want to filter with one of available options:</p>
+            <ul class="feature-points">
+                <li><span class="code-object">equals</span> - data is filtered so that field with data value equals the specified value</li>
+                <li><span class="code-object">greater than</span> - data is filtered so that field with data value is greater than specified value</li>
+                <li><span class="code-object">greater than or equal to</span> - data is filtered so that field with data value is greater than or equal to specified value</li>
+                <li><span class="code-object">less than</span> - data is filtered so that field with data value is less than specified value</li>
+                <li><span class="code-object">less than or equal to</span> - data is filtered so that field with data value is less than or equal to specified value</li>
+                <li><span class="code-object">does not equal</span> - data is filtered so that field with data value does not equal to specified value</li>
+            </ul>
+            <p><span class="initial-space"></span>All set conditions are preserved. To reset a condition, select a field, the measured value and then change the condition to none.</p>
+        </div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.pivotgrid.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module">
+		import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#pivotgrid-value-filter');
+
+		grid.columns = [
+            { 
+                name: "Year", 
+                contentAlignment: 'right', 
+                footerAlignment: 'right', 
+                format: {
+                    options: { 
+                        style: 'decimal'
+                    }
+                },
+                headerAlignment: 'center', 
+                sorting: 'Ascending',
+                width: 110
+            }
+		];
+
+        grid.footerHeight = 22;
+        grid.rowHeight = 22;
+
+        grid.rows = [
+            { name: 'Country', expanded: true, width: 175 },
+            { name: 'Category' }
+        ];
+
+		grid.size = { height: 500 }
+
+        grid.values = [
+            { 
+                name: "Quantity", 
+                contentAlignment: 'right', 
+                footerAlignment: 'right', 
+                format: {
+                    options: { 
+                        style: 'decimal'
+                    }
+                },
+                formula: "SUM",
+                headerAlignment: 'center'
+            },
+            { 
+                name: "Cost", 
+                contentAlignment: 'right', 
+                footerAlignment: 'right', 
+                format: {
+                    options: { 
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                },
+                formula: "SUM", 
+                headerAlignment: 'center', 
+                width: 120
+            }
+        ];
+
+        //
+		// Panel settings
+		//
+
+        const ctrlFields = document.querySelector('#select-field');
+        ctrlFields.items = [
+            { text: 'Category' },
+            { text: 'Country' }
+        ];
+        ctrlFields.addEventListener("selectionChanged", (e) => fieldChanged(e));
+
+        const ctrlMeasures = document.querySelector('#select-measure');
+        ctrlMeasures.items = [
+            { text: 'Quantity' },
+            { text: 'Cost' }
+        ];
+        ctrlMeasures.addEventListener("selectionChanged", (e) => measureChanged(e));
+
+        const ctrlConditions = document.querySelector('#select-condition');
+        ctrlConditions.items = [
+            { text: 'none' },
+            { text: 'equals' },
+            { text: 'greater than' },
+            { text: 'greater than or equal to' },
+            { text: 'less than' },
+            { text: 'less than or equal to' },
+            { text: 'does not equal' }
+        ];
+        ctrlConditions.addEventListener("selectionChanged", (e) => conditionChanged(e));
+
+        let currentFilters = [];
+        let filterValues = {
+            Category: {
+                Quantity: { condition: null, value: 0 },
+                Cost: { condition: null, value: 0 },
+            },
+            Country: {
+                Quantity: { condition: null, value: 0 },
+                Cost: { condition: null, value: 0 },
+            }
+        }
+   
+		const ctrlInputValue = document.querySelector('#filter-value');
+        ctrlInputValue.value = '';
+        ctrlInputValue.addEventListener("change", (e) => valueChanged(e));
+
+		const btnApply = document.querySelector('#apply');
+        btnApply.addEventListener("click", () => applyFilter());
+        
+        // General -------------------------------------------------------------------------------
+
+        let getOperation = function(option){
+            let index = ctrlConditions.items.indexOf(option);
+
+            switch (index){
+                case 1: //equals
+                    return '=';
+
+                case 2: //greater than
+                    return '>';
+
+                case 3: //greater than or equal to
+                    return '>=';
+
+                case 4: //less than
+                    return '<';
+
+                case 5: //less than or equal to
+                    return '<=';
+
+                case 6: //does not equal
+                    return '!=';
+            }
+
+            return '';
+        }
+
+        // Events --------------------------------------------------------------------------------
+
+        let applyFilter = function(){
+            if (ctrlFields.selectedItem && ctrlMeasures.selectedItem){
+                let currentOperation = getOperation(ctrlConditions.selectedItem);
+                let filtered = currentFilters.filter(obj => obj.name === ctrlFields.selectedItem.text && obj.measure ===  ctrlMeasures.selectedItem.text);
+
+                if (currentOperation !== ''){
+                    if (filtered.length > 0){
+                        filtered[0].conditions.value = ctrlInputValue.value;
+                        filtered[0].conditions.operation = currentOperation;
+                        filtered[0].conditions.negative = ctrlConditions.items.indexOf(ctrlConditions.selectedItem) > 5 ? true : false;
+                    }
+                    else 
+                        currentFilters.push({ 
+                            name: ctrlFields.selectedItem.text,
+                            measure: ctrlMeasures.selectedItem.text,
+                            caseSensitive: false,
+                            conditions: { value: ctrlInputValue.value, operation: currentOperation, negative: false }
+                        });
+                }
+                else if (filtered.length > 0)
+                    currentFilters.splice(currentFilters.indexOf(filtered[0]), 1);
+
+                grid.filters = currentFilters;
+            }
+        }
+
+        let conditionChanged = function(e){
+            if (e.detail.item && ctrlFields.selectedItem && ctrlMeasures.selectedItem)
+                filterValues[ctrlFields.selectedItem.text][ctrlMeasures.selectedItem.text].condition = e.detail.item;
+        }
+
+        let fieldChanged = function(e){
+            if (e.detail.item){
+                ctrlConditions.selectedItem = ctrlMeasures.selectedItem ? filterValues[e.detail.item.text][ctrlMeasures.selectedItem.text].condition : null;
+                ctrlInputValue.value = ctrlMeasures.selectedItem ? filterValues[e.detail.item.text][ctrlMeasures.selectedItem.text].value : 0;
+            }
+        }
+
+        let measureChanged = function(e){
+            if (e.detail.item){
+                ctrlConditions.selectedItem = ctrlFields.selectedItem ? filterValues[ctrlFields.selectedItem.text][e.detail.item.text].condition : null;
+                ctrlInputValue.value = ctrlFields.selectedItem ? filterValues[ctrlFields.selectedItem.text][e.detail.item.text].value : 0;
+            }
+        }
+
+        let valueChanged = function(e){
+            if (ctrlFields.selectedItem)
+                filterValues[ctrlFields.selectedItem.text][ctrlMeasures.selectedItem.text].value = e.target.value;
+        }
+  
+        // Templates -----------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        let currentFooterTemplate = (column) => { 
+            return column.footerValue === 0 ? html`` : null;
+        }
+
+        let currentRowCellTemplate = (row, cell) => { 
+            return cell.value === 0 ? html`` : null;
+        }
+
+		grid.footerTemplate = currentFooterTemplate;
+		grid.rowTemplate = currentRowCellTemplate;
+
+        // Initialization ------------------------------------------------------------------------
+
+		fetch("pivotgrid-data.json") 
+			.then(response => response.json()) 
+			.then(data => {
+                // Suspend the grid layout from updates, to increase performance
+                grid.suspendLayout();
+
+                // Load data into the grid
+                grid.data = data;
+
+                // Resume and update the grid layout
+                grid.resumeLayout();
+            });
+
+	</script>
+</html>

@@ -1,0 +1,23 @@
+[id="pivotgrid-inclusive-filter"] {
+    --pivotgrid-display: inline-block;
+    --pivotgrid-width: calc(100% - 280px);
+}
+
+.sbp-pgrd-incl-flt {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 250px;
+}
+.sbp-pgrd-incl-flt label {
+    display: block;
+    margin: 10px 0 5px 0;
+}
+.sbp-pgrd-incl-flt label:first-of-type {
+    margin-top: 0;
+}
+
+.sbp-pgrd-incl-flt iui-button {
+    --button-display: block;
+    --button-margin: 7px 0 0 0;
+}
