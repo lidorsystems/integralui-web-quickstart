@@ -48,6 +48,18 @@ npm start
 
 ### AngularJS or Vanilla JavaScript
 
+First install the [IntegralUI Web](https://github.com/lidorsystems/integralui-web) package under root folder:
+
+```bash
+npm install https://github.com/lidorsystems/integralui-web.git
+```
+
+or directly from NPM
+
+```bash
+npm i integralui-web
+```
+
 In order to start the application you may need to run it on a local server. You can use the local server provided by Node.js, it is a simple HTTP server package. 
 
 To install:
