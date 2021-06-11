@@ -14,7 +14,7 @@ React - v16.13.1 and above
 
 ## Installation
 
-The IntegralUI Web components are already present in the application directory (src/integralui), you only need to install the React libraries. Open the nodejs command prompt, go to application directory and type: 
+Open the nodejs command prompt, go to application directory and type: 
 
 ```bash
 npm install
