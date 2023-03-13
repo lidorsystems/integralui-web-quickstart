@@ -1,0 +1,8 @@
+[id="listbox-1"] {
+    --listbox-float: left;
+    --listbox-margin: 0 20px 0 0;
+}
+[id="listview-1"] {
+    --listview-float: left;
+    --listview-margin: 0 20px 0 0;
+}

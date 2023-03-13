@@ -1,0 +1,21 @@
+<h2 class="feature-title">Grid / Cells with CheckBox</h2>
+<div class="feature-content" #application>
+    <div class="sample-block">
+        <iui-grid #grid id="grid-editors-checkbox"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="28"
+            [rows]="rows"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            (valueChanged)="cellValueChanged($event)"
+        ></iui-grid>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demo, the Grid has one column with check boxes. If checkbox in column header is clicked, all checkboxes will become checked or unchecked.</p>
+    </div>
+</div>

@@ -1,9 +1,9 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiSelectOverviewStyle = css`
     .cmb-ovw-icons
     {
-        background-image: url(assets/integralui-web/resources/icons-x24.png);
+        background-image: url(assets/resources/icons-x24.png);
         background-position: 0 0;
         background-repeat: no-repeat;
         display: inline-block;

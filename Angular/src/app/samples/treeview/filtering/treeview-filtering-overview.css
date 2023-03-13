@@ -1,0 +1,24 @@
+[id="treeview-dropdownfilter"]{
+    --dropdownfilter-display: inline-block;
+    --dropdownfilter-padding: 4px;
+    --dropdownfilter-vertical-align: top;
+
+    --dropdownfilter-operation-top: 6px;
+}
+
+.treeview-filtering-overview-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 170px;
+
+    --radio-button-display: block;
+    --radio-button-margin: 5px 0;
+}
+.treeview-filtering-overview-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.treeview-filtering-overview-panel label:first-of-type {
+    margin-top: 0;
+}

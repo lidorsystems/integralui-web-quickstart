@@ -1,0 +1,31 @@
+<h2>SideBar / Tab Alignment</h2>
+<div class="sample-block" id="sample-block-sidebar-alignment">
+    <iui-sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [parentId]="'sample-block-sidebar-alignment'"
+        [placement]="currentPlacement"
+        [resourcePath]="currentResourcePath"
+        [showHeader]="true"
+        [size]="ctrlSize"
+        [tabAlignment] = "currentTabAlignment"
+        [theme]="currentTheme" 
+    >
+        <iui-tab *ngFor="let tab of data" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdb-alg-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <iui-panel id="sample-block-sidebar-alignment-panel" [contentAlignment] = "{ vertical: 'middle' }">
+        <div class="sample-block-sidebar-control-panel">
+            <label>Alignment: </label>
+            <iui-radiogroup id="alignment" [resourcePath]="currentResourcePath" (buttonChecked)="onAlignmentChecked($event)">
+                <iui-radiobutton>TopLeft</iui-radiobutton>
+                <iui-radiobutton [checked]="true">Middle</iui-radiobutton>
+                <iui-radiobutton>BottomRight</iui-radiobutton>
+            </iui-radiogroup>
+        </div>
+    </iui-panel>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>This demo shows how you can align tabs to appear on top/left, middle or bottom/right side within the side bar. Example only shows tabs placed on right side, but it works on all other sides also.</p>
+</div>

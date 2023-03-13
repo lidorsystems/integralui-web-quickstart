@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-highlight"] {
+                --listitem-padding: 2px 0 2px 10px;
+                --listitem-border-width: 2px 2px 2px 4px;
+                --listitem-hovered-border-width: 2px 2px 2px 4px;
+                --listitem-selected-border-width: 2px 2px 2px 4px;
+
+                --listitem-content-transform: scale(1);
+                --listitem-content-hovered-transform: scale(1);
+           }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Highlight Items</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-highlight"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                show-groups="true" 
+                theme="Office"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, you can highlight items using a checkbox. Whenever item is checked, a vertical green line will appear in front of the item and the label appears in bold.</p>
+                <p><span class="initial-space"></span>For demonstration purposes, root items don't have a check box and you can't highlight them. You can choose other ways to highlight items, like changing their background color or applying a different style on demand.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import { iuiListBoxHighlightStyle } from './listbox-highlight.style.js';
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-highlight');
+
+        listbox.customStyle = iuiListBoxHighlightStyle;
+
+        listbox.groups = [
+            { name: "Common Controls", expanded: false },
+            { name: "Containers" },
+            { name: "Menus & Toolbars" },
+            { name: "Data", expanded: false },
+            { name: "Dialogs" },
+            { name: "Printing" },
+            { name: "IntegralUI" }
+        ];
+
+        listbox.items = [
+            { id: 11, text: "Button", group: "Common Controls" },
+            { id: 12, text: "CheckBox", group: "Common Controls" },
+            { id: 13, text: "ComboBox", group: "Common Controls" },
+            { id: 14, text: "DateTime Picker", group: "Common Controls" },
+            { id: 15, text: "Label", group: "Common Controls" },
+            { id: 16, text: "ProgressBar", group: "Common Controls" },
+            { id: 17, text: "TextBox", group: "Common Controls" },
+            { id: 21, text: "GroupBox", group: "Containers" },
+            { id: 22, text: "Panel", group: "Containers" },
+            { id: 23, text: "SplitContainer", group: "Containers" },
+            { id: 24, text: "TabControl", group: "Containers" },
+            { id: 31, text: "ContextMenu", group: "Menus & Toolbars" },
+            { id: 32, text: "Menu", group: "Menus & Toolbars" },
+            { id: 33, text: "ToolStrip", group: "Menus & Toolbars" },
+            { id: 41, text: "DataGrid", group: "Data" },
+            { id: 42, text: "DataSet", group: "Data" },
+            { id: 43, text: "ReportViewer", group: "Data" },
+            { id: 51, text: "ColorDialog", group: "Dialogs" },
+            { id: 52, text: "FontDialog", group: "Dialogs" },
+            { id: 61, text: "PrintDialog", group: "Printing" },
+            { id: 62, text: "PrintDocument", group: "Printing" },
+            { id: 71, text: "Accordion", group: "IntegralUI" },
+            { id: 72, text: "CheckBox", group: "IntegralUI" },
+            { id: 73, text: "ComboBox", group: "IntegralUI" },
+            { id: 74, text: "ContextMenu", group: "IntegralUI" },
+            { id: 75, text: "Menu", group: "IntegralUI" },
+            { id: 76, text: "SlideBar", group: "IntegralUI" },
+            { id: 77, text: "TabStrip", group: "IntegralUI" },
+            { id: 78, text: "TreeGrid", group: "IntegralUI" },
+            { id: 79, text: "ListBox", group: "IntegralUI" }
+        ];
+        
+        listbox.size = { width: 350, height: 300 }
+
+        // Highlight items with custom style
+
+        let hightlightStyle = {
+            borderLeftColor: '#56c756',
+            borderLeftWidth: '4px',
+            fontWeight: 'bold'
+        }
+
+        // Item Template Content -----------------------------------------------------------------
+
+        listbox.itemTemplate = (item) => { 
+            if (item.type === 'group')
+                return html`
+                    <div>
+                        <span class="lbox-ovw-name">${item.name}</span>
+                    </div>
+                `;
+            else
+                return html`
+                    <div>
+                        <span class=${classMap(getCheckBoxClass(item))} @mousedown="${(e) => checkItem(e, item)}"></span>
+                        <span class="lbox-cbox-item-label">${item.text}</span>
+                    </div>
+                `;
+        };
+
+        let getCheckBoxClass = function(item){
+            let cbClass = { 'lbox-item-cbox': true };
+
+            if (item.checked)
+                cbClass['lbox-item-cbox-checked'] = true;
+
+            return cbClass;
+        }
+
+        let checkItem = function(e, item){
+            if (e.which === 1 && item){
+                item.checked = item.checked !== undefined ? !item.checked : true;
+                item.style = item.checked ? { normal: hightlightStyle, hovered: hightlightStyle, selected: hightlightStyle } : {}
+
+                listbox.refresh();
+            }
+
+            e.stopPropagation();
+        }
+
+    </script>
+</html>

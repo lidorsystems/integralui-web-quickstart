@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Loading / Overview</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-loading-overview"]{
+                height: 300px;
+                padding: 10px;
+                position: relative;
+            }
+            [id="sample-block-loading-content"]{
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-height: calc(100% - 2px);
+
+                --button-margin: 100px 0 0 0;
+                --button-width: 150px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Loading / Overview</h2>
+        <div class="sample-block" id="sample-block-loading-overview">
+            <iui-panel id="sample-block-loading-content">
+                <iui-button id="load" allow-animation="true">Start Loading</iui-button>
+            </iui-panel>
+            <iui-loading id="loading-overview" parent-id="sample-block-loading-overview" theme="Office"></iui-loading>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Loading</strong> is a native Web Component that shows animations during loading progression. It is fully customizable via CSS.</p>
+            <p><span class="initial-space"></span>The following features are available.</p>
+            <ul class="feature-points">
+                <li><span class="code-name">Animations</span> - There are animations when loading starts, during progression and when it ends</li>
+                <li><span class="code-name">Dynamic Resize</span> - Adjustments to component size during dynamic resize of parent container</li>
+                <li><span class="code-name">Events</span> - There are events fired when progession value changes and on load completion/li>
+                <li><span class="code-name">Progression</span> - Each progression from one state to another is animated, with option to start, update or end the loading from code</li>
+                <li><span class="code-name">Size</span> - Component can have custom width and height</li>
+            </ul>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.loading.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module">
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Panel settings
+        //
+
+        const ctrlPanel = document.querySelector('#sample-block-loading-content');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        // Button
+        const btnLoad = document.querySelector('#load');
+
+        btnLoad.addEventListener("click", () => onLoadClicked());
+
+        let onLoadClicked = function(){
+            ctrl.value = 0;
+            ctrlPanel.enabled = false;
+
+            // Update the loading value every 100 miliseconds, until it reaches 100%
+            let valueInterval = setInterval(function(){
+                if (ctrl.value < 100)
+                    ctrl.value += 10;
+                else {
+                    ctrl.value = 100;
+                    clearInterval(valueInterval);
+                }
+            }, 100);
+        }
+
+        //
+        // Loading settings
+        //
+
+        const ctrl = document.querySelector('#loading-overview');
+
+        ctrl.size = { width: 500, height: 5 }
+
+        ctrl.addEventListener("loadComplete", () => onLoadComplete());
+
+        let onLoadComplete = function(){
+            ctrlPanel.enabled = true;
+        }
+    </script>
+</html>

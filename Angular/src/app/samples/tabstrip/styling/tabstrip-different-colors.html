@@ -1,0 +1,17 @@
+<h2>TabStrip / Tabs in Different Colors</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-diffclrs"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-diffclrs-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example where each tab has individual style applied with different colors. You can set the style in code and change it dynamically during run-time.</p>
+    </div>
+</div>

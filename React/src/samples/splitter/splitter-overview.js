@@ -50,15 +50,15 @@ class SplitterOverview extends Component {
                 <h2>Splitter / Overview</h2>
                 <div className="spt-ovw-block">
                     <IntegralUISplitterComponent id="splitter-1" splitterDistance={this.state.currentSplitterDistance} theme={this.state.currentTheme} splitterMoving={(e) => this._onSplitterMoving(e)} splitterMoved={(e) => this._onSplitterMoved(e)}>
-                        <div slot="iui-panel1">
+                        <div slot="panel1">
                             <p className="spt-ovw-panel-content">{this.state.panel1Data.content}</p>
                         </div>
-                        <div slot="iui-panel2" className="spt-ovw-block-2">
+                        <div slot="panel2" className="spt-ovw-block-2">
                             <IntegralUISplitterComponent ref={this._splitter2} id="splitter-2" orientation={this.state.spliiterOrientation} theme={this.state.currentTheme}>
-                                <div slot="iui-panel1">
+                                <div slot="panel1">
                                     <p className="spt-ovw-panel-content">{this.state.panel2Data.content}</p>
                                 </div>
-                                <div slot="iui-panel2" className="spt-ovw-block-2">
+                                <div slot="panel2" className="spt-ovw-block-2">
                                     <p className="spt-ovw-panel-content">{this.state.panel3Data.content}</p>
                                 </div>
                             </IntegralUISplitterComponent>

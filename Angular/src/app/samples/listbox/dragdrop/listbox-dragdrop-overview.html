@@ -1,0 +1,45 @@
+<h2>ListBox / Drag Drop Overview</h2>
+<div class="sample-block">
+    <iui-listbox #listbox id="listbox-dragdrop-overview"
+        [allowAnimation]="true"
+        [allowDrag]="allowDrag"
+        [allowDrop]="allowDrop"
+        [customStyle]="listStyle"
+        [dragDropMode]="currentDragDropMode"
+        [groups]="groups"
+        [items]="items"
+        [itemTemplate]="currentItemTemplate"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [showGroups]="isGrouped"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-listbox>
+    <div class="sample-block-ddlb-control-panel">
+        <label><input type="checkbox" checked="checked" [(ngModel)]="allowDrag" /> Allow Drag</label>
+        <label><input type="checkbox" checked="checked" [(ngModel)]="allowDrop" /> Allow Drop</label>
+        <label><input type="checkbox" checked="checked" [(ngModel)]="isGrouped" /> Show Groups</label>
+        <br/>
+        <label>Drag Drop Mode: </label>
+        <iui-radiogroup (buttonChecked)="onDragDropModeChecked($event)">
+            <iui-radiobutton>Static</iui-radiobutton>
+            <iui-radiobutton [checked]="true">Dynamic</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this sample you can drag drop items within the same ListBox. There are two different ways to drag and drop items:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">Static</span> - a drop marker appears with information about target item and an icon that shows drop position: Up or Down</li>
+            <li><span class="code-name">Dynamic</span> - a window with a list of dragged items appears and while dragging it all other items will move making space where items can drop</li>
+        </ul>
+        <p><span class="initial-space"></span>During drag drop operations, you can also create a copy of an item by holding the SHIFT key. In Static mode the dragging window will change its icon, showing a <span style="color:#c60d0d;font-weight:bold">+</span> sign next to the position marker, while in Dynamic mode a <span style="color:#c60d0d;font-weight:bold">copy/paste</span> icon will appear in the center of the dragging window.</p>
+        <br/>
+        <p><span class="initial-space"></span>By clicking on check boxes, you can change the built-in properties:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowDrag</span> - determines whether items can be dragged</li>
+            <li><span class="code-name">allowDrop</span> - determines whether items can be dropped</li>
+            <li><span class="code-name">showGroups</span> - determines whether items are displayed n groups</li>
+            <li><span class="code-name">dragDropMode</span> - determines whether drag and drop is Static or Dynamic</li>
+        </ul>
+    </div>
+</div>

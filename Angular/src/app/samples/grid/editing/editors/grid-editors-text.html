@@ -1,0 +1,22 @@
+<h2 class="feature-title">Grid / Cells with Text Editor</h2>
+<div class="feature-content" #application>
+    <div class="sample-block">
+        <iui-grid #grid id="grid-editors-text"
+            [allowAnimation]="true"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [editMode]="currentEditMode"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="32"
+            [rows]="rows"
+            [rowTemplate]="currentRowTemplate"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            (valueChanged)="textValueChanged($event)"
+        ></iui-grid>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demo, cells in Company column are editable. When you click on the cell, a textbox will popup where you can enter a new string. Cell value is changed when you press the ENTER key or move the input focus to another cell.</p>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<h2>TreeView / Highlight Items</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-highlight"
+        [checkBoxes]="true"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (checkStateChanged)="onItemChecked($event)"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, you can highlight items using a checkbox. Whenever item is checked, a vertical green line will appear in front of the item and the label appears in bold.</p>
+        <p><span class="initial-space"></span>For demonstration purposes, root items don't have a check box and you can't highlight them. You can choose other ways to highlight items, like changing their background color or applying a different style on demand.</p>
+    </div>
+</div>

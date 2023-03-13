@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Even/Odd Items</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-evenodd"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of ListBox with items displayed in alternate colors.</p>
+                <p><span class="initial-space"></span>Each item can have a unique look. This is done by setting custom inline style to specific item. In case of this sample, we want to have even items in same color, and different color for odd items. This is done by creating two CSS styles which will be applied to even or odd items, accordingly to their order.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-evenodd');
+
+        let flatData = [
+            { id: 11, text: "Art", group: "Books"  },
+            { id: 12, text: "Economics", group: "Books" },
+            { id: 13, text: "Investing", group: "Books", checked: true },
+            { id: 14, text: "Management", group: "Books" },
+            { id: 15, text: "Small Business", group: "Books" },
+            { id: 16, text: "Health", group: "Books", checked: true },
+            { id: 17, text: "Literature", group: "Books" },
+            { id: 18, text: "Astronomy", group: "Books" },
+            { id: 19, text: "Mathematics", group: "Books" },
+            { id: 21, text: "Camera", icon: "camera", group: "Electronics", checked: true },
+            { id: 22, text: "Cell Phones", group: "Electronics", checked: true },
+            { id: 23, text: "Video Game Consoles", group: "Electronics" },
+            { id: 31, text: "Blues", group: "Music" },
+            { id: 32, text: "Classic Rock", group: "Music", checked: true },
+            { id: 33, text: "Pop", group: "Music" },
+            { id: 34, text: "Jazz", group: "Music" },
+            { id: 41, text: "Games", group: "Software", checkState: 'checked' },
+            { id: 42, text: "Operating Systems", group: "Software" },
+            { id: 43, text: "Network & Servers", group: "Software" },
+            { id: 44, text: "Security", group: "Software" },
+            { id: 51, text: "Baseball", group: "Sports" },
+            { id: 52, text: "Martial Arts", group: "Sports", checked: true },
+            { id: 53, text: "Running", group: "Sports" },
+            { id: 54, text: "Tennis", group: "Sports" }
+        ];
+
+        listbox.size = { width: 350, height: 300 }
+        listbox.theme = currentTheme;
+
+        //
+        // Initialize the Component
+        //
+
+        listbox.loadData(flatData);
+
+        // Set the styles for even/odd items
+        let onUpdateComplete = function(e){
+            let list = listbox.getFullList();
+
+            list.forEach((item, index) => {
+                if (index % 2 === 0)
+                    item.style = {
+                        normal: { background: '#fafafa' }
+                    }
+                else 
+                    item.style = {
+                        normal: { background: '#efefef' }
+                    }
+                 
+                item.style.selected = { fontWeight: 'bold' }
+            });
+
+            listbox.refresh();
+        }
+
+        listbox.addEventListener("updateComplete", (e) => onUpdateComplete(e));
+
+    </script>
+</html>

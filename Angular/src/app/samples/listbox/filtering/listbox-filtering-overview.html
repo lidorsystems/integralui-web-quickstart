@@ -1,0 +1,29 @@
+<h2>ListBox / Filtering Overview</h2>
+<div class="sample-block">
+    <iui-dropdownfilter id="listbox-dropdownfilter"
+        [allowAnimation]="true"
+        [dropDownAdjustment]="filterAdjustment"
+        [resourcePath]="currentResourcePath"
+        [size]="filterSize"
+        [theme]="currentTheme"
+        (change)="onFilterChange($event)"
+        (operationChanged)="onFilterOperationChanged($event)"
+        (valueChanged)="onFilterValueChanged($event)"
+    ></iui-dropdownfilter>
+    <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onFilterClicked()">Filter</iui-button>
+    <iui-listbox #listbox id="listbox-filtering-overview"
+        [allowAnimation]="true"
+        [allowFilter]="true"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-listbox>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows how to filter the ListBox content using different conditions.</p>
+        <p><span class="initial-space"></span>By selecting an operation from dropdown filter and specifying matching value, you can filter the ListBox so that only those items that matches the specified condition are shown.</p>
+        <p><span class="initial-space"></span>By default, filtering is executed using the item's value field to match the specified criteria. If this field value is empty, then the value of item's text field is used.</p>
+        <p><span class="initial-space"></span>For filtering operations we are using the <strong>IntegralUIFilterService</strong>, which provides many ways to set string, numeric or custom filtering using multiple conditions with multiple AND / OR combinations.</p>
+        <p><span class="initial-space"></span>You can also create a custom filtering operation, but you would need to create a function in your code and apply it to the callback field of filtering parameter.</p>
+    </div>
+</div>

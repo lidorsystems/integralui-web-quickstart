@@ -1,0 +1,18 @@
+<h2 class="feature-title">Grid / Inline Filter</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-inline-filter"
+        [allowAnimation]="true"
+        [allowFilter]="true"
+        [columns]="columns"
+        [inlineFilter]="true"
+        [resourcePath]="currentResourcePath"
+        [rows]="rows" 
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>Inline filtering allows you to quickly search among grid data and locate the specific information quickly. In this example you can filter the grid data using the inline filter, which appears in first row. Depending on column data type, a different filter is applied for Date, Numeric and String values.</p>
+        <p><span class="initial-space"></span>You can choose a filter operation for each column that has filtering enabled. By clicking on filter operation icon a dropdown list will popup from where you can choose a different operation. In case of Dates, clicking on calendar icon allows you to select a Date.</p>
+    </div>
+</div>

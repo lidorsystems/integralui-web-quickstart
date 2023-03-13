@@ -34,7 +34,7 @@
 	<script type="module">
 		import { html } from '../../node_modules/integralui-web/external/lit-element.js';
         import IntegralUICommonService from '../../node_modules/integralui-web/services/integralui.common.service.js';
-        import { IntegralUIEditorType, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
         import { iuiGridAddRowDynamicallyStyle } from './grid-add-row-dynamically.style.js';
 
         let _commonService = new IntegralUICommonService();
@@ -52,6 +52,8 @@
                 cancelEdit(currentEditRow);
 
             insertRowInGrid();
+            grid.beginEdit(currentEditRow);
+
             setFocusToCell();
         }
 
@@ -64,6 +66,9 @@
 		//
 
 		const grid = document.querySelector('#grid-add-row-dynamically');
+
+		grid.customStyle = iuiGridAddRowDynamicallyStyle;
+        grid.editMode = IntegralUIEditMode.Custom;
 
 		grid.columns = [
             { 
@@ -97,8 +102,6 @@
             },
             { id: 7, contentAlignment: "center", editorType: IntegralUIEditorType.Custom, width: 120, fixedWidth: true }
 		];
-
-		grid.customStyle = iuiGridAddRowDynamicallyStyle;
         
         grid.rows = [
             { 
@@ -145,6 +148,8 @@
         //
 
         let cancelEdit = async function(row){
+            grid.endEdit();
+
             if (isNewRow)
                 removeRow(row);
 
@@ -228,6 +233,7 @@
             if (row){
                 updateEditStatus(row);
                 currentEditRow = row;
+                grid.beginEdit(currentEditRow);
 
                 setFocusToCell(focusCell);
             }
@@ -319,6 +325,8 @@
 
             await setFocusToCell(focusCell);
 
+            grid.endEdit(true);
+
             resetEditor();
             isNewRow = false;
         }
@@ -404,6 +412,5 @@
                 // no default
             }
         }
-
 	</script>
 </html>

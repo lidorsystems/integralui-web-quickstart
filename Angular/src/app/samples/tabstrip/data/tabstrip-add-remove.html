@@ -1,0 +1,37 @@
+<h2>TabStrip / Add-Remove Tabs from Code</h2>
+<div class="sample-block">
+    <div id="tabstrip-addremove" [ngStyle]="{ display: tabs.length > 0 ? 'inline-block' : 'none' }">
+        <iui-tabstrip
+            [allowAnimation]="true"
+            [animation]="currentAnimation"
+            [resourcePath]="currentResourcePath"
+            [scrollMode]="currentScrollMode"
+            [selectedTab]="currentSelection"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        >
+            <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+                <div class="tbs-addremove-tab-content">{{tab.body}}</div>
+            </iui-tab>
+        </iui-tabstrip>
+    </div>
+    <div class="empty-block" [ngStyle]="{ display: tabs.length === 0 ? 'inline-block' : 'none' }">TabStrip is empty.</div>
+    <div class="tabstrip-addremove-panel">
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onAddClicked()">Add</iui-button>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onInsertAfterClicked()">Insert After</iui-button>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onInsertBeforeClicked()">Insert Before</iui-button>
+        <div class="inline-block">
+           <iui-button [allowAnimation]="true" [size]="inlineCtrlSize" [theme]="currentTheme" (click)="onInsertAtClicked()">Insert At</iui-button><iui-numeric [resourcePath]="currentResourcePath" [size]="inlineCtrlSize" [value]="insertAtValue" [theme]="currentTheme"></iui-numeric>
+        </div>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onRemoveClicked()">Remove</iui-button>
+        <div class="inline-block">
+            <iui-button [allowAnimation]="true" [size]="inlineCtrlSize" [theme]="currentTheme" (click)="onRemoveAtClicked()">Remove At</iui-button><iui-numeric [resourcePath]="currentResourcePath" [size]="inlineCtrlSize" [value]="removeAtValue" [theme]="currentTheme"></iui-numeric>
+        </div>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onClearClicked()">Clear</iui-button>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example that demonstrates adding and removal od tabs manually from code using buttons.</p>
+        <p><span class="initial-space"></span>You can add tabs at the end, before or after a specific tab (in this case the selected tab) or at specific position.</p>
+        <p><span class="initial-space"></span>In similar way, you can remove a specific tab using its object reference or its position in the tab list. There is an option to remove all tabs from the list.</p>
+    </div>
+</div>

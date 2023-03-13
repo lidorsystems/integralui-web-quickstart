@@ -1,0 +1,22 @@
+<h2 class="feature-title">Grid / How to Show/Hide Columns</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-show-hide-columns"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [autoSizeColumns]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [headerTemplate]="currentHeaderTemplate"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [showScroll]="gridScrolling"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>As above demo presents, to show or hide a specific column you can use a context menu or dropdown menu. Whenever you right-click on a grid header a context menu will appear displaying the name of each column and a check mark stating whether the column is visible or hidden. In similar why, when column is selected by clicking on its header a command button with dropdown menu will appear from where you can choose which columns will become visible or hidden.</p>
+        <p><span class="initial-space"></span>By selecting the column from the menu option, you can change its visibility. The difference is with context menu you can show/hide only one column at time, while with dropdown menu you can check or uncheck any number of columns you want to change their visibility. Clicking again on the dropdown menu button will apply this change.</p>
+    </div>
+</div>

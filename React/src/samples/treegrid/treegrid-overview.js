@@ -39,7 +39,7 @@ class TreeGridOverview extends Component {
                 { id: 5, headerText: "Released", headerAlignment: "center", contentAlignment: "center", width: 180 }
             ],
             ctrlSize: { width: 800, height: 400 },
-            currentResourcePath: '../integralui-web/icons',
+            currentResourcePath: '../../integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
             expandColumnIndex: 1,
             isAnimationAllowed: true,

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listview-dropdownfilter"]{
+                --dropdownfilter-display: inline-block;
+                --dropdownfilter-padding: 4px;
+                --dropdownfilter-vertical-align: top;
+
+                --dropdownfilter-operation-top: 6px;
+            }
+
+            .listview-filtering-overview-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .listview-filtering-overview-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listview-filtering-overview-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Filtering Overview</h2>
+        <div class="sample-block">
+            <iui-dropdownfilter id="listview-dropdownfilter"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-dropdownfilter>
+            <iui-button id="apply-filter">Filter</iui-button>
+            <iui-listview id="listview-filtering-overview"
+                allow-animation="true"
+                allow-filter="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample shows how to filter the ListView content using different conditions.</p>
+                <p><span class="initial-space"></span>By selecting an operation from dropdown filter and specifying matching value, you can filter the ListView so that only those items that matches the specified condition are shown.</p>
+                <p><span class="initial-space"></span>By default, filtering is executed using the item's value field to match the specified criteria. If this field value is empty, then the value of item's text field is used.</p>
+                <p><span class="initial-space"></span>For filtering operations we are using the <strong>IntegralUIFilterService</strong>, which provides many ways to set string, numeric or custom filtering using multiple conditions with multiple AND / OR combinations.</p>
+                <p><span class="initial-space"></span>You can also create a custom filtering operation, but you would need to create a function in your code and apply it to the callback field of filtering parameter.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownfilter.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+
+        // DropDown Filter
+        let currentFilterOperation = '[]';
+        let currentFilterValue = '';
+
+        const ctrlFilter = document.querySelector('#listview-dropdownfilter');
+
+        ctrlFilter.dropDownAdjustment = { left: 280, top: -1 }
+        ctrlFilter.size = { width: 292 };
+
+        let onFilterChange = function(e){
+            currentFilterValue = e.detail.value;
+        }
+
+        let onFilterOperationChanged = function(e){
+            currentFilterOperation = e.detail.operation;
+        }
+
+        let onFilterValueChanged = function(e){
+            currentFilterOperation = e.detail.filter.operation;
+            currentFilterValue = e.detail.value;
+
+            applyFilter();
+       }
+
+        ctrlFilter.addEventListener("change", (e) => onFilterChange(e));
+        ctrlFilter.addEventListener("operationChanged", (e) => onFilterOperationChanged(e));
+        ctrlFilter.addEventListener("valueChanged", (e) => onFilterValueChanged(e));
+
+        // Filter Button
+        const btnFilter = document.querySelector('#apply-filter');
+        btnFilter.addEventListener("click", (e) => onFilterClicked(e));
+
+        let onFilterClicked = function(e){
+            applyFilter();
+        }
+
+        let applyFilter = function(){
+            // Filter ListView based on selected operation and value
+            if (currentFilterValue){
+                let params = {
+                    caseSensitive: false,
+                    conditions: { 
+                        value: currentFilterValue,
+                        operation: currentFilterOperation
+                    }
+                }
+
+                listview.filter(params);
+            }
+            // Reset the filter
+            else
+                listview.filter();
+        }
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-filtering-overview');
+
+        listview.items = [
+            { id: 11, text: "Milk" },
+            { id: 12, text: "Butter" },
+            { id: 13, text: "Cheese" },
+            { id: 14, text: "Yogurt" },
+            { id: 211, text: "BlackBerries" },
+            { id: 212, text: "CranBerries" },
+            { id: 213, text: "StrawBerries" },
+            { id: 241, text: "Oranges" },
+            { id: 242, text: "Lemons" },
+            { id: 261, text: "Avocados" },
+            { id: 262, text: "Bananas" },
+            { id: 263, text: "Dates" },
+            { id: 31, text: "Barley" },
+            { id: 32, text: "Farro" },
+            { id: 33, text: "Millet" },
+            { id: 34, text: "Rice" },
+            { id: 41, text: "Beef" },
+            { id: 42, text: "Chicken" },
+            { id: 43, text: "Turkey" },
+            { id: 44, text: "Pork" },
+            { id: 45, text: "Lamb" },
+            { id: 51, text: "Biscuits" },
+            { id: 52, text: "Cakes" },
+            { id: 53, text: "Candies" },
+            { id: 54, text: "Muffins" },
+            { id: 55, text: "Pastries" },
+            { id: 61, text: "Asparagus" },
+            { id: 62, text: "Broccoli" },
+            { id: 63, text: "Carrots" },
+            { id: 64, text: "Corn" },
+            { id: 65, text: "Lettuce" },
+            { id: 66, text: "Onions" },
+            { id: 67, text: "Pumpkin" },
+            { id: 68, text: "Tomatoes" },
+            { id: 69, text: "Zucchini" }
+        ];
+
+        listview.itemSize = { width: 150, height: 32 }
+        listview.size = { width: 350, height: 300 };
+
+    </script>
+</html>

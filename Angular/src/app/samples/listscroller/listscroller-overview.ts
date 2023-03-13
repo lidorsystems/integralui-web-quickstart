@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,11 +12,11 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
+import { html } from 'integralui-web/external/lit-element';
 
-import 'integralui-web/components/integralui.listscroller.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiListScrollerOverviewStyle } from './listscroller-overview.style.js';
+import 'integralui-web/components/integralui.listscroller';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiListScrollerOverviewStyle } from './listscroller-overview.style';
 
 @Component({
     selector: '',
@@ -24,11 +24,11 @@ import { iuiListScrollerOverviewStyle } from './listscroller-overview.style.js';
     styleUrls: ['./listscroller-overview.css']
 })
 export class ListScrollerOverviewSample {
-    @ViewChild('listscroller', { static: false }) listscroller: ElementRef;
+    @ViewChild('listscroller', { static: false }) listscroller!: ElementRef;
 
     public ctrlSize: any = { width: 275 };
     public currentItemSize: any = { width: 48, height: 36 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiListScrollerOverviewStyle;
     public items: Array<any> = [];

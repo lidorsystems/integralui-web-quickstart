@@ -1,8 +1,8 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiTabStripOverviewStyle = css`
     .tab-icon {
-        background: url(assets/integralui-web/resources/icons-x24.png) no-repeat 0 0;
+        background: url(assets/resources/icons-x24.png) no-repeat 0 0;
         display: inline-block;
         padding: 0 !important;
         margin: 0 1px 0 5px;

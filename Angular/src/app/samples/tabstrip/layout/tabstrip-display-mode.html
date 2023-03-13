@@ -1,0 +1,30 @@
+<h2>TabStrip / Display Mode</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-dplmode"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [displayMode]="currentDisplayMode"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-dplmode-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-dplmode-panel">
+        <label>Display Mode: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onDisplayModeChecked($event)">
+            <iui-radiobutton [checked]="true">AutoSized</iui-radiobutton>
+            <iui-radiobutton>Justified</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example that shows how content of tab header is arranged. There are two options:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">AutoSized</span> - tab header size is determined by its content</li>
+            <li><span class="code-object">Justified</span> - if there is an empty space in the tab strip, it is equally divided among all tabs</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+[id="listbox-sorting-overview"]{
+    --listbox-display: inline-block;
+}
+
+.listbox-sorting-overview-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 170px;
+
+    --radio-button-display: block;
+    --radio-button-margin: 5px 0;
+}
+.listbox-sorting-overview-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.listbox-sorting-overview-panel label:first-of-type {
+    margin-top: 0;
+}
+/* CheckBox 2 */
+[id="allow-groups"] {
+    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked.png);
+    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked.png);
+}

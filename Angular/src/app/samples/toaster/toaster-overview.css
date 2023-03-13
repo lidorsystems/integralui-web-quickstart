@@ -1,0 +1,27 @@
+.toaster-block {
+    display: inline-block;
+    vertical-align: top;
+    width: 400px;
+}
+.toaster-block input {
+    border: 0;
+    font-size: 1rem;
+    padding: 5px;
+}
+.toaster-block input:focus {
+    outline: none !important;
+}
+.toaster-block iui-label {
+    --label-background: #cecece;
+    --label-display: block;
+    --label-focused-background: #cecece;
+    --label-focused-color: black;
+    --label-focused-font-weight: normal;
+    --label-margin: 5px 0;
+
+    --label-value-padding: 5px;
+}
+.toaster-block iui-select {
+    --select-border-color: transparent;
+    --select-margin: 0;
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Label / Overview</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+             /* Block with Animated Labels */
+            .animated-block {
+                display: inline-block;
+                vertical-align: top;
+                width: 300px;
+            }
+            .animated-block input {
+                border: 0;
+                font-size: 1rem;
+                padding: 7px 4px;
+            }
+            .animated-block input:focus {
+                outline: none !important;
+            }
+            .animated-block iui-label {
+                --label-display: block;
+                --label-margin: 10px 0;
+            }
+
+            /* Block with Label Alignments */
+            .alignment-block {
+                display: inline-block;
+                margin-left: 50px;
+                vertical-align: top;
+            }
+            .alignment-block input {
+                border: 0;
+                font-size: 1rem;
+                padding: 5px;
+            }
+            .alignment-block input:focus {
+                outline: none !important;
+            }
+            .alignment-block iui-label {
+                --label-background: #cecece;
+                --label-display: block;
+                --label-focused-background: #6ea9db;
+                --label-focused-color: white;
+                --label-margin: 10px 0;
+
+                --label-value-padding: 5px;
+           }
+
+            .alignment-block iui-select {
+                --select-margin: 0 0 20px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Label / Overview</h2>
+        <div class="sample-block" id="label-overview">
+            <div class="animated-block">
+                <iui-label allow-animation="true" alignment="Inline" value="Label 1" theme="Office"><input value="Sample text" /></iui-label>
+                <iui-label allow-animation="true" alignment="Inline" value="Label 2" theme="Office"><input /></iui-label>
+                <iui-label allow-animation="true" alignment="Inline" value="Label 3" theme="Office"><input /></iui-label>
+            </div>
+            <div class="alignment-block">
+                <label>Select Alignment: </label>
+                <iui-select allow-animation="true" max-dropdown-items="5" theme="Office"></iui-select>
+                <iui-label value="Label 1" theme="Office"><input value="Sample text" /></iui-label>
+                <iui-label value="Longer Label 2" theme="Office"><input /></iui-label>
+                <iui-label value="Label 3" theme="Office"><input /></iui-label>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Label</strong> is a native Web Component that represents a label. It is fully customizable via CSS and custom properties.</p>
+                <p><span class="initial-space"></span>You can use this component to enclose any other HTML element. In addition, by specifying the label size and/or the size of enclosed element you can easily create properly aligned elements.</p>
+                <p><span class="initial-space"></span>The first group of labels have Inline alignment set which allows animations of label title in relation to its content. From the second group of labels, you can change the label alignment, Inline alignment is excluded from options available for this example.</p>
+                <br/>
+                <p><span class="initial-space"></span>The following properties and events are supported:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">alignment</span> - Determines how label title is aligned in relation to enclosed element</li>
+                    <li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+                    <li><span class="code-name">contentSize</span> - Specifies the width and height of the enclosed HTML element</li>
+                    <li><span class="code-name">customStyle</span> - Specifies an object that contains all custom style settings for the component</li>
+                    <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+                    <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+                    <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+                    <li><span class="code-name">size</span> - Specifies the width and height of the component</li>
+                    <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+                    <br/>
+                    <li><span class="code-name">sizeChanged</span> - Occurs when component size changes</li>
+                    <li><span class="code-name">valueChanged</span> - Occurs when component value property changes</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.label.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module">
+        import { IntegralUILabelAlignment } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+        // Alignment Block
+        let currentAlignment = IntegralUILabelAlignment.Left;
+
+		const alignmentBlock = document.querySelector('.alignment-block');
+		const labelsWithAlignment = alignmentBlock.querySelectorAll('iui-label');
+
+        let setLabeContentSize = function(){
+            labelsWithAlignment.forEach(label => {
+                label.size = { width: 350 }
+                label.contentSize = { width: 200 }
+            });
+        }
+
+        let updateLabelAlignment = function(){
+            labelsWithAlignment.forEach(label => label.alignment = currentAlignment);
+        }
+
+        // Select
+        const ctrlSelect = document.querySelector('iui-select');
+
+        ctrlSelect.items = [
+            { text: 'BottomCenter' },
+            { text: 'BottomLeft' },
+            { text: 'BottomRight' },
+            { text: 'Left' },
+            { text: 'Right' },
+            { text: 'TopCenter' },
+            { text: 'TopLeft' },
+            { text: 'TopRight' }
+        ];
+
+        ctrlSelect.selectedItem = ctrlSelect.items[3];
+
+        ctrlSelect.addEventListener("afterSelect", (e) => onAlignmentChanged(e));
+
+        let onAlignmentChanged = function(e){
+            if (e.detail.item){
+                currentAlignment = e.detail.item.text;
+                updateLabelAlignment();
+            }
+        } 
+
+
+        // Initialization ------------------------------------------------------------------------
+
+        setLabeContentSize();
+        updateLabelAlignment();
+        
+    </script>
+</html>

@@ -1,0 +1,22 @@
+<h2 class="feature-title">Grid / Cells with Rating</h2>
+<div class="feature-content" #application>
+    <div class="sample-block">
+        <iui-grid #grid id="grid-editors-rating"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="28"
+            [rows]="rows"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            (valueChanged)="cellValueChanged($event)"
+        ></iui-grid>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, the default gold star that represents a rating are replaced by a white star on gray and red background. By clicking inside the rating space and move the cursor while you hold the left mouse button, you can change the rating value for each grid cell individually. You can also change the rating by single click or with mouse scroll.</p>
+        <p><span class="initial-space"></span>Whenever rating changes, the console log displays a message from the event fired when cell value changes.</p>
+    </div>
+</div>

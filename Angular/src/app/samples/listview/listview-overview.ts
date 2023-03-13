@@ -1,60 +1,30 @@
-/*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
-
-  This file is part of the "IntegralUI Web" Library. 
-                                                                   
-  The contents of this file are subject to the IntegralUI Web License, and may not be used except in compliance with the License.
-  A copy of the License should have been installed in the product's root installation directory or it can be found at
-  http://www.lidorsystems.com/products/web/studio/license-agreement.aspx.
-                                                            
-  This SOFTWARE is provided "AS IS", WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language 
-  governing rights and limitations under the License. Any infringement will be prosecuted under applicable laws.                           
-*/
-
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
-import 'integralui-web/components/integralui.listview.js';
-import 'integralui-web/components/integralui.rating.js';
-import { IntegralUIScrollMode, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiListViewOverviewStyle } from './listview-overview.style.js';
+import { html } from 'integralui-web/external/lit-element';
+
+import 'integralui-web/components/integralui.listview';
+import 'integralui-web/components/integralui.rating';
+import { IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiListViewOverviewStyle } from './listview-overview.style';
 
 @Component({
     selector: '',
     templateUrl: './listview-overview.html',
     styleUrls: ['./listview-overview.css']
 })
-export class ListViewOverviewSample {
-    @ViewChild('listview', { static: false }) listview: ElementRef;
+export class ListViewOverview {
+    @ViewChild('listview', { static: false }) listview!: ElementRef;
 
-    public ctrlSize: any = { width: 650, height: 400 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
-    public currentScrollMode: IntegralUIScrollMode = IntegralUIScrollMode.Vertical;
+    public ctrlSize: any = { width: 650, height: 400 }
+    public currentItemSize: any = { width: 175, height: 200 }
+    public currentResourcePath: string = 'assets/icons';
     public currentSelectionMode: IntegralUISelectionMode = IntegralUISelectionMode.MultiExtended;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiListViewOverviewStyle;
     public items: Array<any> = [];
-    public itemSize: any = { width: 143, height: 151 };
-
-    //
-    // Currently when using templates, the LitElement binding syntax is required
-    // for properties, methods and events
-    //
-    currentItemTemplate = (item: any) => { 
-        return html`
-            <div class="lview-ovw-custom-item-large">
-                <span class="lview-ovw-num-corner">${item.id}</span><br />
-                <div class="lview-ovw-icon-large">
-                    <span class="lview-ovw-icons ${item.icon}"></span>
-                </div><br />
-                <span class="lview-ovw-title-large">${item.text}</span><br />
-                <iui-rating division="2" max="5" .resourcePath=${this.currentResourcePath} .value=${item.rating} @valueChanged="${(e) => this.ratingValueChanged(e, item)}"></iui-rating>
-            </div>
-        `;
-    };
 
     constructor(){
         this.items = [
-            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.1 },
+            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
             { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
             { id: 3, icon: "action", text: "Gladiator ", year: "2000", rating: 8.5 },
             { id: 4, icon: "drama", text: "Malèna", year: "2000", rating: 7.5 },
@@ -70,16 +40,25 @@ export class ListViewOverviewSample {
             { id: 14, icon: "comedy", text: "Scary Movie 3", year: "2003", rating: 5.5 },
             { id: 15, icon: "music", text: "Walk the Line", year: "2005", rating: 7.9  },
             { id: 16, icon: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6.4 },
-            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", rating: 9.1  },
+            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
             { id: 18, icon: "horror", text: "American Psycho", year: "2000", rating: 7.6 },
             { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8.1 },
             { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8.2 }
         ];
     } 
 
-    ngAfterViewInit(){
-        this.listview.nativeElement.itemTemplate = this.currentItemTemplate;
-    }
+    // Templates ---------------------------------------------------------------------------------
+
+    currentItemTemplate = (item: any) => { 
+        return html`
+                <div class="lview-ovw-title-large">${item.id}. ${item.text}</div>
+                <div class="lview-ovw-icon-large">
+                    <span class="lview-ovw-icons ${item.icon}"></span>
+                </div><br />
+                <iui-rating .allowFocus="${false}" division="2" max="5" .customStyle="${iuiListViewOverviewStyle}" .resourcePath=${this.currentResourcePath} .value=${item.rating} @valueChanged="${(e: any) => this.ratingValueChanged(e, item)}"></iui-rating>
+            </iui-card>
+        `;
+    };
 
     ratingValueChanged(e: any, item: any){
         item.rating = e.detail.value;

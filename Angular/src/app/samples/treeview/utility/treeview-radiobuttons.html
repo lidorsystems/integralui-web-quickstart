@@ -1,0 +1,16 @@
+<h2>TreeView / Items with Radio Buttons</h2>
+<div class="sample-block">
+    <iui-treeview id="treeview-radiobuttons"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (checkedChanged)="onItemRadioChecked($event)"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, some items have a Radio Button shown before their label. Only one radio button is checked per item level that have the same parent.</p>
+        <p><span class="initial-space"></span>Showing radio buttons is optional for each item individually. Once set, all items with radio buttons that have the same parent belong to the same radio group.</p>
+        <p><span class="initial-space"></span>Whenever a radio button is checked, the <span class="code-object">checkedChanged</span> event is fired carrying data: the item object and its checked state.</p>
+        <p><span class="initial-space"></span>You can customize the appearance of radio buttons using custom CSS properties or styles.</p>
+    </div>
+</div>

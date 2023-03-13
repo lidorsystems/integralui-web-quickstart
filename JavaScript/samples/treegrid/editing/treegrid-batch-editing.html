@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - TreeGrid / Batch Editing</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+            .feature-help {
+                margin: 0;
+            }
+            .sample-block-panel-batch-editing {
+                float:right;
+                margin: 20px 0;
+
+                --button-margin: 0 2px;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>TreeGrid / Batch Editing</h2>
+		<div class="sample-block">
+			<iui-treegrid id="treegrid-batch-editing"
+                allow-animation="true"
+				resource-path="../../../node_modules/integralui-web/icons"
+                row-height="30"
+				theme="Office"
+			></iui-treegrid>
+            <div class="sample-block-panel-batch-editing">
+                <iui-button id="btn-save" allow-focus="true" allow-animation="true" theme="Office">Save Changes</iui-button>
+                <iui-button id="btn-cancel" allow-focus="true" allow-animation="true" theme="Office">Cancel</iui-button>
+            </div>
+            <div style="clear:both"></div>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>When <strong>Batch Editing</strong> mode is activated, you can navigate among cells and:</p>
+                <ul class="feature-points">
+                    <li>make changes to cell values using different kind of editors, depending on the value type</li>
+                    <li>remove a row from a button in the last column, this will highlight the row</li>
+                    <li>cancel any changes made within a row from a button in the last column</li>
+                </ul>
+                <p><span class="initial-space"></span>Any changes to cell values are highlight (orange color), so you can easily see what is changed within the TreeGrid. However, these changes are only temporary and if not saved they will be cancelled. Using the last column you can remove a row or if changes are made to cancel them within that row. Finally to complete the editing process, you can save all changes or cancel them using the buttons below the treegrid.</p>
+                <p><span class="initial-space"></span>You can edit dates using keyboard, Left/Right arrow keys changes dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
+                <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity, Price and Shipping Cost values.</p>
+            </div>
+		</div>
+	</body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.treegrid.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTreeGridBatchEditingStyle } from './treegrid-batch-editing.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+		//
+		// Button settings
+		//
+		const btnSave = document.querySelector('#btn-save');
+        btnSave.addEventListener("click", () => saveChanges(true));
+
+		const btnCancel = document.querySelector('#btn-cancel');
+        btnCancel.addEventListener("click", () => saveChanges());
+
+		//
+		// TreeGrid settings
+		//
+
+		const treegrid = document.querySelector('#treegrid-batch-editing');
+
+		treegrid.columns = [];
+        treegrid.rows = [];
+
+		treegrid.customStyle = iuiTreeGridBatchEditingStyle;
+        treegrid.editMode = IntegralUIEditMode.Batch;
+        treegrid.showFooter = false;
+		treegrid.size = { height: 400 }
+
+        let shipModeList = [
+            { id: 1, text: "None", value: -1 },
+            { id: 2, text: "Delivery Truck", value: 0 },
+            { id: 3, text: "Regular Air", value: 1 },
+            { id: 4, text: "Express Air", value: 2 }
+        ];
+
+        // Templates -----------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        let currentHeaderTemplate = (column) => { 
+            return html`<span class="header-label">${column.title}</span>`;
+        };
+
+		treegrid.headerTemplate = currentHeaderTemplate;
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            let columnList = [];
+            let rowList = [];
+
+            /////////////////////
+            // Create columns
+            /////////////////////
+
+            // Load other columns from the data source
+            data.columns.forEach(obj => {
+                let column = Object.assign({ headerAlignment: 'center' }, obj);
+
+                columnList.push(column);
+            });
+
+
+            /////////////////////
+            // Create Rows
+            /////////////////////
+
+            data.rows.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                data.columns.forEach(column => {
+                    let field = column.title;
+
+                    // Delete all fields that will be included in cells
+                    delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    let cell = {
+                        cid: column.id,
+                        colName: field
+                    }
+
+                    if (obj[field] !== undefined){
+                        if (_commonService.isString(obj[field])){
+                            let fieldValue = Date.parse(obj[field]);
+                            if (obj[field].slice(-1) === 'Z' && !isNaN(fieldValue))
+                                cell.value = new Date(fieldValue);
+                            else
+                                cell.value = obj[field];
+                        }
+                        else
+                            cell.value = obj[field];
+                    }
+                    // Caluclate the Total value: sum of (Quantity * Price) + Shipping Cost
+                    else if (column.id === 11)
+                        cell.value = obj["Quantity"] * obj["Price"] + obj["Shipping Cost"];
+
+                    row.cells.push(cell);
+                });
+                
+                rowList.push(row);
+            });
+
+            treegrid.columns = columnList;
+            treegrid.rows = rowList;
+        }
+
+        // Editing -------------------------------------------------------------------------------
+
+        treegrid.addEventListener("dataChanged", (e) => treegridDataChanged(e));
+
+        let treegridDataChanged = function(e){
+            // Update the Total value when Quantity or Price changes
+            if (e.detail.data){
+                e.detail.data.forEach(row => {
+                    let quantityCell = getCellById(row, 6);
+                    let priceCell = getCellById(row, 7);
+                    let shippingCostCell = getCellById(row, 9);
+                    let totalCell = getCellById(row, 11);
+
+                    if (quantityCell && priceCell && shippingCostCell && totalCell)
+                        totalCell.value = quantityCell.value * priceCell.value + shippingCostCell.value;
+                });
+            }
+        }
+
+        let getCellById = function(row, id){
+            let filtered = row.cells.filter(cell => cell.cid === id);
+
+            return filtered.length > 0 ? filtered[0] : null;
+        }
+
+        let saveChanges = function(keep){
+            // Calling endEdit will complete the editing process
+            // If called with true, it will save any changes
+            treegrid.endEdit(keep);
+        }
+
+        // Initialize ----------------------------------------------------------------------------
+ 
+        fetch("treegrid-batch-editing-data.json") 
+			.then(response => response.json()) 
+			.then(data => {
+                // Suspend the treegrid layout from updates, to increase performance
+                treegrid.suspendLayout();
+
+                // Load data into the treegrid
+                convertJSONData(data);
+
+                // Resume and update the treegrid layout
+                treegrid.resumeLayout();
+            });
+
+	</script>
+</html>

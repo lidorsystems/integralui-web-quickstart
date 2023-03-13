@@ -1,0 +1,39 @@
+<h2>TabStrip / Tab Orientation</h2>
+<div class="sample-block">
+    <iui-tabstrip #tabstrip id="tabstrip-orientation"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabOrientation]="currentOrientation"
+        [tabStripPlacement]="currentPlacement"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-orientation-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-orientation-panel">
+        <label>Orientation: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onOrientationChecked($event)">
+            <iui-radiobutton [checked]="true">Horizontal</iui-radiobutton>
+            <iui-radiobutton>Vertical</iui-radiobutton>
+        </iui-radiogroup>
+        <label>Placement: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onPlacementChecked($event)">
+            <iui-radiobutton [checked]="true">Top</iui-radiobutton>
+            <iui-radiobutton>Right</iui-radiobutton>
+            <iui-radiobutton>Bottom</iui-radiobutton>
+            <iui-radiobutton>Left</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example that allows you to change orientation of tba headers. This is useful where you have tabs with longer title or when you want to place tabs on Left or Right side.</p>
+        <p><span class="initial-space"></span>You can have the following orientations:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">Horizontal</span> - content of tab header appears horizontally, default</li>
+            <li><span class="code-object">Vertical</span> - content of tab header is rotated, showing its title or content vertically</li>
+        </ul>
+    </div>
+</div>

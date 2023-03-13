@@ -1,0 +1,44 @@
+<h2 class="feature-title">Grid / Dynamic Resize with a Window</h2>
+<div class="feature-content" #application>
+    <div #winBlock id="grid-window-block-dynamic-resize" style="overflow:hidden; position:relative;">
+        <div class="sample-block">
+            <iui-window #winCtrl id="grid-window-dynamic-resize"
+                [allowAnimation]="true"
+                [parentId]="'grid-window-block-dynamic-resize'"
+                [position]="winPosition"
+                [resourcePath]="currentResourcePath"
+                [selected]="true"
+                [size]="winSize"
+                [text]="'Grid with Dynamic Resize'"
+                [theme]="currentTheme"
+                [visible]="true"
+                (closing)="windowClosing($event)"
+                (sizeChanged)="windowSizeChanged($event)"
+            >
+                <div slot="content">
+                    <iui-grid #grid id="grid-form-editing"
+                        [allowAnimation]="true"
+                        [allowFocus]="false"
+                        [autoSizeColumns]="true"
+                        [columns]="columns"
+                        [editMode]="currentEditMode"
+                        [headerTemplate]="currentHeaderTemplate"
+                        [rowHeight]="30"
+                        [rows]="rows"
+                        [resourcePath]="currentResourcePath"
+                        [showFooter]="false"
+                        [showScroll]="gridScrolling"
+                        [theme]="currentTheme"
+                        (dataChanged)="gridDataChanged($event)"
+                        (rowDblClick)="gridRowDblClick($event)"
+                    ></iui-grid>
+                </div>
+            </iui-window>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example we have a resizable window with Grid. To resize a window, move the cursor over window border and left-click and move to any direction, the window content will also update. In addition you can Minimize or Maximize the windows from buttons in window header. Windows have a parent container set, which restricts them to move or resize within its parent boundaries. Window's appearance is customizable with CSS, including border space for resize.</p>
+        <p><span class="initial-space"></span>Whenever the window is resized, the grid also changes its size. In addition, autoSizeColumns option is enabled which makes all columns in the grid to occupy the whole grid space. You can only resize columns within the grid without showing any horizontal scrollbar.</p>
+        <p><span class="initial-space"></span>The Grid also demonstrates editing with a Form. To edit a row, click in the first cell (the pencil icon) or double-click a row. A Form will appear where you can edit cell values for that row, using built-in editors depending on value types. Once finished you can save the changes or cancel them by clicking Save or Cancel buttons at the end of the Form.</p>
+    </div>
+</div>

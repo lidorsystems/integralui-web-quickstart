@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Custom Label Edit</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-custom-label-edit"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            > 
+            </iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this sample you can edit item label in TreeView component, by click on edit button which appears when item is hovered.</p>
+                <p><span class="initial-space"></span>When edit button is clicked, the text editor will appear and you can change the item label. To confirm any changes in the editor, press the ENTER key. If you press the ESCAPE key or click anywhere outside of the editor, editing is cancelled.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiTreeViewCustomLabelEditStyle } from './treeview-custom-label-edit.style.js';
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-custom-label-edit');
+
+        treeview.customStyle = iuiTreeViewCustomLabelEditStyle;
+        treeview.items = [
+            { 
+                id: 1,
+                text: "Favorites",
+                items: [
+                    { id: 11, pid: 1, text: "Desktop" },
+                    { id: 12, pid: 1, text: "Downloads" }
+                ]
+            },
+            { 
+                id: 2,
+                text: "Libraries",
+                expanded: false,
+                items: [
+                    { 
+                        id: 21, 
+                        pid: 2, 
+                        text: "Documents", 
+                        expanded: false,
+                        items: [
+                            { id: 211, pid: 21, text: "My Documents" },
+                            { id: 212, pid: 21, text: "Public Documents" }
+                        ]
+                    },
+                    { id: 22, pid: 2, text: "Music", icon: "music" },
+                    { id: 23, pid: 2, text: "Pictures", icon: "pictures" },
+                    { id: 24, pid: 2, text: "Videos", icon: "videos" }
+                ]
+            },
+            { 
+                id: 3,
+                text: "Computer",
+                checkState: "checked",
+                items: [
+                    { id: 31, pid: 3, text: "Local Disk (C:)" },
+                    { id: 32, pid: 3, text: "Storage (D:)" }
+                ]
+            },
+            { id: 4, text: "Network", icon: "network" },
+            { id: 5, text: "Recycle Bin", icon: "recycle" }
+        ];
+
+        treeview.size = { width: 350, height: 300 }
+        
+        treeview.itemTemplate = (item) => { 
+            if (item === editItem)
+                return html`
+                    <input type="text" .value="${item.text}" @keydown="${(e) => editorKeyDown(e)}" @focus="${(e) => selectContent(e)}" @blur="${() => editorLostFocus()}" />
+                `;
+
+            return null;
+        }
+
+        treeview.itemHoverTemplate = (item) => { 
+            return html`
+                <div class="trw-cle-toolbar">
+                    <span class="trw-cle-toolitem-button item-button-edit" @click="${() => showEditor(item)}"></span>
+                </div>
+            `;
+        }
+        
+
+        // Editing -------------------------------------------------------------------------------
+
+        let isEditActive = false;
+        let editItem = null;
+        let originalText = '';
+
+        let selectContent = function(e){
+            if (e.target && e.target.value)
+                e.target.setSelectionRange(0,  e.target.value.length);
+        }
+
+        let showEditor = function(item){
+            originalText = item.text;
+            isEditActive = true;
+            editItem = item;
+
+            treeview.refresh();
+
+            setTimeout(function(){
+                let inputElem = treeview.getElemRef().querySelector('input');
+                if (inputElem)
+                    inputElem.focus();
+            }, 1);
+        }
+
+        let closeEditor = function(){
+            editItem = null;
+            originalText = '';
+
+            treeview.updateLayout();
+        }
+
+        let editorKeyDown = function(e){
+            if (editItem){
+                switch (e.keyCode){
+                    case 13: // ENTER
+                        editItem.text = e.target.value;
+
+                        closeEditor();
+                        break;
+                        
+                    case 27: // ESCAPE
+                        editItem.text = originalText;
+                        closeEditor();
+                        break;
+                }
+            }
+        }
+
+        let editorLostFocus = function(){
+            if (editItem)
+                editItem.text = originalText;
+
+            closeEditor();
+        }
+
+    </script>
+</html>

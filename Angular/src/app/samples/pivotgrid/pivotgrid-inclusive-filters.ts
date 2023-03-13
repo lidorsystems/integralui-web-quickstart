@@ -1,14 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { html } from 'integralui-web/external/lit-element.js';
+import { html } from 'integralui-web/external/lit-element';
 
-import 'integralui-web/components/integralui.button.js';
-import 'integralui-web/components/integralui.checkbox.js';
-import 'integralui-web/components/integralui.listbox.js';
-import 'integralui-web/components/integralui.pivotgrid.js';
-import 'integralui-web/components/integralui.select.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiPivotGridInclusiveFiltersStyle } from './pivotgrid-inclusive-filters.style.js';
+import 'integralui-web/components/integralui.button';
+import 'integralui-web/components/integralui.checkbox';
+import 'integralui-web/components/integralui.listbox';
+import 'integralui-web/components/integralui.pivotgrid';
+import 'integralui-web/components/integralui.select';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiPivotGridInclusiveFiltersStyle } from './pivotgrid-inclusive-filters.style';
 
 @Component({
     selector: '',
@@ -16,12 +16,12 @@ import { iuiPivotGridInclusiveFiltersStyle } from './pivotgrid-inclusive-filters
     styleUrls: ['./pivotgrid-inclusive-filters.css']
 })
 export class PivotGridInclusiveFilters {
-    @ViewChild('grid', { static: false }) grid: ElementRef;
-    @ViewChild('listbox', { static: false }) listBox: ElementRef;
+    @ViewChild('grid', { static: false }) grid!: ElementRef;
+    @ViewChild('listbox', { static: false }) listBox!: ElementRef;
 
     public columns: Array<any> = [];
     public ctrlSize: any = { height: 500 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiPivotGridInclusiveFiltersStyle;
     public filters: Array<any> = [];
@@ -96,14 +96,14 @@ export class PivotGridInclusiveFilters {
     }
 
     initList(fieldName: string){
-        let list = [];
+        let list: Array<any> = [];
         
         this.gridData.forEach(obj =>{
             if (!this.checkObj(list, obj[fieldName]))
                 list.push({ checked: true, text: obj[fieldName] });
         });
 
-        return list.sort((first, second) => {
+        return list.sort((first: any, second: any) => {
             let x = first.text;
             let y = second.text;
 
@@ -125,7 +125,7 @@ export class PivotGridInclusiveFilters {
         let self = this;
 
         // Use HTTP service to get data from the specified JSON file
-        self.http.get("./assets/pivotgrid-data.json").subscribe((data: Array<any>) => {
+        self.http.get("./assets/pivotgrid-data.json").subscribe((data: any) => {
             // Suspend the tree layout from updates, to increase performance
             self.grid.nativeElement.suspendLayout();
 
@@ -151,8 +151,8 @@ export class PivotGridInclusiveFilters {
 
             let filtered = currentFilters.filter(obj => obj.name === this.currentField.text);
             let checkedItems = this.valueList[this.currentField.text]
-                .filter(item => item.checked)
-                .map(item => item.text);
+                .filter((item: any) => item.checked)
+                .map((item: any) => item.text);
 
             if (filtered.length > 0)
                 filtered[0].conditions.value = checkedItems;
@@ -191,7 +191,7 @@ export class PivotGridInclusiveFilters {
                 .customStyle="${iuiPivotGridInclusiveFiltersStyle}"
                 .resourcePath="${this.currentResourcePath}"
                 .theme="${this.currentTheme}" 
-                @checkedChanged="${(e) => this.itemChecked(e, item)}" 
+                @checkedChanged="${(e: any) => this.itemChecked(e, item)}" 
             >
                 ${item.text}
             </iui-checkbox>

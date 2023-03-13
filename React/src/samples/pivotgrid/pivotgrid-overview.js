@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
-import { classMap } from 'integralui-web/external/class-map.js';
-import { styleMap } from 'integralui-web/external/style-map.js';
+import { classMap } from 'integralui-web/external/class-map';
+import { styleMap } from 'integralui-web/external/style-map';
 
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
 import IntegralUIPivotGridComponent from 'integralui-web/wrappers/react.integralui.pivotgrid.js';

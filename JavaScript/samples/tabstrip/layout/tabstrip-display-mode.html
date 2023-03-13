@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-dplmode-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-dplmode"]{
+                --tabstrip-display: inline-block;
+                --tabstrip-width: calc(100% - 175px);
+
+                --tab-header-border-radius: 7px 7px 0 0;
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+                --tab-header-padding: 9px;
+            }
+
+            .tabstrip-dplmode-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 150px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .tabstrip-dplmode-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .tabstrip-dplmode-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Display Mode</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-dplmode"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="tabstrip-dplmode-panel">
+                <label>Display Mode: </label>
+                <iui-radiogroup id="dplmode">
+                    <iui-radiobutton checked="true">AutoSized</iui-radiobutton>
+                    <iui-radiobutton>Justified</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example that shows how content of tab header is arranged. There are two options:</p>
+                <ul class="feature-points">
+                    <li><span class="code-object">AutoSized</span> - tab header size is determined by its content</li>
+                    <li><span class="code-object">Justified</span> - if there is an empty space in the tab strip, it is equally divided among all tabs</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUITabDisplayMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+             
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Display Mode
+        const ctrlDisplayMode = document.querySelector('#dplmode');
+
+        ctrlDisplayMode.resourcePath = currentResourcePath;
+        ctrlDisplayMode.addEventListener("buttonChecked", (e) => onDisplayModeChecked(e));
+
+        let onDisplayModeChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    ctrl.displayMode = IntegralUITabDisplayMode.Justified;
+                    break;
+
+                default: 
+                    ctrl.displayMode = IntegralUITabDisplayMode.AutoSized;
+                    break;
+            }
+        }
+ 
+        const ctrl = document.querySelector('#tabstrip-dplmode');
+
+        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.displayMode = IntegralUITabDisplayMode.AutoSized;
+        ctrl.selectedTab = null;
+        ctrl.size = { height: 300 };
+
+        let tabs = [
+            { 
+                id: 1,
+                text: 'JavaScript',
+                body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 2,
+                text: 'Angular',
+                body: 'Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 3,
+                text: 'React',
+                body: 'In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            },
+            { 
+                id: 4,
+                text: 'Vue',
+                body: 'Nullam arcu. Aliquam consequat. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula.'
+            }
+        ];
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+
+                let tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-dplmode-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        //
+        // Initialize the Component
+        //
+
+        addTabs();
+
+        ctrl.updateLayout();
+    </script>
+</html>

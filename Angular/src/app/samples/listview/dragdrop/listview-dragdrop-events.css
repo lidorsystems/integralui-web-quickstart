@@ -1,0 +1,51 @@
+[id="listview-dragdrop-events"]{
+    --listview-display: inline-block;
+    --listview-height: 100%;
+    --listview-width: 45%;
+}
+[id="listview-dragdrop-events-log"] {
+    --listbox-border: 0;
+    --listbox-margin: 0;
+    --listbox-height: calc(100% - 41px);
+
+    --listitem-padding: 5px 0;
+    --listitem-white-space: normal;
+}
+.sample-block-listview-dragdrop-events {
+    height: 400px;
+    padding: 4px;
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.sample-event-block {
+    background: white;
+    border: thin solid #d9d9d9;
+    display: inline-block;
+    height: 100%;
+    margin: 0 0 0 32px;
+    overflow: hidden;
+    width: calc(55% - 44px);
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.sample-event-block button {
+    float: right;
+    margin: 5px 5px 5px 12px;
+    padding: 5px; 
+    width: 75px;
+}
+.sample-event-block p {
+    border-bottom: thin solid #e5e5e5;
+    margin: 0; 
+    padding: 10px 5px; 
+}

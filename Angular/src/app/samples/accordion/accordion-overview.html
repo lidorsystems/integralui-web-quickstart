@@ -8,7 +8,7 @@
         [size]="ctrlSize"
         [theme]="currentTheme"
     >
-        <iui-groupbox *ngFor="let group of groups; let i = index" [allowAnimation]="true" [customStyle]="customStyle" [data]="group" [text]="group.text" [icon]="group.icon" [expandBoxType]="expandBoxType" [size]="ctrlSize" [theme]="currentTheme">
+        <iui-groupbox *ngFor="let group of groups; index as i" [allowAnimation]="true" [customStyle]="customStyle" [data]="group" [text]="group.text" [icon]="group.icon" [expandBoxType]="expandBoxType" [size]="ctrlSize" [theme]="currentTheme">
             <div class="acc-ovw-group-content">{{group.body}}</div>
         </iui-groupbox>
     </iui-accordion>

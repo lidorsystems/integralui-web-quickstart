@@ -1,0 +1,37 @@
+<h2>SideBar / Placement</h2>
+<div class="sample-block" id="sample-block-sidebar-placement">
+    <iui-sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [inbound]="true"
+        [parentId]="'sample-block-sidebar-placement'"
+        [placement]="currentPlacement"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme" 
+    >
+        <iui-tab *ngFor="let tab of data" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdb-plt-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <iui-panel id="sample-block-sidebar-placement-panel" [contentAlignment] = "{ vertical: 'middle' }">
+        <div class="sample-block-sidebar-control-panel">
+            <label>Placement: </label>
+            <iui-radiogroup id="placement" [resourcePath]="currentResourcePath" (buttonChecked)="onPlacementChecked($event)">
+                <iui-radiobutton>Top</iui-radiobutton>
+                <iui-radiobutton>Right</iui-radiobutton>
+                <iui-radiobutton>Bottom</iui-radiobutton>
+                <iui-radiobutton [checked]="true">Left</iui-radiobutton>
+            </iui-radiogroup>
+        </div>
+    </iui-panel>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>An example where you can change the side at which SideBar will appear. You can have the following placements:</p>
+    <ul class="feature-points">
+        <li><span class="code-object">Top</span> - sidebar is placed on top side</li>
+        <li><span class="code-object">Right</span> - sidebar is placed on right side</li>
+        <li><span class="code-object">Bottom</span> - sidebar is placed on bottom side</li>
+        <li><span class="code-object">Left</span> - sidebar is placed on left side</li>
+    </ul>
+</div>

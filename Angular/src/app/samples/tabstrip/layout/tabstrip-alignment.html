@@ -1,0 +1,27 @@
+<h2>TabStrip / Tab Alignment</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-alignment"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabAlignment]="currentAlignment"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-alignment-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-alignment-panel">
+        <label>Animation Type: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onAlignmentChecked($event)">
+            <iui-radiobutton [checked]="true">TopLeft</iui-radiobutton>
+            <iui-radiobutton>Middle</iui-radiobutton>
+            <iui-radiobutton>BottomRight</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This demo shows how you can align tabs to appear on top/left, middle or right side within the tabstrip. Example only shows the top placement, but it works on all other placements also.</p>
+    </div>
+</div>

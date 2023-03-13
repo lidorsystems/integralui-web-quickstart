@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,9 +12,9 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.treelist.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiTreeListOverviewStyle } from './treelist-overview.style.js';
+import 'integralui-web/components/integralui.treelist';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiTreeListOverviewStyle } from './treelist-overview.style';
 
 @Component({
     selector: '',
@@ -23,7 +23,7 @@ import { iuiTreeListOverviewStyle } from './treelist-overview.style.js';
 })
 export class TreeListOverviewSample {
     public ctrlSize: any = { width: 300, height: 350 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentSelection: any = null;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiTreeListOverviewStyle;

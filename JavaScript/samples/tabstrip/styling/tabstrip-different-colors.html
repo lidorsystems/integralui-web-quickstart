@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-diffclrs-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-diffclrs"]{
+                --tab-header-padding: 9px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Tabs in Different Colors</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-diffclrs"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example where each tab has individual style applied with different colors. You can set the style in code and change it dynamically during run-time.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        const ctrl = document.querySelector('#tabstrip-diffclrs');
+
+        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.selectedTab = null;
+        ctrl.size = { width: 600, height: 300 };
+
+        let tabs = [
+            { 
+                id: 1,
+                text: 'Tab 1',
+                body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.',
+                style: { 
+                    normal: { background: '#bf3737', color: 'white', transition: 'all 0.5s ease-in-out' },
+                    hovered: { background: '#ff4d4d', borderColor: '#ff4d4d', color: 'white', transition: 'all 0.5s ease-in-out' },
+                    selected: { background: 'white', borderColor: '#ff4d4d', color: '#ff4d4d', transition: 'all 0.25s ease-in-out' }
+                }
+            },
+            { 
+                id: 2,
+                text: 'Tab 2',
+                body: 'Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.',
+                style: { 
+                    normal: { background: '#37bf49', color: 'white', transition: 'all 0.5s ease-in-out' },
+                    hovered: { background: '#43de7c', borderColor: '#43de7c', color: 'white', transition: 'all 0.5s ease-in-out' },
+                    selected: { background: 'white', borderColor: '#36b565', color: '#36b565', transition: 'all 0.25s ease-in-out' }
+                }
+           },
+            { 
+                id: 3,
+                text: 'Tab 3',
+                body: 'In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.',
+                style: { 
+                    normal: { background: '#378dbf', color: 'white', transition: 'all 0.5s ease-in-out' },
+                    hovered: { background: '#46aeeb', borderColor: '#46aeeb', color: 'white', transition: 'all 0.5s ease-in-out' },
+                    selected: { background: 'white', borderColor: '#3c93c7', color: '#3c93c7', transition: 'all 0.25s ease-in-out' }
+                }
+           }
+        ];
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+
+                let tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-diffclrs-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        //
+        // Initialize the Component
+        //
+
+        addTabs();
+
+    </script>
+</html>

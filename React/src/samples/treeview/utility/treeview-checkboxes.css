@@ -1,4 +1,4 @@
-.sample-block {
+.sample-block-treeview-checkboxes {
     width: 800px;
     height: 400px;
     
@@ -26,9 +26,12 @@
     width: 40%;
     height: 100%;
 }
-
+.sample-panel-treeview-checkboxes {
+    float: left;
+    margin-left: 20px;
+}
 .sample-panel-treeview-checkboxes iui-button {
-    --button-margin: 10px 0 0 3px;
+    --button-margin: 10px 0 3px 3px;
     --button-padding: 5px;
     --button-vertical-align: top;
     --button-width: 100px;

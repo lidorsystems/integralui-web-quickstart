@@ -21,7 +21,7 @@
     opacity: 1;
 }
 .tbs-toolbar-button span {
-    background-image: url(src/assets/integralui-web/resources/icons-x24.png);
+    background-image: url(src/assets/resources/icons-x24.png);
     background-repeat: no-repeat;
     display: inline-block;
     height: 24px;

@@ -1,0 +1,16 @@
+<h2>TreeView / TreeView as Toolbox</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-toolbox"
+        [customStyle]="treeStyle"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (beforeSelect)="onBeforeSelect($event)"
+        (afterSelect)="onAfterSelect($event)"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demonstration, we have a TreeView that appears like an Accordion. Root items behave like group headers and their content is a list of child items. Whenever a child items is selected, its parent item is also highlighted.</p>
+        <p><span class="initial-space"></span>This is accomplished by setting tree item indent to 0 and handling selection events, modifying corresponding CSS classes and applying inline styles.</p>
+    </div>
+</div>

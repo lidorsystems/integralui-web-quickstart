@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-	<head>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	  	<title>IntegralUI Web - Quick Start</title>
-		<link rel="stylesheet" href="../../index.css" />
-		<style type="text/css">
-			.slbar-ovw-slide-block {
-			    width: 700px;
-			    height: 300px;
-			}
-			.slbar-ovw-slide-block span {
-			    display: block;
-			    font-size: 2em;
-			    padding-top: 140px;
-			    text-align: center;
-			}
-		</style>
-	</head>
-	<body>
-		<h2>SlideBar / Overview</h2>
-		<div class="sample-block">
-			<iui-slidebar id="slidebar-overview" allow-animation="true" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-slidebar>
-			<div class="feature-help">
-	            <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SlideBar</strong> is a native Web Component that allows you to animate slides created using images or custom content.</p>
-	            <p><span class="initial-space"></span>The demonstration above shows only the basic features available in SlideBar component. There are few slides each showing a title. Slide changes are automatic and animated from right to left. Whenever a slide is selected, an animation runs showing the slide content in current view of the SlideBar component. Using navigation buttons, you can quickly switch to specific slide.</p>
-	            <ul class="feature-points">
-	                <li><span class="code-name">allowAnimation</span> - Determines whether animation is enabled or not</li>
-	                <li><span class="code-name">animationPause</span> - Specifies a time delay in milliseconds between slide changes during animation</li>
-	                <li><span class="code-name">animationSpeed</span> - Specifies the speed of animation</li>
-	                <li><span class="code-name">controlStyle</span> - Specifies an object that holds the names of custom CSS classes</li>
-	                <li><span class="code-name">navigationButtons</span> - Determines whether left/right navigation buttons are visible or not</li>
-	                <li><span class="code-name">selectedIndex</span> - Specifies the index of currently selected slide</li>
-	                <li><span class="code-name">selectedSlide</span> - An object that points to the currently selected slide</li>
-	                <li><span class="code-name">slides</span> - Holds a reference to the slide collection defined in your application component</li>
-	                <br/>
-	                <li><span class="code-name">clear</span> - Occurs when all items are removed from the SlideBar</li>
-	                <li><span class="code-name">slideAdded</span> - Occurs when new slide is added to the SlideBar</li>
-	                <li><span class="code-name">slideAdding</span> - Occurs before slide is added</li>
-	                <li><span class="code-name">slideRemoved</span> - Occurs when slide is removed from the SlideBar</li>
-	                <li><span class="code-name">slideRemoving</span> - Occurs before slide is removed</li>
-	                <li><span class="code-name">slideChanged</span> - Occurs when currently selected slide has changed</li>
-	            </ul>
-			</div>
-		</div>
-	</body>
-	<script type="module" src="../../node_modules/integralui-web/components/integralui.slidebar.js"></script>
-	<script type="module" src="../../node_modules/integralui-web/components/integralui.groupbox.js"></script>
-	<script type="module">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .slbar-ovw-slide-block {
+                width: 700px;
+                height: 300px;
+            }
+            .slbar-ovw-slide-block span {
+                display: block;
+                font-size: 2em;
+                padding-top: 140px;
+                text-align: center;
+            }
+            .sample-block-slidebar-overview .control-panel {
+                margin: 20px 3px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SlideBar / Overview</h2>
+        <div class="sample-block-slidebar-overview">
+            <div class="control-panel">
+                <iui-radiogroup id="radiogroup-slidebar" theme="Office">
+                    <iui-radiobutton checked="true">Stream</iui-radiobutton>
+                    <iui-radiobutton>Carousel</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <iui-slidebar id="slidebar-overview" allow-animation="true" resource-path="../../node_modules/integralui-web/icons" theme="Office"></iui-slidebar>
+            <div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SlideBar</strong> is a native Web Component that allows you to animate slides created using images or custom HTML elements.</p>
+                <p><span class="initial-space"></span>The demonstration above shows only the basic features available in SlideBar component. There are few slides each showing a title. Slide changes are automatic and animated from right to left. Whenever a slide is selected, an animation runs showing the slide content in current view of the SlideBar component. Using navigation buttons, you can quickly switch to specific slide.</p>
+                <p><span class="initial-space"></span>There are two different modes to display Slides: Stream and Carousel.</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">allowAnimation</span> - Determines whether animation is enabled or not</li>
+                    <li><span class="code-name">animationPause</span> - Specifies a time delay in milliseconds between slide changes during animation</li>
+                    <li><span class="code-name">animationSpeed</span> - Specifies the speed of animation</li>
+                    <li><span class="code-name">displayMode</span> - Specifies how slides are displayed, using a Stream or Carousel</li>
+                    <li><span class="code-name">navigationButtons</span> - Determines whether left/right navigation buttons are visible or not</li>
+                    <li><span class="code-name">selectedIndex</span> - Specifies the index of currently selected slide</li>
+                    <br/>
+                    <li><span class="code-name">clear</span> - Occurs when all items are removed from the SlideBar</li>
+                    <li><span class="code-name">slideAdded</span> - Occurs when new slide is added to the SlideBar</li>
+                    <li><span class="code-name">slideAdding</span> - Occurs before slide is added</li>
+                    <li><span class="code-name">slideRemoved</span> - Occurs when slide is removed from the SlideBar</li>
+                    <li><span class="code-name">slideRemoving</span> - Occurs before slide is removed</li>
+                    <li><span class="code-name">slideChanged</span> - Occurs when currently selected slide has changed</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.slidebar.js"></script>
+    <script type="module">
         import IntegralUISlide from '../../node_modules/integralui-web/components/integralui.slide.js';
+        import { IntegralUISlideDisplayMode } from '../../node_modules/integralui-web/components/integralui.enums.js';
 
-		const ctrl = document.querySelector('#slidebar-overview');
+        const ctrl = document.querySelector('#slidebar-overview');
 
         let slides = [
             { text: "Slide 1" },
             { text: "Slide 2" },
-            { text: "Slide 3" }
+            { text: "Slide 3" },
+            { text: "Slide 4" },
+            { text: "Slide 5" }
         ];
 
         //
@@ -83,5 +96,18 @@
         }
 
         addSlides();
-	</script>
+
+        //
+        // Radio Buttons
+        //
+
+        const group = document.querySelector('iui-radiogroup');
+
+        group.addEventListener("buttonChecked", (e) => onButtonChecked(e));
+
+        let onButtonChecked = function(e){
+            ctrl.displayMode = e.detail.index === 1 ? IntegralUISlideDisplayMode.Carousel : IntegralUISlideDisplayMode.Stream;
+        }
+
+    </script>
 </html>

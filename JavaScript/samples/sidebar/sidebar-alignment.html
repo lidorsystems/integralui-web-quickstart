@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-sidebar-alignment"]{
+                height: 400px;
+                padding: 10px;
+                position: relative;
+            }
+            [id="sample-block-sidebar-alignment-panel"]{
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-height: calc(100% - 2px);
+            }
+            .sample-block-sidebar-control-panel {
+                display: inline-block;
+                text-align: left;
+                width: 150px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .sample-block-sidebar-control-panel label {
+                display: block;
+                margin-bottom: 10px;
+            }
+            .sdbr-alg-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+
+                -webkit-user-select: text;
+                -khtml-user-select: text;
+                -moz-user-select: text;
+                -o-user-select: text;
+                -ms-user-select: text;
+                user-select: text;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SideBar / Tab Alignment</h2>
+        <div class="sample-block" id="sample-block-sidebar-alignment">
+            <iui-sidebar id="sidebar-alignment" allow-animation="true" parent-id="sample-block-sidebar-alignment" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+            </iui-sidebar>
+            <iui-panel id="sample-block-sidebar-alignment-panel">
+                <div class="sample-block-sidebar-control-panel">
+                    <label>Alignment: </label>
+                    <iui-radiogroup id="alignment">
+                        <iui-radiobutton>TopLeft</iui-radiobutton>
+                        <iui-radiobutton checked="true">Middle</iui-radiobutton>
+                        <iui-radiobutton>BottomRight</iui-radiobutton>
+                    </iui-radiogroup>
+                </div>
+            </iui-panel>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>This demo shows how you can align tabs to appear on top/left, middle or bottom/right side within the side bar. Example only shows tabs placed on right side, but it works on all other sides also.</p>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.sidebar.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module">
+        import { iuiSideBarAlignmentStyle } from './sidebar-alignment.style.js';
+        import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIPlacement, IntegralUITabAlignment, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentResourcePath = '../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+     
+        //
+        // Panel settings
+        //
+
+        const ctrlPanel = document.querySelector('#sample-block-sidebar-alignment-panel');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        let alignmentValues = ['TopLeft', 'Middle', 'BottomRight'];
+        let getAlignmentValue = function(index){
+            return index >= 0 ? alignmentValues[index] : 'Topleft';
+        }
+
+        // Alignment
+        const ctrlAlignment = document.querySelector('#alignment');
+
+        ctrlAlignment.resourcePath = currentResourcePath;
+        ctrlAlignment.addEventListener("buttonChecked", (e) => onAlignmentChecked(e));
+
+        let onAlignmentChecked = function(e){
+            ctrl.tabAlignment = getAlignmentValue(e.detail.index);
+        }
+
+        //
+        // SideBar settings
+        //
+
+        const ctrl = document.querySelector('#sidebar-alignment');
+
+        let tabs = [
+            { 
+                id: 1,
+                icon: 'tab-icon library',
+                text: 'Books',
+                body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 2,
+                icon: 'tab-icon album',
+                text: 'Music',
+                body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 3,
+                icon: 'tab-icon star-empty',
+                text: 'Favorites',
+                body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            }
+        ];
+
+        ctrl.autoHide = false;
+        ctrl.customStyle = iuiSideBarAlignmentStyle;
+        ctrl.expanded = false;
+        ctrl.placement = IntegralUIPlacement.Right;
+        ctrl.tabAlignment = IntegralUITabAlignment.Middle;
+        ctrl.size = { width: 400 };
+        ctrl.theme = currentTheme;
+        
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                var ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.icon = tab.icon;
+                ctrlTab.theme = IntegralUITheme.Office;
+
+                var tabContent = document.createElement('div');
+                tabContent.classList.add('sdbr-alg-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        addTabs();
+
+    </script>
+</html>

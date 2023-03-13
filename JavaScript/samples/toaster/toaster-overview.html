@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Toaster / Overview</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .toaster-block {
+                display: inline-block;
+                vertical-align: top;
+                width: 400px;
+            }
+            .toaster-block input {
+                border: 0;
+                font-size: 1rem;
+                padding: 5px;
+            }
+            .toaster-block input:focus {
+                outline: none !important;
+            }
+            .toaster-block iui-label {
+                --label-background: #cecece;
+                --label-display: block;
+                --label-focused-background: #cecece;
+                --label-focused-color: black;
+                --label-focused-font-weight: normal;
+                --label-margin: 5px 0;
+
+                --label-value-padding: 5px;
+            }
+           .toaster-block iui-select {
+                --select-border-color: transparent;
+                --select-margin: 0;
+            }
+       </style>
+    </head>
+    <body style="overflow:hidden">
+        <h2>Toaster / Overview</h2>
+        <div class="sample-block" id="toaster-overview">
+            <div class="toaster-block">
+                <iui-label value="Title" theme="Office"><input id="title" /></iui-label>
+                <iui-label value="Message" theme="Office"><input id="message" /></iui-label>
+                <iui-label value="Duration" theme="Office"><input type="number" id="duration" /></iui-label>
+                <iui-label value="Alignment" theme="Office"><iui-select id="toast-alignment" allow-animation="true" max-dropdown-items="5" theme="Office"></iui-select></iui-label>
+                <iui-label value="Type" theme="Office"><iui-select id="toast-type" allow-animation="true" max-dropdown-items="5" theme="Office"></iui-select></iui-label>
+                <iui-checkbox id="toast-template" resource-path="../../node_modules/integralui-web/icons">Use Template</iui-checkbox>
+                <div style="margin-top: 20px; text-align: center">
+                    <iui-button id="show-button" theme="Office">Show Message</iui-button>
+                </div>
+                <iui-toaster allow-animation="true" theme="Office"></iui-toaster>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Toaster</strong> is a native Web Component that allows you to display notification messages (Toasts) with different alert levels. Each Toast can have a different title, message and alert level: Error, Info, Success or Warning.</p>
+                <p><span class="initial-space"></span>Depending on chosen alignment and parent container, Toasts can appear accordingly. In additon, if a template is specified, the message can be constucted using custom HTML content.</p>
+                <p><span class="initial-space"></span>A partial list of supported properties:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">alignment</span> - Determines the side at which Toasts will appear</li>
+                    <li><span class="code-name">contentTemplate</span> - Specifies a template that you can use to add custom HTML content for Toasts</li>
+                    <li><span class="code-name">duration</span> - Specifies how long Toasts will remain visible, in miliseconds</li>
+                    <li><span class="code-name">customStyle</span> - Specifies an object that contains custom style settings for the component</li>
+                    <li><span class="code-name">parentId</span> - Specifies the id value of parent element that will contain Toasts</li>
+                    <li><span class="code-name">positionAdjustment</span> - An object with values for position adjustment of Toasts</li>
+                    <li><span class="code-name">size</span> - Specifies the component width and height, in pixels</li>
+                    <br/>
+                    <li><span class="code-name">text</span> - Specifies the Toast message</li>
+                    <li><span class="code-name">title</span> - Specifies the Toast title</li>
+                    <li><span class="code-name">type</span> - Specifies the Toast type: Error, Info, Success or Warning</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.label.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.toaster.js"></script>
+    <script type="module">
+        import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { styleMap } from '../../../../node_modules/integralui-web/external/style-map.js';
+
+        //
+        // Toaster settings
+        //
+
+        const toaster = document.querySelector('iui-toaster');
+
+        // Labels
+
+        const labels = document.querySelectorAll('iui-label');
+
+        let setLabeContentSize = function(){
+            labels.forEach(label => {
+                label.contentSize = { width: 300 }
+            });
+        }
+
+        // Input elements
+        const title = document.querySelector('#title');
+        title.value = 'Info';
+
+        const message = document.querySelector('#message');
+        message.value = 'Sample message';
+
+        const duration = document.querySelector('#duration');
+        duration.value = toaster.duration;
+
+        // Use Template
+        const isTemplateActive = document.querySelector('#toast-template');
+
+        toaster.contentTemplate = function(toast){
+            if (isTemplateActive.checked)
+                return html`<div>
+                        <div style=${styleMap({ fontWeight: 'bold', marginBottom: '10px', position: 'relative' })}>
+                            <span>${toast.title}</span>
+                            <span style=${styleMap({ position: 'absolute', fontSize: '1.5rem', right: 0, top: '-4px' })} @click="${(e) => hideToast(toast)}">&times;</span>
+                        </div>
+                        <hr style=${styleMap({ background: '#d9d9d9', border: 0, height: '1px' })} />
+                        <span>${toast.text}</span>
+                    </div>`;
+
+            return null;
+        }
+
+        let hideToast = function(toast){
+            toaster.hide(toast);
+        }
+
+        // Toast Alignment
+        const ctrlToastAlignment = document.querySelector('#toast-alignment');
+
+        ctrlToastAlignment.items = [
+            { text: 'BottomCenter' },
+            { text: 'BottomFull' },
+            { text: 'BottomLeft' },
+            { text: 'BottomRight' },
+            { text: 'TopCenter' },
+            { text: 'TopFull' },
+            { text: 'TopLeft' },
+            { text: 'TopRight' }
+        ];
+
+        ctrlToastAlignment.selectedItem = ctrlToastAlignment.items[7];
+
+        ctrlToastAlignment.addEventListener("afterSelect", (e) => onToastAlignmentChanged(e));
+
+        let onToastAlignmentChanged = function(e){
+            if (e.detail.item)
+                toaster.alignment = e.detail.item.text;
+        } 
+
+        // Toast Type
+        const ctrlToastType = document.querySelector('#toast-type');
+
+        ctrlToastType.items = [
+            { text: 'Error' },
+            { text: 'Info' },
+            { text: 'Success' },
+            { text: 'Warning' }
+        ];
+
+        let currentToastType = 'Info';
+        ctrlToastType.selectedItem = ctrlToastType.items[1];
+
+        ctrlToastType.addEventListener("afterSelect", (e) => onToastTypeChanged(e));
+        
+        let onToastTypeChanged = function(e){
+            if (e.detail.item)
+                currentToastType = e.detail.item.text;
+        } 
+
+        //
+        // Show Button settings
+        //
+
+        const showButton = document.querySelector('#show-button');
+
+        showButton.addEventListener("click", () => onShowClicked());
+
+        let onShowClicked = function(){
+            toaster.duration = duration.value;
+            toaster.show({ title: title.value, text: message.value, type: currentToastType });
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        setLabeContentSize();
+
+    </script>
+</html>

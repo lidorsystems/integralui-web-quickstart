@@ -1,0 +1,33 @@
+<h2>TabStrip / Different Types of Scrolling</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-scrollmode"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [scrollMode]="currentScrollMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-scrollmode-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-scrollmode-panel">
+        <label>Scroll Mode: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onScrollModeChecked($event)">
+            <iui-radiobutton>None</iui-radiobutton>
+            <iui-radiobutton [checked]="true">InBound</iui-radiobutton>
+            <iui-radiobutton>OutBound</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>When you have many tabs that cannot appear in the TabStrip space all at the same time, it is best to enable scrolling. By default, scrolling is disabled.</p>
+        <p><span class="initial-space"></span>There are three scrolling modes:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">None</span> - scrolling disabled, scroll buttons will not appear</li>
+            <li><span class="code-object">InBound</span> - scrolling enabled, scroll buttons appear next to each other</li>
+            <li><span class="code-object">OutBound</span> - scrolling enabled, scroll buttons appear on left/right or up/down side</li>
+        </ul>
+    </div>
+</div>

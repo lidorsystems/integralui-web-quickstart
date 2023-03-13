@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,24 +12,24 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
-import { styleMap } from 'integralui-web/external/style-map.js';
+import { html } from 'integralui-web/external/lit-element';
+import { styleMap } from 'integralui-web/external/style-map';
 
-import 'integralui-web/components/integralui.tab.js';
-import 'integralui-web/components/integralui.tabstrip.js';
-import { IntegralUIAnimationType, IntegralUITabScrollMode } from 'integralui-web/components/integralui.enums.js';
-import { iuiTabStripNewTabStyle } from './tabstrip-new-tab.style.js';
+import 'integralui-web/components/integralui.tab';
+import 'integralui-web/components/integralui.tabstrip';
+import { IntegralUIAnimationType, IntegralUITabScrollMode } from 'integralui-web/components/integralui.enums';
+import { iuiTabStripNewTabStyle } from './tabstrip-new-tab.style';
 
 @Component({
     selector: '',
     templateUrl: './tabstrip-new-tab.html',
     styleUrls: ['./tabstrip-new-tab.css']
 })
-export class TabStripNewTabSample {
-    @ViewChild('tabstrip', { static: false }) tabstrip: ElementRef;
+export class TabStripNewTab {
+    @ViewChild('tabstrip', { static: false }) tabstrip!: ElementRef;
 
     public currentAnimation: IntegralUIAnimationType = IntegralUIAnimationType.Fade;
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentScrollMode: IntegralUITabScrollMode = IntegralUITabScrollMode.OutBound;
     public currentSelection: any = null;
     public currentTabSpacing: number = 3;
@@ -54,13 +54,13 @@ export class TabStripNewTabSample {
     // for properties, methods and events
     //
     currentTabTemplate = (tab: any) => { 
-        if (tab.data && tab.data.tag === 'NEW'){
-            let btnIcon = this.isLoading ? 'assets/integralui-web/icons/load.gif' : 'assets/integralui-web/icons/plus-24.png';
+        if (tab && tab.tag === 'NEW'){
+            let btnIcon = this.isLoading ? 'assets/icons/load.gif' : 'assets/icons/plus-24.png';
             let btnClass = this.isLoading ? 'new-tab-button-loading' : 'new-tab-button';
 
             return html`
                 <div class="new-tab-block">
-                    <img class=${btnClass} src=${btnIcon} @mousedown="${(e) => this.addNewTab(e, tab)}" />
+                    <img class=${btnClass} src=${btnIcon} @mousedown="${(e: any) => this.addNewTab(e, tab)}" />
                 </div>
             `;
         }
@@ -78,7 +78,7 @@ export class TabStripNewTabSample {
 
             // Once the loading animation is active you can load tab from a custom data source (local or remote), like a JSON file
             setTimeout(function(){
-                let newTabIndex = self.tabs.indexOf(tab.data);
+                let newTabIndex = self.tabs.indexOf(tab);
                 let newTab = { id: self.tabs.length, text: "Tab " + self.tabs.length }
                 self.tabs.splice(newTabIndex, 0, newTab);
 

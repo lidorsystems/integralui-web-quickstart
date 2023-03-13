@@ -1,19 +1,18 @@
-<h2>Accordion / Overview</h2>
+<h2>ContextMenu / Overview</h2>
 <div class="sample-block">
-    <iui-accordion #accordion
-        [allowAnimation]="true"
-        [groups]="groups"
-        [resourcePath]="currentResourcePath"
-        [selectedGroup]="currentSelection"
-        [size]="ctrlSize"
+    <iui-contextmenu #contextmenu
+        [customStyle]="customStyle"
+        [enabled]="menuSettings.enabled"
+        [settings]="menuSettings"
         [theme]="currentTheme"
+        (menuClick)="menuItemClick($event)"
     >
-        <iui-groupbox *ngFor="let group of groups; let i = index" [allowAnimation]="true" [data]="group" [text]="group.text" [icon]="group.icon" [expandBoxType]="expandBoxType" [size]="ctrlSize" [theme]="currentTheme">
-            <div class="acc-ovw-group-content">{{group.body}}</div>
-        </iui-groupbox>
-    </iui-accordion>
-    <div class="feature-help">
-        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Accordion</strong> is a native Web Component that represents a list of expandable panels arranged vertically.</p>
-        <p><span class="initial-space"></span>The demonstration above shows only the basic features available in Accordion component. There are few <a routerLink="/groupbox-overview">group boxes</a> each with a header and a content panel.</p>
-    </div>
+        <div class="cmnu-ovw-block" [ngStyle]="{ fontWeight: fontWeight, fontStyle: fontStyle, fontSize: fontSize + 'em', textDecoration: textDecoration }">
+            <span>Right click to open the context menu</span>
+        </div>
+    </iui-contextmenu>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ContextMenu</strong> is a native Web Component that allows you to attach a custom context menu to any HTML element or Angular component. Whenever element is right-clicked, a context menu will popup showing data provided on your side.</p>
+    <p><span class="initial-space"></span>In this example, whenever the block is right-clicked, a context menu will appear with options from where you can change the font style of the block content. These options are divided in two groups using a separator. Options in the first group have a checkbox, while in the second have a radio button. Depending on which option is active, the font style of the block content changes accordingly.</p>
 </div>

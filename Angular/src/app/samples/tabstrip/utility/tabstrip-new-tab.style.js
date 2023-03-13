@@ -1,4 +1,4 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiTabStripNewTabStyle = css`
     .new-tab-block {

@@ -1,36 +1,82 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-	<head>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	  	<title>IntegralUI Web - Quick Start</title>
-		<link rel="stylesheet" href="../../index.css" />
-		<style type="text/css">
-			.sdb-ovw-tab-content {
-			    padding: 5px;
-			    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
-			    font-size: 1.1em;
-			}
-		</style>
-	</head>
-	<body>
-		<h2>SideBar / Overview</h2>
-		<div class="sample-block">
-			<iui-sidebar id="sidebar-overview" allow-animation="true" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
-			</iui-sidebar>
-			<div class="feature-help">
-                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SideBar</strong> is a native Web Component that allows you to add custom content panel that appears by sliding from page side.</p>
-			</div>
-		</div>
-	</body>
-	<script type="module" src="../../node_modules/integralui-web/components/integralui.sidebar.js"></script>
-	<script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
-	<script type="module">
-		import { iuiSideBarOverviewStyle } from './sidebar-overview.style.js';
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-sidebar-overview"]{
+                height: 400px;
+                padding: 10px;
+                position: relative;
+            }
+            [id="sample-block-sidebar-content"]{
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-color: #808080;
+                --panel-font-size: 1.5rem;
+                --panel-font-style: italic;
+                --panel-height: calc(100% - 2px);
+            }
+            .sdb-ovw-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SideBar / Overview</h2>
+        <div class="sample-block" id="sample-block-sidebar-overview">
+            <iui-sidebar id="sidebar-overview" allow-animation="true" parent-id="sample-block-sidebar-overview" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+            </iui-sidebar>
+            <iui-panel id="sample-block-sidebar-content">
+                Sample Content Block
+            </iui-panel>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SideBar</strong> is a native Web Component that allows you to add custom content panel that appears by sliding from page side.</p>
+            <p><span class="initial-space"></span>The following features are available.</p>
+            <ul class="feature-points">
+                <li><span class="code-name">Animations</span> - There are different animations available for different action within the side bar</li>
+                <li><span class="code-name">AutoHide</span> - Allows you to pin or unpin the content panel when expanded. When pinned other parts of parent container will move to make space for the content panel, when unpinned the content panel popups on top of parent container.</li>
+                <li><span class="code-name">Custom Content</span> - Each tab can have its own content composed from custom HTML elements or other components</li>
+                <li><span class="code-name">Different Sides</span> - You can place SideBar component on each side of parent container: Top, Right, Bottom or Left </li>
+                <li><span class="code-name">Dynamic Resize</span> - Any changes to parent container size affects the position and size of the side panel</li>
+                <li><span class="code-name">Events</span> - There are multiple events fired based on action: expand/collapse, selection, resize etc. </li>
+                <li><span class="code-name">Resize</span> - When enabled, you can resize the content panel during run-time</li>
+                <li><span class="code-name">Tab Alignment</span> - Tabs can appear aligned to top/left, middle or bottom/right side</li>
+                <li><span class="code-name">Tabs</span> - SideBar can contain multiple tabs with different content panels</li>
+                <li><span class="code-name">Templates</span> - You can add custom HTML elements to tabs and header</li>
+                <li><span class="code-name">Tooltips</span> - Each tab can have its own tooltip</li>
+            </ul>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.sidebar.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module">
+        import { iuiSideBarOverviewStyle } from './sidebar-overview.style.js';
         import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
-        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUIPlacement, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentTheme = IntegralUITheme.Office;
+ 
+        //
+        // Panel settings
+        //
 
-		const ctrl = document.querySelector('#sidebar-overview');
+        const ctrlPanel = document.querySelector('#sample-block-sidebar-content');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        //
+        // SideBar settings
+        //
+
+        const ctrl = document.querySelector('#sidebar-overview');
 
         let tabs = [
             { 
@@ -65,10 +111,13 @@
             }
         ];
 
+        ctrl.autoHide = false;
         ctrl.customStyle = iuiSideBarOverviewStyle;
         ctrl.expanded = true;
-		ctrl.size = { width: 600, height: 300 };
-        ctrl.tabSpacing = 3;
+        ctrl.placement = IntegralUIPlacement.Left;
+        ctrl.showHeader = true;
+        ctrl.size = { width: 400, height: 200 };
+        ctrl.theme = currentTheme;
 
         //
         // Create a list of tabs
@@ -89,11 +138,12 @@
 
                 ctrl.appendChild(ctrlTab);
             });
+
+            ctrl.selectedTab = tabs[2];
+            ctrl.updateLayout();
         }
 
         addTabs();
 
-        // Make initial selection after tabs are created
-        ctrl.selectedTab = tabs[0];
-	</script>
+    </script>
 </html>

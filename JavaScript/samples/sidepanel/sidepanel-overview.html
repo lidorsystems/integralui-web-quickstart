@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-sidepanel-overview"]{
+                height: 500px;
+                padding: 10px;
+                position: relative;
+            }
+            .sidepanel-overview-content {
+                padding: 10px;
+            }
+            .sidepanel-overview-content > div {
+                margin: 0 0 10px 0;
+                text-align: left;
+            }
+            [id="sample-block-sidepanel-overview-content"]{
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-height: calc(100% - 12px);
+                --panel-padding: 5px;
+            }
+            .sample-block-sidepanel-control-panel {
+                display: inline-block;
+                text-align: center;
+                width: 300px;
+
+                --radio-button-margin: 10px 0 0 0;
+
+                --button-margin: 20px 0 0 0;
+                --button-width: 75px;
+            }
+            .sdbr-pnl-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+
+                -webkit-user-select: text;
+                -khtml-user-select: text;
+                -moz-user-select: text;
+                -o-user-select: text;
+                -ms-user-select: text;
+                user-select: text;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SidePanel / Overview</h2>
+        <div class="sample-block" id="sample-block-sidepanel-overview">
+            <iui-sidepanel id="sidepanel-overview" allow-animation="true" parent-id="sample-block-sidepanel-overview" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+                <div class="sidepanel-overview-content">
+                    <div>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.</div>
+                    <div>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.</div>
+                </div>
+            </iui-sidepanel>
+            <iui-panel id="sample-block-sidepanel-overview-content">
+                <div class="sample-block-sidepanel-control-panel">
+                    <label>Placement: </label>
+                    <iui-radiogroup id="sidepanel-placement">
+                        <iui-radiobutton>Top</iui-radiobutton>
+                        <iui-radiobutton>Right</iui-radiobutton>
+                        <iui-radiobutton>Bottom</iui-radiobutton>
+                        <iui-radiobutton checked="true">Left</iui-radiobutton>
+                    </iui-radiogroup>
+                    <iui-button id="sidepanel-visibility" allow-animation="true">Show</iui-button>
+                </div>
+            </iui-panel>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SidePanel</strong> is a native Web Component that allows you to add custom content panel that appears by sliding from page side. Contains only one content panel and it can appear inside parent container on top of other content with overlay.</p>
+            <p><span class="initial-space"></span>The following features are available.</p>
+            <ul class="feature-points">
+                <li><span class="code-name">Animations</span> - Opening/Closing of side panel is animated with option to change animation speed</li>
+                <li><span class="code-name">Dynamic Resize</span> - Any changes to parent container size affects the position and size of the side panel</li>
+                <li><span class="code-name">Custom Content</span> - Content panel can contain custom HTML elements or other components</li>
+                <li><span class="code-name">Different Sides</span> - You can place SidePanel component on each side of parent container: Top, Right, Bottom or Left </li>
+                <li><span class="code-name">Inbound</span> - Calculating the side panel layout includes parent container padding</li>
+                <li><span class="code-name">Overlay</span> - Optional panel (in dark gray background) that overshadow other page content supressing any user action</li>
+                <li><span class="code-name">Visiblity</span> - Open/Close the content of side panel manually from code </li>
+            </ul>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.sidepanel.js"></script>
+    <script type="module">
+        import { IntegralUIPlacement, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentResourcePath = '../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Panel settings
+        //
+
+        const ctrlPanel = document.querySelector('#sample-block-sidepanel-overview-content');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        // Placement
+        const ctrlPlacement = document.querySelector('#sidepanel-placement');
+
+        ctrlPlacement.resourcePath = currentResourcePath;
+        ctrlPlacement.addEventListener("buttonChecked", (e) => onPlacementChecked(e));
+
+        let onPlacementChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    ctrl.placement = IntegralUIPlacement.Right;
+                    break;
+
+                case 2: 
+                    ctrl.placement = IntegralUIPlacement.Bottom;
+                    break;
+
+                case 3: 
+                    ctrl.placement = IntegralUIPlacement.Left;
+                    break;
+
+                default: 
+                    ctrl.placement = IntegralUIPlacement.Top;
+                    break;
+            }
+        }
+
+        // Button
+        const ctrlVisibility = document.querySelector('#sidepanel-visibility');
+
+        ctrlVisibility.addEventListener("click", () => onVisibilityClicked());
+
+        let onVisibilityClicked = function(){
+            ctrl.visible = !ctrl.visible;
+            updateVisibiltyButtonText();
+        }
+
+        let updateVisibiltyButtonText = function(){
+            ctrlVisibility.innerText = ctrl.visible ? 'Hide' : 'Show';
+        }
+
+        //
+        // SidePanel settings
+        //
+
+        const ctrl = document.querySelector('#sidepanel-overview');
+
+        ctrl.placement = IntegralUIPlacement.Left;
+        ctrl.size = { width: 400, height: 200 };
+        ctrl.theme = currentTheme;
+        ctrl.visible = false;
+
+        ctrl.addEventListener("visibleChanged", (e) => onSidePanelVisibleChanged(e));
+
+        let onSidePanelVisibleChanged = function(e){
+            ctrl.visible = e.detail.visible;
+            updateVisibiltyButtonText();
+        }
+
+    </script>
+</html>

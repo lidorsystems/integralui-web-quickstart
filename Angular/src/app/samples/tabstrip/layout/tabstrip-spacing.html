@@ -1,0 +1,21 @@
+<h2>TabStrip / How to Add Space Between Tabs</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-spacing"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabSpacing]="spacingValue"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-spacing-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-spacing-panel">
+        <iui-numeric [resourcePath]="currentResourcePath" [value]="spacingValue" [size]="ctrlSpacingSize" [theme]="currentTheme" (valueChanged)="onSpacingChanged($event)"></iui-numeric>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample demonstrates how to change the spacing between tabs.</p>
+    </div>
+</div>

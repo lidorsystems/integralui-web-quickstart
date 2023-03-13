@@ -13,7 +13,7 @@ class TabStripToolbar extends Component {
 
         this.state = {
             currentAnimation: IntegralUIAnimationType.Slide,
-            currentResourcePath: '../integralui-web/icons',
+            currentResourcePath: '../../integralui-web/icons',
             currentTabSpacing: 0,
             isAnimationAllowed: true,
             ctrlSize: { width: 500, height: 300 },
@@ -93,7 +93,7 @@ class TabStripToolbar extends Component {
                         tabSpacing={this.state.currentTabSpacing}
                     > 
                         {tabs}
-                        <div className="tbs-toolbar" slot="iui-tabstrip-toolbar-right">
+                        <div className="tbs-toolbar" slot="toolbar-right">
                             {toolbar}
                         </div>
                     </IntegralUITabStripComponent>

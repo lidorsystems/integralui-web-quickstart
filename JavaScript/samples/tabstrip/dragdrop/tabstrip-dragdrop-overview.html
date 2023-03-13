@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-dragdrop-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Drag and Drop Overview</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-dragdrop"
+                allow-animation="true"
+                allow-drag="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, you can reorder tabs using drag and drop. Drag and drop functionality is controlled on general level with <span class="code-lang">allowDrag</span> property that enables or disables dragging of all tabs, or on individial level where each Tab has allowDrag property that determines whether tab is draggable or not.</p>
+                <p><span class="initial-space"></span>Whenever tab is reordered using drag and drop, the <span class="code-lang">tabOrderChanged</span> event is fired, which you can handle in your code and add custom actions.</p>
+                <p><span class="initial-space"></span>To reorder tabs, just select a tab and drag it over other tabs. An empty space will appear showing the target position.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUITabDisplayMode, IntegralUITabScrollMode, IntegralUITabStripPlacement, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTabStripDragDropStyle } from './tabstrip-dragdrop-overview.style.js';
+       
+        const ctrl = document.querySelector('#tabstrip-dragdrop');
+
+        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.customStyle = iuiTabStripDragDropStyle;
+        ctrl.size = { width: 600, height: 300 };
+        ctrl.theme = IntegralUITheme.Office;
+
+        let tabs = [
+            { 
+                id: 1,
+                icon: 'tab-icon library',
+                text: 'Books',
+                body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 2,
+                icon: 'tab-icon album',
+                text: 'Music',
+                body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 3,
+                icon: 'tab-icon star-empty',
+                text: 'Favorites',
+                body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            },
+            { 
+                id: 4,
+                icon: 'tab-icon notes',
+                text: 'Notes',
+                body: 'Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum.'
+            },
+            { 
+                id: 5,
+                icon: 'tab-icon sports',
+                text: 'Sports',
+                body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            }
+        ];
+
+        //
+        // TabStrip Events
+        //
+
+        ctrl.addEventListener("tabOrderChanged", (e) => tabOrderChanged(e));
+
+        let tabOrderChanged = function(e){
+            tabs = e.detail.list;
+            
+            updateTabs();
+
+            console.log(e.detail.tab.text + " changed its position to " + e.detail.index);
+        }
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                var ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.allowDrag = true;
+                ctrlTab.data = tab;
+                ctrlTab.icon = tab.icon;
+                ctrlTab.text = tab.text;
+                ctrlTab.theme = IntegralUITheme.Office;
+
+                var tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-ovw-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        let updateTabs = function(){
+            const children = ctrl.querySelectorAll('iui-tab');
+            children.forEach(tab => tab.remove());
+
+            addTabs();
+        }
+
+        addTabs();
+
+    </script>
+</html>

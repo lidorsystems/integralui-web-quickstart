@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
-import { styleMap } from 'integralui-web/external/style-map.js';
+import { styleMap } from 'integralui-web/external/style-map';
 
 import { IntegralUIAnimationType, IntegralUITabScrollMode } from 'integralui-web/components/integralui.enums.js';
 
@@ -16,14 +16,14 @@ class TabStripNewTab extends Component {
 
         this.state = {
             currentAnimation: IntegralUIAnimationType.Fade,
-            currentResourcePath: '../integralui-web/icons',
+            currentResourcePath: '../../integralui-web/icons',
             currentScrollMode: IntegralUITabScrollMode.OutBound,
             currentSelection: null,
             currentTabSpacing: 3,
             isAnimationAllowed: true,
             isLoading: false,
             ctrlSize: { width: 450, height: 300 },
-            data: [
+            tabs: [
                 { id: 1, text: 'Tab 1' },
                 { id: 999, tag: 'NEW' }
             ]
@@ -37,8 +37,8 @@ class TabStripNewTab extends Component {
     // for properties, methods and events
     //
     currentTabTemplate = (tab) => { 
-        if (tab.data && tab.data.tag === 'NEW'){
-            let btnIcon = this.state.isLoading ? '../../integralui-web/icons/load.gif' : '../../integralui-web/icons/plus-24.png';
+        if (tab && tab.tag === 'NEW'){
+            let btnIcon = this.state.isLoading ? '../../../integralui-web/icons/load.gif' : '../../../integralui-web/icons/plus-24.png';
             let btnClass = this.state.isLoading ? 'new-tab-button-loading' : 'new-tab-button';
 
             return html`
@@ -61,17 +61,17 @@ class TabStripNewTab extends Component {
 
             // Once the loading animation is active you can load tab from a custom data source (local or remote), like a JSON file
             setTimeout(function(){
-                let newTabList = [...self.state.data];
-                let newTabIndex = newTabList.indexOf(tab.data);
+                let newTabList = [...self.state.tabs];
+                let newTabIndex = newTabList.indexOf(tab);
                 let newTab = { id: newTabList.length, text: "Tab " + newTabList.length }
                 newTabList.splice(newTabIndex, 0, newTab);
 
-                self.setState({ data: newTabList, currentSelection: newTab, isLoading: false });
+                self.setState({ tabs: newTabList, currentSelection: newTab, isLoading: false });
 
                 // Scroll tabs and show the newly added tab in the TabStrip
                 setTimeout(function(){
-                    self.tabStripRef.current.scrollPos(999);
-                }, 1);
+                    self.tabStripRef.current.scrollTo(newTab);
+                }, 10);
 
             }, 1000);
         }
@@ -88,7 +88,7 @@ class TabStripNewTab extends Component {
     }
 
     render() {
-        let tabs = this.state.data.map((tab, index) => {
+        let tabs = this.state.tabs.map((tab, index) => {
                 return (
                     <IntegralUITabComponent id={tab.id} key={index} data={tab} text={tab.text}>
                         <div className="tbs-ntb-tab-content">Content of {tab.text}</div>

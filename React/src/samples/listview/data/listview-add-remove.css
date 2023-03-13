@@ -1,0 +1,37 @@
+.listview-addremove-empty-block {
+    border: thin solid #cecece; 
+    display: inline-block;
+    font-size: 2rem;
+    padding: 132px 20px;
+    width: 310px;
+    text-align: center;
+}
+[id="listview-addremove"]{
+    display: inline-block;
+}
+.listview-addremove-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 200px;
+
+    --button-display: block;
+    --button-margin: 5px 0;
+}
+.listview-addremove-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.listview-addremove-panel label:first-of-type {
+    margin-top: 0;
+}
+.inline-block {
+    display: inline-block;
+}
+.inline-block {
+    --button-display: inline-block;
+    --button-vertical-align: middle;
+
+    --numeric-display: inline-block;
+    --numeric-vertical-align: middle;
+}

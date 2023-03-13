@@ -1,6 +1,12 @@
 <h2>SlideBar / Overview</h2>
-<div class="sample-block">
-    <iui-slidebar [allowAnimation]="true" [resourcePath]="currentResourcePath" [theme]="currentTheme">
+<div class="sample-block-slidebar-overview">
+    <div class="control-panel">
+        <iui-radiogroup id="radiogroup-slidebar" [theme]="currentTheme" (buttonChecked)="onButtonChecked($event)">
+            <iui-radiobutton [checked]="true">Stream</iui-radiobutton>
+            <iui-radiobutton>Carousel</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <iui-slidebar [allowAnimation]="true" [displayMode]="currentDisplayMode" [resourcePath]="currentResourcePath" [theme]="currentTheme">
         <iui-slide *ngFor="let slide of slides" [data]="slide">
             <div class="slbar-ovw-slide-block">
                 <span>{{slide.text}}</span>
@@ -8,17 +14,16 @@
         </iui-slide>
     </iui-slidebar>
     <div class="feature-help">
-        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SlideBar</strong> is a native Web Component that allows you to animate slides created using images or custom content.</p>
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SlideBar</strong> is a native Web Component that allows you to animate slides created using images or custom HTML elements.</p>
         <p><span class="initial-space"></span>The demonstration above shows only the basic features available in SlideBar component. There are few slides each showing a title. Slide changes are automatic and animated from right to left. Whenever a slide is selected, an animation runs showing the slide content in current view of the SlideBar component. Using navigation buttons, you can quickly switch to specific slide.</p>
+        <p><span class="initial-space"></span>There are two different modes to display Slides: Stream and Carousel.</p>
         <ul class="feature-points">
             <li><span class="code-name">allowAnimation</span> - Determines whether animation is enabled or not</li>
             <li><span class="code-name">animationPause</span> - Specifies a time delay in milliseconds between slide changes during animation</li>
             <li><span class="code-name">animationSpeed</span> - Specifies the speed of animation</li>
-            <li><span class="code-name">controlStyle</span> - Specifies an object that holds the names of custom CSS classes</li>
+            <li><span class="code-name">displayMode</span> - Specifies how slides are displayed, using a Stream or Carousel</li>
             <li><span class="code-name">navigationButtons</span> - Determines whether left/right navigation buttons are visible or not</li>
             <li><span class="code-name">selectedIndex</span> - Specifies the index of currently selected slide</li>
-            <li><span class="code-name">selectedSlide</span> - An object that points to the currently selected slide</li>
-            <li><span class="code-name">slides</span> - Holds a reference to the slide collection defined in your application component</li>
             <br/>
             <li><span class="code-name">clear</span> - Occurs when all items are removed from the SlideBar</li>
             <li><span class="code-name">slideAdded</span> - Occurs when new slide is added to the SlideBar</li>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="treeview-scrollto"]{
+                --treeview-display: inline-block;
+            }
+
+            .treeview-scrollto-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 300px;
+
+                --select-display: block;
+            }
+            .treeview-scrollto-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .treeview-scrollto-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Scroll To Specific Item</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-scrollto"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-treeview>
+            <div class="treeview-scrollto-panel">
+                <label>Scroll to: </label>
+                <iui-select id="scrollto-select" allow-animation="true" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+                <br/>
+                <label>Scroll Appearance: </label>
+                <iui-radiogroup id="scroll-appearance">
+                    <iui-radiobutton checked="true">Static</iui-radiobutton>
+                    <iui-radiobutton>Dynamic</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, there are multiple items and you can select the item that you want to appear in view by scrolling to it.</p>
+                <p><span class="initial-space"></span>You can also choose how scroll bar appears, there are two options: Static and Dynamic. With Static appearance, the scroll bar is always visible when there are more items than currently present in the view. On the other hand, with Dynamic appearance, the scroll bar will appear only when mouse hovers over TreeView space.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { IntegralUIComponentAppearance } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+     
+        //
+        // Control Panel
+        //
+
+        const ctrlSelect = document.querySelector('#scrollto-select');
+        ctrlSelect.items = [];
+
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => scrollToChanged(e));
+
+        let scrollToChanged = function(e){
+            let item = e.detail.item;
+
+            treeview.scrollTo(item);
+            treeview.selectedItem = item;
+        }
+
+        const ctrlScrollAppearance = document.querySelector('#scroll-appearance');
+
+        ctrlScrollAppearance.resourcePath = currentResourcePath;
+
+        let onScrollAppearanceChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    treeview.scrollAppearance = IntegralUIComponentAppearance.Dynamic;
+                    break;
+
+                default: 
+                    treeview.scrollAppearance = IntegralUIComponentAppearance.Static;
+                    break;
+            }
+
+            treeview.updateLayout();
+        }
+
+        ctrlScrollAppearance.addEventListener("buttonChecked", (e) => onScrollAppearanceChecked(e));
+
+        //
+        // TreeView settings
+        //
+      
+        const treeview = document.querySelector('#treeview-scrollto');
+
+        treeview.items = [
+            { 
+                id: 1,
+                text: "Favorites",
+                items: [
+                    { id: 11, pid: 1, text: "Desktop" },
+                    { id: 12, pid: 1, text: "Downloads", checkState: "Checked" }
+                ]
+            },
+            { 
+                id: 2,
+                text: "Libraries",
+                items: [
+                    { 
+                        id: 21, 
+                        pid: 2, 
+                        text: "Documents", 
+                        expanded: false,
+                        checkState: "Checked",
+                        items: [
+                            { id: 211, pid: 21, text: "My Documents", checkState: "Checked" },
+                            { id: 212, pid: 21, text: "Public Documents", checkState: "Checked" }
+                        ]
+                    },
+                    { id: 22, pid: 2, text: "Music" },
+                    { id: 23, pid: 2, text: "Pictures", checkState: "Checked" },
+                    { id: 24, pid: 2, text: "Videos" }
+                ]
+            },
+            { 
+                id: 3,
+                text: "Computer",
+                checkState: "Checked",
+                items: [
+                    { id: 31, pid: 3, text: "Local Disk (C:)", checkState: "Checked" },
+                    { id: 32, pid: 3, text: "Storage (D:)", checkState: "Checked" }
+                ]
+            },
+            { id: 4, text: "Network" },
+            { id: 5, text: "Recycle Bin" }
+        ];
+
+        treeview.size = { width: 350, height: 300 }
+
+        // Update the item list to Select component
+        let onUpdateComplete = function(e){
+            ctrlSelect.items = treeview.getFullList();
+        }
+
+        treeview.addEventListener("updateComplete", (e) => onUpdateComplete(e));
+
+    </script>
+</html>

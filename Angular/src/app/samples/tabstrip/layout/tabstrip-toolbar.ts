@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -13,18 +13,18 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import 'integralui-web/components/integralui.tab.js';
-import 'integralui-web/components/integralui.tabstrip.js';
-import { IntegralUIAnimationType } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.tab';
+import 'integralui-web/components/integralui.tabstrip';
+import { IntegralUIAnimationType } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
     templateUrl: './tabstrip-toolbar.html',
     styleUrls: ['./tabstrip-toolbar.css']
 })
-export class TabStripToolbarSample {
+export class TabStripToolbar {
     public currentAnimation: IntegralUIAnimationType = IntegralUIAnimationType.Slide;
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTabSpacing: number = 0;
     public ctrlSize: any = { width: 500, height: 300 };
     public tabs: Array<any> = [];

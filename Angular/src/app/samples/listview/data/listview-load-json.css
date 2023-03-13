@@ -1,0 +1,9 @@
+[id="listview-load-json"] {
+    --listitem-background: transparent;
+    --listitem-hovered-background: transparent;
+    --listitem-selected-background: transparent;
+
+    --listitem-border-color: transparent;
+    --listitem-hovered-border-color: transparent;
+    --listitem-selected-border-color: transparent;
+}

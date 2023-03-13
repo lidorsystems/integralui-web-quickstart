@@ -1,0 +1,28 @@
+<h2>DockPanel / Overview</h2>
+<div class="sample-block" id="dockpanel-overview">
+    <iui-dockarea [size]="ctrlSize">
+        <iui-dockpanel *ngFor="let panel of panels" [data]="panel" [dock]="panel.dock" [size]="panel.size" [theme]="currentTheme" (dockChanged)="panelDockChanged($event)">
+            <iui-panel [allowDrag]="true" [contentAlignment]="{ vertical: 'middle' }">
+                {{panel.text}} - {{panel.dock}}
+            </iui-panel>
+        </iui-dockpanel>
+    </iui-dockarea>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> DockPanel</strong> is a native Web Component that represents a resizable docking container. You can dock this component on each side: Top, Right, Bottom, Left or set it up to Fill the remaining space of its parent element. When docked at any side, the component becomes resizable. You can add any custom HTML content inside the container and modify it using CSS.</p>
+        <p><span class="initial-space"></span>This component allows you to create dynamic layouts, where you can rearrange your content during run-time.</p>
+        <p><span class="initial-space"></span>In this demo, there are five DockPanels, four of them docked on each side and one that fills the remaining space. To change the docking side, left-click and start dragging the panel. Depending on target, a docking position marker will appear showing exact position where you can drop it. For demonstration purposes, each docking panel contains Panel component with information about its current dock side.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowDock</span> - Specifies the side(s) at which the component can dock</li>
+            <li><span class="code-name">allowDrag</span> - Determines whether you can move the component to a different side</li>
+            <li><span class="code-name">allowResize</span> - Determines whether component is resizable or not</li>
+            <li><span class="code-name">dock</span> - Specifies the side at which the component is currently docked</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <br/>
+            <li><span class="code-name">dockChanged</span> - Occurs when docking panel changes its dock side</li>
+        </ul>
+   </div>
+</div>

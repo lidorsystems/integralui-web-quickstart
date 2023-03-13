@@ -1,0 +1,44 @@
+<h2>ListView / Drag Drop Events</h2>
+<div class="sample-block-listview-dragdrop-events">
+    <iui-listview #listview id="listview-dragdrop-events"
+        [allowAnimation]="true"
+        [allowDrag]="true"
+        [allowDrop]="true"
+        [items]="items"
+        [itemSize]="currentItemSize"
+        [resourcePath]="currentResourcePath"
+        [theme]="currentTheme"
+        (dragStart)="listDragStart($event)"
+        (dragEnter)="listDragEnter($event)"
+        (dragOver)="listDragOver($event)"
+        (dragLeave)="listDragLeave($event)"
+        (dragDrop)="listDragDrop($event)"
+        (dragEnd)="listDragEnd($event)"
+    ></iui-listview>
+    <div class="sample-event-block">
+        <button (click)="clearEventLog()">Clear</button>
+        <p>Event log:</p>
+        <iui-listbox #evList id="listview-dragdrop-events-log"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [customStyle]="listStyle"
+            [items]="evListItems"
+            [itemTemplate]="currentEvListTemplate"
+            [resourcePath]="currentResourcePath"
+            [theme]="currentTheme"
+        ></iui-listbox>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this demo, you are free to drag and drop items one by one within the ListView. When item is dragged over a different item, you can drop it above or below the target item. In this particular example, you cannot drop items above or below the <strong><i>"Gladiator"</i></strong> item, the above and below positions are disabled within the <strong>dragOver</strong> event handler.</p>
+        <p><span class="initial-space"></span>To see which event is fired and in what order, the list on right logs all drag and drop events that occur, from newest to the oldest event fired. The list shows event name, information about the source and target item, position and how many times the event fires.</p>
+        <p><span class="initial-space"></span>Here is a list of available drag and drop events:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">dragEnd</span> - occurs when HTML5 drag and drop operation ends over ListView space</li>
+            <li><span class="code-name">dragEnter</span> - occurs when item is dragged over ListView space for the first time</li>
+            <li><span class="code-name">dragDrop</span> - occurs when item drops within the ListView</li>
+            <li><span class="code-name">dragLeave</span> - occurs when dragged item leaves the ListView space</li>
+            <li><span class="code-name">dragOver</span> - occurs when item is dragged over other items and ListView space</li>
+            <li><span class="code-name">dragStart</span> - occurs  when HTML5 drag and drop operation starts over ListView space</li>
+        </ul>
+    </div>
+</div>

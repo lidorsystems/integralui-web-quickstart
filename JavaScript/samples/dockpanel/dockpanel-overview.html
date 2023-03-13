@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - DockPanel / Overview</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            [id="dockpanel-overview"] iui-panel {
+                --panel-cursor: grab;
+                --panel-overflow: hidden;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>DockPanel / Overview</h2>
+		<div class="sample-block" id="dockpanel-overview">
+            <iui-dockarea></iui-dockarea>
+            <div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> DockPanel</strong> is a native Web Component that represents a resizable docking container. You can dock this component on each side: Top, Right, Bottom, Left or set it up to Fill the remaining space of its parent element. When docked at any side, the component becomes resizable. You can add any custom HTML content inside the container and modify it using CSS.</p>
+                <p><span class="initial-space"></span>This component allows you to create dynamic layouts, where you can rearrange your content during run-time.</p>
+                <p><span class="initial-space"></span>In this demo, there are five DockPanels, four of them docked on each side and one that fills the remaining space. To change the docking side, left-click and start dragging the panel. Depending on target, a docking position marker will appear showing exact position where you can drop it. For demonstration purposes, each docking panel contains Panel component with information about its current dock side.</p>
+                <p><span class="initial-space"></span>The following properties and events are supported:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">allowDock</span> - Specifies the side(s) at which the component can dock</li>
+                    <li><span class="code-name">allowDrag</span> - Determines whether you can move the component to a different side</li>
+                    <li><span class="code-name">allowResize</span> - Determines whether component is resizable or not</li>
+                    <li><span class="code-name">dock</span> - Specifies the side at which the component is currently docked</li>
+                    <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+                    <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+                    <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+                    <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+                    <br/>
+                    <li><span class="code-name">dockChanged</span> - Occurs when docking panel changes its dock side</li>
+                </ul>
+            </div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.dockarea.js"></script>
+	<script type="module">
+        import IntegralUIDockPanel from '../../node_modules/integralui-web/components/integralui.dockpanel.js';
+        import IntegralUIPanel from '../../node_modules/integralui-web/components/integralui.panel.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+
+        const dockArea = document.querySelector('iui-dockarea');
+
+        dockArea.size = { height: 500 }
+
+        //
+        // Create a list of docking panels
+        //
+
+        let panels = [
+            { id: 1, text: 'Panel 1', dock:  'Left', size: { width: 150 } },
+            { id: 2, text: 'Panel 2', dock: 'Top', size: { height: 50 } },
+            { id: 3, text: 'Panel 3', dock: 'Right', size: { width: 250 } },
+            { id: 4, text: 'Panel 4', dock: 'Bottom', size: { height: 200 } },
+            { id: 5, text: 'Panel 5', dock: 'Fill' }
+        ]
+
+        let addDockingPanels = function(){
+            panels.forEach(panelObj => {
+                // Create docking panel
+                let dockPanel = document.createElement('iui-dockpanel', { is: IntegralUIDockPanel });
+
+                // This stores the panel data within the docking panel component
+                dockPanel.data = panelObj;
+                
+                dockPanel.dock = panelObj.dock;
+                dockPanel.size = panelObj.size;
+                dockPanel.theme = IntegralUITheme.Office;
+
+                // Create content for the docking panel
+                let panelContent = document.createElement('iui-panel', { is: IntegralUIPanel });
+
+                panelContent.allowDrag = true;
+                panelContent.contentAlignment = { vertical: 'middle' }
+                panelContent.textContent = panelObj.text + " - " + panelObj.dock;
+                dockPanel.appendChild(panelContent);
+
+                // Handle changes of dock side for the docking panel, during drag drop
+                dockPanel.addEventListener("dockChanged", (e) => panelDockChanged(e));
+
+                // Add docking panel to the dock area
+                dockArea.appendChild(dockPanel);
+            });
+        }
+
+        let updatePanelContent = function(){
+            let dockPanels = document.querySelectorAll('iui-dockpanel');
+
+            if (dockPanels && dockPanels.length > 0)
+                dockPanels.forEach(dockPanel => {
+                    let panelContent = dockPanel.querySelector('iui-panel');
+                    if (panelContent)
+                        panelContent.textContent = dockPanel.data.text + " - " + dockPanel.data.dock;
+                });
+        }
+
+
+        // Events --------------------------------------------------------------------------------
+
+        let panelDockChanged = function(e){
+            if (e.detail.data){
+                panels
+                    .filter(panel => panel.id === e.detail.data.id)
+                    .forEach(panel => panel.dock = e.detail.dock);
+
+                updatePanelContent();
+            }
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        addDockingPanels();
+
+	</script>
+</html>

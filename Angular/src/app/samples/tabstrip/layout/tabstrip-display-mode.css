@@ -1,0 +1,31 @@
+.tbs-dplmode-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+[id="tabstrip-dplmode"]{
+    --tabstrip-display: inline-block;
+    --tabstrip-width: calc(100% - 175px);
+
+    --tab-header-border-radius: 7px 7px 0 0;
+    --tab-header-hovered-background: #d9edfd;
+    --tab-header-hovered-border-color: #8cb1d1;
+    --tab-header-padding: 9px;
+}
+
+.tabstrip-dplmode-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 150px;
+
+    --radio-button-display: block;
+    --radio-button-margin: 5px 0;
+}
+.tabstrip-dplmode-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.tabstrip-dplmode-panel label:first-of-type {
+    margin-top: 0;
+}

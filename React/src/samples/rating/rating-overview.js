@@ -27,7 +27,9 @@ class RatingOverview extends Component {
 
             ctrlSize: { height: 16 },
             currentResourcePath: 'integralui-web/icons',
-            currentTheme: IntegralUITheme.Office
+            currentTheme: IntegralUITheme.Office,
+
+            isFocusAllowed: true
         }
     }
 
@@ -42,12 +44,26 @@ class RatingOverview extends Component {
             <div>
                 <h2>Rating / Overview</h2>
                 <div className="sample-block">
-                    <IntegralUIRatingComponent id="rating-1" max={this.state.ctrlMaxValue} resourcePath={this.state.currentResourcePath} size={this.state.ctrlSize} value={this.state.ctrlValue} /><br/>
-                    <IntegralUIRatingComponent id="rating-2" increment={this.state.brickIncrementMode} max={this.state.ctrlMaxValue2} resourcePath={this.state.currentResourcePath} size={this.state.ctrlSize} stepSize={this.state.ctrlStepSize2} value={this.state.ctrlValue2} />
+                    <IntegralUIRatingComponent id="rating-1" 
+                        allowFocus={this.state.isFocusAllowed} 
+                        max={this.state.ctrlMaxValue} 
+                        resourcePath={this.state.currentResourcePath} 
+                        size={this.state.ctrlSize} 
+                        value={this.state.ctrlValue} />
+                    <br/>
+                    <IntegralUIRatingComponent id="rating-2" 
+                        allowFocus={this.state.isFocusAllowed} 
+                        increment={this.state.brickIncrementMode} 
+                        max={this.state.ctrlMaxValue2} 
+                        resourcePath={this.state.currentResourcePath} 
+                        size={this.state.ctrlSize} 
+                        stepSize={this.state.ctrlStepSize2} 
+                        value={this.state.ctrlValue2} />
                     <div className="feature-help">
                         <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> Rating</strong> is a native Web Component that visualizes ratings. You can change the rating by left-click and drag the mouse cursor, by clicking the left mouse button or using touch. In addition, you can customize its appearance using different images via CSS.</p>
                         <p><span className="initial-space"></span>The following properties and events are supported:</p>
                         <ul className="feature-points">
+                            <li><span className="code-name">allowFocus</span> - Determines whether component can have the keyboard focus</li>
                             <li><span className="code-name">data</span> - Specifies an object that holds data related to the component</li>
                             <li><span className="code-name">division</span> - Specifies a number by which rating values are divided, used to display large values within small component size</li>
                             <li><span className="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>

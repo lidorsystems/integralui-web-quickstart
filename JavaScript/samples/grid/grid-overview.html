@@ -14,7 +14,6 @@
 			<iui-grid id="grid-overview"
                 allow-animation="true"
                 expand-column-index="1"
-				item-display="Full"
 				resource-path="../../node_modules/integralui-web/icons"
 				selection-mode="MultiExtended"
 				theme="Office"
@@ -113,7 +112,7 @@
                 grid.suspendLayout();
 
                 // Load data into the grid
-                grid.loadData(convertJSONData(data), null, null, false);
+                grid.loadData(convertJSONData(data));
 
                 // Resume and update the grid layout
                 grid.resumeLayout();

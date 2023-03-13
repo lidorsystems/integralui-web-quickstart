@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,19 +12,19 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.radiobutton.js';
-import 'integralui-web/components/integralui.radiogroup.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.radiobutton';
+import 'integralui-web/components/integralui.radiogroup';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
-    templateUrl: './radiobutton-overview.html'
+    templateUrl: './radiobutton-overview.html',
+    styleUrls: ['./radiobutton-overview.css']
 })
 export class RadioButtonOverviewSample {
-    public currentResourcePath: string = 'assets/integralui-web/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
 
-    onButtonChecked(e: any){
-        console.log("RadioButton with index: " + e.detail.index + " is checked");
+    onButtonChecked(e: any, group: string){
+        console.log("RadioButton with index: " + e.detail.index + " is checked, in " + group);
     }
 }

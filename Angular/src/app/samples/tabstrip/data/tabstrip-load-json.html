@@ -1,0 +1,19 @@
+<h2>TabStrip / Load Tabs from JSON</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-loadjson"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabAlignment]="currentAlignment"
+        [tabStripPlacement]="currentPlacement"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.title" [theme]="currentTheme">
+            <div class="tbs-loadjson-tab-content">{{tab.content}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, all tabs with their content are loaded from a JSON file.</p>
+    </div>
+</div>

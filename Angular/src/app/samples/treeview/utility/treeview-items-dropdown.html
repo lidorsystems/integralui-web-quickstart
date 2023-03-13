@@ -1,0 +1,17 @@
+<h2>TreeView / Items with DropDown</h2>
+<div class="sample-block">
+    <iui-treeview id="treeview-items-dropdown"
+        [customStyle]="treeStyle"
+        [itemDisplay]="currentItemDisplay"
+        [items]="items"
+        [itemTemplate]="currentItemTemplate"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example each TreeView item has a dropdown (using the Select component), shown after its label.</p>
+        <p><span class="initial-space"></span>The underlined label represents a value that can be changed. When item is clicked, an editor (in this case a Select component) replaces the label. By selecting different options from the options list, you can change the item value. After value is changed, the dropdown becomes hidden, and again the underlined label is shown.</p>
+        <p><span class="initial-space"></span>All items have a dropdown, except for the item labeled 'Copy Count' which uses a standard input element as editor.</p>
+    </div>
+</div>

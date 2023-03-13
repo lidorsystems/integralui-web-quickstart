@@ -1,0 +1,30 @@
+<h2 class="feature-title">Grid / How to Show/Hide Header and Footer</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-show-hide-header-footer">
+        <iui-grid #grid id="grid-show-hide-header-footer"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [footerTemplate]="currentFooterTemplate"
+            [gridLines]="currentGridLines"
+            [headerTemplate]="currentHeaderTemplate"
+            [rowHeight]="40"
+            [rows]="rows"
+            [rowTemplate]="currentRowTemplate"
+            [resourcePath]="currentResourcePath"
+            [showFooter]="isFooterVisible"
+            [showHeader]="isHeaderVisible"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        ></iui-grid>
+        <div class="control-panel">
+            <iui-checkbox [allowAnimation]="true" [checked]="true" (checkedChanged)="onHeaderChanged($event)">Header</iui-checkbox>
+            <iui-checkbox [allowAnimation]="true" [checked]="true" (checkedChanged)="onFooterChanged($event)">Footer</iui-checkbox>
+            <iui-checkbox [allowAnimation]="true"[checked]="true" (checkedChanged)="onGridLinesChanged($event)">Grid Lines</iui-checkbox>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this demo, clicking on check boxes in control panel below the grid, you can set whether grid header or footer are visible or not.</p>
+    </div>
+</div>

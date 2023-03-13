@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            /* Changes to the tree item layout*/
+            [id="treeview-evenodd"] {
+                --treeitem-expand-box-margin: 3px 5px 0 0;
+                --treeitem-padding: 2px 0;
+           }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Even/Odd Items</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-evenodd"
+                allow-animation="true"
+                check-boxes="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of TreeView with items displayed in alternate colors.</p>
+                <p><span class="initial-space"></span>Each item can have a unique look. This is done by setting custom inline style to specific item. In case of this sample, we want to have even items in same color, and different color for odd items. This is done by creating two CSS styles which will be applied to even or odd items, accordingly to their order.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { IntegralUICheckMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-evenodd');
+
+        let flatData = [
+            { id: 1, text: "Dairy", expanded: false, checkState: "Checked" },
+            { id: 11, pid: 1, text: "Milk" },
+            { id: 12, pid: 1, text: "Butter" },
+            { id: 13, pid: 1, text: "Cheese" },
+            { id: 14, pid: 1, text: "Yogurt" },
+            { id: 2, text: "Fruits" },
+            { id: 21, pid: 2, text: "Berries", expanded:  false},
+            { id: 211, pid: 21, text: "BlackBerries" },
+            { id: 212, pid: 21, text: "CranBerries" },
+            { id: 213, pid: 21, text: "StrawBerries" },
+            { id: 22, pid: 2, text: "Pits", checkState: "Checked" },
+            { id: 23, pid: 2, text: "Core" },
+            { id: 24, pid: 2, text: "Citrus Fruits" },
+            { id: 241, pid: 24, text: "Oranges", checkState: "Checked" },
+            { id: 242, pid: 24, text: "Lemons" },
+            { id: 25, pid: 2, text: "Melons" },
+            { id: 26, pid: 2, text: "Tropical Fruits", expanded: false, checkState: "Checked" },
+            { id: 261, pid: 26, text: "Avocados" },
+            { id: 262, pid: 26, text: "Bananas" },
+            { id: 263, pid: 26, text: "Dates" },
+            { id: 3, text: "Grains" },
+            { id: 4, text: "Meat" },
+            { id: 41, pid: 4, text: "Beef" },
+            { id: 42, pid: 4, text: "Lamb", expanded: false },
+            { id: 421, pid: 42, text: "Lamb Breast" },
+            { id: 422, pid: 42, text: "Lamb Leg", checkState: "Checked" },
+            { id: 423, pid: 42, text: "Lamb Ribs" },
+            { id: 43, pid: 4, text: "Pork" },
+            { id: 5, text: "Sweets", checkState: "Checked" },
+            { id: 6, text: "Vegetables" },
+            { id: 7, text: "Water" }
+        ];
+
+        treeview.checkMode = IntegralUICheckMode.ThreeState;
+        treeview.size = { width: 350, height: 300 }
+        treeview.theme = currentTheme;
+
+        //
+        // Initialize the Component
+        //
+
+        treeview.loadData(flatData, null, null, true);
+
+        // Set the styles for even/odd items
+        let onUpdateComplete = function(e){
+            let list = treeview.getFullList();
+
+            list.forEach((item, index) => {
+                if (index % 2 === 0)
+                    item.style = {
+                        normal: { background: '#fafafa' }
+                    }
+                else 
+                    item.style = {
+                        normal: { background: '#efefef' }
+                    }
+                 
+                item.style.selected = { fontWeight: 'bold' }
+            });
+
+            treeview.refresh();
+        }
+
+        treeview.addEventListener("updateComplete", (e) => onUpdateComplete(e));
+
+    </script>
+</html>

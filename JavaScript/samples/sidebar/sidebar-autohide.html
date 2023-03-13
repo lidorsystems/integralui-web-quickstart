@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-sidebar-autohide"]{
+                height: 400px;
+                padding: 10px;
+                position: relative;
+            }
+            [id="sample-block-sidebar-content"]{
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-color: #808080;
+                --panel-font-size: 1.5rem;
+                --panel-font-style: italic;
+                --panel-height: calc(100% - 2px);
+            }
+            .sdb-ah-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SideBar / Auto-Hide</h2>
+        <div class="sample-block" id="sample-block-sidebar-autohide">
+            <iui-sidebar id="sidebar-autohide" parent-id="sample-block-sidebar-autohide" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+            </iui-sidebar>
+            <iui-panel id="sample-block-sidebar-content">
+                Sample Content Block
+            </iui-panel>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>This sample demonstrates the <strong>auto-hide</strong> ability of the SideBar component. With auto-hide you can change whether side bar content pops out on top of the parent container or pushes its content to the side when opening. You can activate this mode from header that appears when tab is opened. Clicking on the <strong>pin</strong> button will change the auto-hide state to true or false.</p>
+            <p><span class="initial-space"></span>Showing a header is optional. The <strong>showHeader</strong> property determines whether the header is visible or hidden. When header is hidden, you can still change the auto-hide mode from code using the <strong>autoHide</strong> property.</p>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.sidebar.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module">
+        import { iuiSideBarAutoHideStyle } from './sidebar-autohide.style.js';
+        import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentTheme = IntegralUITheme.Office;
+ 
+        //
+        // Panel settings
+        //
+
+        const ctrlPanel = document.querySelector('#sample-block-sidebar-content');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        //
+        // SideBar settings
+        //
+
+        const ctrl = document.querySelector('#sidebar-autohide');
+
+        let tabs = [
+            { 
+                id: 1,
+                icon: 'tab-icon library',
+                text: 'Books',
+                body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 2,
+                icon: 'tab-icon album',
+                text: 'Music',
+                body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 3,
+                icon: 'tab-icon star-empty',
+                text: 'Favorites',
+                body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            },
+            { 
+                id: 4,
+                icon: 'tab-icon notes',
+                text: 'Notes',
+                body: 'Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum.'
+            },
+            { 
+                id: 5,
+                icon: 'tab-icon sports',
+                text: 'Sports',
+                body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            }
+        ];
+
+        ctrl.allowAnimation = true;
+        ctrl.autoHide = true;
+        ctrl.customStyle = iuiSideBarAutoHideStyle;
+        ctrl.expanded = false;
+        ctrl.showHeader = true;
+        ctrl.size = { width: 400 };
+        ctrl.theme = currentTheme;
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                var ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.icon = tab.icon;
+                ctrlTab.theme = IntegralUITheme.Office;
+
+                var tabContent = document.createElement('div');
+                tabContent.classList.add('sdb-ah-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        addTabs();
+
+    </script>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Cells with DatePicker</title>
+		<link rel="stylesheet" href="../../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Cells with DatePicker</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-editors-datepicker"
+                allow-animation="true"
+                row-height="32"
+			></iui-grid>
+		</div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>An example of grid cells with date picker. Whenever a cell under Date column is clicked, a dropdown calendar will appear from where you can select a new date.</p>
+            <p><span class="initial-space"></span>For demonstrations purposes only, you can select dates between 2016 and 2022. This restriction is set in this sample code when cell value is changing.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module">
+        import { html } from '../../../../node_modules/integralui-web/external/lit-element.js';
+
+        import { IntegralUIDateFormat, IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme, IntegralUIWeekDays } from '../../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridEditorsDatePickerStyle } from './grid-editors-datepicker.style.js';
+
+        let currentResourcePath = '../../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-editors-datepicker');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 1, headerText: "Company", width: 300 },
+            { id: 2, headerText: "Country", headerAlignment: "center", width: 180 },
+            { 
+                id: 3, 
+                contentAlignment: "right", 
+                headerText: "Date", 
+                headerAlignment: "center", 
+                editorType: IntegralUIEditorType.Date,
+                editorSettings: {
+                    allowAnimation: true,
+                    calendarSize: { width: 300, height: 250 },
+                    dropDownAdjustment: { top: 10 },
+                    locales: 'en-GB',
+                    firstDayOfWeek: IntegralUIWeekDays.Monday,
+                    format: IntegralUIDateFormat.Custom,
+                    formatOptions: {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit'
+                    }
+                },
+                width: 150
+            },
+            { id: 4, headerText: "Price", headerAlignment: "center", contentAlignment: "right" },
+        ];
+
+		grid.customStyle = iuiGridEditorsDatePickerStyle;
+        grid.editMode = IntegralUIEditMode.Custom;
+        grid.resourcePath = currentResourcePath;
+
+        grid.rows = [
+            { 
+                id: 1,
+                text: "Lacus Aliquam Consulting",
+                cells: [{ cid: 1, text: "Lacus Aliquam Consulting" }, { cid: 2, icon: 'brazil', text: "Brazil" }, { cid: 3, value: new Date(2021, 0, 13) }, { cid: 4, text: "$326.42" } ]
+            },
+            { 
+                id: 2,
+                text: "Magna Sed Limited",
+                cells: [{ cid: 1, text: "Magna Sed Limited" }, { cid: 2, icon: 'germany', text: "Germany" }, { cid: 3, value: new Date(2020, 3, 10) }, { cid: 4, text: "$780.60" } ]
+            },
+            { 
+                id: 3,
+                text: "Nulla Foundation",
+                cells: [{ cid: 1, text: "Nulla Foundation" }, { cid: 2, icon: 'poland', text: "Poland" }, { cid: 3, value: new Date(2019, 4, 19) }, { cid: 4, text: "$706.75" } ]
+            },
+            { 
+                id: 4,
+                text: "Augue LLC",
+                cells: [{ cid: 1, text: "Augue LLC" }, { cid: 2, icon: 'austria', text: "Austria" }, { cid: 3, value: new Date(2021, 5, 1) }, { cid: 4, text: "$743.29" } ]
+            },
+            { 
+                id: 5,
+                text: "Porttitor Corp.",
+                cells: [{ cid: 1, text: "Porttitor Corp." }, { cid: 2, icon: 'italy', text: "Italy" }, { cid: 3, value: new Date(2020, 10, 29) }, { cid: 4, text: "$196.53" } ]
+            },
+            { 
+                id: 6,
+                text: "Odio Sagittis Semper Industries",
+                cells: [{ cid: 1, text: "Odio Sagittis Semper Industries" }, { cid: 2, icon: 'spain', text: "Spain" }, { cid: 3, value: new Date(2020, 4, 3) }, { cid: 4, text: "$476.05" } ]
+            },
+            { 
+                id: 7,
+                text: "Varius Orci In PC",
+                cells: [{ cid: 1, text: "Varius Orci In PC" }, { cid: 2, icon: 'india', text: "India" }, { cid: 3, value: new Date(2019, 5, 23) }, { cid: 4, text: "$592.57" } ]
+            },
+            { 
+                id: 8,
+                text: "Neque Sed Sem Foundation",
+                cells: [{ cid: 1, text: "Neque Sed Sem Foundation" }, { cid: 2, icon: 'uk', text: "United Kingdom" }, { cid: 3, value: new Date(2017, 4, 24) }, { cid: 4, text: "$951.02" } ]
+            },
+            { 
+                id: 9,
+                text: "Semper Erat In Company",
+                cells: [{ cid: 1, text: "Semper Erat In Company" }, { cid: 2, icon: 'turkey', text: "Turkey" }, { cid: 3, value: new Date(2018, 11, 24) }, { cid: 4, text: "$977.49" } ]
+            },
+            { 
+                id: 10,
+                text: "Mi Pede Associates",
+                cells: [{ cid: 1, text: "Mi Pede Associates" }, { cid: 2, icon: 'netherlands', text: "Netherlands" }, { cid: 3, value: new Date(2019, 5, 26) }, { cid: 4, text: "$875.76" } ]
+            },
+            { 
+                id: 11,
+                text: "Aliquet Incorporated",
+                cells: [{ cid: 1, text: "Aliquet Incorporated" }, { cid: 2, icon: 'netherlands', text: "Netherlands" }, { cid: 3, value: new Date(2018, 4, 12) }, { cid: 4, text: "$100.27" } ]
+            },
+            { 
+                id: 12,
+                text: "Viverra LLC",
+                cells: [{ cid: 1, text: "Viverra LLC" }, { cid: 2, icon: 'brazil', text: "Brazil" }, { cid: 3, value: new Date(2021, 2, 26) }, { cid: 4, text: "$864.68" } ]
+            },
+            { 
+                id: 13,
+                text: "Hymenaeos Corporation",
+                cells: [{ cid: 1, text: "Hymenaeos Corporation" }, { cid: 2, icon: 'canada', text: "Canada" }, { cid: 3, value: new Date(2020, 8, 29) }, { cid: 4, text: "$444.67" } ]
+            },
+            { 
+                id: 14,
+                text: "Consectetuer Euismod Est PC",
+                cells: [{ cid: 1, text: "Consectetuer Euismod Est PC" }, { cid: 2, icon: 'sweden', text: "Sweden" }, { cid: 3, value: new Date(2016, 7, 26) }, { cid: 4, text: "$965.14" } ]
+            },
+            { 
+                id: 15,
+                text: "Ultricies Sem Magna Corp.",
+                cells: [{ cid: 1, text: "Ultricies Sem Magna Corp." }, { cid: 2, icon: 'ireland', text: "Ireland" }, { cid: 3, value: new Date(2016, 8, 28) }, { cid: 4, text: "$797.74" } ]
+            },
+            { 
+                id: 16,
+                text: "Proin Industries",
+                cells: [{ cid: 1, text: "Proin Industries" }, { cid: 2, icon: 'usa', text: "United States" }, { cid: 3, value: new Date(2019, 9, 31) }, { cid: 4, text: "$233.66" } ]
+            },
+            { 
+                id: 17,
+                text: "Sociis Consulting",
+                cells: [{ cid: 1, text: "Sociis Consulting" }, { cid: 2, icon: 'uk', text: "United Kingdom" }, { cid: 3, value: new Date(2019, 10, 26) }, { cid: 4, text: "$333.94" } ]
+            },
+            { 
+                id: 18,
+                text: "Metus Urna Convallis Corp.",
+                cells: [{ cid: 1, text: "Metus Urna Convallis Corp." }, { cid: 2, icon: 'germany', text: "Germany" }, { cid: 3, value: new Date(2016, 10, 9) }, { cid: 4, text: "$772.77" } ]
+            },
+            { 
+                id: 19,
+                text: "Augue Scelerisque PC",
+                cells: [{ cid: 1, text: "Augue Scelerisque PC" }, { cid: 2, icon: 'belgium', text: "Belgium" }, { cid: 3, value: new Date(2020, 0, 10) }, { cid: 4, text: "$676.69" } ]
+            },
+            { 
+                id: 20,
+                text: "Ornare Facilisis Eget LLP",
+                cells: [{ cid: 1, text: "Ornare Facilisis Eget LLP" }, { cid: 2, icon: 'turkey', text: "Turkey" }, { cid: 3, value: new Date(2018, 6, 25) }, { cid: 4, text: "$97.52" } ]
+            },
+            { 
+                id: 21,
+                text: "Id Risus",
+                cells: [{ cid: 1, text: "Id Risus" }, { cid: 2, icon: 'france', text: "France" }, { cid: 3, value: new Date(2019, 10, 29) }, { cid: 4, text: "$692.36" } ]
+            }
+        ];
+
+        grid.showFooter = false;
+		grid.size = { width: 800, height: 450 }
+        grid.theme = currentTheme;
+
+        // Events --------------------------------------------------------------------------------
+
+        window.onbeforeunload = function(){
+            grid.removeEventListener("valueChanging", isDateInRange);
+        };
+
+        let isDateInRange = function(e){
+            // Check whether the event value is a Date object
+            if (Object.prototype.toString.call(e.detail.value) === '[object Date]'){
+                let year = e.detail.value.getFullYear();
+
+                // Cancel the event if year is outside this range
+                if (year < 2016 || year > 2022)
+                    e.detail.cancel = true;
+            }
+        }
+
+        grid.addEventListener("valueChanging", isDateInRange);
+
+        // Templates -----------------------------------------------------------------------------
+
+        grid.rowTemplate = (row, cell) => { 
+            if (cell.cid === 2)
+                return html`<div class="change-cell">
+                        <span class="grid-celldt-flags ${cell.icon}"></span>
+                        <span class="grid-celldt-country">${cell.text}</span>
+                    </div>`;
+
+            return null;
+        };
+
+	</script>
+</html>

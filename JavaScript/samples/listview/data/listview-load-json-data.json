@@ -1,0 +1,11 @@
+﻿[
+    { "itemId": 1, "label": "Comment", "icon": "notes", "dropdown": { "adjustment": { "top": 2, "left": 80 }, "label": "Open", "items": [{ "text": "Open" }, { "text": "Learn More" }] } },
+    { "itemId": 2, "label": "Protect", "icon": "shield", "dropdown": { "adjustment": { "top": 2, "left": 86 }, "label": "Add", "items": [{ "text": "Add" }, { "text": "Learn More" }] } },
+    { "itemId": 3, "label": "Measure", "icon": "measure", "dropdown": { "adjustment": { "top": 2, "left": 80 }, "label": "Open", "items": [{ "text": "Open" }, { "text": "Learn More" }] } },
+    { "itemId": 4, "label": "Fill & Sign", "icon": "sign", "dropdown": { "adjustment": { "top": 2, "left": 80 }, "label": "Open", "items": [{ "text": "Open" }, { "text": "Learn More" }] } },
+    { "itemId": 5, "label": "Compress Files", "icon": "compress", "dropdown": { "adjustment": { "top": 2, "left": 80 }, "label": "Open", "items": [{ "text": "Open" }, { "text": "Learn More" }] } },
+    { "itemId": 6, "label": "Add Rich Media", "icon": "film", "dropdown": { "adjustment": { "top": 2, "left": 86 }, "label": "Add", "items": [{ "text": "Add" }, { "text": "Learn More" }] } },
+    { "itemId": 7, "label": "Import Document", "icon": "import-file", "dropdown": { "adjustment": { "top": 2, "left": 80 }, "label": "Open", "items": [{ "text": "Open" }, { "text": "Learn More" }] } },
+    { "itemId": 8, "label": "Transfer Files", "icon": "transfer", "dropdown": { "adjustment": { "top": 2, "left": 86 }, "label": "Add", "items": [{ "text": "Add" }, { "text": "Learn More" }] } },
+    { "itemId": 9, "label": "Statistics", "icon": "stats", "dropdown": { "adjustment": { "top": 2, "left": 80 }, "label": "Open", "items": [{ "text": "Open" }, { "text": "Learn More" }] } }
+]

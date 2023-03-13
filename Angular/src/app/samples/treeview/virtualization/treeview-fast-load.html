@@ -1,0 +1,38 @@
+<h2>TreeView / Fast Load</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-fast-load"
+        [allowDrag]="true"
+        [allowDrop]="true"
+        [allowFocus]="true"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-treeview>
+    <div class="treeview-fast-load-panel">
+        <table cellpadding="3">
+            <tr>
+                <td>Max items: </td>
+                <td class="align-left"><input [(ngModel)]="numItems" type="number" min="1" max="100000" style="width:75px" integer /></td>
+            </tr>
+            <tr>
+                <td>Levels: </td>
+                <td class="align-left"><input [(ngModel)]="numLevels" type="number" min="0" max="100" style="width:75px" integer /></td>
+            </tr>
+        </table>
+        <div align="center" style="margin-top:20px">
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onAddClicked()">Add</iui-button>
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onClearClicked()">Clear</iui-button>
+        </div>
+        <div align="center" style="margin-top:20px">
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onExpandAllClicked()">Expand All</iui-button>
+            <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onCollapseAllClicked()">Collapse All</iui-button>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demo, you can choose how many items to display in the TreeView. For demonstration purposes only, a limit is set to 100,000 items. In real scenario, the only limit is how much data the browser can handle. By clicking on the Add button, the TreeView is populated with custom data.</p>
+        <p><span class="initial-space"></span>To start a drag and drop operation, left-click on a item and move the mouse cursor, so that you can reorder items during run-time. In this example, there are no restrictions set, and you can drag and drop a item and place it above or below another item. However, if you want you can set conditions and provide custom drag drop operations on your own.</p>
+        <p><span class="initial-space"></span>You can also navigate among items using the keyboard. All standard operations are supported: Left, Right, Up, Down, PageUp, PageDown, Home and End.</p>
+    </div>
+</div>

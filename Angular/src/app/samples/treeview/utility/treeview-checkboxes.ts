@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,27 +12,27 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
-import { classMap } from 'integralui-web/external/class-map.js';
+import { html } from 'integralui-web/external/lit-element';
+import { classMap } from 'integralui-web/external/class-map';
 
-import 'integralui-web/components/integralui.button.js';
-import 'integralui-web/components/integralui.list.js';
-import 'integralui-web/components/integralui.select.js';
-import 'integralui-web/components/integralui.treeview.js';
-import { IntegralUIItemDisplayMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiTreeViewCheckBoxesStyle } from './treeview-checkboxes.style.js';
+import 'integralui-web/components/integralui.button';
+import 'integralui-web/components/integralui.list';
+import 'integralui-web/components/integralui.select';
+import 'integralui-web/components/integralui.treeview';
+import { IntegralUIItemDisplayMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiTreeViewCheckBoxesStyle } from './treeview-checkboxes.style';
 
 @Component({
     selector: '',
     templateUrl: './treeview-checkboxes.html',
     styleUrls: ['./treeview-checkboxes.css']
 })
-export class TreeViewCheckBoxesSample {
-    @ViewChild('list', { static: false }) ctrlList: ElementRef;
-    @ViewChild('treeview', { static: false }) treeview: ElementRef;
+export class TreeViewCheckBoxes {
+    @ViewChild('list', { static: false }) ctrlList!: ElementRef;
+    @ViewChild('treeview', { static: false }) treeview!: ElementRef;
 
     public ctrlSize: any = { height: 395 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiTreeViewCheckBoxesStyle;
     public displayMode: IntegralUIItemDisplayMode = IntegralUIItemDisplayMode.Full;
@@ -55,7 +55,7 @@ export class TreeViewCheckBoxesSample {
     public currentItemTemplate = (item: any) => { 
         return html`
             <div>
-                <span class=${classMap(this.getCheckBoxClass(item))} @mousedown="${(e) => this.checkItem(e, item)}"></span>
+                <span class=${classMap(this.getCheckBoxClass(item))} @mousedown="${(e: any) => this.checkItem(e, item)}"></span>
                 ${item.icon ? html`<span class="trw-cbox-icons-medium ${item.icon}"></span>` : ``}
                 <span class="trw-cbox-item-label">${item.text}</span>
             </div>
@@ -179,7 +179,7 @@ export class TreeViewCheckBoxesSample {
         this.treeview.nativeElement.updateFullList();
 
         let list = this.treeview.nativeElement.getFullList();
-        list.forEach(item => this.updateParentItemCheckValue(item));
+        list.forEach((item: any) => this.updateParentItemCheckValue(item));
 
         this.showCheckList();
     }
@@ -187,7 +187,7 @@ export class TreeViewCheckBoxesSample {
     // Item Template Content -----------------------------------------------------------------
 
     getCheckBoxClass(item: any){
-        let cbClass = { 'trw-item-cbox': true };
+        let cbClass: any = { 'trw-item-cbox': true };
 
         switch (item.checkState){
             case 'indeterminate':
@@ -309,10 +309,10 @@ export class TreeViewCheckBoxesSample {
     // Check List ----------------------------------------------------------------------------
 
     showCheckList(){
-        let checkedList = [];
+        let checkedList: Array<any> = [];
 
         let list = this.treeview.nativeElement.getFullList();
-        list.forEach(item => {
+        list.forEach((item: any) => {
             let checkValue = this.getItemCheckValue(item);
             if (checkValue === this.selOption)
                 checkedList.push({ text: item.text });

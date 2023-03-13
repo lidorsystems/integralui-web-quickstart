@@ -13,4 +13,23 @@ export const iuiGridAddRowDynamicallyStyle = css`
     .iui-rating {
         margin-top: 5px;
     }
+
+    .test-cell { 
+        background: transparent;
+        /*transition: background 5s ease-in-out;*/
+        
+        animation-name: test-anim;
+        animation-delay: 0s;
+        animation-direction: normal;
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-play-state: running;
+        animation-timing-function: linear; 
+    }
+
+    @keyframes test-anim {
+        0% { background: transparent); }
+        50% { background: red; }
+    }
 `;

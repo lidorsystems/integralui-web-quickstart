@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-sorting-overview"]{
+                --listbox-display: inline-block;
+            }
+
+            .listbox-sorting-overview-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .listbox-sorting-overview-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listbox-sorting-overview-panel label:first-of-type {
+                margin-top: 0;
+            }
+            /* CheckBox 2 */
+            [id="allow-groups"] {
+                --checkbox-btn-checked-background-image: url(../../../resources/checkbox/checkbox-checked.png);
+                --checkbox-btn-unchecked-background-image: url(../../../resources/checkbox/checkbox-unchecked.png);
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Sorting Overview</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-sorting-overview"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                scroll-appearance="Dynamic"
+                theme="Office"
+            ></iui-listbox>
+            <div class="listbox-sorting-overview-panel">
+                <label>Sorting: </label>
+                <iui-radiogroup id="sorting-overview">
+                    <iui-radiobutton checked="true">None</iui-radiobutton>
+                    <iui-radiobutton>Ascending</iui-radiobutton>
+                    <iui-radiobutton>Descending</iui-radiobutton>
+                </iui-radiogroup>
+                <br/>
+                <iui-checkbox id="allow-groups">Show Groups</iui-checkbox>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample demonstrates how to sort ListBox items in ascending or descending order. By clicking on buttons on right panel, you can see how items are sorted.</p>
+                <p>The following properties and methods are presented:</p>
+                <ul class="feature-points">
+                    <li><span class="code-object">sorting</span> a property which determines the sort order</li>
+                    <li><span class="code-object">sort</span> a method which sorts the ListBox items based on applied order</li>
+                </ul>
+                <p><span class="initial-space"></span>Sorting is performed using the item text, but if item has its value field set (it has higher priority than text), the value will be used.</p>
+                <p><span class="initial-space"></span>Although in this sample a basic sorting is used (a sorting of string values), you can create your own custom sorting by providing a <span style="color:#c60d0d">comparer</span> function as a second parameter of the sort method. In this way you can create any kind of custom sort operations.</p>
+                <p><span class="initial-space"></span>This example also shows dynamic scrolling, the scroll bar will appear only when mouse hovers over ListBox space.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { IntegralUIAnimationType, IntegralUISortOrder } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Control Panel
+        const ctrlSorting = document.querySelector('#sorting-overview');
+
+        ctrlSorting.resourcePath = currentResourcePath;
+
+        let onSortingChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listbox.sorting = IntegralUISortOrder.Ascending;
+                    break;
+
+                case 2: 
+                    listbox.sorting = IntegralUISortOrder.Descending;
+                    break;
+
+                default: 
+                    listbox.sorting = IntegralUISortOrder.None;
+                    break;
+            }
+
+            listbox.updateLayout();
+        }
+
+        ctrlSorting.addEventListener("buttonChecked", (e) => onSortingChecked(e));
+
+
+        const ctrlAllowGroups = document.querySelector('#allow-groups');
+        ctrlAllowGroups.allowFocus = false;
+
+        ctrlAllowGroups.addEventListener("checkedChanged", (e) => onAllowGroupsChanged(e));
+
+        let onAllowGroupsChanged = function(e){
+            listbox.showGroups = e.detail.checked;
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-sorting-overview');
+
+        listbox.groups = [
+            { name: "Driving/Racing" },
+            { name: "Role-Playing", expanded: false },
+            { name: "Action" },
+            { name: "Shooter" },
+            { name: "Sports", expanded: false },
+            { name: "Adventure" },
+            { name: "First-Person" },
+            { name: "Platformer", expanded: false },
+            { name: "MMO" }
+        ];
+
+        listbox.items = [
+            { id: 111, text: "DiRT 3", group: "Driving/Racing" },
+            { id: 112, text: "Ridge Racer Unbounded", group: "Driving/Racing" },
+            { id: 113, text: "TrackMania 2", group: "Driving/Racing" },
+            { id: 121, text: "Dark Souls 2", group: "Role-Playing" },
+            { id: 122, text: "Mass Effect 3", group: "Role-Playing" },
+            { id: 123, text: "The Elder Scrolls V: Skyrim", group: "Role-Playing" },
+            { id: 124, text: "Divinity: Original Sin", group: "Role-Playing" },
+            { id: 125, text: "Fallout: New Vegas", group: "Role-Playing" },
+            { id: 131, text: "Diablo 3", group: "Action" },
+            { id: 132, text: "Gears of War", group: "Action" },
+            { id: 133, text: "F.E.A.R.", group: "Action" },
+            { id: 134, text: "Path of Exile", group: "Action" },
+            { id: 135, text: "Grand Theft Auto IV", group: "Action" },
+            { id: 136, text: "Divine Divinity", group: "Action" },
+            { id: 137, text: "The Witcher 2", group: "Action" },
+            { id: 141, text: "Battlefield: Bad Company 2", group: "Shooter" },
+            { id: 142, text: "Call of Duty: Black Ops", group: "Shooter" },
+            { id: 143, text: "BioShock Infinite", group: "Shooter" },
+            { id: 144, text: "Crysis 2", group: "Shooter" },
+            { id: 211, text: "FIFA 14", group: "Sports" },
+            { id: 212, text: "Madden NFL 25", group: "Sports" },
+            { id: 221, text: "Assassin's Creed IV", group: "Adventure" },
+            { id: 222, text: "Tomb Raider", group: "Adventure" },
+            { id: 223, text: "Metal Gear Solid V", group: "Adventure" },
+            { id: 311, text: "Battlefield 4", group: "First-Person" },
+            { id: 312, text: "Call of Duty: Ghosts", group: "First-Person" },
+            { id: 313, text: "Killzone: Shadow Fall", group: "First-Person" },
+            { id: 321, text: "Rayman Legends", group: "Platformer" },
+            { id: 322, text: "Rogue Legacy", group: "Platformer" },
+            { id: 323, text: "1001 Spikes", group: "Platformer" },
+            { id: 333, text: "Final Fantasy XIV Online", group: "MMO" }
+        ];
+
+        listbox.size = { width: 350, height: 300 };
+
+    </script>
+</html>

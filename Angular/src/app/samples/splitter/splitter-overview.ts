@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,8 +12,8 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.splitter.js';
-import { IntegralUIOrientation, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.splitter';
+import { IntegralUIOrientation, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -21,7 +21,7 @@ import { IntegralUIOrientation, IntegralUITheme } from 'integralui-web/component
     styleUrls: ['./splitter-overview.css']
 })
 export class SplitterOverviewSample {
-    @ViewChild('splitter2', { static: false }) splitter2: ElementRef;
+    @ViewChild('splitter2', { static: false }) splitter2!: ElementRef;
 
     public currentSplitterDistance: number = 180;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;

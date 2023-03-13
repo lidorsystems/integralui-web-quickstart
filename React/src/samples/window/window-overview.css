@@ -1,0 +1,12 @@
+#window-block {
+    margin-top: 10px;
+}
+#window-block .feature-help {
+    margin-top: 450px;
+}
+div[slot="content"] {
+    height: 100%;
+}
+[id="window-overview-1"], [id="window-overview-2"] {
+    --window-icon-margin: 2px 0 0 2px;
+}

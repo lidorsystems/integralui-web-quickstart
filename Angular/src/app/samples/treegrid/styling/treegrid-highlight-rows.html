@@ -1,0 +1,23 @@
+<h2 class="feature-title">TreeGrid / Highlight Rows on Demand</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-highlight-rows"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [autoSizeColumns]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [expandColumnIndex]="1"
+        [rowHeight]="28"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (cellDblClick)="cellDoubleClicked($event)"
+        (valueChanged)="cellValueChanged($event)"
+    ></iui-treegrid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample demonstrates how to select or highlight a row in TreeGrid component.</p>
+        <p><span class="initial-space"></span>When you click on a checkbox in specific row, it will become highlighted. To distinguish highlighted state of a row from a normal state, a custom style is applied to highlighted rows. In this example, all rows affected have a green background with white text color in bold.</p>
+    </div>
+</div>

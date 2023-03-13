@@ -1,10 +1,10 @@
 {
   "name": "integralui-web-quickstart-javascript",
-  "version": "21.2.0",
+  "version": "23.1.0",
   "author": "Lidor Systems",
   "license": "SEE LICENSE in LICENSE.md",
   "private": true,
   "dependencies": {
-    "integralui-web": "git+https://github.com/lidorsystems/integralui-web.git"
+    "integralui-web": "~23.1.0"
   }
 }

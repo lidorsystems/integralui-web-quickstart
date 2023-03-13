@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -14,8 +14,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import 'integralui-web/components/integralui.autocomplete.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.autocomplete';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -41,10 +41,10 @@ export class AutoCompleteOverviewSample {
         let self = this;
 
         // Use HTTP service to get data from the specified JSON file
-        self.http.get("./assets/cities.json").subscribe((data: Array<any>) => self.sampleList = data);
+        self.http.get("./assets/cities.json").subscribe((data: any) => self.sampleList = data);
     }
 
-    onValueChanged(e){
+    onValueChanged(e: any){
         console.log("Text value changes to: ", e.detail.value);
     }
 }

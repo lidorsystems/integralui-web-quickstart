@@ -1,0 +1,19 @@
+<h2 class="feature-title">Grid / Cells with ProgressBar</h2>
+<div class="feature-content">
+    <iui-treegrid #treegrid id="treegrid-editors-progressbar"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [columns]="columns"
+        [customStyle]="gridStyle"
+        [resourcePath]="currentResourcePath"
+        [rowHeight]="32"
+        [rows]="rows"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-treegrid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this demo, the Progress column displays a progress bar visualizing the completion of specific operation. Depending on cell value, the progress is updated in different colors, where each color represents a progression stage: red, orange, yellow, green and blue</p>
+        <p><span class="initial-space"></span>For parent rows, the progress value is calculated from its children, using an aggregation function</p>
+    </div>
+</div>

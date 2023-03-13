@@ -1,0 +1,15 @@
+<h2>TreeView / Auto Sized</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-autosized"
+        [autoSize]="true"    
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, TreeView height is determined by its content. Whenever tree item expands or collapses, it also updates the treeview height.</p>
+        <p><span class="initial-space"></span>When auto-size is enabled, vertical scrollbar will remain hidden, only the horizontal scrollbar may appear when required.</p>
+        <p><span class="initial-space"></span>This feature is useful with small tree hierarchies or when you want to determine the tree view size on demand showing the tree structure in full.</p>
+    </div>
+</div>

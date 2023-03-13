@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="treeview-export"]{
+                --treeview-display: inline-block;
+                --treeview-width: calc(60% - 200px);
+            }
+            [id="treeview-export-result-block"]{
+                border: thin solid #d9d9d9;
+                display: inline-block;
+                height: 300px;
+                overflow: auto;
+                width: calc(40% - 10px);
+            }
+
+            .treeview-export-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --button-margin: 10px 5px;
+           }
+            .treeview-export-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .treeview-export-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Export to JSON</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-export"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-treeview>
+            <div class="treeview-export-panel">
+                <iui-checkbox id="treeview-export-selected">Only selected</iui-checkbox>
+                <iui-checkbox id="treeview-export-flat">Export as Flat list</iui-checkbox>
+                <iui-button id="treeview-export-button" allow-animation="true">Export</iui-button>
+            </div>
+            <div id="treeview-export-result-block">
+                <pre id="treeview-export-result"><code></code></pre>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>IntegralUI TreeView component comes with built-in functionality that allows you to export the tree data in full or partially to JSON format.</p>
+                <p><span class="initial-space"></span>When exporting the data in full, it is straightforward, you don't need to specify any parameters just call the exporting method. On the other hand, when exporting partial data from the TreeView, you need to specify items that you want to export, for example exporting selected items.</p>
+                <p><span class="initial-space"></span>To select items use the CTRL key or SHIFT key. The <strong>MultiExtended</strong> mode allows selection of multiple items in wide range. While SHIFT key is pressed, all items from first to last clicked item will become selected.</p>
+                <p><span class="initial-space"></span>You can also choose whether exported data will be as a tree hierarchy or a flat list.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { IntegralUIAnimationType, IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Export Panel
+        const ctrlSelectedOnly = document.querySelector('#treeview-export-selected');
+        ctrlSelectedOnly.resourcePath = currentResourcePath;
+
+        const ctrlFlat = document.querySelector('#treeview-export-flat');
+        ctrlFlat.resourcePath = currentResourcePath;
+
+        const ctrlExport = document.querySelector('#treeview-export-button');
+
+        let onExport = function(){
+            let data = treeview.items;
+
+            // Source is selected items only
+            if (ctrlSelectedOnly.checked)
+                data = treeview.getList('selected');
+            // Source is the full tree hierarchy as flat list
+            else if (ctrlFlat.checked)
+                data = treeview.getFullList();
+
+            ctrlResult.innerHTML = treeview.exportToJSON(data, null, '   ', ctrlFlat.checked);
+        }
+
+        ctrlExport.addEventListener("click", () => onExport());
+
+        //
+        // Result settings
+        //
+
+        const ctrlResult = document.querySelector('#treeview-export-result');
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-export');
+
+        treeview.selectionMode = IntegralUISelectionMode.MultiExtended;
+        treeview.size = { height: 300 };
+
+        let flatData = [
+            { id: 1, text: "Dairy", expanded: false },
+            { id: 11, pid: 1, text: "Milk" },
+            { id: 12, pid: 1, text: "Butter" },
+            { id: 13, pid: 1, text: "Cheese" },
+            { id: 14, pid: 1, text: "Yogurt" },
+            { id: 2, text: "Fruits" },
+            { id: 21, pid: 2, text: "Berries", expanded:  false},
+            { id: 211, pid: 21, text: "BlackBerries" },
+            { id: 212, pid: 21, text: "CranBerries" },
+            { id: 213, pid: 21, text: "StrawBerries" },
+            { id: 22, pid: 2, text: "Pits" },
+            { id: 23, pid: 2, text: "Core" },
+            { id: 24, pid: 2, text: "Citrus Fruits" },
+            { id: 241, pid: 24, text: "Oranges" },
+            { id: 242, pid: 24, text: "Lemons" },
+            { id: 25, pid: 2, text: "Melons" },
+            { id: 26, pid: 2, text: "Tropical Fruits", expanded: false },
+            { id: 261, pid: 26, text: "Avocados" },
+            { id: 262, pid: 26, text: "Bananas" },
+            { id: 263, pid: 26, text: "Dates" },
+            { id: 3, text: "Grains" },
+            { id: 4, text: "Meat" },
+            { id: 41, pid: 4, text: "Beef" },
+            { id: 42, pid: 4, text: "Lamb", expanded: false },
+            { id: 421, pid: 42, text: "Lamb Breast" },
+            { id: 422, pid: 42, text: "Lamb Leg" },
+            { id: 423, pid: 42, text: "Lamb Ribs" },
+            { id: 43, pid: 4, text: "Pork" },
+            { id: 5, text: "Sweets", expanded: false },
+            { id: 51, pid: 5, text: "Biscuits" },
+            { id: 52, pid: 5, text: "Cakes" },
+            { id: 53, pid: 5, text: "Candies" },
+            { id: 54, pid: 5, text: "Muffins" },
+            { id: 55, pid: 5, text: "Pastries" },
+            { id: 6, text: "Vegetables", expanded: false },
+            { id: 61, pid: 6, text: "Asparagus" },
+            { id: 62, pid: 6, text: "Broccoli" },
+            { id: 63, pid: 6, text: "Carrots" },
+            { id: 64, pid: 6, text: "Corn" },
+            { id: 65, pid: 6, text: "Lettuce" },
+            { id: 66, pid: 6, text: "Onions" },
+            { id: 67, pid: 6, text: "Pumpkin" },
+            { id: 68, pid: 6, text: "Tomatoes" },
+            { id: 69, pid: 6, text: "Zucchini" },
+            { id: 7, text: "Water" }
+        ];
+
+        //
+        // Initialize the Component
+        //
+
+        treeview.loadData(flatData, null, null, true);
+
+    </script>
+</html>

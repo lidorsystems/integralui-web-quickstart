@@ -19,7 +19,8 @@ class SliderOverview extends Component {
             ctrlValue: 30,
             ctrlValue2: 75,
             currentTheme: IntegralUITheme.Office,
-            isAnimationAllowed: false
+            isAnimationAllowed: false,
+            isFocusAllowed: false
         }
     }
 
@@ -34,13 +35,25 @@ class SliderOverview extends Component {
             <div>
                 <h2>Slider / Overview</h2>
                 <div className="sample-block">
-                    <IntegralUISliderComponent id="slider-1" allowAnimation={this.state.isAnimationAllowed} size={this.state.ctrlSize} theme={this.state.currentTheme} value={this.state.ctrlValue} /><br />
-                    <IntegralUISliderComponent id="slider-2" allowAnimation={this.state.isAnimationAllowed} size={this.state.ctrlSize} theme={this.state.currentTheme} value={this.state.ctrlValue2} />
+                    <IntegralUISliderComponent id="slider-1" 
+                        allowAnimation={this.state.isAnimationAllowed} 
+                        allowFocus={this.state.isFocusAllowed}
+                        size={this.state.ctrlSize} 
+                        theme={this.state.currentTheme} 
+                        value={this.state.ctrlValue} />
+                    <br />
+                    <IntegralUISliderComponent id="slider-2" 
+                        allowAnimation={this.state.isAnimationAllowed} 
+                        allowFocus={this.state.isFocusAllowed}
+                        size={this.state.ctrlSize} 
+                        theme={this.state.currentTheme} 
+                        value={this.state.ctrlValue2} />
                     <div className="feature-help">
                         <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> Slider</strong> is a native Web Component that allows you to change a numeric value within a range of defined minimum and maximum values.</p>
                         <p><span className="initial-space"></span>You can move the slider by dragging it or by clicking the mouse to either side. In addition, you can customize its appearance using different colors or shapes via CSS.</p>
                         <p><span className="initial-space"></span>The following properties and events are supported:</p>
                         <ul className="feature-points">
+                            <li><span className="code-name">allowFocus</span> - Determines whether component can have the keyboard focus</li>
                             <li><span className="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
                             <li><span className="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
                             <li><span className="code-name">data</span> - Specifies an object that holds data related to the component</li>

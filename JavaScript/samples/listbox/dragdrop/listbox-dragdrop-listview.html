@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - ListBox / Drag Drop to ListView</title>
+		<link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-1"] {
+                --listbox-float: left;
+                --listbox-margin: 0 20px 0 0;
+            }
+            [id="listview-1"] {
+                --listview-float: left;
+                --listview-margin: 0 20px 0 0;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>ListBox / Drag Drop to ListView</h2>
+		<div class="sample-block">
+            <iui-listbox id="listbox-1" name="ListBox" resource-path="../../../node_modules/integralui-web/icons" selection-mode="MultiExtended" theme="Office"></iui-listbox>
+            <iui-listview id="listview-1" name="ListView" resource-path="../../../node_modules/integralui-web/icons" selection-mode="MultiExtended" theme="Office"></iui-listview>
+            <br style="clear:both;"/>
+            <div style="display:inline-block; margin-top:20px">
+                <div style="float:left;width:350px;margin-right:30px" align="center">
+                    <label style="margin-right:30px"><input id="allow-drag" type="checkbox" checked="checked" /> Allow Drag</label>
+                    <label><input id="allow-drop" type="checkbox" checked="checked" /> Allow Drop</label>
+                </div>
+                <div style="float:left;width:350px;" align="center">
+                    <label style="margin-right:30px"><input id="allow-drag-2" type="checkbox" checked="checked" /> Allow Drag</label>
+                    <label><input id="allow-drop-2" type="checkbox" checked="checked" /> Allow Drop</label>
+                </div>
+                <br style="clear:both;"/>
+            </div>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>In this sample you can drag drop items between ListBox and ListView components. The Dynamic drag and drop is active, which means when one or more items are dragged all other items will move and show the target position at which dragged items can drop.</p>
+                <p><span class="initial-space"></span>To create a copy of a dragged item(s), holding the SHIFT key just before item(s) are dropped. A <span style="color:#c60d0d;font-weight:bold">copy/paste</span> icon will appear in the center of the dragging window.</p>
+                <p><span class="initial-space"></span>By clicking on check boxes, you can change the built-in properties:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">allowDrag</span> - determines whether items can be dragged</li>
+                    <li><span class="code-name">allowDrop</span> - determines whether items can be dropped</li>
+               </ul>
+            </div>
+        </div>
+	</body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+	<script type="module">
+
+		//
+		// Sample settings
+		//
+            
+        // ListBox 1 settings
+		const list1 = document.querySelector('#listbox-1');
+        
+        list1.allowDrag = true;
+        list1.allowDrop = true;
+
+        list1.items = [
+            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
+            { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
+            { id: 3, icon: "action", text: "Gladiator", year: "2000", rating: 8.5 },
+            { id: 4, icon: "drama", text: "Malèna", year: "2000", rating: 7.5 },
+            { id: 5, icon: "music", text: "Moulin Rouge", year: "2001", rating: 7.6 },
+            { id: 6, icon: "comedy", text: "Snatch", year: "2000", rating: 8.3  },
+            { id: 7, icon: "biography", text: "A Beautiful Mind", year: "2001", rating: 8.2  },
+            { id: 8, icon: "crime", text: "Black Hawk Down", year: "2001", rating: 7.7 },
+            { id: 9, icon: "western", text: "Django Unchained", year: "2012", rating: 8.5  },
+            { id: 10, icon: "sci-fi", text: "Man of Steel", year: "2013", rating: 7.2 },
+            { id: 11, icon: "horror", text: "The Ring", year: "2002", rating: 7.1 },
+            { id: 12, icon: "romance", text: "40 Days and 40 Nights", year: "2002", rating: 5.6 },
+            { id: 13, icon: "sci-fi", text: "Minority Report", year: "2002", rating: 7.7 },
+            { id: 14, icon: "comedy", text: "Scary Movie 3", year: "2003", rating: 5.5 },
+            { id: 15, icon: "music", text: "Walk the Line", year: "2005", rating: 7.9  },
+            { id: 16, icon: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6.4 },
+            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
+            { id: 18, icon: "horror", text: "American Psycho", year: "2000", rating: 7.6 },
+            { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8.1 },
+            { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8.2 }
+        ];
+
+        // ListBox 2 settings
+        const list2 = document.querySelector('#listview-1');
+       
+        list2.allowDrag = true;
+        list2.allowDrop = true;
+        list2.items = [];
+        list2.itemSize = { width: 150, height: 32 }
+
+        // Both ListBox have the same settings
+        list1.size = list2.size = { width: 350, height: 300 };
+
+        // CheckBoxes
+        const chBoxes = document.querySelectorAll('input');
+
+        chBoxes.forEach((elem, index) => elem.addEventListener("change", (e) => onCheckBoxChange(e, index)));
+
+        let onCheckBoxChange = function(e, index){
+            switch (index){
+                case 1: 
+                    list1.allowDrop = e.target.checked;
+                    break;
+                case 2: 
+                    list2.allowDrag = e.target.checked;
+                    break;
+                case 3: 
+                    list2.allowDrop = e.target.checked;
+                    break;
+                default: 
+                    list1.allowDrag = e.target.checked;
+                    break;
+            }
+        }
+
+	</script>
+</html>

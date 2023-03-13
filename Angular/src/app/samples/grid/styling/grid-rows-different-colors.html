@@ -1,0 +1,20 @@
+<h2 class="feature-title">Grid / Rows in Different Colors</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-rows-different-colors"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [rowHeight]="24"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (selectionChanged)="gridSelectionChanged($event)"
+    ></iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, whenever a row is clicked it will appear in different color. Any subsequent clicks (up to three) will change the color until resets.</p>
+    </div>
+</div>

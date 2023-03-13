@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,11 +12,11 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
+import { html } from 'integralui-web/external/lit-element';
 
-import 'integralui-web/components/integralui.popover.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiPopOverOverviewStyle } from './popover-overview.style.js';
+import 'integralui-web/components/integralui.popover';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiPopOverOverviewStyle } from './popover-overview.style';
 
 @Component({
     selector: '',
@@ -24,10 +24,10 @@ import { iuiPopOverOverviewStyle } from './popover-overview.style.js';
     styleUrls: ['./popover-overview.css']
 })
 export class PopOverOverviewSample {
-    @ViewChild('popover', { static: false }) popover: ElementRef;
+    @ViewChild('popover', { static: false }) popover!: ElementRef;
 
     public ctrlSize: any = { width: 400, height: 250 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiPopOverOverviewStyle;
     public isPopoverActive: boolean = false;
@@ -80,7 +80,7 @@ export class PopOverOverviewSample {
         this.popoverSettings = newSettings;
     }
 
-    toggle(e){
+    toggle(e: any){
         e.preventDefault();
         
         this.isPopoverActive = !this.isPopoverActive;

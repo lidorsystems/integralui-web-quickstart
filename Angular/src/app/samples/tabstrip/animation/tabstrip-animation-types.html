@@ -1,0 +1,31 @@
+<h2>TabStrip / How to Animate Tab Content</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-animtypes"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-animtypes-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-animtypes-panel">
+        <label>Animation Type: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onAnimationTypeChecked($event)">
+            <iui-radiobutton>None</iui-radiobutton>
+            <iui-radiobutton>Fade</iui-radiobutton>
+            <iui-radiobutton [checked]="true">Slide</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example you can change the way tab content is animated. There are three options available:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">None</span> - animations are disabled</li>
+            <li><span class="code-object">Fade</span> - when tab is selected, its content appears with fade in/out animation</li>
+            <li><span class="code-object">Slide</span> - when tab is selected, its content slides from left/right or top/bottom direction depending on tab placement</li>
+        </ul>
+    </div>
+</div>

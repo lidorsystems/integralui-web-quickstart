@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-scrollto"]{
+                --listbox-display: inline-block;
+            }
+
+            .listbox-scrollto-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 300px;
+
+                --select-display: block;
+            }
+            .listbox-scrollto-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listbox-scrollto-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Scroll To Specific Item</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-scrollto"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listbox>
+            <div class="listbox-scrollto-panel">
+                <label>Scroll to: </label>
+                <iui-select id="scrollto-select" allow-animation="true" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+                <br/>
+                <label>Scroll Appearance: </label>
+                <iui-radiogroup id="scroll-appearance">
+                    <iui-radiobutton checked="true">Static</iui-radiobutton>
+                    <iui-radiobutton>Dynamic</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, there are multiple items and you can select the item that you want to appear in view by scrolling to it.</p>
+                <p><span class="initial-space"></span>You can also choose how scroll bar appears, there are two options: Static and Dynamic. With Static appearance, the scroll bar is always visible when there are more items than currently present in the view. On the other hand, with Dynamic appearance, the scroll bar will appear only when mouse hovers over ListBox space.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module">
+        import { IntegralUIComponentAppearance } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+     
+        //
+        // Control Panel
+        //
+
+        const ctrlSelect = document.querySelector('#scrollto-select');
+        ctrlSelect.items = [];
+
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => scrollToChanged(e));
+
+        let scrollToChanged = function(e){
+            let item = e.detail.item;
+
+            listbox.scrollTo(item);
+            listbox.selectedItem = item;
+        }
+
+
+        const ctrlScrollAppearance = document.querySelector('#scroll-appearance');
+
+        ctrlScrollAppearance.resourcePath = currentResourcePath;
+
+        let onScrollAppearanceChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listbox.scrollAppearance = IntegralUIComponentAppearance.Dynamic;
+                    break;
+
+                default: 
+                    listbox.scrollAppearance = IntegralUIComponentAppearance.Static;
+                    break;
+            }
+
+            listbox.updateLayout();
+        }
+
+        ctrlScrollAppearance.addEventListener("buttonChecked", (e) => onScrollAppearanceChecked(e));
+
+        //
+        // ListBox settings
+        //
+      
+        const listbox = document.querySelector('#listbox-scrollto');
+
+        listbox.items = [
+            { id: 11, text: "Milk", group: "Dairy" },
+            { id: 12, text: "Butter", group: "Dairy" },
+            { id: 13, text: "Cheese", group: "Dairy" },
+            { id: 14, text: "Yogurt", group: "Dairy" },
+            { id: 211, text: "BlackBerries", group: "Fruits" },
+            { id: 212, text: "CranBerries", group: "Fruits" },
+            { id: 213, text: "StrawBerries", group: "Fruits" },
+            { id: 241, text: "Oranges", group: "Fruits" },
+            { id: 242, text: "Lemons", group: "Fruits" },
+            { id: 261, text: "Avocados", group: "Fruits" },
+            { id: 262, text: "Bananas", group: "Fruits" },
+            { id: 263, text: "Dates", group: "Fruits" },
+            { id: 31, text: "Barley", group: "Grains" },
+            { id: 32, text: "Farro", group: "Grains" },
+            { id: 33, text: "Millet", group: "Grains" },
+            { id: 34, text: "Rice", group: "Grains" },
+            { id: 41, text: "Beef", group: "Meat" },
+            { id: 42, text: "Chicken", group: "Meat" },
+            { id: 43, text: "Turkey", group: "Meat" },
+            { id: 44, text: "Pork", group: "Meat" },
+            { id: 45, text: "Lamb", group: "Meat" },
+            { id: 51, text: "Biscuits", group: "Sweets" },
+            { id: 52, text: "Cakes", group: "Sweets" },
+            { id: 53, text: "Candies", group: "Sweets" },
+            { id: 54, text: "Muffins", group: "Sweets" },
+            { id: 55, text: "Pastries", group: "Sweets" },
+            { id: 61, text: "Asparagus", group: "Vegetables" },
+            { id: 62, text: "Broccoli", group: "Vegetables" },
+            { id: 63, text: "Carrots", group: "Vegetables" },
+            { id: 64, text: "Corn", group: "Vegetables" },
+            { id: 65, text: "Lettuce", group: "Vegetables" },
+            { id: 66, text: "Onions", group: "Vegetables" },
+            { id: 67, text: "Pumpkin", group: "Vegetables" },
+            { id: 68, text: "Tomatoes", group: "Vegetables" },
+            { id: 69, text: "Zucchini", group: "Vegetables" }
+        ];
+
+        listbox.size = { width: 350, height: 300 }
+
+        // Update the item list to Select component
+        let onUpdateComplete = function(e){
+            ctrlSelect.items = listbox.getFullList();
+        }
+
+        listbox.addEventListener("updateComplete", (e) => onUpdateComplete(e));
+
+    </script>
+</html>

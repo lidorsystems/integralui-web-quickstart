@@ -1,0 +1,7 @@
+[id="treeview-custom-content"] {
+    --treeitem-expand-box-margin: 12px 5px 0 0;
+    --treeitem-padding: 5px 0;
+
+    --progressbar-content-height: 12px;
+    --progressbar-border: 0;
+}

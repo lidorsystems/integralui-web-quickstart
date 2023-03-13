@@ -1,0 +1,34 @@
+<h2>ListBox / Grouping</h2>
+<div class="sample-block">
+    <iui-listbox #listbox id="listbox-grouping"
+        [allowAnimation]="true"
+        [groups]="groups"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [showGroups]="true"
+        [size]="ctrlSize"
+        [sorting]="currentSorting"
+        [theme]="currentTheme"
+    ></iui-listbox>
+    <div class="listbox-grouping-panel">
+        <label>Group by: </label>
+        <iui-select [allowAnimation]="true" [items]="groupList" [selectedItem]="selectedGroup" [theme]="currentTheme" (selectedIndexChanged)="groupingChanged($event)"></iui-select>
+        <br/>
+        <label>Sorting: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onSortingChecked($event)">
+            <iui-radiobutton [checked]="true">None</iui-radiobutton>
+            <iui-radiobutton>Ascending</iui-radiobutton>
+            <iui-radiobutton>Descending</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, you can change the group by which items in ListBox are grouped. Based on provided data, groups are created and changed dynamically.</p>
+        <p><span class="initial-space"></span>Each item object has a <strong>group</strong> field that determines the group under which it will appear. For grouping to work, the following is required:</p>
+        <ul class="feature-points">
+            <li>ListBox must have <strong>showGroups</strong> property set to true</li>
+            <li>There should be a list of group objects with name set, applied to the ListBox using the <strong>groups</strong> property</li>
+            <li>Each item object needs to have its <strong>group</strong> field set to specific group name from provided group list</li>
+            <li>If item doesn't have group set, it will appear under default 'Other' group</li>
+       </ul>
+    </div>
+</div>

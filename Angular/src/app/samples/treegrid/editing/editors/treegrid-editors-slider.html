@@ -1,0 +1,20 @@
+<h2 class="feature-title">Grid / Cells with Slider</h2>
+<div class="feature-content">
+    <iui-treegrid #treegrid id="treegrid-editors-slider"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [editMode]="currentEditMode"
+        [columns]="columns"
+        [customStyle]="gridStyle"
+        [resourcePath]="currentResourcePath"
+        [rowHeight]="32"
+        [rows]="rows"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (valueChanged)="sliderValueChanged($event)"
+    ></iui-treegrid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this demo, the Progress column displays a slider visualizing the completion of specific operation. You can change the progression using the Slider from 0 to 100%. This also changes the progression value of parent rows. Depending on current state, the progression is displayed in different colors: red, orange, yellow, green and blue. For parent rows, the progress value is aggregated from its children, using custom function.</p>
+    </div>
+</div>

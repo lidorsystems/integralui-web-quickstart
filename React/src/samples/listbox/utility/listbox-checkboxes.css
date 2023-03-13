@@ -1,0 +1,39 @@
+.sample-block-listbox-checkboxes {
+    width: 800px;
+    height: 400px;
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.sample-panel-listbox-checkboxes {
+    display: inline-block;
+    margin-left: 20px;
+    width: calc(60% - 25px);
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.ctrl-block {
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+
+.sample-panel-listbox-checkboxes {
+    --button-margin: 8px 0 5px 3px;
+    --button-padding: 5px;
+    --button-vertical-align: top;
+    --button-width: 100px;
+
+    --select-display: inline-block;
+    --select-margin: 10px 2px 0 2px;
+    --select-width: 200px;
+}

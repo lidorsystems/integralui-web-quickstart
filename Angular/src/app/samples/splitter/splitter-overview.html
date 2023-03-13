@@ -1,15 +1,15 @@
 <h2>Splitter / Overview</h2>
 <div class="spt-ovw-block">
     <iui-splitter id="splitter-1" [splitterDistance]="currentSplitterDistance" [theme]="currentTheme" (splitterMoving)="onSplitterMoving($event)" (splitterMoved)="onSplitterMoved($event)">
-        <div slot="iui-panel1">
+        <div slot="panel1">
             <p class="spt-ovw-panel-content">{{panel1Data.content}}</p>
         </div>
-        <div slot="iui-panel2" class="spt-ovw-block-2">
+        <div slot="panel2" class="spt-ovw-block-2">
             <iui-splitter #splitter2 id="splitter-2" [orientation]="spliiterOrientation" [theme]="currentTheme">
-                <div slot="iui-panel1">
+                <div slot="panel1">
                     <p class="spt-ovw-panel-content">{{panel2Data.content}}</p>
                 </div>
-                <div slot="iui-panel2" class="spt-ovw-block-2">
+                <div slot="panel2" class="spt-ovw-block-2">
                     <p class="spt-ovw-panel-content">{{panel3Data.content}}</p>
                 </div>
             </iui-splitter>

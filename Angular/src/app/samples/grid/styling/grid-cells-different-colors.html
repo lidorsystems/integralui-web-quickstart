@@ -1,0 +1,21 @@
+<h2 class="feature-title">Grid / Cells in Different Colors</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-cells-different-colors"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [rowHeight]="24"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (cellClick)="gridCellClicked($event)"
+    ></iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, whenever a cell is clicked it will appear in different color. In addition, an alert state with animation is applied to a cell when clicked few times.</p>
+    </div>
+</div>

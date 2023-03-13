@@ -1,0 +1,23 @@
+<h2>TabStrip / Drag and Drop Overview</h2>
+<div class="sample-block">
+    <iui-tabstrip
+        [allowAnimation]="true"
+        [allowDrag]="true"
+        [animation]="currentAnimation"
+        [customStyle]="customStyle"
+        [selectedTab]="currentSelection"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (tabOrderChanged)="tabOrderChanged($event)"
+        > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [allowDrag]="true" [data]="tab" [icon]="tab.icon" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-ovw-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, you can reorder tabs using drag and drop. Drag and drop functionality is controlled on general level with <span class="code-lang">allowDrag</span> property that enables or disables dragging of all tabs, or on individial level where each Tab has allowDrag property that determines whether tab is draggable or not.</p>
+        <p><span class="initial-space"></span>Whenever tab is reordered using drag and drop, the <span class="code-lang">tabOrderChanged</span> event is fired, which you can handle in your code and add custom actions.</p>
+        <p><span class="initial-space"></span>To reorder tabs, just select a tab and drag it over other tabs. An empty space will appear showing the target position.</p>
+    </div>
+</div>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Cells with RadioButton</title>
+		<link rel="stylesheet" href="../../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Cells with RadioButton</h2>
+		<div class="sample-block-grid-radiobutton">
+			<iui-grid id="grid-editors-radiobutton"
+                allow-animation="true"
+                auto-size-columns="true"
+                row-height="36"
+                selection-mode="none"
+			></iui-grid>
+            <br/>
+            <div style="margin: 0 10px 0 0; text-align: right">
+                <iui-button id="submit-button">Submit</iui-button>
+            </div>
+            <iui-toaster allow-animation="true"></iui-toaster>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>An example of a Grid that allows you to select different options during a survey. There are two groups of options,. where each option is represented by a RadioButton. In addition grid appearance is modified in a way that it hides the grid lines and shows two groups of options separted by an emtpy column.</p>
+            <p><span class="initial-space"></span>Once the survey is complete, clicking on a Submit button will show a notfication message (using the <strong>IntegralUI Toaster</strong> component) stating a 'Warning' if no option is selected or a 'Info' with a message stating the you can find results in the console log.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.button.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.toaster.js"></script>
+	<script type="module">
+        import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme, IntegralUIToastType } from '../../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridEditorsRadioButtonStyle } from './grid-editors-radiobutton.style.js';
+
+        let currentResourcePath = '../../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+		//
+		// Submit Button settings
+		//
+
+        const submitButton = document.querySelector('#submit-button');
+
+        submitButton.theme = currentTheme;
+
+        submitButton.addEventListener("click", () => onSubmitClicked());
+
+        let onSubmitClicked = function(){
+            let result = [];
+
+            let noFieldsChecked = true;
+
+            grid.rows.forEach(row => {
+                let category = { name: row.cells[0].text }
+
+                row.cells.forEach(cell => {
+                    if (cell.value){
+                        let column = grid.getColumnById(cell.cid);
+                        let parentColumn = grid.getColumnParent(column);
+
+                        if (column && parentColumn)
+                            category[parentColumn.headerText] = column.headerText;
+
+                        noFieldsChecked = false;
+                    }
+                });
+
+                result.push(category);
+            });
+
+            if (noFieldsChecked)
+                toaster.show({ title: 'Warning', text: 'Submitted results are empty, please provide your feedback by selecting options.', type: IntegralUIToastType.Error });
+            else {
+                console.log(result);
+
+                toaster.show({ title: 'Info', text: 'Results from the survey are submited, you can find them in the CONSOLE LOG.', type: IntegralUIToastType.Success });
+            }
+        }
+
+		//
+		// Toaster settings - For Notifications
+		//
+
+        const toaster = document.querySelector('iui-toaster');
+
+        toaster.positionAdjustment = { left: -15 }
+        toaster.theme = currentTheme;
+        toaster.toastSize = { width: 350, height: 70 }
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-editors-radiobutton');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 1, width: 200, minWidth: 135 },
+            {
+                id: 999, 
+                headerText: "Online Shoping Experience Survey",
+                headerAlignment: "center",
+                class: { header: 'column-title' },
+                columns: [
+                    { 
+                        id: 99, 
+                        headerText: "Importance", 
+                        headerAlignment: "center", 
+                        class: { header: 'column-group' },
+                        editorType: IntegralUIEditorType.RadioButton,
+                        editorSettings: { group: 'Importance'},
+                        columns: [
+                            { id: 2, pid: 99, headerText: "1", class: { header: 'group-first-cell', body: ['group-first-cell', 'group-last-bottom-cell'] }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 3, pid: 99, headerText: "2", class: { body: 'group-last-bottom-cell' }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 4, pid: 99, headerText: "3", class: { body: 'group-last-bottom-cell' }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 5, pid: 99, headerText: "4", class: { body: 'group-last-bottom-cell' }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 6, pid: 99, headerText: "5", class: { header: 'group-last-cell', body: 'group-last-cell' }, headerAlignment: "center", contentAlignment: "center" }
+                        ],
+                        width: 300
+                    },
+                    { id: 100, fixedWidth: true, width: 20 },
+                    { 
+                        id: 101, 
+                        headerText: "Satisfaction", 
+                        headerAlignment: "center", 
+                        class: { header: 'column-group' },
+                        editorType: IntegralUIEditorType.RadioButton,
+                        editorSettings: { group: 'Satisfaction'},
+                        columns: [
+                            { id: 8, pid: 101, headerText: "1", class: { header: 'group-first-cell', body: ['group-first-cell', 'group-last-bottom-cell'] }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 9, pid: 101, headerText: "2", class: { body: 'group-last-bottom-cell' }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 10, pid: 101, headerText: "3", class: { body: 'group-last-bottom-cell' }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 11, pid: 101, headerText: "4", class: { body: 'group-last-bottom-cell' }, headerAlignment: "center", contentAlignment: "center" },
+                            { id: 12, pid: 101, headerText: "5", class: { header: 'group-last-cell', body: 'group-last-cell' }, headerAlignment: "center", contentAlignment: "center" }
+                        ],
+                        width: 300
+                    }
+                ]
+            }
+        ];
+
+		grid.customStyle = iuiGridEditorsRadioButtonStyle;
+        grid.editMode = IntegralUIEditMode.Custom;
+        grid.resourcePath = currentResourcePath;
+        grid.showScroll = { horizontal: false, vertical: false }
+
+        grid.rows = [
+            { id: 1, cells: [{ cid: 1, text: "Product Catalog" } ] },
+            { id: 2, cells: [{ cid: 1, text: "Customer Service" } ] },
+            { id: 3, cells: [{ cid: 1, text: "Interface" } ] },
+            { id: 4, cells: [{ cid: 1, text: "User-friendly" } ] },
+            { id: 5, cells: [{ cid: 1, text: "Speed" } ] },
+            { id: 6, cells: [{ cid: 1, text: "Returns Policy" } ] }
+        ];
+
+        grid.showFooter = false;
+		grid.size = { height: 400 }
+        grid.theme = currentTheme;
+        
+        // Initialization ------------------------------------------------------------------------
+
+        let createRowCells = function(){
+            grid.rows.forEach(row => {
+                //
+                // In order for cell to appear under specific column, cell's cid value should be the same as column's id value
+                // Because we are using radio buttons with initial value as undefined, the value field in cell object is not required
+                //
+
+                // Create cells for Importance group
+                for (let i = 2; i <= 6; i++){
+                    row.cells.push({ cid: i });
+                }
+
+                // Create cells for Satisfaction group
+                for (let i = 8; i <= 12; i++){
+                    row.cells.push({ cid: i });
+                }
+            });
+        }
+
+        let init = function(){
+            createRowCells();
+
+            grid.updateLayout();
+        }
+
+        init();
+
+	</script>
+</html>

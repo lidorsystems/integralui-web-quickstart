@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Custom Toolbar on Mouse Over</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Custom Toolbar on Mouse Over</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-row-custom-toolbar"
+                allow-animation="true"
+                auto-size-columns="true"
+                row-height="28"
+			></iui-grid>
+		</div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>in this demo, when moving the mouse cursor over rows, a toolbar will appear on the right side. The toolbar contains three icons: Delete, Statistics and Favorite. Clicking on them will start a different action accordingly.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.rating.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tooltip.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import { styleMap } from '../../../node_modules/integralui-web/external/style-map.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridRowCustomToolbarStyle } from './grid-row-custom-toolbar.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        // DropDownList
+        let genres = [
+            { text: 'Action' },
+            { text: "Adventure" },
+            { text: "Animation" },
+            { text: "Biography" },
+            { text: "Comedy" },
+            { text: "Crime" },
+            { text: "Drama" },
+            { text: "Fantasy" },
+            { text: "Horror" },
+            { text: "Mystery" },
+            { text: "Sci-Fi" },
+            { text: "Thriller" },
+            { text: "Western" }
+        ];
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-row-custom-toolbar');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 1, fixedWidth: true, width: 30 },
+            { id: 2, headerText: "Title", minWidth: 150, width: 300 },
+            { 
+                id: 5, 
+                headerText: "Genre", 
+                headerAlignment: "center", 
+                editorType: IntegralUIEditorType.DropDownList,
+                editorSettings: {
+                    allowAnimation: true,
+                    dropDownAdjustment: { top: 10 },
+                    items: genres
+                },
+                minWidth: 100,
+                width: 120
+            },
+            { 
+                id: 4, 
+                headerText: "Rating", 
+                editorType: IntegralUIEditorType.Rating, 
+                editorSettings: {
+                    editOnFocus: true
+                },
+                headerAlignment: "center", 
+                contentAlignment: "center", 
+                width: 120, 
+                fixedWidth: true
+            },
+            { id: 3, headerText: "Year", headerAlignment: "center", contentAlignment: "center", minWidth: 50, width: 70 },
+        ];
+
+        grid.editMode = IntegralUIEditMode.Custom;
+        grid.resourcePath = currentResourcePath;
+        grid.rows = [];
+        grid.showFooter = false;
+        grid.showScroll = { horizontal: false }
+		grid.size = { height: 400 }
+        
+		grid.customStyle = iuiGridRowCustomToolbarStyle;
+        grid.theme = currentTheme;
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            grid.rows = [];
+
+            data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.id === 1 ? 'isChecked' : column.headerText;
+
+                    // Add Title to the row text
+                    if (field === 'Title')
+                        row.text = obj[field];
+
+                    // Delete all fields that will be included in cells, except for the field 'Title'
+                    if (column.headerText !== 'Title')
+                        delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    if (column.id === 1 || obj[field] !== undefined){
+                        let cell = {
+                            cid: column.id,
+                            colName: field
+                        }
+
+                        // If it is not the Genre field, add it to cell text, otherwise because of dropdownlist editor add it to cell value
+                        if (column.id !== 5 && _commonService.isString(obj[field]))
+                            cell.text = obj[field];
+                        else
+                            cell.value = obj[field];
+
+                        row.cells.push(cell);
+                    }
+                });
+
+                grid.rows.push(row);
+            });
+        }
+        
+        let createRowToolbar = function(){
+            grid.rows.map(row => 
+                row.buttons = [
+                    { key: 'DELETE', icon: 'trash', tooltip: { title: "Delete", initialDelay: 1000, position: 'above' } },
+                    { key: 'CHARTS', icon: 'statistics', tooltip: { title: "Statistics", initialDelay: 1000, position: 'above' } },
+                    { key: 'MARK', icon: 'favorite', tooltip: { title: "Favorite", initialDelay: 1000, position: 'above' } }
+                ]
+            );
+        }
+
+        // Events --------------------------------------------------------------------------------
+
+        let toolbarButtonClicked = function(row, button){
+            switch (button.key){
+                case 'DELETE':
+                    grid.removeRow(row);
+                    grid.updateLayout();
+                    break;
+
+                case 'CHARTS':
+                    alert("Statistics button is clicked for row: " + row.text);
+                    break;
+
+                case 'MARK':
+                    row.favorite = row.favorite != undefined ? !row.favorite : true;
+                    button.icon = row.favorite ? 'favorite-selected' : 'favorite';
+                    break;
+            }
+        }
+
+        // Templates -----------------------------------------------------------------------------
+
+        grid.rowHoverTemplate = (row) => { 
+            if (row && row.buttons)
+                return html`
+                    ${row.buttons.map(button => html`
+                            <div class="grid-row-hover-button">
+                        <iui-tooltip enabled="true" .settings="${button.tooltip}"> 
+                                <span class="grid-row-hover-button-icons ${button.icon}" @click="${() => toolbarButtonClicked(row, button)}"></span>
+                        </iui-tooltip>
+                            </div>
+                    `)}
+                `;
+
+            return null;
+        };
+
+        grid.rowTemplate = (row, cell) => { 
+            switch (cell.cid){
+                case 1:
+                    return html`<span class=${classMap({ 'grid-row-hover-cell-favorite': true, 'grid-row-hover-cell-favorite-selected': row.favorite === true })} style=${styleMap({ opacity: isRowHovered(row) ? 1 : 0.5 })}></span>`;
+            }
+
+            return null;
+        };
+
+        let isRowHovered = function(row){
+            return grid.isRowHovered(row);
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        let init = function(){
+            let self = this;
+
+            fetch('./grid-row-custom-toolbar-data.json') 
+                .then(response => response.json()) 
+                .then(data => {
+                    let self = this;
+
+                    // Suspend the grid layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    convertJSONData(data);
+                    createRowToolbar();
+
+                    // Resume and update the grid layout
+                    grid.resumeLayout();
+                });
+        }
+
+        init();
+	</script>
+</html>

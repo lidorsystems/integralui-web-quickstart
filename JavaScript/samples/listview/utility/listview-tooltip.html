@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Items with Tooltip</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-tooltip"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, each item has a tooltip attached. Whenever the mouse cursor is moved above the item, a tooltip will appear showing the item text.</p>
+                <p><span class="initial-space"></span>Tooltip is fully customizable, you can set the initial delay, how long the tooltip will remain visible, its position etc.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tooltip.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUICheckMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Tooltip settings
+        //
+
+        let tooltipSettings = {
+            autoPopDelay: 3000,
+            enabled: true,
+            initialDelay: 500,
+            position: 'mouse',
+            showMarker: true
+        }
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-tooltip');
+
+        listview.items = [
+            { id: 1, text: "Star Trek" },
+            { id: 2, text: "Cast Away"  },
+            { id: 3, text: "Gladiator" },
+            { id: 4, text: "Malèna" },
+            { id: 5, text: "Moulin Rouge" },
+            { id: 6, text: "Snatch"  },
+            { id: 7, text: "A Beautiful Mind"  },
+            { id: 8, text: "Black Hawk Down" },
+            { id: 9, text: "Django Unchained" },
+            { id: 10, text: "Man of Steel" },
+            { id: 11, text: "The Ring" },
+            { id: 12, text: "40 Days and 40 Nights" },
+            { id: 13, text: "Minority Report" },
+            { id: 14, text: "Scary Movie 3" },
+            { id: 15, text: "Walk the Line"  },
+            { id: 16, text: "How to Lose a Guy in 10 Days" },
+            { id: 17, text: "The Dark Knight"  },
+            { id: 18, text: "American Psycho" },
+            { id: 19, text: "The Grand Budapest Hotel" },
+            { id: 20, text: "The Wolf of Wall Street" }
+        ];
+        
+        listview.itemSize = { width: 150, height: 32 }
+        listview.size = { width: 350, height: 250 }
+        listview.theme = currentTheme;
+
+        listview.itemTemplate = (item) => { 
+            return html`
+                <div>
+                    <iui-tooltip
+                        .enabled=${tooltipSettings.enabled}
+                        .settings=${Object.assign({ title: item.text }, tooltipSettings )}
+                        .theme=${currentTheme}
+                    >
+                        <div style="overflow: hidden;text-overflow: ellipsis;">
+                            <span>${item.text}</span>
+                        </div>
+                    </iui-tooltip>
+                </div>
+            `;
+        };
+
+    </script>
+</html>

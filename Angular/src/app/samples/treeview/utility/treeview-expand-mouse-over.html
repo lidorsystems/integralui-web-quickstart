@@ -1,0 +1,14 @@
+<h2>TreeView / Expand on Mouse Over</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-expand-mouseover"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (itemHover)="onItemHover($event)"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, whenever mouse hovers over item space, the item will expand after a delay of 500ms. If mouse cursor is moved away from item space before set delay expires, nothing happens.</p>
+        <p><span class="initial-space"></span>This functionality is set in code by handling the <span class="code-object">itemHover</span> event.</p>
+    </div>
+</div>

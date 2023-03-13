@@ -1,0 +1,29 @@
+<h2 class="feature-title">TreeGrid / How to Change Expanding Column</h2>
+<div class="feature-content">
+    <iui-treegrid #treegrid id="treegrid-expanding-column"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [columns]="columns"
+        [rowHeight]="24"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-treegrid>
+    <div class="sample-block-expanding-column">
+        <label>Expanding Column: </label>
+        <iui-select 
+            [allowAnimation]="true" 
+            [items]="selectOptions"
+            [maxDropDownItems]="5" 
+            [selectedIndex]="currentSelectedIndex"
+            [theme]="currentTheme"
+            (selectedIndexChanged)="onColumnSelectionChanged($event)"
+        ></iui-select>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows how to change the column which contains the expand box for rows in TreeGrid component. By default expanding column is set to be the first column. By selecting a different column from right panel, you can change that so expand boxes can appear in some other column.</p>
+        <p><span class="initial-space"></span>This is useful when you have one or more columns that contains a checkbox, icon, buttons or similar content that require small width that will appear left from the expanding column.</p>
+    </div>
+</div>

@@ -1,9 +1,9 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiTreeViewOverviewStyle = css`
     .computer-icons
     {
-        background-image: url(assets/integralui-web/resources/computer.png);
+        background-image: url(assets/resources/computer.png);
         background-repeat: no-repeat;
         display: inline-block;
         overflow: hidden;
@@ -75,7 +75,7 @@ export const iuiTreeViewOverviewStyle = css`
         padding-left: 5px;
     }
     .trw-ovw-toolitem-button {
-        background-image: url(assets/integralui-web/resources/icons.png);
+        background-image: url(assets/resources/icons.png);
         background-repeat: no-repeat;
         display: block;
         overflow: hidden;

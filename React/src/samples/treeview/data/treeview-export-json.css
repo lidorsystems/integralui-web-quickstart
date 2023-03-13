@@ -1,0 +1,28 @@
+[id="treeview-export"]{
+    --treeview-display: inline-block;
+    --treeview-width: calc(60% - 200px);
+}
+[id="treeview-export-result-block"]{
+    border: thin solid #d9d9d9;
+    display: inline-block;
+    height: 300px;
+    overflow: auto;
+    vertical-align: top;
+    width: calc(40% - 10px);
+}
+
+.treeview-export-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 170px;
+
+    --button-margin: 10px 5px;
+}
+.treeview-export-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.treeview-export-panel label:first-of-type {
+    margin-top: 0;
+}

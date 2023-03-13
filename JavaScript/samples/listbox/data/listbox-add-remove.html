@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .empty-block {
+                border: thin solid #cecece; 
+                display: inline-block;
+                font-size: 2rem;
+                padding: 132px 20px;
+                width: 310px;
+                text-align: center;
+            }
+            [id="listbox-addremove"]{
+                display: inline-block;
+            }
+            .listbox-addremove-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 200px;
+
+                --button-display: block;
+                --button-margin: 5px 0;
+            }
+            .listbox-addremove-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listbox-addremove-panel label:first-of-type {
+                margin-top: 0;
+            }
+            .inline-block {
+                display: inline-block;
+            }
+            .inline-block {
+                --button-display: inline-block;
+                --button-vertical-align: middle;
+
+                --numeric-display: inline-block;
+                --numeric-vertical-align: middle;
+           }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Add-Remove Items from Code</h2>
+        <div class="sample-block">
+            <div id="listbox-addremove">
+                <iui-listbox
+                    allow-animation="true"
+                    resource-path="../../../node_modules/integralui-web/icons"
+                ></iui-listbox>
+            </div>
+            <div class="empty-block">ListBox is empty.</div>
+            <div class="listbox-addremove-panel">
+                <iui-button id="add">Add</iui-button>
+                <iui-button id="insert-after">Insert After</iui-button>
+                <iui-button id="insert-before">Insert Before</iui-button>
+                <div class="inline-block">
+                   <iui-button id="insert-at">Insert At</iui-button><iui-numeric id="insert-pos" min="0" max="100"></iui-numeric>
+                </div>
+                <iui-button id="remove">Remove</iui-button>
+                <div class="inline-block">
+                    <iui-button id="remove-at">Remove At</iui-button><iui-numeric id="remove-pos" min="0" max="100"></iui-numeric>
+                </div>
+                <iui-button id="clear">Clear</iui-button>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example that demonstrates adding and removal od items manually from code using buttons.</p>
+                <p><span class="initial-space"></span>You can add items at the end, before or after a specific item (in this case the selected item) or at specific position.</p>
+                <p><span class="initial-space"></span>In similar way, you can remove a specific item using its object reference or its position in the item list. There is an option to remove all items from the list.</p>
+                <p><span class="initial-space"></span>The following methods are used:</p>
+                <ul class="feature-points">
+                    <li><span class="code-object">addItem</span> - adds the item to the end of the list</li>
+                    <li><span class="code-object">clearItems</span> - removes all items from the list</li>
+                    <li><span class="code-object">insertItemAfter</span> - inserts the item after the specified item</li>
+                    <li><span class="code-object">insertItemAt</span> - inserts the item at specified position within the list</li>
+                    <li><span class="code-object">insertItemBefore</span> - inserts the item before the specified item</li>
+                    <li><span class="code-object">removeItem</span> - removes the item from the list</li>
+                    <li><span class="code-object">removeItemAt</span> - removes the item at specified position from the list</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.numeric.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Control Panel
+        let insertPos = 0;
+        let removePos = 0;
+        let itemCount = 0;
+
+        const btnList = document.querySelectorAll('iui-button');
+        btnList.forEach(btn => {
+            btn.allowAnimation = true;
+            btn.theme = IntegralUITheme.Office;
+        });
+
+        // Add Button
+        const btnAdd = document.querySelector('#add');
+        btnAdd.addEventListener("click", (e) => onAddClicked(e));
+
+        let onAddClicked = function(e){
+            let newItem = createNewItem();
+
+            listbox.addItem(newItem);
+            listbox.selectedItem = newItem;
+            updateContent();
+        }
+
+        // Insert After Button
+        const btnAfterBefore = document.querySelector('#insert-after');
+        btnAfterBefore.addEventListener("click", (e) => onInsertAfterClicked(e));
+
+        let onInsertAfterClicked = function(e){
+            if (!listbox.selectedItem)
+                onAddClicked(e);
+            else {
+                let newItem = createNewItem();
+
+                listbox.insertItemAfter(newItem, listbox.selectedItem);
+                listbox.selectedItem = newItem;
+                updateContent();
+            }
+        }
+
+        // Insert Before Button
+        const btnInsertBefore = document.querySelector('#insert-before');
+        btnInsertBefore.addEventListener("click", (e) => onInsertBeforeClicked(e));
+
+        let onInsertBeforeClicked = function(e){
+            if (!listbox.selectedItem)
+                onAddClicked(e);
+            else {
+                let newItem = createNewItem();
+
+                listbox.insertItemBefore(newItem, listbox.selectedItem);
+                listbox.selectedItem = newItem;
+                updateContent();
+            }
+        }
+
+        // Insert At Button
+        const btnInsertAt = document.querySelector('#insert-at');
+        btnInsertAt.addEventListener("click", (e) => onInsertAtClicked(e));
+        btnInsertAt.size = { width: 90 }
+
+        let onInsertAtClicked = function(e){
+            let itemCount = listbox.items.length;
+            let insertPos = numInsertAt.value >= itemCount && itemCount > 0 ? itemCount - 1 : numInsertAt.value;
+
+            if (insertPos >= 0 && insertPos < itemCount){
+                let newItem = createNewItem();
+
+                listbox.insertItemAt(newItem, insertPos);
+                listbox.selectedItem = newItem;
+                updateContent();
+            }
+        }
+
+        const numInsertAt = document.querySelector('#insert-pos');
+        numInsertAt.resourcePath = currentResourcePath;
+        numInsertAt.value = 0;
+        numInsertAt.size = { width: 90 }
+        numInsertAt.theme = IntegralUITheme.Office;
+
+        // Remove Button
+        const btnRemove = document.querySelector('#remove');
+        btnRemove.addEventListener("click", (e) => onRemoveClicked(e));
+
+        let onRemoveClicked = function(e){
+            let newSelItem = listbox.getPrevItem(listbox.selectedItem);
+            if (!newSelItem && listbox.items.length > 0)
+                newSelItem = listbox.getNextItem(listbox.selectedItem);
+
+            if (listbox.selectedItem){
+                listbox.removeItem(listbox.selectedItem);
+
+                listbox.selectedItem = newSelItem;
+                updateContent();
+            }
+        }
+
+        // Remove At Button
+        const btnRemoveAt = document.querySelector('#remove-at');
+        btnRemoveAt.addEventListener("click", (e) => onRemoveAtClicked(e));
+        btnRemoveAt.size = { width: 90 }
+
+        let onRemoveAtClicked = function(e){
+            let itemCount = listbox.items.length;
+            let removePos = numRemoveAt.value;
+
+            if (removePos >= 0 && removePos < itemCount){
+                listbox.removeItemAt(removePos);
+                listbox.selectedItem = listbox.items[removePos];
+
+                updateContent();
+            }
+        }
+
+        const numRemoveAt = document.querySelector('#remove-pos');
+        numRemoveAt.resourcePath = currentResourcePath;
+        numRemoveAt.value = 0;
+        numRemoveAt.size = { width: 90 }
+        numRemoveAt.theme = IntegralUITheme.Office;
+
+        // Clear Button
+        const btnClear = document.querySelector('#clear');
+        btnClear.addEventListener("click", (e) => onClearClicked(e));
+
+        let onClearClicked = function(e){
+            listbox.clearItems();
+            itemCount = 0;
+
+            listbox.selectedItem = null;
+            updateContent();
+        }
+
+        //
+        // Create Items Methods
+        //
+
+        let createNewItem = function(){
+            itemCount++;
+
+            // Create a new item object
+            return { id: itemCount, text: "Item " + itemCount }
+        }
+
+        //
+        // ListBox settings
+        //      
+        const listbox = document.querySelector('iui-listbox');
+
+		listbox.size = { width: 350, height: 310 }
+
+        //
+        // Initialize the Component
+        //
+
+        let updateContent = function(){
+            listbox.updateLayout();
+
+            const itemBlock = document.querySelector('#listbox-addremove');
+            itemBlock.style.display = listbox.items.length > 0 ? 'inline-block' : 'none';
+
+            const emptyBlock = document.querySelector('.empty-block');
+            emptyBlock.style.display = listbox.items.length === 0 ? 'inline-block' : 'none';
+        }
+
+        updateContent();
+
+    </script>
+</html>

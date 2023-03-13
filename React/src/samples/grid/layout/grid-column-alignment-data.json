@@ -1,0 +1,65 @@
+﻿[
+    { 
+        "id": 1,
+        "Order ID": "293",
+        "Customer": "John MacIntyre",
+        "Ship Mode": "Regular Air",
+        "Ship Date": "21 Oct 2016",
+        "Quantity": 6,
+        "Price": 38.94
+    },
+    { 
+        "id": 2,
+        "Order ID": "312",
+        "Customer": "Barry French",
+        "Ship Mode": "Express Air",
+        "Ship Date": "16 Jul 2018",
+        "Quantity": 49,
+        "Price": 208.16
+    },
+    { 
+        "id": 3,
+        "Order ID": "476",
+        "Customer": "Benjamin Oliver",
+        "Ship Mode": "Delivery Truck",
+        "Ship Date": "28 Mar 2017",
+        "Quantity": 27,
+        "Price": 8.69
+    },
+    { 
+        "id": 4,
+        "Order ID": "119",
+        "Customer": "Clay Rozendal",
+        "Ship Mode": "Express Air",
+        "Ship Date": "15 Aug 2018",
+        "Quantity": 30,
+        "Price": 195.99
+    },
+    { 
+        "id": 5,
+        "Order ID": "512",
+        "Customer": "Carlos Soltero",
+        "Ship Mode": "Delivery Truck",
+        "Ship Date": "20 May 2019",
+        "Quantity": 19,
+        "Price": 21.78
+    },
+    { 
+        "id": 6,
+        "Order ID": "575",
+        "Customer": "Noble Hancock",
+        "Ship Mode": "Regular Air",
+        "Ship Date": "10 Dec 2016",
+        "Quantity": 21,
+        "Price": 8.69
+    },
+    { 
+        "id": 7,
+        "Order ID": "237",
+        "Customer": "Carl Jackson",
+        "Ship Mode": "Delivery Truck",
+        "Ship Date": "08 Aug 2018",
+        "Quantity": 12,
+        "Price": 6.64
+    }
+]

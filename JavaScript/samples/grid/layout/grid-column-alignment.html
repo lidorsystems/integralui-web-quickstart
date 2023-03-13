@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Grid / Column Alignment</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="grid-column-alignment"] {
+                --grid-display: inline-block;
+                --grid-width: calc(100% - 280px);
+            }
+
+            .sample-block-column-alignment {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 250px;
+
+                --radio-button-margin: 10px 0;
+            }
+            .sample-block-column-alignment label {
+                display: block;
+                margin: 10px 0 5px 0;
+            }
+            .sample-block-column-alignment label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Grid / Column Alignment</h2>
+        <div class="sample-block">
+            <iui-grid id="grid-column-alignment"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-grid>
+            <div class="sample-block-column-alignment">
+                <label>Selected Column: </label>
+                <iui-select allow-animation="true" max-dropdown-items="5"></iui-select>
+                <label>Header alignment: </label>
+                <iui-radiogroup id="header-alignment">
+                    <iui-radiobutton>Left</iui-radiobutton>
+                    <iui-radiobutton>Center</iui-radiobutton>
+                    <iui-radiobutton>Right</iui-radiobutton>
+                </iui-radiogroup>
+                <label>Content alignment: </label>
+                <iui-radiogroup id="content-alignment">
+                    <iui-radiobutton>Left</iui-radiobutton>
+                    <iui-radiobutton>Center</iui-radiobutton>
+                    <iui-radiobutton>Right</iui-radiobutton>
+                </iui-radiogroup>
+                <label>Footer alignment: </label>
+                <iui-radiogroup id="footer-alignment">
+                    <iui-radiobutton>Left</iui-radiobutton>
+                    <iui-radiobutton>Center</iui-radiobutton>
+                    <iui-radiobutton>Right</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>A demonstration on how to change alignment of column header, content and footer in Grid component. By clicking on radio-buttons on right panel, you can change the alignment of each cell for currently selected column. By default column's content is aligned to the left.</p>
+                <p><span class="initial-space"></span>Each column object has three fields which allows you to horizontally align the content of cells that belong to specified column.</p>
+                <ul class="feature-points">
+                    <li><span style="color:#c60d0d">headerAlignment</span> - aligns the content of column header</li>
+                    <li><span style="color:#c60d0d">contentAlignment</span> - aligns the content of column body</li>
+                    <li><span style="color:#c60d0d">footerAlignment</span> - aligns the content of column footer</li>
+                </ul>
+                <p><span class="initial-space"></span>In case of footer, in this example it makes sense to show some data only in the footer for 'Total' column, showing the sumary from all current records. Regardless, each column has its own separate footer with its own alignment.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Control Panel
+        //
+
+        let alignmentValues = ['left', 'center', 'right'];
+        let getAlignmentValue = function(index){
+            return index >= 0 ? alignmentValues[index] : 'left';
+        }
+
+        let getIndexFromAlignment = function(value){
+            return value ? alignmentValues.indexOf(value) : 0;
+        }
+
+        // Header Alignment
+        const ctrlHeaderAlignment = document.querySelector('#header-alignment');
+
+        ctrlHeaderAlignment.resourcePath = currentResourcePath;
+        ctrlHeaderAlignment.addEventListener("buttonChecked", (e) => onHeaderAlignmentChecked(e));
+
+        let onHeaderAlignmentChecked = function(e){
+            if (grid.selectedColumn)
+                grid.selectedColumn.headerAlignment = getAlignmentValue(e.detail.index);
+        }
+
+        // Content Alignment
+        const ctrlContentAlignment = document.querySelector('#content-alignment');
+
+        ctrlContentAlignment.resourcePath = currentResourcePath;
+        ctrlContentAlignment.addEventListener("buttonChecked", (e) => onContentAlignmentChecked(e));
+
+        let onContentAlignmentChecked = function(e){
+            if (grid.selectedColumn){
+                grid.selectedColumn.contentAlignment = getAlignmentValue(e.detail.index);
+                grid.updateView();
+            }
+       }
+
+        // Footer Alignment
+        const ctrlFooterAlignment = document.querySelector('#footer-alignment');
+
+        ctrlFooterAlignment.resourcePath = currentResourcePath;
+        ctrlFooterAlignment.addEventListener("buttonChecked", (e) => onFooterAlignmentChecked(e));
+
+        let onFooterAlignmentChecked = function(e){
+            if (grid.selectedColumn)
+                grid.selectedColumn.footerAlignment = getAlignmentValue(e.detail.index);
+        }
+
+        // Select
+        const ctrlSelect = document.querySelector('iui-select');
+
+        ctrlSelect.theme = currentTheme;
+        
+        ctrlSelect.addEventListener("afterSelect", (e) => onColumnSelectionChanged(e));
+
+        let onColumnSelectionChanged = function(e){
+            if (e.detail.item){
+                let column = grid.getColumnById(e.detail.item.id);
+                grid.selectedColumn = column;
+
+                ctrlHeaderAlignment.selectedIndex = getIndexFromAlignment(column.headerAlignment);
+                ctrlContentAlignment.selectedIndex = getIndexFromAlignment(column.contentAlignment);
+                ctrlFooterAlignment.selectedIndex = getIndexFromAlignment(column.footerAlignment);
+            }
+        } 
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-column-alignment');
+
+        grid.allowFocus = false;
+        grid.columns = [
+            { id: 1, headerText: "Order ID", headerAlignment: "center", contentAlignment: "center" },
+            { id: 2, headerText: "Customer", width: 200 },
+            { id: 4, headerText: "Ship Date", headerAlignment: "center", contentAlignment: "center", width: 120 },
+            { id: 5, headerText: "Quantity", headerAlignment: "center", contentAlignment: "right", width: 80 },
+            { 
+                id: 6, 
+                headerText: "Price", 
+                headerAlignment: "center", 
+                contentAlignment: "right", 
+                footerText: "Total", 
+                footerAlignment: "right",
+                format: { 
+                    options: { 
+                        style: "currency", 
+                        currency: "USD"
+                    }
+                },
+                width: 90
+            },
+            { 
+                id: 7, 
+                headerText: "Total", 
+                headerAlignment: "center", 
+                contentAlignment: "right",
+                footerValue: 0, 
+                footerAlignment: "right",
+                format: { 
+                    options: { 
+                        style: "currency", 
+                        currency: "USD"
+                    }
+                },
+                width: 120
+            }
+        ];
+
+        grid.rows = [];
+        grid.size = { height: 400 }
+
+        // Data --------------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+          let result = [];
+
+          data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.headerText;
+
+                    // Delete all fields that will be included in cells, except for the field 'Title'
+                    delete row[field];
+
+                    let cell = {
+                        cid: column.id,
+                        colName: field
+                    }
+
+                    if (obj[field] !== undefined){
+
+                        if (_commonService.isString(obj[field]))
+                            cell.text = obj[field];
+                        else
+                            cell.value = obj[field];
+                    }
+                    else if (column.id === 7) // Total Column
+                        cell.value = obj["Quantity"] * obj["Price"];
+
+                    row.cells.push(cell);
+                });
+
+                // If there are child rows, convert the JSON data for them
+                row.rows = convertJSONData(obj.rows || []);
+
+                result.push(row);
+            });
+
+            return result;
+        }
+
+        //
+        // Methods -----------------------------------------------------------------------------------
+
+        let getCellById = function(row, id){
+            let filtered = row.cells.filter(cell => cell.cid === id);
+
+            return filtered.length > 0 ? filtered[0] : null;
+        }
+
+        let updateTotalValue = function(){
+            let sumTotal = 0;
+
+            grid.rows.forEach(row => {
+                let quantityCell = getCellById(row, 5);
+                let priceCell = getCellById(row, 6);
+                let totalCell = getCellById(row, 7);
+
+                let total = quantityCell.value * priceCell.value
+                totalCell.value = total;
+
+                sumTotal += total;
+            });
+
+            // Show Total value in the footer
+            let column = grid.getColumnById(7);
+            if (column)
+                column.footerValue = sumTotal;
+        }
+
+        // Templates -----------------------------------------------------------------------------
+
+        grid.footerTemplate = (column) => { 
+            switch (column.id){
+                case 6: // Total description
+                    return html`<strong>${column.footerText}</strong>`;
+
+                case 7: // Total value
+                    return html`<strong>${getFooterDisplayValue(column)}</strong>`;
+            }
+        };
+
+        
+        let getFooterDisplayValue = function(column){
+            return _commonService.convertValue(column.footerValue, column.format);
+        }
+
+        //
+        // Initialization ------------------------------------------------------------------------
+        //
+
+        let init = function(){
+            // Create a dropdown list from all columns
+            grid.columns.forEach(column => {
+                let item = { 
+                    id: column.id, 
+                    text: column.headerText
+                }
+
+                ctrlSelect.items.push(item);
+            });
+
+            // Load rows from JSON file
+            fetch("grid-column-alignment-data.json") 
+                .then(response => response.json()) 
+                .then(data => {
+                    // Suspend the tree layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    // Load data into the tree view
+                    grid.loadData(convertJSONData(data), null, null, false);
+
+                    // Update Total Value based on Quantity and Prices
+                    updateTotalValue();
+
+                    // Resume and update the tree layout
+                    grid.resumeLayout();
+            });
+        }
+
+        init();
+
+    </script>
+</html>

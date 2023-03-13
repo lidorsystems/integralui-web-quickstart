@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-placement-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-placement"]{
+                --tabstrip-display: inline-block;
+                --tabstrip-width: calc(100% - 175px);
+
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+                --tab-header-padding: 9px;
+            }
+
+            .tabstrip-placement-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 150px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .tabstrip-placement-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .tabstrip-placement-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Tabs on Different Sides</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-placement"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="tabstrip-placement-panel">
+                <label>Placement: </label>
+                <iui-radiogroup id="placement">
+                    <iui-radiobutton checked="true">Top</iui-radiobutton>
+                    <iui-radiobutton>Right</iui-radiobutton>
+                    <iui-radiobutton>Bottom</iui-radiobutton>
+                    <iui-radiobutton>Left</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example where you can change the side at which tabs will appear. You can have the following placements:</p>
+                <ul class="feature-points">
+                    <li><span class="code-object">Top</span> - tabs appear on top side</li>
+                    <li><span class="code-object">Right</span> - tabs appear on right side</li>
+                    <li><span class="code-object">Bottom</span> - tabs appear on bottom side</li>
+                    <li><span class="code-object">Left</span> - tabs appear on left side</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUITabStripPlacement } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Placement
+        const ctrlPlacement = document.querySelector('#placement');
+
+        ctrlPlacement.resourcePath = currentResourcePath;
+        ctrlPlacement.addEventListener("buttonChecked", (e) => onPlacementChecked(e));
+
+        let onPlacementChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    ctrl.tabStripPlacement = IntegralUITabStripPlacement.Right;
+                    break;
+
+                case 2: 
+                    ctrl.tabStripPlacement = IntegralUITabStripPlacement.Bottom;
+                    break;
+
+                case 3: 
+                    ctrl.tabStripPlacement = IntegralUITabStripPlacement.Left;
+                    break;
+
+                default: 
+                    ctrl.tabStripPlacement = IntegralUITabStripPlacement.Top;
+                    break;
+            }
+        }
+
+        //
+        // TabStrip settings
+        //
+
+        const ctrl = document.querySelector('#tabstrip-placement');
+
+        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.selectedTab = null;
+        ctrl.size = { height: 300 };
+        ctrl.tabStripPlacement = IntegralUITabStripPlacement.Top;
+
+        let tabs = [
+            { 
+                id: 1,
+                text: 'JavaScript',
+                body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 2,
+                text: 'Angular',
+                body: 'Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 3,
+                text: 'React',
+                body: 'In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            },
+            { 
+                id: 4,
+                text: 'Vue',
+                body: 'Nullam arcu. Aliquam consequat. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula.'
+            }
+        ];
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+
+                let tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-placement-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        //
+        // Initialize the Component
+        //
+
+        addTabs();
+
+    </script>
+</html>

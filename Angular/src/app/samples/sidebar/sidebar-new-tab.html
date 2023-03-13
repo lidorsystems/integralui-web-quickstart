@@ -1,0 +1,26 @@
+<h2>SideBar / Open New Tab</h2>
+<div class="sample-block" id="sample-block-sidebar-new-tab">
+    <iui-sidebar #sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [parentId]="'sample-block-sidebar-new-tab'"
+        [resourcePath]="currentResourcePath"
+        [selectedTab]="currentSelection"
+        [size]="ctrlSize"
+        [tabTemplate]="currentTabTemplate"
+        [theme]="currentTheme" 
+        (beforeSelect)="beforeTabSelection($event)"
+    >
+        <iui-tab *ngFor="let tab of tabs" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdbr-new-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <iui-panel id="sample-block-sidebar-content" [contentAlignment] = "{ vertical: 'middle' }">
+        Sample Content Block
+    </iui-panel>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>This sample shows how to load new tab on demand into the SideBar, using the last tab with '+' icon.</p>
+    <p><span class="initial-space"></span>The last tab is modified using custom template to change its appearance to a loading icon whenever is selected. In this case, whenever the '+' is clicked a new tab is added into the SideBar, which becomes selected and expanded. In additon the tab with '+' icon is prevented to appear as selected, clicking on it will only add new tabs.</p>
+    <p><span class="initial-space"></span>You can use JSON file or any other data source, for demonstration purposes the sample shows a loading icon whenever a new tab is loaded. You can customize this behavior in code.</p>
+</div>

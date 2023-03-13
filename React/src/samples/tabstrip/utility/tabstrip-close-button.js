@@ -15,12 +15,12 @@ class TabStripCloseButton extends Component {
 
         this.state = {
             currentAnimation: IntegralUIAnimationType.Fade,
-            currentResourcePath: '../integralui-web/icons',
+            currentResourcePath: '../../integralui-web/icons',
             currentSelection: null,
             currentTabSpacing: 3,
             isAnimationAllowed: true,
             ctrlSize: { width: 600, height: 300 },
-            data: [
+            tabs: [
                 { 
                     id: 1,
                     icon: 'library',
@@ -48,7 +48,7 @@ class TabStripCloseButton extends Component {
     // for properties, methods and events
     //
     currentTabTemplate = (tab) => { 
-        let btnIcon = tab.state & IntegralUIObjectState.Hovered || tab.state & IntegralUIObjectState.Selected ? '../../integralui-web/icons/close.ico' : '../../integralui-web/icons/close-gray.ico';
+        let btnIcon = '../../integralui-web/icons/close.ico';
 
         return html`
             <div>
@@ -62,18 +62,18 @@ class TabStripCloseButton extends Component {
     closeButtonClicked(e, tab){
         // Delete tabs only when left mouse button is clicked
         if (e.which === 1){
-            let tabIndex = this.state.data.indexOf(tab.data);
-            let newTabList = [...this.state.data];
+            let tabIndex = this.state.tabs.indexOf(tab);
+            let newTabList = [...this.state.tabs];
             newTabList.splice(tabIndex, 1);
 
             // Set selection to a new tab 
             let newSelTab = this.state.currentSelection;
-            if (tab.state & IntegralUIObjectState.Selected){
+            if (tab.selected){
                 let newSelIndex = tabIndex < newTabList.length ? tabIndex : newTabList.length - 1;
                 newSelTab = newSelIndex >= 0 && newSelIndex < newTabList.length  ? newTabList[newSelIndex] : null;
             }
 
-            this.setState({ data: newTabList, currentSelection: newSelTab });
+            this.setState({ tabs: newTabList, currentSelection: newSelTab });
         }
 
         e.stopPropagation();
@@ -88,7 +88,7 @@ class TabStripCloseButton extends Component {
             textAlign: 'center'
         }
 
-        let tabs = this.state.data.map((tab, index) => {
+        let tabs = this.state.tabs.map((tab, index) => {
                 return (
                     <IntegralUITabComponent key={index} data={tab} icon={tab.icon} text={tab.text}>
                         <div className="tbs-cbtn-tab-content">{tab.body}</div>

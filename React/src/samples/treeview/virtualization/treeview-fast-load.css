@@ -1,0 +1,20 @@
+[id="treeview-fast-load"]{
+    --treeview-display: inline-block;
+}
+
+.treeview-fast-load-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 200px;
+
+    --button-display: block;
+    --button-margin: 5px 0;
+}
+.treeview-fast-load-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.treeview-fast-load-panel label:first-of-type {
+    margin-top: 0;
+}

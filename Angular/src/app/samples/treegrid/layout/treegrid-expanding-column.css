@@ -1,0 +1,18 @@
+[id="treegrid-expanding-column"] {
+    --treegrid-display: inline-block;
+    --treegrid-width: calc(100% - 280px);
+
+    --treegrid-expand-box-margin: 4px 3px 0 0;
+    --editor-label-margin: 2px 0;
+}
+
+.sample-block-expanding-column {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 250px;
+}
+.sample-block-expanding-column label {
+    display: block;
+    margin: 0 0 5px 0;
+}

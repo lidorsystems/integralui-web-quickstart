@@ -1,0 +1,44 @@
+<h2>Toaster / Overview</h2>
+<div class="sample-block" id="toaster-overview" style="overflow: hidden; position: relative">
+    <div class="toaster-block">
+        <iui-label [contentSize]="labelContentSize" [value]="'Title'" [theme]="currentTheme"><input [(ngModel)]="toastTitle" /></iui-label>
+        <iui-label [contentSize]="labelContentSize" [value]="'Message'" [theme]="currentTheme"><input [(ngModel)]="toastMessage"/></iui-label>
+        <iui-label [contentSize]="labelContentSize" [value]="'Duration'" [theme]="currentTheme"><input type="number" [(ngModel)]="toastDuration" /></iui-label>
+        <iui-label [contentSize]="labelContentSize" [value]="'Alignment'" [theme]="currentTheme">
+            <iui-select [allowAnimation]="true" [items]="alignmentOptions" [maxDropDownItems]="5" [theme]="currentTheme" [selectedItem]="currentToastAlignment" (afterSelect)="onToastAlignmentChanged($event)"></iui-select>
+        </iui-label>
+        <iui-label [contentSize]="labelContentSize" [value]="'Type'" [theme]="currentTheme">
+            <iui-select [allowAnimation]="true" [items]="typeOptions" [maxDropDownItems]="5" [theme]="currentTheme" [selectedItem]="currentToastType" (afterSelect)="onToastTypeChanged($event)"></iui-select>
+        </iui-label>
+        <iui-checkbox [checked]="isTemplateActive" [resourcePath]="currentResourcePath" (checkedChanged)="onToastTemplateChanged($event)">Use Template</iui-checkbox>
+        <div style="margin-top: 20px; text-align: center">
+            <iui-button [theme]="currentTheme" (click)="onShowClicked()">Show Message</iui-button>
+        </div>
+        <iui-toaster #toaster
+            [alignment]="getToastAlignment()"
+            [allowAnimation]="true"
+            [contentTemplate]="currentContentTemplate"
+            [duration]="toastDuration"
+            [parentId]="'toaster-overview'"
+            [theme]="currentTheme"
+        ></iui-toaster>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Toaster</strong> is a native Web Component that allows you to display notification messages (Toasts) with different alert levels. Each Toast can have a different title, message and alert level: Error, Info, Success or Warning.</p>
+        <p><span class="initial-space"></span>Depending on chosen alignment and parent container, Toasts can appear accordingly. In additon, if a template is specified, the message can be constucted using custom HTML content.</p>
+        <p><span class="initial-space"></span>A partial list of supported properties:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">alignment</span> - Determines the side at which Toasts will appear</li>
+            <li><span class="code-name">contentTemplate</span> - Specifies a template that you can use to add custom HTML content for Toasts</li>
+            <li><span class="code-name">duration</span> - Specifies how long Toasts will remain visible, in miliseconds</li>
+            <li><span class="code-name">customStyle</span> - Specifies an object that contains custom style settings for the component</li>
+            <li><span class="code-name">parentId</span> - Specifies the id value of parent element that will contain Toasts</li>
+            <li><span class="code-name">positionAdjustment</span> - An object with values for position adjustment of Toasts</li>
+            <li><span class="code-name">size</span> - Specifies the component width and height, in pixels</li>
+            <br/>
+            <li><span class="code-name">text</span> - Specifies the Toast message</li>
+            <li><span class="code-name">title</span> - Specifies the Toast title</li>
+            <li><span class="code-name">type</span> - Specifies the Toast type: Error, Info, Success or Warning</li>
+        </ul>
+    </div>
+</div>

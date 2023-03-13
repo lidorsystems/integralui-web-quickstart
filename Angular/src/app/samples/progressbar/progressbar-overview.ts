@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,7 +12,7 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.progressbar.js';
+import 'integralui-web/components/integralui.progressbar';
 
 @Component({
     selector: '',

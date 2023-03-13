@@ -1,0 +1,20 @@
+<h2 class="feature-title">Grid / Auto-Size Columns</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-auto-size-columns"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [autoSizeColumns]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [rowHeight]="28"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above sample, columns occupy the grid width in full. The horizontal scrollbar will remain hidden, and whenever a column resizes, it only changes its width and the width of neighboring column.</p>
+    </div>
+</div>

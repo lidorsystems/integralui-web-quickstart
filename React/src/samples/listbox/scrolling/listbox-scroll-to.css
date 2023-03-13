@@ -1,0 +1,19 @@
+[id="listbox-scrollto"]{
+    --listbox-display: inline-block;
+}
+
+.listbox-scrollto-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 300px;
+
+    --select-display: block;
+}
+.listbox-scrollto-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.listbox-scrollto-panel label:first-of-type {
+    margin-top: 0;
+}

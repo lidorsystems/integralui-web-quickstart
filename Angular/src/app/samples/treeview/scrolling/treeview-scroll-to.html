@@ -1,0 +1,25 @@
+<h2>TreeView / Scroll To Specific Item</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-scrollto"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [scrollAppearance]="currentScrollAppearance"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (updateComplete)="onUpdateComplete($event)"
+    ></iui-treeview>
+    <div class="treeview-scrollto-panel">
+        <label>Scroll to: </label>
+        <iui-select [allowAnimation]="true" [items]="itemList" [resourcePath]="currentResourcePath" [theme]="currentTheme" (selectedIndexChanged)="scrollToChanged($event)"></iui-select>
+        <br/>
+        <label>Scroll Appearance: </label>
+        <iui-radiogroup (buttonChecked)="onScrollAppearanceChecked($event)">
+            <iui-radiobutton [checked]="true">Static</iui-radiobutton>
+            <iui-radiobutton>Dynamic</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, there are multiple items and you can select the item that you want to appear in view by scrolling to it.</p>
+        <p><span class="initial-space"></span>You can also choose how scroll bar appears, there are two options: Static and Dynamic. With Static appearance, the scroll bar is always visible when there are more items than currently present in the view. On the other hand, with Dynamic appearance, the scroll bar will appear only when mouse hovers over TreeView space.</p>
+    </div>
+</div>

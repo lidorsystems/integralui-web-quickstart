@@ -1,0 +1,17 @@
+.empty-block {
+    border: thin solid #cecece; 
+    font-size: 2rem;
+    padding: 125px 20px;
+    width: 500px;
+    text-align: center;
+}
+.tbs-tab-groups-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+
+[id="tabstrip-tab-groups"]{
+    --tab-header-hovered-background: #d9edfd;
+    --tab-header-hovered-border-color: #8cb1d1;
+}

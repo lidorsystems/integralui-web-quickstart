@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listview-scrollto"]{
+                --listview-display: inline-block;
+            }
+
+            .listview-scrollto-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 300px;
+
+                --select-display: block;
+            }
+            .listview-scrollto-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listview-scrollto-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Scroll To Specific Item</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-scrollto"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listview>
+            <div class="listview-scrollto-panel">
+                <label>Scroll to: </label>
+                <iui-select id="scrollto-select" allow-animation="true" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+                <br/>
+                <label>Scroll Mode: </label>
+                <iui-radiogroup id="scroll-mode">
+                    <iui-radiobutton>Horizontal</iui-radiobutton>
+                    <iui-radiobutton checked="true">Vertical</iui-radiobutton>
+                </iui-radiogroup>
+                <br/>
+                <label>Scroll Appearance: </label>
+                <iui-radiogroup id="scroll-appearance">
+                    <iui-radiobutton checked="true">Static</iui-radiobutton>
+                    <iui-radiobutton>Dynamic</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, there are multiple items and you can select the item that you want to appear in view by scrolling to it.</p>
+                <p><span class="initial-space"></span>ListView arranges items in two directions: Horizontally or Vertically. You can choose how items are scrolled by selecting the scroll mode: Horizontal or Vertical.</p>
+                <p><span class="initial-space"></span>You can also choose how scroll bar appears, there are two options: Static and Dynamic. With Static appearance, the scroll bar is always visible when there are more items than currently present in the view. On the other hand, with Dynamic appearance, the scroll bar will appear only when mouse hovers over ListView space.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module">
+        import { IntegralUIComponentAppearance, IntegralUIScrollMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+     
+        //
+        // Control Panel
+        //
+
+        const ctrlSelect = document.querySelector('#scrollto-select');
+        ctrlSelect.items = [];
+
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => scrollToChanged(e));
+
+        let scrollToChanged = function(e){
+            let item = e.detail.item;
+
+            listview.scrollTo(item);
+            listview.selectedItem = item;
+        }
+
+        // Scroll Mode: Horizontal or Vertical
+        const ctrlScrollMode = document.querySelector('#scroll-mode');
+
+        ctrlScrollMode.resourcePath = currentResourcePath;
+
+        let onScrollModeChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listview.scrollMode = IntegralUIScrollMode.Vertical;
+                    break;
+
+                default: 
+                    listview.scrollMode = IntegralUIScrollMode.Horizontal;
+                    break;
+            }
+
+            listview.updateLayout();
+        }
+
+        ctrlScrollMode.addEventListener("buttonChecked", (e) => onScrollModeChecked(e));
+
+        // ScrollBar Appearance: Static or Dynamic
+        const ctrlScrollAppearance = document.querySelector('#scroll-appearance');
+
+        ctrlScrollAppearance.resourcePath = currentResourcePath;
+
+        let onScrollAppearanceChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listview.scrollAppearance = IntegralUIComponentAppearance.Dynamic;
+                    break;
+
+                default: 
+                    listview.scrollAppearance = IntegralUIComponentAppearance.Static;
+                    break;
+            }
+
+            listview.updateLayout();
+        }
+
+        ctrlScrollAppearance.addEventListener("buttonChecked", (e) => onScrollAppearanceChecked(e));
+
+        //
+        // ListView settings
+        //
+      
+        const listview = document.querySelector('#listview-scrollto');
+
+        listview.items = [
+            { id: 11, text: "Milk" },
+            { id: 12, text: "Butter" },
+            { id: 13, text: "Cheese" },
+            { id: 14, text: "Yogurt" },
+            { id: 211, text: "BlackBerries" },
+            { id: 212, text: "CranBerries" },
+            { id: 213, text: "StrawBerries" },
+            { id: 241, text: "Oranges" },
+            { id: 242, text: "Lemons" },
+            { id: 261, text: "Avocados" },
+            { id: 262, text: "Bananas" },
+            { id: 263, text: "Dates" },
+            { id: 31, text: "Barley" },
+            { id: 32, text: "Farro" },
+            { id: 33, text: "Millet" },
+            { id: 34, text: "Rice" },
+            { id: 41, text: "Beef" },
+            { id: 42, text: "Chicken" },
+            { id: 43, text: "Turkey" },
+            { id: 44, text: "Pork" },
+            { id: 45, text: "Lamb" },
+            { id: 51, text: "Biscuits" },
+            { id: 52, text: "Cakes" },
+            { id: 53, text: "Candies" },
+            { id: 54, text: "Muffins" },
+            { id: 55, text: "Pastries" },
+            { id: 61, text: "Asparagus" },
+            { id: 62, text: "Broccoli" },
+            { id: 63, text: "Carrots" },
+            { id: 64, text: "Corn" },
+            { id: 65, text: "Lettuce" },
+            { id: 66, text: "Onions" },
+            { id: 67, text: "Pumpkin" },
+            { id: 68, text: "Tomatoes" },
+            { id: 69, text: "Zucchini" }
+        ];
+
+        listview.itemSize = { width: 150, height: 32 }
+        listview.size = { width: 350, height: 300 }
+
+        // Update the item list to Select component
+        let onUpdateComplete = function(e){
+            ctrlSelect.items = listview.getFullList();
+        }
+
+        listview.addEventListener("updateComplete", (e) => onUpdateComplete(e));
+
+    </script>
+</html>

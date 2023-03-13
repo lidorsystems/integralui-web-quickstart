@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Items with Custom Content</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-custom-content"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of ListBox component where templates are used to add custom HTML content in item space. Each item contains different HTML elements that present information about specific device driver based on provided data.</p>
+                <p><span class="initial-space"></span>Templates are fully customizable via CSS and you can add any custom actions to template elements.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import { iuiListBoxCustomContentStyle } from './listbox-custom-content.style.js';
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-custom-content');
+
+        listbox.items = [
+            { 
+                id: 1,
+                category: 'Disk drives',
+                date: '21 Jun 2022',
+                driverName: 'TOSHIBA DT01ACA100 ATA Device',
+                icon: 'disk',
+                version: '6.1.7600.16385'
+            },
+            { 
+                id: 2,
+                checked: true,
+                category: 'Display adapters',
+                date: '05 Nov 2022',
+                driverName: 'NVIDIA GeForce GT 730',
+                icon: 'pc',
+                version: '10.18.13.5891'
+            },
+            { 
+                id: 3,
+                category: 'Network',
+                date: '17 Mar 2021',
+                driverName: 'Realtek PCIe GBE Family Controller',
+                icon: 'network',
+                version: '7.82.317.2021'
+            },
+            { 
+                id: 4,
+                category: 'Sound',
+                date: '14 Mar 2021',
+                driverName: 'Realtek High Defintion Audio',
+                icon: 'sound',
+                version: '6.0.1.7200'
+            },
+            { 
+                id: 5,
+                category: 'Universal Serial Bus controllers',
+                date: '12 Feb 2021',
+                driverName: 'Intel USB 3.0 Root Hub',
+                icon: 'usb',
+                version: '3.0.0.16'
+            }
+        ];
+        
+        listbox.customStyle = iuiListBoxCustomContentStyle;
+        listbox.size = { width: 500, height: 240 }
+
+        // Templates -----------------------------------------------------------------------------
+
+        listbox.itemTemplate = (item) => { 
+            return html`<div class="driver">
+                    <div class="driver-selection">
+                        <span class=${classMap(getCheckBoxClass(item))} @mousedown="${(e) => checkItem(e, item)}"></span>
+                    </div>
+                    <div class="driver-info">
+                        <span class="icons-medium ${item.icon}"></span>
+                        <div class="driver-name">
+                            <span class="driver-category">${item.category}</span><br/>
+                            <span>${item.driverName}</span>
+                        </div>
+                    </div>
+                    <div class="driver-action">
+                        <iui-button allow-animation="true" .allowFocus="${false}" .customStyle="${iuiListBoxCustomContentStyle}" @click="${() => updateDriver(item)}">Update</iui-button>
+                    </div>
+                </div>`;
+        }
+
+        let checkItem = function(e, item){
+            if (e.which === 1 && item){
+                item.checked = item.checked !== undefined ? !item.checked : true;
+                listbox.refresh();
+            }
+
+            e.stopPropagation();
+        }
+
+        let getCheckBoxClass = function(item){
+            let cbClass = { 'lbox-item-cbox': true };
+
+            if (item.checked)
+                cbClass['lbox-item-cbox-checked'] = true;
+
+            return cbClass;
+        }
+
+        let updateDriver = function(item){
+            alert("Update Driver for " + item.driverName);
+        }
+
+    </script>
+</html>

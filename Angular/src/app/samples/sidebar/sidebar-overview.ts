@@ -1,22 +1,10 @@
-/*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+import { Component } from '@angular/core';
 
-  This file is part of the "IntegralUI Web" Library. 
-                                                                   
-  The contents of this file are subject to the IntegralUI Web License, and may not be used except in compliance with the License.
-  A copy of the License should have been installed in the product's root installation directory or it can be found at
-  http://www.lidorsystems.com/products/web/studio/license-agreement.aspx.
-                                                            
-  This SOFTWARE is provided "AS IS", WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language 
-  governing rights and limitations under the License. Any infringement will be prosecuted under applicable laws.                           
-*/
-
-import { Component, ElementRef, ViewChild } from '@angular/core';
-
-import 'integralui-web/components/integralui.sidebar.js';
-import 'integralui-web/components/integralui.tab.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiSideBarOverviewStyle } from './sidebar-overview.style.js';
+import 'integralui-web/components/integralui.panel';
+import 'integralui-web/components/integralui.sidebar';
+import 'integralui-web/components/integralui.tab';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiSideBarOverviewStyle } from './sidebar-overview.style';
 
 @Component({
     selector: '',
@@ -24,10 +12,9 @@ import { iuiSideBarOverviewStyle } from './sidebar-overview.style.js';
     styleUrls: ['./sidebar-overview.css']
 })
 export class SideBarOverview {
-    public ctrlSize: any = { width: 600, height: 300 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public ctrlSize: any = { width: 400 };
+    public currentResourcePath: string = 'assets/icons';
     public currentSelection: any = null;
-    public currentTabSpacing: number = 3;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiSideBarOverviewStyle;
     public isAnimationAllowed: boolean = true;

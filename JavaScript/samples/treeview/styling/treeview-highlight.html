@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            /* Changes to the tree item layout*/
+            [id="treeview-highlight"] {
+                --treeitem-expand-box-margin: 3px 5px 0 0;
+                --treeitem-padding: 2px 0;
+                --treeitem-border-width: 2px 2px 2px 4px;
+           }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Highlight Items</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-highlight"
+                allow-animation="true"
+                check-boxes="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, you can highlight items using a checkbox. Whenever item is checked, a vertical green line will appear in front of the item and the label appears in bold.</p>
+                <p><span class="initial-space"></span>For demonstration purposes, root items don't have a check box and you can't highlight them. You can choose other ways to highlight items, like changing their background color or applying a different style on demand.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { IntegralUICheckMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-highlight');
+
+        treeview.items = [
+            { 
+                id: 1, 
+                allowCheckBox: false,
+                text: "Common Controls",
+                expanded: false,
+                items: [
+                    { id: 11, pid: 1, text: "Button" },
+                    { id: 12, pid: 1, text: "CheckBox" },
+                    { id: 13, pid: 1, text: "ComboBox" },
+                    { id: 14, pid: 1, text: "DateTime Picker" },
+                    { id: 15, pid: 1, text: "Label" },
+                    { id: 16, pid: 1, text: "ProgressBar" },
+                    { id: 17, pid: 1, text: "TextBox" }
+                ]
+            },
+            { 
+                id: 2, 
+                allowCheckBox: false,
+                text: "Containers",
+                items: [
+                    { id: 21, pid: 2, text: "GroupBox" },
+                    { id: 22, pid: 2, text: "Panel" },
+                    { id: 23, pid: 2, text: "SplitContainer" },
+                    { id: 24, pid: 2, text: "TabControl" }
+                ]
+            },
+            { 
+                id: 3, 
+                allowCheckBox: false,
+                text: "Menus & Toolbars",
+                items: [
+                    { id: 31, pid: 3, text: "ContextMenu" },
+                    { id: 32, pid: 3, text: "Menu" },
+                    { id: 33, pid: 3, text: "ToolStrip" }
+                ]
+            },
+            { 
+                id: 4, 
+                allowCheckBox: false,
+                text: "Data",
+                expanded: false,
+                items: [
+                    { id: 41, pid: 4, text: "DataGrid" },
+                    { id: 42, pid: 4, text: "DataSet" },
+                    { id: 43, pid: 4, text: "ReportViewer" }
+                ]
+            },
+            { 
+                id: 5, 
+                allowCheckBox: false,
+                text: "Dialogs",
+                expanded: false,
+                items: [
+                    { id: 51, pid: 5, text: "ColorDialog" },
+                    { id: 52, pid: 5, text: "FontDialog" }
+                ]
+            },
+            { 
+                id: 6, 
+                allowCheckBox: false,
+                text: "Printing",
+                expanded: false,
+                items: [
+                    { id: 61, pid: 6, text: "PrintDialog" },
+                    { id: 62, pid: 6, text: "PrintDocument" }
+                ]
+            },
+            { 
+                id: 7, 
+                allowCheckBox: false,
+                text: "IntegralUI",
+                items: [
+                    { id: 71, pid: 7, text: "Accordion" },
+                    { id: 72, pid: 7, text: "CheckBox" },
+                    { id: 73, pid: 7, text: "ComboBox" },
+                    { id: 74, pid: 7, text: "ContextMenu" },
+                    { id: 75, pid: 7, text: "Menu" },
+                    { id: 76, pid: 7, text: "SlideBar" },
+                    { id: 77, pid: 7, text: "TabStrip" },
+                    { id: 78, pid: 7, text: "TreeGrid" },
+                    { id: 79, pid: 7, text: "TreeView" }
+                ]
+            }
+        ];
+        
+        treeview.size = { width: 350, height: 300 }
+        treeview.theme = currentTheme;
+
+        // Highlight items with custom style
+
+        let hightlightStyle = {
+            borderLeftColor: '#56c756',
+            borderLeftWidth: '4px',
+            fontWeight: 'bold'
+        }
+
+        let onItemChecked = function(e){
+            e.detail.item.style = e.detail.checked ? {normal: hightlightStyle, hovered: hightlightStyle, selected: hightlightStyle } : {}
+
+            treeview.refresh();
+        }
+
+        treeview.addEventListener("checkStateChanged", (e) => onItemChecked(e));
+
+    </script>
+</html>

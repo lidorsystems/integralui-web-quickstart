@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Items with Context Menu</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-contextmenu"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example where if you right-click on each item a context menu will popup. Using the context menu you can add or remove items.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiListViewContextMenuStyle } from './listview-contextmenu.style.js';
+
+        let currentTheme = IntegralUITheme.Office;
+        let itemCount = 0;
+
+        //
+        // Context Menu
+        //
+
+        let menuSettings = {
+            items: [
+                { id: 3, text: "Add Item" },
+                { id: 5, text: "Insert Item Before" },
+                { id: 6, text: "Insert Item After" },
+                { id: 7, type: "separator" },
+                { id: 8, text: "Remove Item" }
+            ]
+        }
+
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-contextmenu');
+
+        listview.items = [
+            { id: 1, text: "Favorites" },
+            { id: 2, text: "Libraries" },
+            { id: 3, text: "Computer" },
+            { id: 4, text: "Network" },
+            { id: 5, text: "Recycle Bin" }
+        ];
+        
+        listview.itemSize = { width: 150, height: 32 }
+        listview.size = { width: 350, height: 250 }
+        listview.theme = currentTheme;
+
+        listview.itemTemplate = (item) => { 
+            return html`
+                <iui-contextmenu
+                    .customStyle=${iuiListViewContextMenuStyle}
+                    .enabled=${true}
+                    .settings=${menuSettings}
+                    theme="Office"
+                    @menuClick="${(e) => onMenuClick(e)}"
+                    @menuOpening="${() => onMenuOpening(item)}"
+                >
+                    <span>${item.text}</span>
+                </iui-contextmenu>
+            `;
+        };
+
+        // ContextMenu events --------------------------------------------------------------------
+
+        let onMenuClick = function(e){
+            if (e.detail.item){
+                // Action depends on selected menu option
+                switch (e.detail.item.id){
+                    case 3:
+                        addItem();
+                        break;
+
+                    case 5:
+                        insertItemBefore();
+                        break;
+
+                    case 6:
+                        insertItemAfter();
+                        break;
+
+                    case 8:
+                        removeItem();
+                        break;
+
+                    // no default
+                }
+
+                listview.updateLayout();
+            }
+        }
+
+        let onMenuOpening = function(item){
+            listview.selectedItem = item;
+        }
+
+
+        // Add/Remove methods
+
+        let createNewItem = function(){
+            itemCount++;
+
+            // Create a new item object
+            return { id: itemCount, text: "Item " + itemCount }
+        }
+
+        let addItem = function(e){
+            let newItem = createNewItem();
+
+            listview.addItem(newItem);
+        }
+
+        let addChildItem = function(e){
+            let newItem = createNewItem();
+
+            listview.addItem(newItem, listview.selectedItem);
+        }
+
+        let insertItemAfter = function(e){
+            let newItem = createNewItem();
+
+            listview.insertItemAfter(newItem, listview.selectedItem);
+        }
+
+        let insertItemBefore = function(e){
+            let newItem = createNewItem();
+
+            listview.insertItemBefore(newItem, listview.selectedItem);
+        }
+
+        let removeItem = function(e){
+            let newSelItem =  listview.getPrevItem(listview.selectedItem);
+            
+            listview.removeItem(listview.selectedItem);
+            listview.selectedItem = newSelItem;
+        }
+
+    </script>
+</html>

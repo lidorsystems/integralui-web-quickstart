@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Card / Overview</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            div[slot="front-content"] {
+                padding: 7px;
+            }
+            div[slot="back-content"] {
+                padding: 10px;
+            }
+            [id="card-overview"] {
+                /* Front */
+                --card-front-header-border-radius: 15px;
+                --card-front-header-padding: 7px 10px;
+                --card-front-border-radius: 15px;
+                --card-front-footer-padding: 3px 10px;
+
+                /* Back */
+                --card-back-border-radius: 15px;
+
+            }		
+        </style>
+	</head>
+	<body>
+		<h2>Card / Overview</h2>
+		<div class="sample-block">
+            <iui-card id="card-overview" selected="true" theme="Office">
+                <div slot="front-header">
+                    <span>Header</span>
+                </div>
+                <div slot="front-content">
+                    <span>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.</span>
+                </div>
+                <div slot="front-footer">
+                    <span>Footer</span>
+                </div>
+
+                <div slot="back-content">
+                    <div>Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.</div>
+                </div>
+            </iui-card>
+            <div class="feature-help">
+                <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Card</strong> is a native Web Component that represents a content container. It consists of front and back side each with its own header, footer and content in the middle.</p>
+                <p><span class="initial-space"></span>The demonstration above shows only the basic features available in Card component. You can add custom HTML content inside each header, content or footer. Furthermore, card appearance is customizable via CSS.</p>
+                <p><span class="initial-space"></span>In this example, the front side contains header, content and footer while the back side only the content is filled. By clicking anywhere on the Card, you can flip its side.</p>
+            </div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.card.js"></script>
+	<script type="module">
+		const card = document.querySelector('#card-overview');
+
+        card.footer = { back: false }
+        card.header = { back: false }
+        card.size = { width: 250, height: 300 }
+
+        card.addEventListener("mouseUp", (e) => flipCard(e));
+
+        let flipCard = function(e){
+            if (e.detail.which === 1)
+                card.flip();
+        }
+
+        card.refresh();
+	</script>
+</html>

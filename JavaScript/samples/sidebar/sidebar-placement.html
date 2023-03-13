@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-sidebar-placement"]{
+                height: 400px;
+                padding: 10px;
+                position: relative;
+                width: 800px;
+            }
+            [id="sample-block-sidebar-placement-panel"]{
+                
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-height: calc(100% - 2px);
+            }
+            .sample-block-sidebar-control-panel {
+                display: inline-block;
+                text-align: left;
+                width: 150px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .sample-block-sidebar-control-panel label {
+                display: block;
+                margin-bottom: 10px;
+            }
+            .sdbr-plt-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+
+                -webkit-user-select: text;
+                -khtml-user-select: text;
+                -moz-user-select: text;
+                -o-user-select: text;
+                -ms-user-select: text;
+                user-select: text;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SideBar / Placement</h2>
+        <div class="sample-block" id="sample-block-sidebar-placement">
+            <iui-sidebar id="sidebar-placement" allow-animation="true" parent-id="sample-block-sidebar-placement" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+            </iui-sidebar>
+            <iui-panel id="sample-block-sidebar-placement-panel">
+                <div class="sample-block-sidebar-control-panel">
+                    <label>Placement: </label>
+                    <iui-radiogroup id="placement">
+                        <iui-radiobutton>Top</iui-radiobutton>
+                        <iui-radiobutton>Right</iui-radiobutton>
+                        <iui-radiobutton>Bottom</iui-radiobutton>
+                        <iui-radiobutton checked="true">Left</iui-radiobutton>
+                    </iui-radiogroup>
+                </div>
+            </iui-panel>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>An example where you can change the side at which SideBar will appear. You can have the following placements:</p>
+            <ul class="feature-points">
+                <li><span class="code-object">Top</span> - sidebar is placed on top side</li>
+                <li><span class="code-object">Right</span> - sidebar is placed on right side</li>
+                <li><span class="code-object">Bottom</span> - sidebar is placed on bottom side</li>
+                <li><span class="code-object">Left</span> - sidebar is placed on left side</li>
+            </ul>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.sidebar.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module">
+        import { iuiSideBarPlacementStyle } from './sidebar-placement.style.js';
+        import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIPlacement, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentResourcePath = '../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Panel settings
+        //
+
+        const ctrlPanel = document.querySelector('#sample-block-sidebar-placement-panel');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        // Placement
+        const ctrlPlacement = document.querySelector('#placement');
+
+        ctrlPlacement.resourcePath = currentResourcePath;
+        ctrlPlacement.addEventListener("buttonChecked", (e) => onPlacementChecked(e));
+
+        let onPlacementChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    ctrl.placement = IntegralUIPlacement.Right;
+                    break;
+
+                case 2: 
+                    ctrl.placement = IntegralUIPlacement.Bottom;
+                    break;
+
+                case 3: 
+                    ctrl.placement = IntegralUIPlacement.Left;
+                    break;
+
+                default: 
+                    ctrl.placement = IntegralUIPlacement.Top;
+                    break;
+            }
+        }
+
+        //
+        // SideBar settings
+        //
+
+        const ctrl = document.querySelector('#sidebar-placement');
+
+        let tabs = [
+            { 
+                id: 1,
+                icon: 'tab-icon library',
+                text: 'Books',
+                body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 2,
+                icon: 'tab-icon album',
+                text: 'Music',
+                body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 3,
+                icon: 'tab-icon star-empty',
+                text: 'Favorites',
+                body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            }
+        ];
+
+        ctrl.autoHide = false;
+        ctrl.customStyle = iuiSideBarPlacementStyle;
+        ctrl.expanded = false;
+        ctrl.inbound = true;
+        ctrl.placement = IntegralUIPlacement.Left;
+        ctrl.size = { width: 400, height: 150 };
+        ctrl.theme = currentTheme;
+        
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                var ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.icon = tab.icon;
+                ctrlTab.theme = IntegralUITheme.Office;
+
+                var tabContent = document.createElement('div');
+                tabContent.classList.add('sdbr-plt-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        addTabs();
+
+    </script>
+</html>

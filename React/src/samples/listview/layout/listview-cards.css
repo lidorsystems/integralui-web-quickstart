@@ -1,0 +1,11 @@
+[id="listview-cards"] {
+    --listitem-animate-border: 0;
+
+    --listitem-content-overflow: visible;
+    --listitem-selected-background: transparent;
+    --listitem-selected-border-color: #808080;
+    --listitem-selected-color: white;
+
+    --draglist-active-border-color: transparent;
+    --draglist-active-box-shadow: none;
+}

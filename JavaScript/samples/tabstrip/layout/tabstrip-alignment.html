@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-alignment-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-alignment"]{
+                --tabstrip-display: inline-block;
+                --tabstrip-width: calc(100% - 175px);
+
+                --tab-header-border-radius: 7px 7px 0 0;
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+                --tab-header-padding: 9px;
+            }
+
+            .tabstrip-alignment-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 150px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .tabstrip-alignment-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .tabstrip-alignment-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Tab Alignment</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-alignment"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="tabstrip-alignment-panel">
+                <label>Alignment: </label>
+                <iui-radiogroup id="alignment">
+                    <iui-radiobutton checked="true">TopLeft</iui-radiobutton>
+                    <iui-radiobutton>Middle</iui-radiobutton>
+                    <iui-radiobutton>BottomRight</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This demo shows how you can align tabs to appear on top/left, middle or right side within the tabstrip. Example only shows the top placement, but it works on all other placements also.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUITabAlignment } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+     
+        //
+        // Control Panel
+        //
+
+        let alignmentValues = ['TopLeft', 'Middle', 'BottomRight'];
+        let getAlignmentValue = function(index){
+            return index >= 0 ? alignmentValues[index] : 'topleft';
+        }
+
+        let getIndexFromAlignment = function(value){
+            return value ? alignmentValues.indexOf(value) : 0;
+        }
+
+        // Alignment
+        const ctrlAlignment = document.querySelector('#alignment');
+
+        ctrlAlignment.resourcePath = currentResourcePath;
+        ctrlAlignment.addEventListener("buttonChecked", (e) => onAlignmentChecked(e));
+
+        let onAlignmentChecked = function(e){
+            ctrl.tabAlignment = getAlignmentValue(e.detail.index);
+        }
+
+        //
+        // TabStrip settings
+        //
+ 
+        const ctrl = document.querySelector('#tabstrip-alignment');
+
+        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.selectedTab = null;
+        ctrl.showTabLine = true;
+        ctrl.size = { height: 200 };
+        ctrl.tabAlignment = IntegralUITabAlignment.TopLeft;
+
+        let tabs = [
+            { 
+                id: 1,
+                text: 'JavaScript',
+                body: 'Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+            },
+            { 
+                id: 2,
+                text: 'Angular',
+                body: 'Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+            },
+            { 
+                id: 3,
+                text: 'React',
+                body: 'In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+            },
+            { 
+                id: 4,
+                text: 'Vue',
+                body: 'Nullam arcu. Aliquam consequat. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula.'
+            }
+        ];
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+
+                let tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-alignment-tab-content');
+                tabContent.textContent = tab.body;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        //
+        // Initialize the Component
+        //
+
+        addTabs();
+
+    </script>
+</html>

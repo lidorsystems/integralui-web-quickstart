@@ -43,7 +43,8 @@ class ButtonOverview extends Component {
                         <p><span className="initial-space"></span>The following properties and events are supported:</p>
                         <ul className="feature-points">
                             <li><span className="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
-                            <li><span className="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
+                            <li><span className="code-name">allowFocus</span> - Determines whether component can have the keyboard focus</li>
+                            <li><span className="code-name">customStyle</span> - Specifies an object that contains custom CSS style settings for the component</li>
                             <li><span className="code-name">data</span> - Specifies an object that holds data related to the component</li>
                             <li><span className="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
                             <li><span className="code-name">name</span> - Uniquely identifies the component</li>

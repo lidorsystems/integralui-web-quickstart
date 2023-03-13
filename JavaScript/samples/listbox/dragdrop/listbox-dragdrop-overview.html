@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - ListBox / Drag Drop Overview</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-dragdrop-overview"]{
+                --listbox-display: inline-block;
+            }
+            .sample-block-ddlb-overview-panel {
+                margin-top: 20px;
+                text-align: center;
+                width: 350px;
+            }
+            .sample-block-ddlb-control-panel {
+                display: inline-block;
+                margin: 0 0 0 20px;
+                text-align: left;
+                vertical-align: top;
+                width: 150px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .sample-block-ddlb-control-panel label {
+                display: block;
+                margin: 12px 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Drag Drop Overview</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-dragdrop-overview"
+                allow-animation="true"
+                selection-mode="MultiExtended"
+            ></iui-listbox>
+            <div class="sample-block-ddlb-control-panel">
+                <label><input id="allow-drag" type="checkbox" checked="checked" /> Allow Drag</label>
+                <label><input id="allow-drop" type="checkbox" checked="checked" /> Allow Drop</label>
+                <label><input id="allow-groups" type="checkbox" checked="checked" /> Show Groups</label>
+                <br/>
+                <label>Drag Drop Mode: </label>
+                <iui-radiogroup id="dragdrop-mode">
+                    <iui-radiobutton>Static</iui-radiobutton>
+                    <iui-radiobutton checked="true">Dynamic</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this sample you can drag drop items within the same ListBox. There are two different ways to drag and drop items:
+                <ul class="feature-points">
+                    <li><span class="code-name">Static</span> - a drop marker appears with information about target item and an icon that shows drop position: Up or Down</li>
+                    <li><span class="code-name">Dynamic</span> - a window with a list of dragged items appears and while dragging it all other items will move making space where items can drop</li>
+                </ul>
+                <p><span class="initial-space"></span>During drag drop operations, you can also create a copy of an item by holding the SHIFT key. In Static mode the dragging window will change its icon, showing a <span style="color:#c60d0d;font-weight:bold">+</span> sign next to the position marker, while in Dynamic mode a <span style="color:#c60d0d;font-weight:bold">copy/paste</span> icon will appear in the center of the dragging window.</p>
+                <br/>
+                <p><span class="initial-space"></span>By clicking on check boxes, you can change the built-in properties:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">allowDrag</span> - determines whether items can be dragged</li>
+                    <li><span class="code-name">allowDrop</span> - determines whether items can be dropped</li>
+                    <li><span class="code-name">showGroups</span> - determines whether items are displayed n groups</li>
+                    <li><span class="code-name">dragDropMode</span> - determines whether drag and drop is Static or Dynamic</li>
+               </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiListBoxDragDropOverviewStyle } from './listbox-dragdrop-overview.style.js';
+        import { IntegralUIDragDropMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Sample settings
+        //
+            
+        // CheckBoxes
+        const chBoxes = document.querySelectorAll('input');
+
+        chBoxes.forEach((elem, index) => elem.addEventListener("change", (e) => onCheckBoxChange(e, index)));
+
+        let onCheckBoxChange = function(e, index){
+            switch (index){
+                case 1: 
+                    ctrl.allowDrop = e.target.checked;
+                    break;
+
+                case 2: 
+                    ctrl.showGroups = e.target.checked;
+                    break;
+
+                default: 
+                    ctrl.allowDrag = e.target.checked;
+                    break;
+            }
+        }
+
+        // Drag Drop Mode
+        const ctrlDDMode = document.querySelector('#dragdrop-mode');
+        ctrlDDMode.theme = currentTheme;
+        
+        ctrlDDMode.resourcePath = currentResourcePath;
+        ctrlDDMode.addEventListener("buttonChecked", (e) => onDragDropModeChecked(e));
+
+        let onDragDropModeChecked = function(e){
+            switch (e.detail.index){
+                case 0: 
+                    ctrl.dragDropMode = IntegralUIDragDropMode.Static;
+                    break;
+
+                default: 
+                    ctrl.dragDropMode = IntegralUIDragDropMode.Dynamic;
+                    break;
+            }
+        }
+
+        // ListBox settings
+        const ctrl = document.querySelector('#listbox-dragdrop-overview');
+        
+        ctrl.allowDrag = true;
+        ctrl.allowDrop = true;
+
+        ctrl.groups = [
+            { name: "sci-fi" },
+            { name: "adventure" },
+            { name: "action" },
+            { name: "drama" },
+            { name: "music" },
+            { name: "comedy" },
+            { name: "biography" },
+            { name: "crime" },
+            { name: "western" },
+            { name: "horror" },
+            { name: "romance" }
+        ];
+
+        ctrl.items = [
+            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
+            { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
+            { id: 3, icon: "action", text: "Gladiator", year: "2000", rating: 8.5 },
+            { id: 4, icon: "drama", text: "Malèna", year: "2000", rating: 7.5 },
+            { id: 5, icon: "music", text: "Moulin Rouge", year: "2001", rating: 7.6 },
+            { id: 6, icon: "comedy", text: "Snatch", year: "2000", rating: 8.3  },
+            { id: 7, icon: "biography", text: "A Beautiful Mind", year: "2001", rating: 8.2  },
+            { id: 8, icon: "crime", text: "Black Hawk Down", year: "2001", rating: 7.7 },
+            { id: 9, icon: "western", text: "Django Unchained", year: "2012", rating: 8.5  },
+            { id: 10, icon: "sci-fi", text: "Man of Steel", year: "2013", rating: 7.2 },
+            { id: 11, icon: "horror", text: "The Ring", year: "2002", rating: 7.1 },
+            { id: 12, icon: "romance", text: "40 Days and 40 Nights", year: "2002", rating: 5.6 },
+            { id: 13, icon: "sci-fi", text: "Minority Report", year: "2002", rating: 7.7 },
+            { id: 14, icon: "comedy", text: "Scary Movie 3", year: "2003", rating: 5.5 },
+            { id: 15, icon: "music", text: "Walk the Line", year: "2005", rating: 7.9  },
+            { id: 16, icon: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6.4 },
+            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
+            { id: 18, icon: "horror", text: "American Psycho", year: "2000", rating: 7.6 },
+            { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8.1 },
+            { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8.2 }
+        ];
+
+        // Both ListBox have the same settings
+        ctrl.size = { width: 350, height: 400 };
+        ctrl.customStyle = iuiListBoxDragDropOverviewStyle;
+        ctrl.resourcePath = currentResourcePath;
+        ctrl.showGroups = true;
+        ctrl.theme = currentTheme;
+  
+        ctrl.itemTemplate = (item) => { 
+            if (item.type === 'group')
+                return html`
+                    <div class="lbox-ddovw-item-content-group">
+                        <span class="lbox-ddovw-icons ${item.name}"></span>
+                        <span class="lbox-ddovw-name">${item.name}</span>
+                    </div>
+                `;
+            else
+                return html`
+                    <div class="lbox-ddovw-item-content">
+                        <span class="lbox-ddovw-title">${item.text}</span>
+                        <span class="lbox-ddovw-year">${item.year}</span>
+                    </div>
+                `;
+        };
+
+        // Initialization ------------------------------------------------------------------------
+
+        // Apply grouping
+        ctrl.items.forEach(item => item.group = item.icon);
+        ctrl.updateLayout();
+    </script>
+</html>

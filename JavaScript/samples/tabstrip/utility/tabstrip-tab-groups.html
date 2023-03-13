@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>TabStrip / Tabs with Close Button</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .empty-block {
+                border: thin solid #cecece; 
+                font-size: 2rem;
+                padding: 125px 20px;
+                width: 500px;
+                text-align: center;
+            }
+            .tbs-tab-groups-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+
+            [id="tabstrip-tab-groups"]{
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Switch Tab Groups with ComboBox</h2>
+        <div class="sample-block">
+            <div id="tabstrip-block">
+                <iui-tabstrip id="tabstrip-tab-groups"
+                    allow-animation="true"
+                    resource-path="../../../node_modules/integralui-web/icons"
+                    tab-spacing="3"
+                >
+                    <div slot="toolbar-right">
+                        <iui-select id="tab-groups-select" allow-animation="true" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+                    </div>
+                </iui-tabstrip>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span> An example that shows how you can change the tab list using the Select component. Depending on current option selected, a different set of tabs is shown.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import IntegralUISelect from '../../../node_modules/integralui-web/components/integralui.select.js';
+        import { IntegralUIAnimationType, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        const ctrl = document.querySelector('#tabstrip-tab-groups');
+
+        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.selectedTab = null;
+        ctrl.size = { width: 600, height: 300 };
+
+        let groupList = [
+            [
+                { id: 1, name: 'Tab1', text: 'Tab 1' },
+                { id: 2, name: 'Tab2', text: 'Tab 2' },
+                { id: 3, name: 'Tab3', text: 'Tab 3' }
+            ],
+            [
+                { id: 4, name: 'Tab4', text: 'Tab 4' },
+                { id: 5, name: 'Tab5', text: 'Tab 5' }
+            ],
+            [
+                { id: 6, name: 'Tab6', text: 'Tab 6' },
+                { id: 7, name: 'Tab7', text: 'Tab 7' },
+                { id: 8, name: 'Tab8', text: 'Tab 8' },
+                { id: 9, name: 'Tab9', text: 'Tab 9' }
+            ]
+        ];
+
+        let tabs = groupList[0];
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                var ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+                ctrlTab.theme = IntegralUITheme.Office;
+
+                var tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-tab-groups-content');
+                tabContent.textContent = "Content of " + tab.text;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        let removeTabs = function(){
+            const tabElems = ctrl.querySelectorAll('iui-tab');
+            tabElems.forEach(elem => elem.parentNode.removeChild(elem));
+
+            ctrl.selectedIndex = -1;
+        }
+
+        //
+        // Create a Combo with tab groups
+        //
+
+        const ctrlSelect = document.querySelector('#tab-groups-select');
+
+        ctrlSelect.size = { width: 100 }
+        ctrlSelect.items = [
+            { id: 1, text: "Group 1" },
+            { id: 2, text: "Group 2" },
+            { id: 3, text: "Group 3" }
+        ];
+
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => groupChanged(e));
+
+        let groupChanged = function(e){
+            // Remove all existing tabs
+            removeTabs();
+
+            // Create a new set of tabs based on selected group
+            tabs = groupList[e.detail.index];
+            addTabs();
+
+            ctrl.updateLayout(); 
+            ctrl.selectedIndex = 0;
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        ctrlSelect.selectedIndex = 0;
+
+    </script>
+</html>

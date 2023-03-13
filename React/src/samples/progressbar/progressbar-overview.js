@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import IntegralUIProgressBarComponent from 'integralui-web/wrappers/react.integralui.progressbar.js';
-import { IntegralUIOrientation } from 'integralui-web/components/integralui.enums.js';
+import {  } from 'integralui-web/components/integralui.enums.js';
 
 import './progressbar-overview.css';
 
@@ -16,7 +16,6 @@ class ProgressBarOverview extends Component {
 
         this.state = {
             ctrlSize: { width: 300 },
-            currentOrientation: IntegralUIOrientation.Horizontal,
             isAnimationAllowed: true,
             progressValue1: 50,
             progressValue2: 30,
@@ -35,9 +34,9 @@ class ProgressBarOverview extends Component {
             <div>
                 <h2>ProgressBar / Overview</h2>
                 <div className="sample-block">
-                    <IntegralUIProgressBarComponent id="progress-1" allowAnimation={this.state.isAnimationAllowed} orientation={this.state.currentOrientation} size={this.state.ctrlSize} value={this.state.progressValue1} />
-                    <IntegralUIProgressBarComponent id="progress-2" allowAnimation={this.state.isAnimationAllowed} orientation={this.state.currentOrientation} size={this.state.ctrlSize} value={this.state.progressValue2} />
-                    <IntegralUIProgressBarComponent id="progress-3" allowAnimation={this.state.isAnimationAllowed} orientation={this.state.currentOrientation} size={this.state.ctrlSize} value={this.state.progressValue3} />
+                    <IntegralUIProgressBarComponent id="progress-1" allowAnimation={this.state.isAnimationAllowed} size={this.state.ctrlSize} value={this.state.progressValue1}></IntegralUIProgressBarComponent>
+                    <IntegralUIProgressBarComponent id="progress-2" allowAnimation={this.state.isAnimationAllowed} labelAlignment={'MiddleLeft'} size={this.state.ctrlSize} value={this.state.progressValue2}></IntegralUIProgressBarComponent>
+                    <IntegralUIProgressBarComponent id="progress-3" allowAnimation={this.state.isAnimationAllowed} labelAlignment={'BottomCenter'} size={this.state.ctrlSize} value={this.state.progressValue3}></IntegralUIProgressBarComponent>
                     <div className="feature-help">
                         <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> ProgressBar</strong> is a native Web Component that visualize the progression of an operation. You can customize the progress indicator using different color or image via CSS.</p>
                         <p><span className="initial-space"></span>You can also change orientation of the ProgressBar to: horizontal or vertical. The appearance of progresss value is based on different set of CSS styles, based on orientation.</p>

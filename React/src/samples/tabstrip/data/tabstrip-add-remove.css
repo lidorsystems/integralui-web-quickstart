@@ -1,0 +1,47 @@
+.tabstrip-addremove-empty-block {
+    border: thin solid #cecece; 
+    display: inline-block;
+    font-size: 2rem;
+    padding: 125px 20px;
+    width: calc(100% - 277px);
+    text-align: center;
+}
+.tbs-addremove-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+[id="tabstrip-addremove"]{
+    display: inline-block;
+    width: calc(100% - 225px);
+
+    --tab-header-hovered-background: #d9edfd;
+    --tab-header-hovered-border-color: #8cb1d1;
+    --tab-header-padding: 9px;
+}
+.tabstrip-addremove-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 200px;
+
+    --button-display: block;
+    --button-margin: 5px 0;
+}
+.tabstrip-addremove-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.tabstrip-addremove-panel label:first-of-type {
+    margin-top: 0;
+}
+.inline-block {
+    display: inline-block;
+}
+.inline-block {
+    --button-display: inline-block;
+    --button-vertical-align: middle;
+
+    --numeric-display: inline-block;
+    --numeric-vertical-align: middle;
+}

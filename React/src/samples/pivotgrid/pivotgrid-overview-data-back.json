@@ -1,0 +1,51 @@
+﻿[
+    { 
+        "Category": "Dairy",
+        "Year": 2021,
+        "Country": "Slovenia",
+        "Quantity": 123,
+        "Cost": 276.75
+    },
+    { 
+        "Category": "Fruits",
+        "Year": 2021,
+        "Country": "Italy",
+        "Quantity": 127,
+        "Cost": 406.40
+    },
+    { 
+        "Category": "Grains",
+        "Year": 2020,
+        "Country": "Italy",
+        "Quantity": 32,
+        "Cost": 229.60
+    },
+    { 
+        "Category": "Meats",
+        "Year": 2020,
+        "Country": "Slovenia",
+        "Quantity": 57,
+        "Cost": 296.40
+    },
+    { 
+        "Category": "Vegetables",
+        "Year": 2020,
+        "Country": "Italy",
+        "Quantity": 41,
+        "Cost": 456.50
+    },
+    { 
+        "Category": "Fruits",
+        "Year": 2021,
+        "Country": "Slovenia",
+        "Quantity": 33,
+        "Cost": 127.00
+    },
+    { 
+        "Category": "Dairy",
+        "Year": 2020,
+        "Country": "Slovenia",
+        "Quantity": 11,
+        "Cost": 250.00
+    }
+]

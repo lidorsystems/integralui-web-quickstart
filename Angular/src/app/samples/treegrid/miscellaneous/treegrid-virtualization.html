@@ -1,0 +1,34 @@
+<h2 class="feature-title">TreeGrid / Virtualization</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-virtualization"
+        [allowAnimation]="true"
+        [allowDrag]="true"
+        [allowDrop]="true"
+        [autoExpand]="true"
+        [columns]="columns"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    > 
+    </iui-treegrid>
+    <br/>
+    <div class="sample-block-panel" align="center">
+        <span>Max columns:</span> <iui-numeric [min]="1" [max]="250" [resourcePath]="currentResourcePath" [size]="inputSize" [value]="numColumns" [theme]="currentTheme" (valueChanged)="numColumnsChanged($event)"></iui-numeric>
+        <span>Max rows:</span> <iui-numeric [min]="1" [max]="100000" [resourcePath]="currentResourcePath" [size]="{ width: 125 }" [value]="numRows" [theme]="currentTheme" (valueChanged)="numRowsChanged($event)"></iui-numeric>
+        <span>Levels:</span> <iui-numeric [min]="0" [max]="100" [resourcePath]="currentResourcePath" [size]="inputSize" [value]="numLevels" [theme]="currentTheme" (valueChanged)="numLevelsChanged($event)"></iui-numeric>
+        <br /><br />
+        <iui-button [allowAnimation]="true" [size]="buttonSize" [theme]="currentTheme" (click)="this.add()">Add</iui-button>
+        <iui-button [allowAnimation]="true" [size]="buttonSize" [theme]="currentTheme" (click)="this.clear()">Clear</iui-button>
+        <iui-button [allowAnimation]="true" [size]="buttonSize" [theme]="currentTheme" (click)="this.expandAll()">Expand All</iui-button>
+        <iui-button [allowAnimation]="true" [size]="buttonSize" [theme]="currentTheme" (click)="this.collapseAll()">Collapse All</iui-button>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demo, you can choose how many columns and rows to display in the TreeGrid. For demonstration purposes only, a limit is set to 250 columns and 100,000 rows with maximum depth of 100 tree levels. In real scenario, the only limit is how much data the browser can handle. By clicking on the 'Add' button, the treegrid is populated with custom data.</p>
+        <p><span class="initial-space"></span>To start a drag and drop operation, left-click on a move row icon in first column on the left, then move the mouse cursor and drag operation will start. A drag-drop marker will appear with information about target row and an icon (up, down or in) showing whether the dragged row can drop above, below or as a child to target row.</p>
+        <p><span class="initial-space"></span>In this example, there are no restrictions set, and you can drag and drop a row and place it above, below or as a child of another row. However, if you want you can set conditions and provide custom drag drop operations on your own.</p>
+        <p><span class="initial-space"></span>While dragging a row over middle space of some target row, when dropped the row will be added as a child of the target row. If the <span class="code-name">autoExpand</span> property is set to true, the target row will expand, after a short delay of 500ms.</p>
+        <p><span class="initial-space"></span>To select multiple rows, hold SHIFT or CTRL key and click on specific row.</p>
+    </div>
+</div>

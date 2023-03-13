@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Grid / How to Show/Hide Columns</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>Grid / How to Show/Hide Columns</h2>
+        <div class="sample-block">
+            <iui-grid id="grid-show-hide-columns"
+                allow-animation="true"
+                auto-size-columns="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-grid>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>As above demo presents, to show or hide a specific column you can use a context menu or dropdown menu. Whenever you right-click on a grid header a context menu will appear displaying the name of each column and a check mark stating whether the column is visible or hidden. In similar why, when column is selected by clicking on its header a command button with dropdown menu will appear from where you can choose which columns will become visible or hidden.</p>
+                <p><span class="initial-space"></span>By selecting the column from the menu option, you can change its visibility. The difference is with context menu you can show/hide only one column at time, while with dropdown menu you can check or uncheck any number of columns you want to change their visibility. Clicking again on the dropdown menu button will apply this change.</p>
+            </div>
+        </div>
+    </body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownbutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.list.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridShowHideColumnsStyle } from './grid-show-hide-columns.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentTheme = IntegralUITheme.Office;
+
+        let columnList = [];
+        let currentMaxDropDownItems = 6;
+        let dropDownSize = { width: 150, height: 200 };
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-show-hide-columns');
+
+        grid.allowFocus = false;
+        grid.columns = [
+            { id: 1, headerText: "Order ID", width: 90 },
+            { id: 2, headerText: "Customer", width: 225 },
+            { id: 3, headerText: "Ship Mode", width: 180, visible: false },
+            { id: 4, headerText: "Ship Date", contentAlignment: "center", width: 120 },
+            { id: 5, headerText: "Quantity", contentAlignment: "right", width: 80 },
+            { id: 6, headerText: "Price", contentAlignment: "right" }
+        ];
+
+        grid.customStyle = iuiGridShowHideColumnsStyle;
+
+        grid.rows = [];
+        grid.showFooter = false;
+        grid.showScroll = { horizontal: false }
+        grid.size = { height: 400 }
+
+        // Data --------------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+          let result = [];
+
+          data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.headerText;
+
+                    // Delete all fields that will be included in cells, except for the field 'Title'
+                    delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    if (obj[field] !== undefined){
+                        let cell = {
+                            cid: column.id,
+                            colName: field
+                        }
+
+                        if (_commonService.isString(obj[field]))
+                            cell.text = obj[field];
+                        else
+                            cell.value = obj[field];
+
+                        row.cells.push(cell);
+                    }
+                });
+
+                // If there are child rows, convert the JSON data for them
+                row.rows = convertJSONData(obj.rows || []);
+
+                result.push(row);
+            });
+
+            return result;
+        }
+
+
+        // Templates -----------------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        let currentDropDownTemplate = (column) => { 
+            return html`
+                <iui-list 
+                    .allowFocus=${false}
+                    .customStyle=${iuiGridShowHideColumnsStyle}
+                    .items="${columnList}" 
+                    .maxVisibleItems="${currentMaxDropDownItems}"
+                    .selectedItem="${getItemFromColumn(column)}" 
+                    .size="${{ width: dropDownSize.width - 4, height: dropDownSize.height - 4 }}" 
+                    .theme="${currentTheme}" 
+                    @itemClick="${(e) => itemSelected(e, column)}" 
+                    @itemTouch="${(e) => itemSelected(e, column)}"
+                ></iui-list>
+          `;
+        };
+
+        grid.headerTemplate = (column) => { 
+            return html`
+                <iui-contextmenu
+                    .customStyle=${iuiGridShowHideColumnsStyle}
+                    .enabled=${true}
+                    .settings=${{ items: columnList }}
+                    theme="Office"
+                    @menuClick="${(e) => contextMenuClick(e)}"
+                    @menuOpening="${() => contextMenuOpening(column)}"
+                >
+                    <div>
+                        <iui-dropdownbutton data-column-dropdown
+                            .contentTemplate="${currentDropDownTemplate}"
+                            .data="${column}"
+                            .dropDownAdjustment=${{ left: 0, top: 7 }}
+                            .dropDownIcon="${false}"
+                            .dropDownSize="${dropDownSize}"
+                            .expanded="${column.selected && column.isDropDownExpanded === true}"
+                            .items="${columnList}"
+                            @expandedChanged="${(e) => dropDownExpandedChanged(e, column)}"
+                        >
+                            <img src="../../../node_modules/integralui-web/icons/menu-button.ico" />
+                        </iui-dropdownbutton>
+                        <span class="header-label">${column.headerText}</span>
+                    </div>
+                </iui-contextmenu>
+          `;
+        };
+        //
+        // Methods -----------------------------------------------------------------------------------
+        //
+
+        let getItemIcon = function(item){
+           return item && item.checked ? 'icons checked-icon' : 'icons';
+        }
+
+        // ContextMenu
+    
+        let contextMenuClick = function(e){
+            if (e.detail.item){
+
+                e.detail.item.checked = !e.detail.item.checked;
+                e.detail.item.icon = getItemIcon(e.detail.item);
+
+                let column = getColumnFromItem(e.detail.item);
+                if (column)
+                    column.visible = e.detail.item.checked;
+
+                grid.updateLayout();
+            }
+        }
+    
+        let contextMenuOpening = function(column){
+            column.isDropDownExpanded = false;
+            grid.selectedColumn = column;
+            grid.refresh();
+        }
+
+        let getColumnFromItem = function(item){
+            if (item){
+                let filtered = grid.columns.filter(column => column.id === item.id);
+
+                return filtered.length > 0 ? filtered[0] : null;
+            }
+
+            return null;
+        }
+
+        // DropDownMenu
+
+        let dropDownExpandedChanged = function(e, column){
+            column.isDropDownExpanded = e.detail.expanded;
+            grid.updateLayout();
+        }
+
+        let getItemFromColumn = function(column){
+            if (column){
+                let filtered = columnList.filter(obj => obj.id === column.id);
+
+                return filtered.length > 0 ? filtered[0] : null;
+            }
+
+            return null;
+        }
+
+        let itemSelected = function(e, column){
+            if (e.detail.item){
+                e.detail.item.checked = !e.detail.item.checked;
+                e.detail.item.icon = getItemIcon(e.detail.item);
+
+                let changedColumn = getColumnFromItem(e.detail.item);
+                if (changedColumn)
+                    changedColumn.visible = e.detail.item.checked;
+
+                // Delete the selected status from the List component, so that item will not appear as selected when clicked
+                columnList.forEach(item => delete item.selected);
+
+                e.detail.update = true;
+           }
+        }
+
+        //
+        // Initialization ------------------------------------------------------------------------
+        //
+
+        let init = function(){
+            // Create a dropdown list from all columns
+            grid.columns.forEach(column => {
+                let item = { 
+                    id: column.id, 
+                    text: column.headerText, 
+                    checked: column.visible !== false
+                }
+
+                item.icon = getItemIcon(item);
+
+                columnList.push(item);
+            });
+
+            // Load rows from JSON file
+            fetch("grid-show-hide-columns-data.json") 
+                .then(response => response.json()) 
+                .then(data => {
+                    // Suspend the tree layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    // Load data into the tree view
+                    grid.loadData(convertJSONData(data), null, null, false);
+
+                    // Resume and update the tree layout
+                    grid.resumeLayout();
+            });
+        }
+
+        init();
+
+    </script>
+</html>

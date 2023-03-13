@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            /* Changes to the tree item layout*/
+            [id="treeview-custom-expandbox"] {
+                --treeitem-expand-box-margin: 3px 5px 0 0;
+                --treeitem-padding: 2px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Custom Expand Box</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-custom-expandbox"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In above demo, expand boxes are represented by open/close folder icon, and additionally locked items display the locked folder icon.</p>
+                <p><span class="initial-space"></span>Default CSS classes responsible for expand box appearance are modified and instead of default arrow icons, a set of custom icons are used. Furthermore, one item is marked as locked, that is it cannot become expanded, by handling the <span class="code-object"beforeExpand></span> event and canceling the expand process. Additionaly, the expand box is changed to a locked folder icon, to make visual reprsentation of the locked state.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTreeViewCustomExpandBoxStyle } from './treeview-custom-expandbox.style.js';
+
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-custom-expandbox');
+
+        treeview.customStyle = iuiTreeViewCustomExpandBoxStyle;
+        treeview.items = [
+            { 
+                id: 1,
+                text: "Favorites",
+                items: [
+                    { id: 11, pid: 1, text: "Desktop" },
+                    { id: 12, pid: 1, text: "Downloads" }
+                ]
+            },
+            { 
+                id: 2,
+                text: "Libraries",
+                items: [
+                    { 
+                        id: 21, 
+                        pid: 2, 
+                        text: "Documents", 
+                        expanded: false,
+                        locked: true,
+                        style: {
+                            expandBox: {
+                                backgroundPosition: '-168px -144px'
+                            }
+                        },
+                        items: [
+                            { id: 211, pid: 21, text: "My Documents" },
+                            { id: 212, pid: 21, text: "Public Documents" }
+                        ]
+                    },
+                    { id: 22, pid: 2, text: "Music" },
+                    { id: 23, pid: 2, text: "Pictures" },
+                    { id: 24, pid: 2, text: "Videos" }
+                ]
+            },
+            { 
+                id: 3,
+                text: "Computer",
+                items: [
+                    { id: 31, pid: 3, text: "Local Disk (C:)" },
+                    { id: 32, pid: 3, text: "Storage (D:)" }
+                ]
+            },
+            { id: 4, text: "Network" },
+            { id: 5, text: "Recycle Bin" }
+        ];
+        
+        treeview.size = { width: 350, height: 300 }
+        treeview.theme = currentTheme;
+
+        treeview.itemTemplate = (item) => { 
+            return html`
+                <div>
+                    <span class="iui-item-label">${item.text}</span>
+                </div>
+            `;
+        };
+
+        // Prevent expanding of items that are locked
+        let onBeforeExpand = function(e){
+            if (e.detail.item && e.detail.item.locked === true)
+                e.detail.cancel = true;
+        }
+
+        treeview.addEventListener("beforeExpand", (e) => onBeforeExpand(e));
+
+    </script>
+</html>

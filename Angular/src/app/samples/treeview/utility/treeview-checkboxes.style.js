@@ -1,8 +1,8 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiTreeViewCheckBoxesStyle = css`
     .trw-cbox-icons-medium {
-        background-image: url(assets/integralui-web/resources/icons-x24.png);
+        background-image: url(assets/resources/icons-x24.png);
         background-position: 0 0;
         background-repeat: no-repeat;
         display: inline-block;
@@ -47,7 +47,7 @@ export const iuiTreeViewCheckBoxesStyle = css`
         background-position: -96px -72px;
     }
     .trw-item-cbox {
-        background-image: url(assets/integralui-web/resources/checkbox/checkbox-unchecked.png);
+        background-image: url(assets/resources/checkbox/checkbox-unchecked.png);
         background-repeat: no-repeat;
         display: inline-block;
         overflow: hidden;
@@ -58,10 +58,10 @@ export const iuiTreeViewCheckBoxesStyle = css`
         vertical-align: middle;
     }
     .trw-item-cbox-checked {
-        background-image: url(assets/integralui-web/resources/checkbox/checkbox-checked.png);
+        background-image: url(assets/resources/checkbox/checkbox-checked.png);
     }
     .trw-item-cbox-indeterminate {
-        background-image: url(assets/integralui-web/resources/checkbox/checkbox-indeterminate.png);
+        background-image: url(assets/resources/checkbox/checkbox-indeterminate.png);
     }
     .trw-cbox-item-label {
         display: inline-block;

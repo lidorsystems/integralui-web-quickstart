@@ -1,0 +1,23 @@
+<h2 class="feature-title">TreeGrid / Disable Rows on Demand</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-highlight-rows"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [autoSizeColumns]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [expandColumnIndex]="1"
+        [rowHeight]="28"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (cellDblClick)="cellDoubleClicked($event)"
+        (valueChanged)="cellValueChanged($event)"
+    ></iui-treegrid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example on how to disable rows in TreeGrid on demand using column with custom check boxes. A row can become enabled/disabled depending on the state of its check box, checked/unchecked. Whenever a row is disabled, any interaction with that row is also disabled.</p>
+        <p><span class="initial-space"></span>Instead of showing a check mark for checked state and an empty box for unchecked state of check boxes, we are using custom images. Depending on check box state, you can apply a different image. This is done by overriding the default styles of CheckBox with custom styles, which can be applied through code.</p>
+    </div>
+</div>

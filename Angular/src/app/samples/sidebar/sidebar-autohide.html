@@ -1,0 +1,24 @@
+<h2>SideBar / AutoHide</h2>
+<div class="sample-block" id="sample-block-sidebar-autohide">
+    <iui-sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [autoHide]="true"
+        [customStyle]="customStyle"
+        [parentId]="'sample-block-sidebar-autohide'"
+        [resourcePath]="currentResourcePath"
+        [showHeader]="true"
+        [size]="ctrlSize"
+        [theme]="currentTheme" 
+    >
+        <iui-tab *ngFor="let tab of data" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdb-ah-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <iui-panel id="sample-block-sidebar-content" [contentAlignment] = "{ vertical: 'middle' }">
+        Sample Content Block
+    </iui-panel>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>This sample demonstrates the <strong>auto-hide</strong> ability of the SideBar component. With auto-hide you can change whether side bar content pops out on top of the parent container or pushes its content to the side when opening. You can activate this mode from header that appears when tab is opened. Clicking on the <strong>pin</strong> button will change the auto-hide state to true or false.</p>
+    <p><span class="initial-space"></span>Showing a header is optional. The <strong>showHeader</strong> property determines whether the header is visible or hidden. When header is hidden, you can still change the auto-hide mode from code using the <strong>autoHide</strong> property.</p>
+</div>

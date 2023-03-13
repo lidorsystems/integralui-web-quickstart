@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import IntegralUITabComponent from 'integralui-web/wrappers/react.integralui.tab.js';
+import IntegralUIPanelComponent from 'integralui-web/wrappers/react.integralui.panel.js';
 import IntegralUISideBarComponent from 'integralui-web/wrappers/react.integralui.sidebar.js';
+import IntegralUITabComponent from 'integralui-web/wrappers/react.integralui.tab.js';
 import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
 
 import './sidebar-overview.css';
@@ -12,10 +13,9 @@ class SideBarOverview extends Component {
         super(props);
 
         this.state = {
-            ctrlSize: { width: 600, height: 300 },
-            currentResourcePath: 'integralui-web/icons',
+            ctrlSize: { width: 400 },
+            currentResourcePath: '../integralui-web/icons',
             currentSelection: null,
-            currentTabSpacing: 3,
             currentTheme: IntegralUITheme.Office,
             isAnimationAllowed: true,
             data: [
@@ -55,8 +55,10 @@ class SideBarOverview extends Component {
         this.state.currentSelection = this.state.data[0];
     }
 
+    // Update ------------------------------------------------------------------------------------
+
     render() {
-        var tabs = this.state.data.map((tab, index) => {
+        let tabs = this.state.data.map((tab, index) => {
                 return (
                     <IntegralUITabComponent key={index} data={tab} icon={tab.icon} theme={this.state.currentTheme}>
                         <div className="sdb-ovw-tab-content">{tab.body}</div>
@@ -67,22 +69,40 @@ class SideBarOverview extends Component {
         return (
             <div>
                 <h2>SideBar / Overview</h2>
-                <div className="sample-block">
+                <div className="sample-block" id="sample-block-sidebar-overview">
                     <IntegralUISideBarComponent
                         allowAnimation={this.state.isAnimationAllowed}
                         customStyle={iuiSideBarOverviewStyle}
+                        expanded={true}
+                        parentId={'sample-block-sidebar-overview'}
                         resourcePath={this.state.currentResourcePath}
                         selectedTab={this.state.currentSelection}
+                        showHeader={true}
                         size={this.state.ctrlSize}
-                        tabSpacing={this.state.currentTabSpacing}
                         theme={this.state.currentTheme} 
-                        expanded={true}
-                        > 
+                    >
                         {tabs}
                     </IntegralUISideBarComponent>
-                    <div className="feature-help">
-                        <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> SideBar</strong> is a native Web Component that allows you to add custom content panel that appears by sliding from page side.</p>
-                    </div>
+                    <IntegralUIPanelComponent id="sample-block-sidebar-content" contentAlignment = {{ vertical: 'middle' }}>
+                        Sample Content Block
+                    </IntegralUIPanelComponent>
+                </div>
+                <div className="feature-help">
+                    <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> SideBar</strong> is a native Web Component that allows you to add custom content panel that appears by sliding from page side.</p>
+                    <p><span className="initial-space"></span>The following features are available.</p>
+                    <ul className="feature-points">
+                        <li><span className="code-name">Animations</span> - There are different animations available for different action within the side bar</li>
+                        <li><span className="code-name">AutoHide</span> - Allows you to pin or unpin the content panel when expanded. When pinned other parts of parent container will move to make space for the content panel, when unpinned the content panel popups on top of parent container.</li>
+                        <li><span className="code-name">Custom Content</span> - Each tab can have its own content composed from custom HTML elements or other components</li>
+                        <li><span className="code-name">Different Sides</span> - You can place SideBar component on each side of parent container: Top, Right, Bottom or Left </li>
+                        <li><span className="code-name">Dynamic Resize</span> - Any changes to parent container size affects the position and size of the side panel</li>
+                        <li><span className="code-name">Events</span> - There are multiple events fired based on action: expand/collapse, selection, resize etc. </li>
+                        <li><span className="code-name">Resize</span> - When enabled, you can resize the content panel during run-time</li>
+                        <li><span className="code-name">Tab Alignment</span> - Tabs can appear aligned to top/left, middle or bottom/right side</li>
+                        <li><span className="code-name">Tabs</span> - SideBar can contain multiple tabs with different content panels</li>
+                        <li><span className="code-name">Templates</span> - You can add custom HTML elements to tabs and header</li>
+                        <li><span className="code-name">Tooltips</span> - Each tab can have its own tooltip</li>
+                    </ul>
                 </div>
             </div>
         );

@@ -1,0 +1,39 @@
+<h2 class="feature-title">Grid / Dynamic Update</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-grd-stock" id="grid-stock">
+        <iui-grid #grid id="grid-dynamic-grouping"
+            [allowAnimation]="true"
+            [allowColumnReorder]="true"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [expandColumnIndex]="0"
+            [grouping]="groupSettings"
+            [groups]="groups"
+            [rowHeight]="40"
+            [rows]="rows"
+            [resourcePath]="currentResourcePath"
+            [selectedColumn]="currentSelectedColumn"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            (scrollPosChanged)="gridScrollPosChanged($event)"
+        > 
+        </iui-grid>
+        <div *ngIf="isGridLoading" class="grid-loading" [ngStyle]="{ width: getGridSize().width - 16 + 'px' }">
+            <span [ngStyle]="{ marginLeft: getGridSize().width / 2 - 50 + 'px' }"></span>
+        </div>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of real time data simulation of stock exchange. The following features are presented:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">Loading</span> - initial data is loaded froma JSON file and then converted to Grid data</li>
+            <li><span class="code-name">Update</span> - every 150ms a set of rows is randomly selected and its data changed. All related columns are updated accordingly.</li>
+            <li><span class="code-name">Grouping</span> - Grid re-arranges data in groups. In this demo rows can only be grouped by columns 'Sector' and 'Country'. Drag and Drop column header to grouping panel add a specified group. You can also reorder groups.</li>
+            <li><span class="code-name">Cell Templates</span> - some cells shows data in different colors and layouts</li>
+            <li><span class="code-name">Data Formatting</span> - numerical values like % and large numbers are automatically converted using standard data formats</li>
+            <li><span class="code-name">Fixed Columns</span> - first two columns: 'Company' and 'Last' are fixed on left side</li>
+            <li><span class="code-name">Column Visibility</span> - a dropdown menu is available from 'Company' column where you can choose which column is visible</li>
+            <li><span class="code-name">Infinite Scrolling</span> - when scrolling to the end, loading process starts and new data is loaded. This demo present only three additional JSON data sets.</li>
+        </ul>
+    </div>
+</div>

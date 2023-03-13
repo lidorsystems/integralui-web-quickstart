@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Grid / Grid as ListBox</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>Grid / Grid as ListBox</h2>
+        <div class="sample-block">
+            <iui-grid id="grid-as-listbox"
+                allow-animation="true"
+                auto-size-columns="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                row-height="64"
+                theme="Office"
+            > 
+            </iui-grid>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of Grid component that act as a ListBox. The column header and footer are hidden and templates are used to add custom HTML content in grid cells.</p>
+                <p><span class="initial-space"></span>On first look, you cannot tell whether the above control is a Grid or a ListBox. By CSS modifications and templates, the Grid appears as a simple list. In this example, we have chosen to show a list of device drivers.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+
+        import { IntegralUIEditorType, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridAsListBoxStyle } from './grid-as-listbox.style.js';
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-as-listbox');
+
+        grid.allowFocus = false;
+
+        grid.columns = [
+            { id: 1, editorType: IntegralUIEditorType.CheckBox, fixedWidth: true, headerAlignment: "center", width: 30 },
+            { id: 2, headerText: "Name", width: 300 },
+            { id: 3, headerText: "Version", contentAlignment: 'center', width: 120 },
+            { id: 4, headerText: "Date", contentAlignment: 'center', width: 110 },
+            { id: 5, width: 90, contentAlignment: 'center' }
+        ];
+
+        grid.customStyle = iuiGridAsListBoxStyle;
+
+        grid.rows = [
+            { 
+                id: 1,
+                cells: [ 
+                    { cid: 1 }, 
+                    { cid: 2, icon: 'disk',category: 'Disk drives', driverName: 'TOSHIBA DT01ACA100 ATA Device' },
+                    { cid: 3, text: "6.1.7600.16385" },
+                    { cid: 4, text: "21 Jun 2015" },
+                    { cid: 5 }
+                ]
+            },
+            { 
+                id: 2,
+                cells: [
+                    { cid: 1, value: true },
+                    { cid: 2, icon: 'pc', category: 'Display adapters', driverName: 'NVIDIA GeForce GT 730' },
+                    { cid: 3, text: "10.18.13.5891" },
+                    { cid: 4, text: "05 Nov 2015" },
+                    { cid: 5 }
+                ]
+            },
+            { 
+                id: 3,
+                cells: [
+                    { cid: 1 },
+                    { cid: 2, icon: 'network', category: 'Network', driverName: 'Realtek PCIe GBE Family Controller' },
+                    { cid: 3, text: "7.82.317.2014" },
+                    { cid: 4, text: "17 Mar 2014" },
+                    { cid: 5 }
+                ]
+            },
+            { 
+                id: 4,
+                cells: [
+                    { cid: 1, value: true },
+                    { cid: 2, icon: 'sound', category: 'Sound', driverName: 'Realtek High Defintion Audio' },
+                    { cid: 3, text: "6.0.1.7200" },
+                    { cid: 4, text: "14 Mar 2014" },
+                    { cid: 5 }
+                ]
+            },
+            { 
+                id: 5,
+                cells: [
+                    { cid: 1 },
+                    { cid: 2, icon: 'usb', category: 'Universal Serial Bus controllers', driverName: 'Intel USB 3.0 Root Hub' },
+                    { cid: 3, text: "3.0.0.16" },
+                    { cid: 4, text: "12 Feb 2014" },
+                    { cid: 5 }
+                ]
+            }
+        ];
+
+        grid.showFooter = false;
+        grid.showHeader = false;
+        grid.size = { width: 800, height: 300 }
+
+        //
+        // Methods -----------------------------------------------------------------------------------
+        //
+
+        // Templates -----------------------------------------------------------------------------
+
+        grid.rowTemplate = (row, cell) => { 
+            switch (cell.cid){
+                case 2: // Driver Info
+                    return html`<div class="driver">
+                            <span class="icons-medium ${cell.icon}"></span>
+                            <div class="driver-info">
+                                <span class="driver-category">${cell.category}</span><br/>
+                                <span>${cell.driverName}</span>
+                            </div>
+                        </div>`;
+
+                case 5: // Driver Action
+                    return html`<iui-button allow-animation="true" .allowFocus="${false}" .customStyle="${iuiGridAsListBoxStyle}" @click="${() => updateDriver(row)}">Update</iui-button>`;
+            }
+
+            return null;
+        }
+
+        let getCellById = function(row, id){
+            let filtered = row.cells.filter(cell => cell.cid === id);
+
+            return filtered.length > 0 ? filtered[0] : null;
+        }
+
+        let updateDriver = function(row){
+            let driverInfoCell = getCellById(row, 2);
+
+            if (driverInfoCell)
+                alert("Update Driver for " + driverInfoCell.driverName);
+        }
+
+    </script>
+</html>

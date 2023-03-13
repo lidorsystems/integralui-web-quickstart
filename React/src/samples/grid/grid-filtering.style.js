@@ -19,7 +19,7 @@ export const iuiGridFilteringStyle = css`
 
     .filter-button
     {
-        background-image: url(../integralui-web/icons/filter-white.ico);
+        background-image: url(../../integralui-web/icons/filter-white.ico);
         display: inline-block;
         margin: 0;
         padding: 0;

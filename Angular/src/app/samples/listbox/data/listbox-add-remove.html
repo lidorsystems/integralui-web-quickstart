@@ -1,0 +1,41 @@
+<h2>ListBox / Add-Remove Items from Code</h2>
+<div class="sample-block">
+    <div id="listbox-addremove" [ngStyle]="{ display: this.items.length > 0 ? 'inline-block' : 'none' }">
+        <iui-listbox #listbox
+            [allowAnimation]="true"
+            [items]="items"
+            [resourcePath]="currentResourcePath"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        ></iui-listbox>
+    </div>
+    <div class="empty-block" [ngStyle]="{ display: this.items.length === 0 ? 'inline-block' : 'none' }">ListBox is empty.</div>
+    <div class="listbox-addremove-panel">
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onAddClicked()">Add</iui-button>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onInsertAfterClicked()">Insert After</iui-button>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onInsertBeforeClicked()">Insert Before</iui-button>
+        <div class="inline-block">
+           <iui-button [allowAnimation]="true" [size]="inlineCtrlSize" [theme]="currentTheme" (click)="onInsertAtClicked()">Insert At</iui-button><iui-numeric [resourcePath]="currentResourcePath" [size]="inlineCtrlSize" [value]="insertAtValue" [theme]="currentTheme" (valueChanged)="onInsertAtValueChanged($event)"></iui-numeric>
+        </div>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onRemoveClicked()">Remove</iui-button>
+        <div class="inline-block">
+            <iui-button [allowAnimation]="true" [size]="inlineCtrlSize" [theme]="currentTheme" (click)="onRemoveAtClicked()">Remove At</iui-button><iui-numeric [resourcePath]="currentResourcePath" [size]="inlineCtrlSize" [value]="removeAtValue" [theme]="currentTheme" (valueChanged)="onRemoveAtValueChanged($event)"></iui-numeric>
+        </div>
+        <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onClearClicked()">Clear</iui-button>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example that demonstrates adding and removal od items manually from code using buttons.</p>
+        <p><span class="initial-space"></span>You can add items at the end, before or after a specific item (in this case the selected item) or at specific position.</p>
+        <p><span class="initial-space"></span>In similar way, you can remove a specific item using its object reference or its position in the item list. There is an option to remove all items from the list.</p>
+        <p><span class="initial-space"></span>The following methods are used:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">addItem</span> - adds the item to the end of the list</li>
+            <li><span class="code-object">clearItems</span> - removes all items from the list</li>
+            <li><span class="code-object">insertItemAfter</span> - inserts the item after the specified item</li>
+            <li><span class="code-object">insertItemAt</span> - inserts the item at specified position within the list</li>
+            <li><span class="code-object">insertItemBefore</span> - inserts the item before the specified item</li>
+            <li><span class="code-object">removeItem</span> - removes the item from the list</li>
+            <li><span class="code-object">removeItemAt</span> - removes the item at specified position from the list</li>
+        </ul>
+    </div>
+</div>

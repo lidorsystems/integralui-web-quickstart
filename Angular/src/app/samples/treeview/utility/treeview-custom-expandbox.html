@@ -1,0 +1,16 @@
+<h2>TreeView / Custom Expand Box</h2>
+<div class="sample-block">
+    <iui-treeview id="treeview-custom-expandbox"
+        [customStyle]="treeStyle"
+        [items]="items"
+        [itemTemplate]="currentItemTemplate"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (beforeExpand)="onBeforeExpand($event)"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demo, expand boxes are represented by open/close folder icon, and additionally locked items display the locked folder icon.</p>
+        <p><span class="initial-space"></span>Default CSS classes responsible for expand box appearance are modified and instead of default arrow icons, a set of custom icons are used. Furthermore, one item is marked as locked, that is it cannot become expanded, by handling the <span class="code-object"beforeExpand></span> event and canceling the expand process. Additionaly, the expand box is changed to a locked folder icon, to make visual reprsentation of the locked state.</p>
+    </div>
+</div>

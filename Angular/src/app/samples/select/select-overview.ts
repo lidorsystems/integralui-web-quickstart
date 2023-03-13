@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -13,9 +13,9 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import 'integralui-web/components/integralui.select.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiSelectOverviewStyle } from './select-overview.style.js';
+import 'integralui-web/components/integralui.select';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiSelectOverviewStyle } from './select-overview.style';
 
 @Component({
     selector: '',
@@ -25,7 +25,7 @@ import { iuiSelectOverviewStyle } from './select-overview.style.js';
 export class SelectOverviewSample {
     public ctrlSize: any = { width: 300 };
     public currentMaxDropDownItems: number = 5;
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentSelection: any = null;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiSelectOverviewStyle;

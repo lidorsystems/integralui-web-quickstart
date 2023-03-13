@@ -1,0 +1,37 @@
+<h2>DropDownButton / Overview</h2>
+<div class="sample-block" id="dropdownbutton-overview">
+    <iui-dropdownbutton 
+        [allowAnimation]="isAnimationAllowed"
+        [contentTemplate]="currentContentTemplate"
+        [dropDownSize]="dropDownSize"
+        [expanded]="isExpanded"
+        [resourcePath]="currentResourcePath"
+        [theme]="currentTheme"
+        (expandedChanged)="dropDownExpandedChanged($event)"
+    >
+        {{currentSelection ? currentSelection.text : 'Button'}}
+    </iui-dropdownbutton>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> DropDownButton</strong> is a native Angular component that represents a button with option to show a dropdown window. Using different properties you can change the direction at which the dropdown window will open.</p>
+        <p><span class="initial-space"></span>To modify the button content, you can add other HTML elements or components. For example, the button label can also have an image before it. In addition, you can customize the appearance of dropdown button and window using different CSS styles.</p>
+        <p><span class="initial-space"></span>You can add ANY custom content in the dropdown window. In current example, the dropdown window contains the <strong>List</strong> component.</p>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">direction</span> - Specifies the direction at which the dropdown list will open</li>
+            <li><span class="code-name">dropDownAdjustment</span> - An object with values for position adjustment of dropdown window</li>
+            <li><span class="code-name">dropDownSize</span> - Specifies the width and height of dropdown window, in pixels</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">customStyle</span> - Specifies a custom CSS applied to the component</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">expanded</span> - Determines whether the dropdown window is visible or not</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">placement</span> - Determines whether the dropdown arrow is placed on left or right side</li>
+            <li><span class="code-name">size</span> - Specifies the component width and height, in pixels</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <br/>
+            <li><span class="code-name">expandedChanged</span> - Occurs when expanded property changes</li>
+            <li><span class="code-name">closed</span> - Occurs after the dropdown window closes</li>
+            <li><span class="code-name">opened</span> - Occurs after the dropdown window opens</li>
+        </ul>
+    </div>
+</div>

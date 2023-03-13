@@ -1,13 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { html } from 'integralui-web/external/lit-element.js';
-import { classMap } from 'integralui-web/external/class-map.js';
-import { styleMap } from 'integralui-web/external/style-map.js';
+import { html } from 'integralui-web/external/lit-element';
+import { classMap } from 'integralui-web/external/class-map';
+import { styleMap } from 'integralui-web/external/style-map';
 
-import 'integralui-web/components/integralui.pivotgrid.js';
-import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiPivotGridOverviewStyle } from './pivotgrid-overview.style.js';
+import 'integralui-web/components/integralui.pivotgrid';
+import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiPivotGridOverviewStyle } from './pivotgrid-overview.style';
 
 @Component({
     selector: '',
@@ -15,13 +15,13 @@ import { iuiPivotGridOverviewStyle } from './pivotgrid-overview.style.js';
     styleUrls: ['./pivotgrid-overview.css']
 })
 export class PivotGridOverview {
-    @ViewChild('grid', { static: false }) grid: ElementRef;
+    @ViewChild('grid', { static: false }) grid!: ElementRef;
 
-    private _commonService: IntegralUICommonService  = null;
+    private _commonService!: IntegralUICommonService;
 
     public columns: Array<any> = [];
     public ctrlSize: any = { height: 500 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiPivotGridOverviewStyle;
     public gridData: Array<any> = [];
@@ -85,7 +85,7 @@ export class PivotGridOverview {
         let self = this;
 
         // Use HTTP service to get data from the specified JSON file
-        self.http.get("./assets/pivotgrid-data.json").subscribe((data: Array<any>) => {
+        self.http.get("./assets/pivotgrid-data.json").subscribe((data: any) => {
             // Suspend the tree layout from updates, to increase performance
             self.grid.nativeElement.suspendLayout();
 
@@ -132,7 +132,7 @@ export class PivotGridOverview {
     }
 
     getIndicatorClass(cell: any){
-        let classList = { 'indicator-icons': true }
+        let classList: any = { 'indicator-icons': true }
 
         if (cell.value < 100)
             classList['indicator-down'] = true;

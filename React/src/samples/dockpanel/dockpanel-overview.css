@@ -1,0 +1,4 @@
+[id="dockpanel-overview"] iui-panel {
+    --panel-cursor: grab;
+    --panel-overflow: hidden;
+}

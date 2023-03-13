@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -13,8 +13,8 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import 'integralui-web/components/integralui.numeric.js';
-import { IntegralUINumericDisplayMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.numeric';
+import { IntegralUINumericDisplayMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -23,7 +23,7 @@ import { IntegralUINumericDisplayMode, IntegralUITheme } from 'integralui-web/co
 export class NumericOverviewSample {
     public ctrlSize: any = { width: 100 };
     public currentDisplayMode: IntegralUINumericDisplayMode = IntegralUINumericDisplayMode.InBound;
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public currentValue: number = 30;
 

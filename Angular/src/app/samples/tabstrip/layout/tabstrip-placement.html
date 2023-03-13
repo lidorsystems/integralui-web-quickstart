@@ -1,0 +1,34 @@
+<h2>TabStrip / Tabs on Different Sides</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-placement"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabStripPlacement]="currentPlacement"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-placement-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-placement-panel">
+        <label>Placement: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onPlacementChecked($event)">
+            <iui-radiobutton [checked]="true">Top</iui-radiobutton>
+            <iui-radiobutton>Right</iui-radiobutton>
+            <iui-radiobutton>Bottom</iui-radiobutton>
+            <iui-radiobutton>Left</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example where you can change the side at which tabs will appear. You can have the following placements:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">Top</span> - tabs appear on top side</li>
+            <li><span class="code-object">Right</span> - tabs appear on right side</li>
+            <li><span class="code-object">Bottom</span> - tabs appear on bottom side</li>
+            <li><span class="code-object">Left</span> - tabs appear on left side</li>
+        </ul>
+    </div>
+</div>

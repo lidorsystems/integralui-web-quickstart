@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Even/Odd Items</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-evenodd"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of ListView with items displayed in alternate colors.</p>
+                <p><span class="initial-space"></span>Each item can have a unique look. This is done by setting custom inline style to specific item. In case of this sample, we want to have even items in same color, and different color for odd items. This is done by creating two CSS styles which will be applied to even or odd items, accordingly to their order.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-evenodd');
+
+        let flatData = [
+            { id: 11, text: "Art"  },
+            { id: 12, text: "Economics" },
+            { id: 13, text: "Investing" },
+            { id: 14, text: "Management" },
+            { id: 15, text: "Small Business" },
+            { id: 16, text: "Health" },
+            { id: 17, text: "Literature" },
+            { id: 18, text: "Astronomy" },
+            { id: 19, text: "Mathematics" },
+            { id: 21, text: "Camera", icon: "camera" },
+            { id: 22, text: "Cell Phones" },
+            { id: 23, text: "Video Game Consoles" },
+            { id: 31, text: "Blues" },
+            { id: 32, text: "Classic Rock" },
+            { id: 33, text: "Pop" },
+            { id: 34, text: "Jazz" },
+            { id: 41, text: "Games" },
+            { id: 42, text: "Operating Systems" },
+            { id: 43, text: "Network & Servers" },
+            { id: 44, text: "Security" },
+            { id: 51, text: "Baseball" },
+            { id: 52, text: "Martial Arts" },
+            { id: 53, text: "Running" },
+            { id: 54, text: "Tennis" }
+        ];
+
+        listview.itemSize = { width: 175, height: 32 }
+        listview.size = { width: 600, height: 200 }
+
+        //
+        // Initialize the Component
+        //
+
+        listview.loadData(flatData);
+
+        // Set the styles for even/odd items
+        let onUpdateComplete = function(e){
+            let list = listview.getFullList();
+
+            list.forEach((item, index) => {
+                if (index % 2 === 0)
+                    item.style = {
+                        normal: { background: '#fafafa' }
+                    }
+                else 
+                    item.style = {
+                        normal: { background: '#efefef' }
+                    }
+                 
+                item.style.selected = { fontWeight: 'bold' }
+            });
+
+            listview.refresh();
+        }
+
+        listview.addEventListener("updateComplete", (e) => onUpdateComplete(e));
+
+    </script>
+</html>

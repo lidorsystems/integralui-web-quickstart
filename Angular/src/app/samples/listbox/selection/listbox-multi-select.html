@@ -1,0 +1,34 @@
+<h2>ListBox / Select Multiple Items</h2>
+<div class="sample-block">
+    <iui-listbox #listbox id="listbox-multiselect"
+        [groups]="groups"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [showGroups]="true"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (selectionChanged)="onSelectionChanged($event)"
+    ></iui-listbox>
+    <div class="listbox-multiselect-panel">
+        <label>Selection Mode: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onMultiSelectChecked($event)">
+            <iui-radiobutton>None</iui-radiobutton>
+            <iui-radiobutton [checked]="true">One</iui-radiobutton>
+            <iui-radiobutton>MultiSimple</iui-radiobutton>
+            <iui-radiobutton>MultiExtended</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <iui-list id="list-multiselect" [allowFocus]="false" [items]="selItems" [size]="listSize" [theme]="currentTheme"></iui-list>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>A demonstration of different selection types available in ListBox component. By selecting an option from <strong>Select</strong> component above, you can change the current selected mode. There are four acceptable values:</p>
+        <ul class="feature-points">
+            <li><span class="code-object">None</span> - selection is disabled</li>
+            <li><span class="code-object">One</span> - Only one item is selectable</li>
+            <li><span class="code-object">MultiSimple</span> - Multiple items are selectable using mouse clicks without CTRL key</li>
+            <li><span class="code-object">MultiExtended</span> - Multiple items are selectabl using mouse clicks with CTRL and SHIFT key</li>
+        </ul>
+        <p><span class="initial-space"></span>In multi-selection mode, items can become selected using the CTRL key or SHIFT key. The <strong>MultiExtended</strong> mode allows selection of multiple items in wide range. While SHIFT key is pressed, all items from first to last clicked item will become selected.</p>
+        <p><span class="initial-space"></span>List on the right, shows which items are currently selected. To retrieve this list, you can use the <span class="code-object">getList</span> method with key value <span style="color:#0000ff">'selected'</span>.</p>
+    </div>
+</div>

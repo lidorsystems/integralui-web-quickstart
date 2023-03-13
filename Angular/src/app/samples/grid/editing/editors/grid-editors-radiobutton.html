@@ -1,0 +1,34 @@
+<h2 class="feature-title">Grid / Cells with RadioButton</h2>
+<div class="feature-content" #application>
+    <div class="sample-block-grid-radiobutton">
+        <iui-grid #grid id="grid-editors-radiobutton"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [autoSizeColumns]="true"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [editMode]="currentEditMode"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="36"
+            [rows]="rows"
+            [selectionMode]="currentSelectionMode"
+            [showFooter]="false"
+            [showScroll]="gridScrolling"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+        ></iui-grid>
+        <br/>
+        <div style="margin: 0 10px 0 0; text-align: right">
+            <iui-button [theme]="currentTheme" (click)="onSubmitClicked()">Submit</iui-button>
+        </div>
+        <iui-toaster #toaster
+            [allowAnimation]="true"
+            [positionAdjustment]="currentPositionAdjustment"
+            [theme]="currentTheme"
+            [toastSize]="currentToastSize"
+        ></iui-toaster>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, whenever a row is clicked it will appear in different color. Any subsequent clicks (up to three) will change the color until resets.</p>
+    </div>
+</div>

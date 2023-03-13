@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            /* Changes to the tree item layout*/
+            [id="treeview-contextmenu"] {
+                --treeitem-expand-box-margin: 2px 5px 0 0;
+                --treeitem-padding: 2px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Items with Context Menu</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-contextmenu"
+                allow-animation="true"
+                item-display="Full"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example where if you right-click on each item a context menu will popup. Using the context menu you can add or remove items.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTreeViewContextMenuStyle } from './treeview-contextmenu.style.js';
+
+        let currentTheme = IntegralUITheme.Office;
+        let itemCount = 0;
+
+        //
+        // Context Menu
+        //
+
+        let menuSettings = {
+            items: [
+                { id: 3, text: "Add Item" },
+                { id: 4, text: "Add Child Item" },
+                { id: 5, text: "Insert Item Before" },
+                { id: 6, text: "Insert Item After" },
+                { id: 7, type: "separator" },
+                { id: 8, text: "Remove Item" }
+            ]
+        }
+
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-contextmenu');
+
+        treeview.items = [
+            { 
+                id: 1,
+                text: "Favorites",
+                items: [
+                    { id: 11, pid: 1, text: "Desktop" },
+                    { id: 12, pid: 1, text: "Downloads"}
+                ]
+            },
+            { 
+                id: 2,
+                text: "Libraries",
+                expanded: false,
+                items: [
+                    { 
+                        id: 21, 
+                        pid: 2, 
+                        text: "Documents", 
+                        expanded: false,
+                        items: [
+                            { id: 211, pid: 21, text: "My Documents"},
+                            { id: 212, pid: 21, text: "Public Documents"}
+                        ]
+                    },
+                    { id: 22, pid: 2, text: "Music" },
+                    { id: 23, pid: 2, text: "Pictures"},
+                    { id: 24, pid: 2, text: "Videos" }
+                ]
+            },
+            { 
+                id: 3,
+                text: "Computer",
+                items: [
+                    { id: 31, pid: 3, text: "Local Disk (C:)"},
+                    { id: 32, pid: 3, text: "Storage (D:)"}
+                ]
+            },
+            { id: 4, text: "Network" },
+            { id: 5, text: "Recycle Bin" }
+        ];
+        
+        treeview.size = { width: 350, height: 300 }
+        treeview.theme = currentTheme;
+
+        treeview.itemTemplate = (item) => { 
+            return html`
+                <iui-contextmenu
+                    .customStyle=${iuiTreeViewContextMenuStyle}
+                    .enabled=${true}
+                    .settings=${menuSettings}
+                    theme="Office"
+                    @menuClick="${(e) => onMenuClick(e)}"
+                    @menuOpening="${() => onMenuOpening(item)}"
+                >
+                    <div>
+                        <span>${item.text}</span>
+                    </div>
+                </iui-contextmenu>
+            `;
+        };
+
+        // ContextMenu events --------------------------------------------------------------------
+
+        let onMenuClick = function(e){
+            if (e.detail.item){
+                // Action depends on selected menu option
+                switch (e.detail.item.id){
+                    case 3:
+                        addItem();
+                        break;
+
+                    case 4:
+                        addChildItem();
+                        break;
+
+                    case 5:
+                        insertItemBefore();
+                        break;
+
+                    case 6:
+                        insertItemAfter();
+                        break;
+
+                    case 8:
+                        removeItem();
+                        break;
+
+                    // no default
+                }
+
+                treeview.updateLayout();
+            }
+        }
+
+        let onMenuOpening = function(item){
+            treeview.selectedItem = item;
+        }
+
+
+        // Add/Remove methods
+
+        let createNewItem = function(){
+            itemCount++;
+
+            // Create a new item object
+            return { id: itemCount, text: "Item " + itemCount }
+        }
+
+        let addItem = function(e){
+            let newItem = createNewItem();
+
+            treeview.addItem(newItem);
+            treeview.selectedItem = newItem;
+        }
+
+        let addChildItem = function(e){
+            let newItem = createNewItem();
+
+            treeview.addItem(newItem, treeview.selectedItem);
+        }
+
+        let insertItemAfter = function(e){
+            let newItem = createNewItem();
+
+            treeview.insertItemAfter(newItem, treeview.selectedItem);
+            treeview.selectedItem = newItem;
+        }
+
+        let insertItemBefore = function(e){
+            let newItem = createNewItem();
+
+            treeview.insertItemBefore(newItem, treeview.selectedItem);
+            treeview.selectedItem = newItem;
+        }
+
+        let removeItem = function(e){
+            treeview.removeItem(treeview.selectedItem);
+            treeview.selectedItem = treeview.getPrevItem(treeview.selectedItem);
+        }
+
+    </script>
+</html>

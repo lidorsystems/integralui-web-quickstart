@@ -1,0 +1,24 @@
+<h2>SideBar / Tooltip</h2>
+<div class="sample-block" id="sample-block-sidebar-tooltip">
+    <iui-sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [inbound]="true"
+        [parentId]="'sample-block-sidebar-tooltip'"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabTemplate]="currentTabTemplate"
+        [theme]="currentTheme" 
+    >
+        <iui-tab *ngFor="let tab of data" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdbr-ttp-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <iui-panel id="sample-block-sidebar-content" [contentAlignment] = "{ vertical: 'middle' }">
+        Sample Content Block
+    </iui-panel>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>In this example, each tab has a tooltip attached. Whenever the mouse cursor is moved above the tab icon, a tooltip will appear showing the tab title.</p>
+    <p><span class="initial-space"></span>Tooltip is fully customizable, you can set the initial delay, how long the tooltip will remain visible, its position etc.</p>
+</div>

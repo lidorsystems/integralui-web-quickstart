@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listview-sorting-overview"]{
+                --listview-display: inline-block;
+            }
+
+            .listview-sorting-overview-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .listview-sorting-overview-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listview-sorting-overview-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Sorting Overview</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-sorting-overview"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-listview>
+            <div class="listview-sorting-overview-panel">
+                <label>Sorting: </label>
+                <iui-radiogroup id="sorting-overview">
+                    <iui-radiobutton checked="true">None</iui-radiobutton>
+                    <iui-radiobutton>Ascending</iui-radiobutton>
+                    <iui-radiobutton>Descending</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample demonstrates how to sort ListView items in ascending or descending order. By clicking on buttons on right panel, you can see how items are sorted.</p>
+                <p>The following properties and methods are presented:</p>
+                <ul class="feature-points">
+                    <li><span class="code-object">sorting</span> a property which determines the sort order</li>
+                    <li><span class="code-object">sort</span> a method which sorts the ListView items based on applied order</li>
+                </ul>
+                <p><span class="initial-space"></span>Sorting is performed using the item text, but if item has its value field set (it has higher priority than text), the value will be used.</p>
+                <p><span class="initial-space"></span>Although in this sample a basic sorting is used (a sorting of string values), you can create your own custom sorting by providing a <span style="color:#c60d0d">comparer</span> function as a second parameter of the sort method. In this way you can create any kind of custom sort operations.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+        import { IntegralUIAnimationType, IntegralUISortOrder } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Multi Select Panel
+        const ctrlSorting = document.querySelector('#sorting-overview');
+
+        ctrlSorting.resourcePath = currentResourcePath;
+
+        let onSortingChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listview.sorting = IntegralUISortOrder.Ascending;
+                    break;
+
+                case 2: 
+                    listview.sorting = IntegralUISortOrder.Descending;
+                    break;
+
+                default: 
+                    listview.sorting = IntegralUISortOrder.None;
+                    break;
+            }
+
+            listview.updateLayout();
+        }
+
+        ctrlSorting.addEventListener("buttonChecked", (e) => onSortingChecked(e));
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-sorting-overview');
+
+        listview.items = [
+            { id: 111, text: "DiRT 3" },
+            { id: 112, text: "Ridge Racer Unbounded" },
+            { id: 113, text: "TrackMania 2" },
+            { id: 121, text: "Dark Souls 2" },
+            { id: 122, text: "Mass Effect 3" },
+            { id: 123, text: "The Elder Scrolls V: Skyrim" },
+            { id: 124, text: "Divinity: Original Sin" },
+            { id: 125, text: "Fallout: New Vegas" },
+            { id: 131, text: "Diablo 3" },
+            { id: 132, text: "Gears of War" },
+            { id: 133, text: "F.E.A.R." },
+            { id: 134, text: "Path of Exile" },
+            { id: 135, text: "Grand Theft Auto IV" },
+            { id: 136, text: "Divine Divinity" },
+            { id: 137, text: "The Witcher 2" },
+            { id: 141, text: "Battlefield: Bad Company 2" },
+            { id: 142, text: "Call of Duty: Black Ops" },
+            { id: 143, text: "BioShock Infinite" },
+            { id: 144, text: "Crysis 2" },
+            { id: 211, text: "FIFA 14" },
+            { id: 212, text: "Madden NFL 25" },
+            { id: 221, text: "Assassin's Creed IV" },
+            { id: 222, text: "Tomb Raider" },
+            { id: 223, text: "Metal Gear Solid V" },
+            { id: 311, text: "Battlefield 4" },
+            { id: 312, text: "Call of Duty: Ghosts" },
+            { id: 313, text: "Killzone: Shadow Fall" },
+            { id: 321, text: "Rayman Legends" },
+            { id: 322, text: "Rogue Legacy" },
+            { id: 323, text: "1001 Spikes" },
+            { id: 333, text: "Final Fantasy XIV Online" }
+        ];
+
+        listview.itemSize = { width: 175, height: 32 }
+        listview.size = { width: 400, height: 300 }
+
+    </script>
+</html>

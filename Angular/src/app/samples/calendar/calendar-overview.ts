@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,8 +12,8 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.calendar.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.calendar';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -21,11 +21,11 @@ import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
 })
 export class CalendarOverviewSample {
     public ctrlSize: any = { width: 250, height: 200 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public isAnimationAllowed: boolean = true;
 
-    onDateChanged(e){
+    onDateChanged(e: any){
         console.log("Calendar date changed to: ", e.detail.date);
     }
 }

@@ -1,0 +1,22 @@
+<h2 class="feature-title">Grid / Cells with DropDownList</h2>
+<div class="feature-content" #application>
+    <div class="sample-block">
+        <iui-grid #grid id="grid-editors-dropdownlist"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [editMode]="currentEditMode"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="32"
+            [rows]="rows"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            (valueChanging)="beforeValueChange($event)"
+        ></iui-grid>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In above demo, you can change the Ship Mode using different options from a dropdown list. The cells that have a dropdown editor attached have a down arrow icon, which when clicked will open a dropdown list. Once the list opens, you can select a different option.</p>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-scrollto-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-scrollto"]{
+                --tabstrip-display: inline-block;
+
+                --tab-header-border-radius: 7px 7px 0 0;
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+                --tab-header-padding: 9px;
+            }
+
+            .tabstrip-scrollto-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 300px;
+
+                --select-display: block;
+            }
+            .tabstrip-scrollto-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .tabstrip-scrollto-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Scroll To Specific Tab</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-scrollto"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="tabstrip-scrollto-panel">
+                <label>Scroll to: </label>
+                <iui-select id="scrollto-select" allow-animation="true" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+                <br/>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, there are multiple tabs and you can select the tab that you want to appear in view by scrolling to it.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType, IntegralUITabScrollMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+ 
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+     
+        //
+        // Control Panel
+        //
+
+        const ctrlSelect = document.querySelector('#scrollto-select');
+        ctrlSelect.items = [];
+
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => scrollToChanged(e));
+
+        let scrollToChanged = async function(e){
+            ctrl.scrollTo(ctrl.tabs[e.detail.index]);
+            ctrl.selectedIndex = e.detail.index;
+        }
+
+        //
+        // TabStrip settings
+        //
+      
+        const ctrl = document.querySelector('#tabstrip-scrollto');
+
+        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.scrollMode = IntegralUITabScrollMode.InBound;
+        ctrl.selectedTab = null;
+        ctrl.size = { width: 600, height: 300 };
+
+        let tabs = [];
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            for (let i = 1; i <= 15; i++)
+                tabs.push({ id: i, text: 'Tab' + i });
+
+            tabs.forEach(tab => {
+                let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+
+                let tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-scrollto-tab-content');
+                tabContent.textContent = 'Content of ' + tab.text;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+
+                // Add the tab to the Select component
+                ctrlSelect.items.push(tab);
+            });
+        }
+
+        //
+        // Initialize the Component
+        //
+
+        addTabs();
+
+    </script>
+</html>

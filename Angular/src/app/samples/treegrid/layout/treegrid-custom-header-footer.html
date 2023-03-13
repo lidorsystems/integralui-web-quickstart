@@ -1,0 +1,34 @@
+<h2 class="feature-title">TreeGrid / Custom Header and Footer</h2>
+<div class="feature-content" #application>
+    <iui-treegrid #treegrid id="treegrid-custom-header-footer"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [expandColumnIndex]="1"
+        [resourcePath]="currentResourcePath"
+        [rowHeight]="28"
+        [rows]="rows"
+        [rowHeight]="28"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (cellDblClick)="cellDoubleClicked($event)"
+        (valueChanged)="cellValueChanged($event)"
+    ></iui-treegrid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this sample each column header is built using a custom template. Second column footer also uses a custom template. The following examples are presented: </p>
+        <ul class="feature-points">
+            <li>column header with check box - a template showing a check box. We are using the IntegralUI CheckBox component in this case, but any other HTML element is acceptable, like input element</li>
+            <li>column header with text in two lines - a template with two text paragraphs</li>
+            <li>column header  with text and an icon - a template with a paragraph containing text and question icon with a tooltip</li>
+            <li>column footer with button and text - a template with a paragraph containing button and text</li>
+        </ul>
+        <p><span class="initial-space"></span>Whenever button in column footer is clicked, the text is updated showing how many rows are checked.</p>
+        <p><span class="initial-space"></span>The template is created in code, using custom CSS styles and HTML elements, and then applied to the column by using the following properties:</p>
+        <ul class="feature-points">
+            <li><span style="color:#c60d0d">headerTemplate</span> - holds a reference to a custom template used to replace the header text with custom HTML elements</li>
+            <li><span style="color:#c60d0d">footerTemplate</span> - holds a reference to a custom template used to replace the footer text with custom HTML elements</li>
+        </ul>
+        <p><span class="initial-space"></span>There is no limit on what kind of template that you can create. Any combination of HTML elements is acceptable, along with custom events.</p>
+    </div>
+</div>

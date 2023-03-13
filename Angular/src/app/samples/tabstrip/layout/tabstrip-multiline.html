@@ -1,0 +1,32 @@
+<h2>TabStrip / Multiline Tabs</h2>
+<div class="sample-block">
+    <iui-tabstrip id="tabstrip-multiline"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [displayMode]="currentDisplayMode"
+        [navigation]="currentNavigation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabSpacing]="currentTabSpacing"
+        [tabStripPlacement]="currentPlacement"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-multiline-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-multiline-panel">
+        <label>Placement: </label>
+        <iui-radiogroup [theme]="currentTheme" (buttonChecked)="onPlacementChecked($event)">
+            <iui-radiobutton [checked]="true">Top</iui-radiobutton>
+            <iui-radiobutton>Right</iui-radiobutton>
+            <iui-radiobutton>Bottom</iui-radiobutton>
+            <iui-radiobutton>Left</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example where tabs appear in multiple lines. Only the line tab contains the selected tab is attached to the tab content, while others appear in lines above the current line.</p>
+        <p><span class="initial-space"></span>In this mode, drag and drop, scrolling and toolbars are disabled.</p>
+    </div>
+</div>

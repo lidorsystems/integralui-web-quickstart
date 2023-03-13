@@ -1,0 +1,36 @@
+<h2>Label / Overview</h2>
+<div class="sample-block">
+    <div class="animated-block">
+        <iui-label [allowAnimation]="true" [alignment]="'Inline'" [value]="'Label 1'" [theme]="currentTheme"><input value="Sample text" /></iui-label>
+        <iui-label [allowAnimation]="true" [alignment]="'Inline'" [value]="'Label 2'" [theme]="currentTheme"><input /></iui-label>
+        <iui-label [allowAnimation]="true" [alignment]="'Inline'" [value]="'Label 3'" [theme]="currentTheme"><input /></iui-label>
+    </div>
+    <div class="alignment-block">
+        <label>Select Alignment: </label>
+        <iui-select [allowAnimation]="true" [items]="alignmentOptions" [maxDropDownItems]="5" [theme]="currentTheme" [selectedItem]="currentSelection" (afterSelect)="onAlignmentChanged($event)"></iui-select>
+        <iui-label [alignment]="labelAlignment" [contentSize]="labelContentSize" [size]="labelSize" [value]="'Label 1'" [theme]="currentTheme"><input value="Sample text" /></iui-label>
+        <iui-label [alignment]="labelAlignment" [contentSize]="labelContentSize" [size]="labelSize" [value]="'Longer Label 2'" [theme]="currentTheme"><input /></iui-label>
+        <iui-label [alignment]="labelAlignment" [contentSize]="labelContentSize" [size]="labelSize" [value]="'Label 3'" [theme]="currentTheme"><input /></iui-label>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Label</strong> is a native Web Component that represents a label. It is fully customizable via CSS and custom properties.</p>
+        <p><span class="initial-space"></span>You can use this component to enclose any other HTML element. In addition, by specifying the label size and/or the size of enclosed element you can easily create properly aligned elements.</p>
+        <p><span class="initial-space"></span>The first group of labels have Inline alignment set which allows animations of label title in relation to its content. From the second group of labels, you can change the label alignment, Inline alignment is excluded from options available for this example.</p>
+        <br/>
+        <p><span class="initial-space"></span>The following properties and events are supported:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">alignment</span> - Determines how label title is aligned in relation to enclosed element</li>
+            <li><span class="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+            <li><span class="code-name">contentSize</span> - Specifies the width and height of the enclosed HTML element</li>
+            <li><span class="code-name">customStyle</span> - Specifies an object that contains all custom style settings for the component</li>
+            <li><span class="code-name">data</span> - Specifies an object that holds data related to the component</li>
+            <li><span class="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>
+            <li><span class="code-name">name</span> - Uniquely identifies the component</li>
+            <li><span class="code-name">size</span> - Specifies the width and height of the component</li>
+            <li><span class="code-name">state</span> - Specifies the component state: disabled, hovered, etc.</li>
+            <br/>
+            <li><span class="code-name">sizeChanged</span> - Occurs when component size changes</li>
+            <li><span class="code-name">valueChanged</span> - Occurs when component value property changes</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-load-json"] {
+                --listitem-content-padding: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Load Data from JSON</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-load-json" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample shows how to populate the ListBox using JSON file as a data source. The data source has custom data fields, which are mapped to the ones used by the list box.</p>
+                <p><span class="initial-space"></span>For data binding, use the <strong>dataFields</strong> property of the ListBox component. This property accepts an object that replaces the default field names with your own. The other way with custom fields, is to use <strong>loadData</strong> method and set the data fields as function parameter.</p>
+                <p><span class="initial-space"></span>You can find the JSON data file in the same directory as this sample.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import { styleMap } from '../../../node_modules/integralui-web/external/style-map.js';
+        import { iuiListBoxLoadJSONStyle } from './listbox-load-json.style.js';
+
+        //
+        // Sample settings
+        //
+            
+        // ListBox
+        const listbox = document.querySelector('#listbox-load-json');
+        
+        let listFields = {
+            icon: 'itemIcon',
+            id: 'itemId',
+            text: 'label'
+        }
+
+        listbox.customStyle = iuiListBoxLoadJSONStyle;
+        listbox.items = [];
+
+        listbox.itemTemplate = (item) => { 
+            return html`
+                <div class="lbox-dfjson-item-content">
+                    <table width="100%">
+                        <tr>
+                            <td rowspan="99"><span class=${classMap({ 'lbox-dfjson-icons': true, [item.itemIcon]: true, 'envelope-open': item.isOpen && item.itemIcon === 'envelope' })}></span></td>
+                            <td width="75%"><span class="lbox-dfjson-label">${item.label}</span></td>
+                            <td class="lbox-dfjson-date" width="25%">${item.date}</td>
+                        </tr>
+                        <tr><td colspan="2"><span class="lbox-dfjson-subtext">${item.subtext}</span></td></tr>
+                        <tr style=${styleMap({ display: item.isOpen ? 'table-row' : 'none' })}><td colspan="2"><hr /></td><tr>
+                    </table>
+                </div>
+            `;
+        }
+
+        listbox.size = { width: 500, height: 350 }
+
+        // Initialization ------------------------------------------------------------------------
+
+        fetch("listbox-load-json-data.json") 
+            .then(response => response.json()) 
+            .then(data => {
+                // Suspend the list layout from updates, to increase performance
+                listbox.suspendLayout();
+
+                // Load data into the list box
+                listbox.loadData(data, listFields);
+
+                // Resume and update the list layout
+                listbox.resumeLayout();
+            });
+
+    </script>
+</html>

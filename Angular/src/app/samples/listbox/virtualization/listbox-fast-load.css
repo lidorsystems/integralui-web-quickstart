@@ -1,0 +1,21 @@
+[id="listbox-fast-load"]{
+    --listbox-display: inline-block;
+    --listitem-transition-duration: 0s;
+}
+
+.listbox-fast-load-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 200px;
+
+    --button-display: block;
+    --button-margin: 5px 0;
+}
+.listbox-fast-load-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.listbox-fast-load-panel label:first-of-type {
+    margin-top: 0;
+}

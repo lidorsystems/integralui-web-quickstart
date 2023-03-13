@@ -1,0 +1,384 @@
+﻿{
+    "columns": [
+        { "id": 2, "title": "Stock / Company", "fixed": "left", "width": 250 },
+        { 
+            "id": 3, 
+            "title": "Last",
+            "format": { 
+                "options": { 
+                    "style": "decimal",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "contentAlignment": "right",
+            "fixed": "left",
+            "width": 100
+        },
+        { 
+            "id": 4, 
+            "title": "Change %", 
+            "format": { 
+                "options": { 
+                    "style": "percent",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "contentAlignment": "right",
+            "width": 100
+        },
+        { 
+            "id": 5, 
+            "title": "Change", 
+            "format": { 
+                "options": { 
+                    "style": "decimal",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "contentAlignment": "right",
+            "width": 100
+        },
+        { "id": 1, "editorType": "CheckBox", "contentAlignment": "center", "groupText": "Checked", "width": 30, "fixedWidth": true, "visible": false },
+        { "id": 6, "title": "Rating", "width": 125 },
+        { 
+            "id": 7, 
+            "title": "Volume", 
+            "format": { 
+                "options": { 
+                    "style": "decimal"
+                }
+            }, 
+            "contentAlignment": "right",
+            "width": 100
+        },
+        { "id": 8, "title": "MKT Cap", "contentAlignment": "right", "width": 110 },
+        { "id": 9, "title": "P/E", "contentAlignment": "right", "width": 90 },
+        { "id": 10, "title": "EPS", "contentAlignment": "right", "width": 90 },
+        { 
+            "id": 11, 
+            "title": "Sector", 
+            "allowGrouping": true, 
+            "editorType": "DropDownList",
+            "editorSettings": {
+                "dropDownAdjustment": { "top": 14 },
+                "visible": 6,
+                "items": [ 
+                    { "text": "Consumer Durables" },
+                    { "text": "Electronic Technology" }, 
+                    { "text": "Energy Minerals" },
+                    { "text": "Finance" },
+                    { "text": "Health Technology" },
+                    { "text": "Industrial Services" },
+                    { "text": "Non-Energy Minerals" },
+                    { "text": "Retail Trade" }, 
+                    { "text": "Technology Services" }, 
+                    { "text": "Transportation" }
+                ]
+            },
+            "width": 275
+        },
+        { 
+            "id": 12, 
+            "title": "Div Yield", 
+            "format": { 
+                "options": { 
+                    "style": "percent",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "contentAlignment": "right",
+            "visible": false,
+            "width": 75
+        },
+        { 
+            "id": 13, 
+            "title": "All Time Low", 
+            "format": { 
+                "options": { 
+                    "style": "decimal",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "contentAlignment": "right",
+            "visible": false,
+            "width": 110
+        },
+        { 
+            "id": 14, 
+            "title": "All Time High", 
+            "format": { 
+                "options": { 
+                    "style": "decimal",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "contentAlignment": "right",
+            "visible": false,
+            "width": 110
+        },
+        { "id": 15, "title": "Country", "allowGrouping": true, "width": 150, "visible": false }
+    ],
+    "rows" : [
+        { 
+            "Stock": "AAPL",
+            "Company": "Apple Inc",
+            "Last": 133,
+            "Change %": 0.0202,
+            "Change": 2.64,
+            "Rating": 5,
+            "Volume": 106948056,
+            "MKT Cap": "2.233T",
+            "P/E": 35.24,
+            "EPS": 3.74,
+            "Sector": "Electronic Technology",
+            "Div Yield": 0.0062,
+            "All Time Low": 0.05,
+            "All Time High": 145.09,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "MSFT",
+            "Company": "Microsoft Corp.",
+            "Last": 255.85,
+            "Change %": 0.0103,
+            "Change": 2.60,
+            "Rating": 4,
+            "Volume": 30264616,
+            "MKT Cap": "1.93T",
+            "P/E": 32.72,
+            "EPS": 6.78,
+            "Sector": "Technology Services",
+            "Div Yield": 0.0088,
+            "All Time Low": 0.09,
+            "All Time High": 255.99,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "AMZN",
+            "Company": "Amazon Com Inc",
+            "Last": 3372.20,
+            "Change %": 0.0221,
+            "Change": 72.90,
+            "Rating": 5,
+            "Volume": 4341467,
+            "MKT Cap": "1.698T",
+            "P/E": 79.02,
+            "EPS": 42.60,
+            "Sector": "Retail Trade",
+            "Div Yield": 0,
+            "All Time Low": 1.31,
+            "All Time High": 3552.25,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "GOOG",
+            "Company": "Alphabet Inc (Google)",
+            "Last": 2285.88,
+            "Change %": 0.009,
+            "Change": 20.44,
+            "Rating": 4,
+            "Volume": 1044365,
+            "MKT Cap": "1.541T",
+            "P/E": 38.59,
+            "EPS": 59.26,
+            "Sector": "Technology Services",
+            "Div Yield": 0,
+            "All Time Low": 486.25,
+            "All Time High": 2289.04,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "FB",
+            "Company": "Facebook inc",
+            "Last": 312.46,
+            "Change %": -0.0018,
+            "Change": -0.56,
+            "Rating": 4,
+            "Volume": 15988568,
+            "MKT Cap": "889.783B",
+            "P/E": 30.98,
+            "EPS": 10.23,
+            "Sector": "Technology Services",
+            "Div Yield": 0,
+            "All Time Low": 17.55,
+            "All Time High": 315.88,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "PTR",
+            "Company": "PetroChina Company Limited",
+            "Last": 35.24,
+            "Change %": -0.0034,
+            "Change": -0.12,
+            "Rating": 2,
+            "Volume": 91358,
+            "MKT Cap": "743.525B",
+            "P/E": 23.84,
+            "EPS": 0.01,
+            "Sector": "Energy Minerals",
+            "Div Yield": 0.0652,
+            "All Time Low": 14.25,
+            "All Time High": 266.81,
+            "Country": "China"
+        },
+        { 
+            "Stock": "TSM",
+            "Company": "Taiwan Semiconductor Manufacturing Company Limited",
+            "Last": 122.80,
+            "Change %": -0.0051,
+            "Change": -0.63,
+            "Rating": 4,
+            "Volume": 8315311,
+            "MKT Cap": "636.851B",
+            "P/E": 36.32,
+            "EPS": 3.40,
+            "Sector": "Electronic Technology",
+            "Div Yield": 0.0114,
+            "All Time Low": 2.81,
+            "All Time High": 142.20,
+            "Country": "Taiwan"
+        },
+        { 
+            "Stock": "JPM",
+            "Company": "JPMorgan Chase & Co.",
+            "Last": 150.56,
+            "Change %": 0.0025,
+            "Change": 0.37,
+            "Rating": 3,
+            "Volume": 10442383,
+            "MKT Cap": "455.393B",
+            "P/E": 11.92,
+            "EPS": 12.62,
+            "Sector": "Finance",
+            "Div Yield": 0.024,
+            "All Time Low": 3.21,
+            "All Time High": 161.69,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "NVDA",
+            "Company": "NVIDIA Corporation",
+            "Last": 619.12,
+            "Change %": 0.0139,
+            "Change": 8.51,
+            "Rating": 4,
+            "Volume": 4944927,
+            "MKT Cap": "380.034B",
+            "P/E": 88.52,
+            "EPS": 7.02,
+            "Sector": "Electronic Technology",
+            "Div Yield": 0.010,
+            "All Time Low": 1.33,
+            "All Time High": 648.57,
+            "Country": "United States"
+        },
+        { 
+            "Stock": "TM",
+            "Company": "Toyota Motor Corporation",
+            "Last": 153.54,
+            "Change %": 0.0094,
+            "Change": 1.45,
+            "Rating": 2,
+            "Volume": 247737,
+            "MKT Cap": "216.673B",
+            "P/E": 15.11,
+            "EPS": 10.36,
+            "Sector": "Consumer Durables",
+            "Div Yield": 0.0243,
+            "All Time Low": 1.78,
+            "All Time High": 163.37,
+            "Country": "Japan"
+        },
+        { 
+            "Stock": "SAP",
+            "Company": "SAP SE",
+            "Last": 143.22,
+            "Change %": 0.005,
+            "Change": 0.72,
+            "Rating": 4,
+            "Volume": 570292,
+            "MKT Cap": "169.788B",
+            "P/E": 0,
+            "EPS": 5.34,
+            "Sector": "Technology Services",
+            "Div Yield": 0.0196,
+            "All Time Low": 9.93,
+            "All Time High": 169.30,
+            "Country": "Germany"
+        },
+        { 
+            "Stock": "SHOP",
+            "Company": "Shopify Inc.",
+            "Last": 1166.00,
+            "Change %": 0.0609,
+            "Change": 66.97,
+            "Rating": 4,
+            "Volume": 1419605,
+            "MKT Cap": "136.171B",
+            "P/E": 432.48,
+            "EPS": 2.63,
+            "Sector": "Retail Trade",
+            "Div Yield": 0,
+            "All Time Low": 18.48,
+            "All Time High": 1499.75,
+            "Country": "Canada"
+        },
+        { 
+            "Stock": "ENB",
+            "Company": "Enbridge Inc.",
+            "Last": 37.18,
+            "Change %": 0.0024,
+            "Change": 0.09,
+            "Rating": 5,
+            "Volume": 2669979,
+            "MKT Cap": "75.625B",
+            "P/E": 32.07,
+            "EPS": 1.16,
+            "Sector": "Industrial Services",
+            "Div Yield": 0.0722,
+            "All Time Low": 1.28,
+            "All Time High": 57.19,
+            "Country": "Canada"
+        },
+        { 
+            "Stock": "SONY",
+            "Company": "Sony Group Corporation",
+            "Last": 108.92,
+            "Change %": 0.0093,
+            "Change": 1.02,
+            "Rating": 3,
+            "Volume": 527089,
+            "MKT Cap": "135.929B",
+            "P/E": 13.50,
+            "EPS": 8.28,
+            "Sector": "Consumer Durables",
+            "Div Yield": 0.0032,
+            "All Time Low": 1.75,
+            "All Time High": 157.38,
+            "Country": "Japan"
+        },
+        { 
+            "Stock": "NVO",
+            "Company": "Novo Nordisk A/S",
+            "Last": 74.10,
+            "Change %": 0.0005,
+            "Change": 0.04,
+            "Rating": 4,
+            "Volume": 618869,
+            "MKT Cap": "131.461B",
+            "P/E": 26.95,
+            "EPS": 2.76,
+            "Sector": "Health Technology",
+            "Div Yield": 0.0139,
+            "All Time Low": 0.17,
+            "All Time High": 75.86,
+            "Country": "Denmark"
+        }
+    ]
+}

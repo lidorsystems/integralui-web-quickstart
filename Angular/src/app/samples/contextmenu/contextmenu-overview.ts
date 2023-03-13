@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,42 +12,87 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.accordion.js';
-import 'integralui-web/components/integralui.groupbox.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+
+import 'integralui-web/components/integralui.contextmenu';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+
+import { iuiContextMenuOverviewStyle } from './contextmenu-overview.style';
 
 @Component({
     selector: '',
-    templateUrl: './accordion-overview.html',
-    styleUrls: ['./accordion-overview.css']
+    templateUrl: './contextmenu-overview.html',
+    styleUrls: ['./contextmenu-overview.css']
 })
-export class AccordionOverviewSample {
-    public ctrlSize: any = { width: 400 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
-    public currentSelection: any = null;
+export class ContextMenuOverviewSample {
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
-    public expandBoxType: string = 'arrow';
-    public groups: Array<any> = [];
+    public customStyle: any = iuiContextMenuOverviewStyle;
+    public fontWeight: string = 'bold';
+    public fontStyle: string = 'normal';
+    public fontSize: string = '1';
+    public textDecoration: string = 'none';
 
-    constructor(){
-        this.groups = [
-            { 
-                icon: 'icons library',
-                text: 'Books',
-                body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
-            },
-            { 
-                icon: 'icons album',
-                text: 'Music',
-                body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
-            },
-            { 
-                icon: 'icons star-empty',
-                text: 'Favorites',
-                body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+    public menuSettings: any = {
+        items: [
+            { id: 2, text: "Bold", icon: 'cmnu-icons-medium check-mark', checked: true },
+            { id: 3, text: "Italic", icon: 'cmnu-icons-medium empty' },
+            { id: 4, text: "Strikethrough", icon: 'cmnu-icons-medium empty' },
+            { id: 5, type: "separator" },
+            { id: 6, text: "x1", icon: 'cmnu-icons-medium radio-mark-filled' },
+            { id: 7, text: "x1.5", icon: 'cmnu-icons-medium radio-mark-empty' },
+            { id: 8, text: "x2", icon: 'cmnu-icons-medium radio-mark-empty' }
+        ]
+    }
+    
+    //
+    // Methods -----------------------------------------------------------------------------------
+    //
+
+    menuItemClick(e: any){
+        let currentItem = e.detail.item;
+
+        if (currentItem){
+            if (currentItem.id < 5)
+                currentItem.checked = currentItem.checked !== undefined ? !currentItem.checked : true;
+            else
+                currentItem.checked = true;
+
+            switch (currentItem.id){
+                case 2: 
+                    this.fontWeight = currentItem.checked !== false ? 'bold' : 'normal';
+                    break;
+                case 3: 
+                    this.fontStyle = currentItem.checked !== false ? 'italic' : 'normal';
+                    break;
+                case 4: 
+                    this.textDecoration = currentItem.checked !== false ? 'line-through' : 'none';
+                    break;
+                case 6: 
+                    this.fontSize = currentItem.checked !== false ? '1' : '1';
+                    break;
+                case 7: 
+                    this.fontSize = currentItem.checked !== false ? '1.5' : '1';
+                    break;
+                case 8: 
+                    this.fontSize = currentItem.checked !== false ? '2' : '1';
+                    break;
+
+                default:
+                    break;
             }
-        ];
 
-        this.currentSelection = this.groups[0];
-    } 
+            if (currentItem.id < 5)
+                currentItem.icon = currentItem.checked !== false ? 'cmnu-icons-medium check-mark' : 'cmnu-icons-medium empty';
+            else {
+                let list = [...this.menuSettings.items];
+                for (let i = 4; i < list.length; i++){
+                    if (list[i] !== currentItem)
+                        list[i].checked = false;
+
+                    list[i].icon = list[i].checked !== false ? 'cmnu-icons-medium radio-mark-filled' : 'cmnu-icons-medium radio-mark-empty';
+                }
+
+                this.menuSettings.items = list;
+            }
+        }
+    }
 }

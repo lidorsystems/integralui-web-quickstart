@@ -1,0 +1,20 @@
+[id="treeview-scrollto"]{
+    --treeview-display: inline-block;
+    --treeview-width: calc(100% - 330px);
+}
+
+.treeview-scrollto-panel {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    width: 300px;
+
+    --select-display: block;
+}
+.treeview-scrollto-panel label {
+    display: block;
+    margin: 10px 0 10px 10px;
+}
+.treeview-scrollto-panel label:first-of-type {
+    margin-top: 0;
+}

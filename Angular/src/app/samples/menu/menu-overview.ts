@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -13,9 +13,9 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import 'integralui-web/components/integralui.menu.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiMenuOverviewStyle } from './menu-overview.style.js';
+import 'integralui-web/components/integralui.menu';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiMenuOverviewStyle } from './menu-overview.style';
 
 @Component({
     selector: '',
@@ -24,7 +24,7 @@ import { iuiMenuOverviewStyle } from './menu-overview.style.js';
 })
 export class MenuOverviewSample {
     public ctrlSize: any = { width: 700 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiMenuOverviewStyle;
     public isAnimationAllowed: boolean = false;

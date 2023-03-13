@@ -1,11 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { html } from 'integralui-web/external/lit-element.js';
+import { html } from 'integralui-web/external/lit-element';
 
-import 'integralui-web/components/integralui.button.js';
-import 'integralui-web/components/integralui.pivotgrid.js';
-import 'integralui-web/components/integralui.select.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.button';
+import 'integralui-web/components/integralui.pivotgrid';
+import 'integralui-web/components/integralui.select';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -13,11 +13,11 @@ import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
     styleUrls: ['./pivotgrid-value-filters.css']
 })
 export class PivotGridValueFilters {
-    @ViewChild('grid', { static: false }) grid: ElementRef;
+    @ViewChild('grid', { static: false }) grid!: ElementRef;
 
     public columns: Array<any> = [];
     public ctrlSize: any = { height: 500 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public filters: Array<any> = [];
     public gridData: Array<any> = [];
@@ -127,7 +127,7 @@ export class PivotGridValueFilters {
         let self = this;
 
         // Use HTTP service to get data from the specified JSON file
-        self.http.get("./assets/pivotgrid-data.json").subscribe((data: Array<any>) => {
+        self.http.get("./assets/pivotgrid-data.json").subscribe((data: any) => {
             // Suspend the tree layout from updates, to increase performance
             self.grid.nativeElement.suspendLayout();
 

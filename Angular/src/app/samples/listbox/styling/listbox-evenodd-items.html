@@ -1,0 +1,14 @@
+<h2>ListBox / Even/Odd Items</h2>
+<div class="sample-block">
+    <iui-listbox #listbox id="listbox-evenodd"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (updateComplete)="onUpdateComplete()"
+    ></iui-listbox>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of ListBox with items displayed in alternate colors.</p>
+        <p><span class="initial-space"></span>Each item can have a unique look. This is done by setting custom inline style to specific item. In case of this sample, we want to have even items in same color, and different color for odd items. This is done by creating two CSS styles which will be applied to even or odd items, accordingly to their order.</p>
+    </div>
+</div>

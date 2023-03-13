@@ -3,14 +3,16 @@
     <iui-listbox #listbox
         [allowAnimation]="true"
         [allowDrag]="true"
+        [allowDrop]="true"
         [customStyle]="customStyle"
+        [groups]="groups"
         [items]="items"
         [resourcePath]="currentResourcePath"
         [selectionMode]="currentSelectionMode"
+        [showGroups]="true"
         [size]="ctrlSize"
         [theme]="currentTheme"
-    > 
-    </iui-listbox>
+    ></iui-listbox>
     <div class="feature-help">
         <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ListBox</strong> is a native Web Component that represents a list of custom HTML elements that you can reorder dynamically during run-time using drag drop operations.</p>
         <p><span class="initial-space"></span>This example displays a list of movies represented by some general info about each movie: genre, title, rating and year when it is released. By click and hold of the left mouse button, you can drag and drop each item from the list over other items. To display ratings the <a routerLink="/rating-overview">Rating</a> component is used.</p>

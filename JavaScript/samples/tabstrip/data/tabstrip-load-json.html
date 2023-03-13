@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .tbs-loadjson-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-loadjson"]{
+                --tab-header-border-radius: 7px 7px 0 0;
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+                --tab-header-padding: 9px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Load Tabs from JSON</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-loadjson"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, all tabs with their content are loaded from a JSON file.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIAnimationType } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        const ctrl = document.querySelector('#tabstrip-loadjson');
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(tabs){
+            tabs.forEach(tab => {
+                let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+                ctrlTab.data = tab;
+                ctrlTab.text = tab.text;
+
+                let tabContent = document.createElement('div');
+                tabContent.classList.add('tbs-loadjson-tab-content');
+                tabContent.textContent = tab.content;
+                ctrlTab.appendChild(tabContent);
+
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        //
+        // Initialize the Component
+        //
+
+        fetch("tabstrip-load-json-data.json") 
+            .then(response => response.json()) 
+            .then(data => {
+                // Apply settings from JSON data
+                ctrl.tabAlignment = data.settings.alignment;
+                ctrl.animation = data.settings.animation;
+                ctrl.tabStripPlacement = data.settings.tabStripPlacement;
+                ctrl.size = data.settings.size;
+               
+                // Load data into the TabStrip
+                addTabs(data.tabs);
+
+                // Update the tab strip layout
+                ctrl.updateLayout();
+            });
+
+    </script>
+</html>

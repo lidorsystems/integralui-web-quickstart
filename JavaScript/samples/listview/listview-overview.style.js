@@ -1,40 +1,19 @@
 import { css } from '../../node_modules/integralui-web/external/lit-element.js';
 
 export const iuiListViewOverviewStyle = css`
-    .lview-ovw-custom-item-large {
-        display: inline-block;
-        margin: 0;
-        overflow: hidden;
-        padding: 5px;
-        position: relative;
-        text-align: center;
-        white-space: nowrap;
-        width: 125px;
-        z-index: 0;
-    }
     .lview-ovw-title-large {
-        color: black;
         display: inline-block;
         overflow: hidden;
         padding: 3px 0;
+        text-align: center;
         text-overflow: ellipsis;
         vertical-align: middle;
         width: 100%;
     }
     .lview-ovw-icon-large {
         padding: 10px;
-        margin: 0 auto;
+        margin: 30px auto;
         width: 24px;
-    }
-    .lview-ovw-num-corner {
-        display: inline-block;
-        font-size: 0.875em;
-        font-weight: bold;
-        margin: -3px 0 0 -3px;
-        position: relative;
-        text-align: left;
-        vertical-align: middle;
-        z-index: 1;
     }
     .lview-ovw-icons {
         background: url(../../resources/movie-genres.png) no-repeat 0 0;
@@ -79,15 +58,10 @@ export const iuiListViewOverviewStyle = css`
         background-position: -120px -24px;
     }
 
-    /* Changes to the Rating component inside the ListBox Item */
-    .lview-ovw-custom-item-large iui-rating {
-        --rating-background: transparent;
-        --rating-border: 0;
+    /* Changes to the Rating component */
+    .iui-listview iui-rating {
+        --rating-border-color: transparent;
         --rating-cursor: pointer;
-        --rating-display: inline-block;
         --rating-margin: auto;
-        vertical-align: middle;
-
-        --rating-content-image: url(../../resources/rating/star-empty-white.png);
     }
 `;

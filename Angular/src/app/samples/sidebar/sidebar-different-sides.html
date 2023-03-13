@@ -1,0 +1,44 @@
+<h2>SideBar / Different Sides</h2>
+<div class="sample-block" id="sample-block-sidebar-first">
+    <iui-sidebar
+        [allowAnimation]="isAnimationAllowed"
+        [customStyle]="customStyle"
+        [expanded]="true"
+        [parentId]="'sample-block-sidebar-first'"
+        [placement]="currentPlacement"
+        [resourcePath]="currentResourcePath"
+        [selectedTab]="currentSelection"
+        [showHeader]="true"
+        [size]="ctrlSize"
+        [theme]="currentTheme" 
+    >
+        <iui-tab *ngFor="let tab of data" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+            <div class="sdb-dfsd-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-sidebar>
+    <div id="sample-block-sidebar-second">
+        <iui-sidebar
+            [allowAnimation]="isAnimationAllowed"
+            [customStyle]="customStyle"
+            [expanded]="true"
+            [inbound]="true"
+            [parentId]="'sample-block-sidebar-second'"
+            [placement]="currentPlacement2"
+            [resourcePath]="currentResourcePath"
+            [selectedTab]="currentSelection2"
+            [showHeader]="true"
+            [size]="ctrlSize2"
+            [theme]="currentTheme" 
+        >
+            <iui-tab *ngFor="let tab of data2" [data]="tab" [icon]="tab.icon" [theme]="currentTheme">
+                <div class="sdb-dfsd-tab-content">{{tab.body}}</div>
+            </iui-tab>
+        </iui-sidebar>
+        <iui-panel id="sample-block-sidebar-content" [contentAlignment] = "{ vertical: 'middle' }">
+            Sample Content Block
+        </iui-panel>
+    </div>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>An example of two SideBars placed on diffrent sides. The first is placed on Left and the second on the Bottom side of parent container. The auto-hide is enabled where each content panel has a headerwith button from where you can switch on/off the auto-hide mode. You can resize each side bar within the parent container bounds.</p>
+</div>

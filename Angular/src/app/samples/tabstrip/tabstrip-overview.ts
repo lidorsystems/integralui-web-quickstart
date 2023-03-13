@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -11,20 +11,21 @@
   governing rights and limitations under the License. Any infringement will be prosecuted under applicable laws.                           
 */
 
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import 'integralui-web/components/integralui.tab.js';
-import 'integralui-web/components/integralui.tabstrip.js';
-import { IntegralUIAnimationType, IntegralUITabScrollMode, IntegralUITabStripPlacement, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiTabStripOverviewStyle } from './tabstrip-overview.style.js';
+import { Component } from '@angular/core';
+import 'integralui-web/components/integralui.tab';
+import 'integralui-web/components/integralui.tabstrip';
+import { IntegralUIAnimationType, IntegralUITabScrollMode, IntegralUITabStripPlacement, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiTabStripOverviewStyle } from './tabstrip-overview.style';
 
 @Component({
     selector: '',
     templateUrl: './tabstrip-overview.html',
     styleUrls: ['./tabstrip-overview.css']
 })
-export class TabStripOverviewSample {
+export class TabStripOverview {
+
     public currentAnimation: IntegralUIAnimationType = IntegralUIAnimationType.Slide;
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentScrollMode: IntegralUITabScrollMode = IntegralUITabScrollMode.None;
     public currentSelection: any = null;
     public currentTabSpacing: number = 3;
@@ -69,7 +70,7 @@ export class TabStripOverviewSample {
         ];
     }
 
-    tabOrderChanged(e : any){
+    tabOrderChanged(e: any){
         this.currentSelection = e.detail.tab;
         this.tabs = e.detail.list;
     }

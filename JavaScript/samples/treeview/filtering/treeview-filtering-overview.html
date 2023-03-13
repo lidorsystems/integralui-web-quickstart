@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="treeview-dropdownfilter"]{
+                --dropdownfilter-display: inline-block;
+                --dropdownfilter-padding: 4px;
+                --dropdownfilter-vertical-align: top;
+
+                --dropdownfilter-operation-top: 6px;
+            }
+
+            .treeview-filtering-overview-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .treeview-filtering-overview-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .treeview-filtering-overview-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Filtering Overview</h2>
+        <div class="sample-block">
+            <iui-dropdownfilter id="treeview-dropdownfilter"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-dropdownfilter>
+            <iui-button id="apply-filter">Filter</iui-button>
+            <iui-treeview id="treeview-filtering-overview"
+                allow-animation="true"
+                allow-filter="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample shows how to filter the TreeView content using different conditions.</p>
+                <p><span class="initial-space"></span>By selecting an operation from dropdown filter and specifying matching value, you can filter the TreeView so that only those items that matches the specified condition are shown.</p>
+                <p><span class="initial-space"></span>By default, filtering is executed using the item's value field to match the specified criteria. If this field value is empty, then the value of item's text field is used. If parent item has children that passes the filter conditions, then parent item also passes the filter conditions. This is determined from <span class="code-object">allowParent</span> field in filter parameters.</p>
+                <p><span class="initial-space"></span>For filtering operations we are using the <strong>IntegralUIFilterService</strong>, which provides many ways to set string, numeric or custom filtering using multiple conditions with multiple AND / OR combinations.</p>
+                <p><span class="initial-space"></span>You can also create a custom filtering operation, but you would need to create a function in your code and apply it to the callback field of filtering parameter.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownfilter.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+
+        // DropDown Filter
+        let currentFilterOperation = '[]';
+        let currentFilterValue = '';
+
+        const ctrlFilter = document.querySelector('#treeview-dropdownfilter');
+
+        ctrlFilter.dropDownAdjustment = { left: 280, top: -1 }
+        ctrlFilter.size = { width: 292 };
+
+        let onFilterChange = function(e){
+            currentFilterValue = e.detail.value;
+        }
+
+        let onFilterOperationChanged = function(e){
+            currentFilterOperation = e.detail.operation;
+        }
+
+        let onFilterValueChanged = function(e){
+            currentFilterOperation = e.detail.filter.operation;
+            currentFilterValue = e.detail.value;
+
+            applyFilter();
+       }
+
+        ctrlFilter.addEventListener("change", (e) => onFilterChange(e));
+        ctrlFilter.addEventListener("operationChanged", (e) => onFilterOperationChanged(e));
+        ctrlFilter.addEventListener("valueChanged", (e) => onFilterValueChanged(e));
+
+        // Filter Button
+        const btnFilter = document.querySelector('#apply-filter');
+        btnFilter.addEventListener("click", (e) => onFilterClicked(e));
+
+        let onFilterClicked = function(e){
+            applyFilter();
+        }
+
+        let applyFilter = function(){
+            // Filter TreeView based on selected operation and value
+            if (currentFilterValue){
+                let params = {
+                    allowParent: true,
+                    caseSensitive: false,
+                    conditions: { 
+                        value: currentFilterValue,
+                        operation: currentFilterOperation
+                    }
+                }
+
+                treeview.filter(params);
+            }
+            // Reset the filter
+            else
+                treeview.filter();
+        }
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-filtering-overview');
+
+        let flatData = [
+            { id: 1, text: "Dairy", expanded: false },
+            { id: 11, pid: 1, text: "Milk" },
+            { id: 12, pid: 1, text: "Butter" },
+            { id: 13, pid: 1, text: "Cheese" },
+            { id: 14, pid: 1, text: "Yogurt" },
+            { id: 2, text: "Fruits" },
+            { id: 21, pid: 2, text: "Berries", expanded:  false},
+            { id: 211, pid: 21, text: "BlackBerries" },
+            { id: 212, pid: 21, text: "CranBerries" },
+            { id: 213, pid: 21, text: "StrawBerries" },
+            { id: 22, pid: 2, text: "Pits" },
+            { id: 23, pid: 2, text: "Core" },
+            { id: 24, pid: 2, text: "Citrus Fruits" },
+            { id: 241, pid: 24, text: "Oranges" },
+            { id: 242, pid: 24, text: "Lemons" },
+            { id: 25, pid: 2, text: "Melons" },
+            { id: 26, pid: 2, text: "Tropical Fruits", expanded: false },
+            { id: 261, pid: 26, text: "Avocados" },
+            { id: 262, pid: 26, text: "Bananas" },
+            { id: 263, pid: 26, text: "Dates" },
+            { id: 3, text: "Grains" },
+            { id: 4, text: "Meat" },
+            { id: 41, pid: 4, text: "Beef" },
+            { id: 42, pid: 4, text: "Lamb", expanded: false },
+            { id: 421, pid: 42, text: "Lamb Breast" },
+            { id: 422, pid: 42, text: "Lamb Leg" },
+            { id: 423, pid: 42, text: "Lamb Ribs" },
+            { id: 43, pid: 4, text: "Pork" },
+            { id: 5, text: "Sweets" },
+            { id: 6, text: "Vegetables" },
+            { id: 7, text: "Water" }
+        ];
+
+        treeview.size = { width: 350, height: 300 };
+
+        //
+        // Initialize the Component
+        //
+
+        treeview.loadData(flatData, null, null, true);
+
+    </script>
+</html>

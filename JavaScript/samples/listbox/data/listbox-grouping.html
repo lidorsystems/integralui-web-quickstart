@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-grouping"] {
+                --listbox-display: inline-block;
+            }
+            .listbox-grouping-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 300px;
+
+                --select-display: block;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .listbox-grouping-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listbox-grouping-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Grouping</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-grouping"
+                allow-animation="true"
+                show-groups="true"
+                theme="Office"
+            ></iui-listbox>
+            <div class="listbox-grouping-panel">
+                <label>Group by: </label>
+                <iui-select id="grouping-select" allow-animation="true" theme="Office"></iui-select>
+                <br/>
+                <label>Sorting: </label>
+                <iui-radiogroup id="groups-sorting">
+                    <iui-radiobutton checked="true">None</iui-radiobutton>
+                    <iui-radiobutton>Ascending</iui-radiobutton>
+                    <iui-radiobutton>Descending</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, you can change the group by which items in ListBox are grouped. Based on provided data, groups are created and changed dynamically.</p>
+                <p><span class="initial-space"></span>Each item object has a <strong>group</strong> field that determines the group under which it will appear. For grouping to work, the following is required:</p>
+                <ul class="feature-points">
+                    <li>ListBox must have <strong>showGroups</strong> property set to true</li>
+                    <li>There should be a list of group objects with name set, applied to the ListBox using the <strong>groups</strong> property</li>
+                    <li>Each item object needs to have its <strong>group</strong> field set to specific group name from provided group list</li>
+                    <li>If item doesn't have group set, it will appear under default 'Other' group</li>
+               </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module">
+        import { IntegralUISortOrder, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+            
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        //
+        // Control Panel
+        //
+
+        let groupsGenre = [];
+        let groupsYear = [];
+        let groupsRating = [];
+
+        const ctrlSelect = document.querySelector('#grouping-select');
+        ctrlSelect.items = [
+            { text: 'Genre' },
+            { text: 'Year' },
+            { text: 'Rating' }
+        ];
+        
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => groupingChanged(e));
+
+        ctrlSelect.resourcePath = currentResourcePath;
+
+        let groupingChanged = function(e){
+            let item = e.detail.item;
+
+            switch (item.text){
+                case 'Genre':
+                    listbox.groups = groupsGenre;
+                    break;
+
+                case 'Year':
+                    listbox.groups = groupsYear;
+                    break;
+
+                case 'Rating':
+                    listbox.groups = groupsRating;
+                    break;
+            }
+
+            // Update the item group based on selected group by option
+            listbox.items.forEach(obj => obj.group = obj[item.text.toLowerCase()]);
+            listbox.updateLayout();
+        }
+
+        // Sorting
+        const ctrlSorting = document.querySelector('#groups-sorting');
+
+        ctrlSorting.resourcePath = currentResourcePath;
+
+        let onSortingChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listbox.sorting = IntegralUISortOrder.Ascending;
+                    break;
+
+                case 2: 
+                    listbox.sorting = IntegralUISortOrder.Descending;
+                    break;
+
+                default: 
+                    listbox.sorting = IntegralUISortOrder.None;
+                    break;
+            }
+
+            listbox.updateLayout();
+        }
+
+        ctrlSorting.addEventListener("buttonChecked", (e) => onSortingChecked(e));
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-grouping');
+
+        listbox.items = [
+            { id: 1, genre: "sci-fi", text: "Star Trek", year: "2009", rating: 8 },
+            { id: 2, genre: "adventure", text: "Cast Away", year: "2000", rating: 7  },
+            { id: 3, genre: "action", text: "Gladiator", year: "2000", rating: 8 },
+            { id: 4, genre: "drama", text: "Malèna", year: "2000", rating: 7 },
+            { id: 5, genre: "music", text: "Moulin Rouge", year: "2001", rating: 7 },
+            { id: 6, genre: "comedy", text: "Snatch", year: "2000", rating: 8  },
+            { id: 7, genre: "biography", text: "A Beautiful Mind", year: "2001", rating: 8  },
+            { id: 8, genre: "crime", text: "Black Hawk Down", year: "2001", rating: 7 },
+            { id: 9, genre: "western", text: "Django Unchained", year: "2012", rating: 8  },
+            { id: 10, genre: "sci-fi", text: "Man of Steel", year: "2013", rating: 7 },
+            { id: 11, genre: "horror", text: "The Ring", year: "2002", rating: 7 },
+            { id: 12, genre: "romance", text: "40 Days and 40 Nights", year: "2002", rating: 5 },
+            { id: 13, genre: "sci-fi", text: "Minority Report", year: "2002", rating: 7 },
+            { id: 14, genre: "comedy", text: "Scary Movie 3", year: "2003", rating: 5 },
+            { id: 15, genre: "music", text: "Walk the Line", year: "2005", rating: 7  },
+            { id: 16, genre: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6 },
+            { id: 17, genre: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
+            { id: 18, genre: "horror", text: "American Psycho", year: "2000", rating: 7 },
+            { id: 19, genre: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8 },
+            { id: 20, genre: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8 }
+        ];
+        
+        listbox.resourcePath = currentResourcePath;
+        listbox.size = { width: 500, height: 400 }
+
+        // Initialization ------------------------------------------------------------------------
+
+        let isGroupPresent = function(value, list){
+            let filtered = list.filter(obj => obj.name === value);
+
+            return filtered.length > 0 ? true : false;
+        }
+
+        let createGroups = function(){
+            listbox.items.forEach(item => {
+                if (!isGroupPresent(item.genre, groupsGenre))
+                    groupsGenre.push({ name: item.genre });
+
+                if (!isGroupPresent(item.year, groupsYear))
+                    groupsYear.push({ name: item.year });
+
+                if (!isGroupPresent(item.rating, groupsRating))
+                    groupsRating.push({ name: item.rating });
+            });
+
+            ctrlSelect.selectedItem = ctrlSelect.items[0];
+        }
+
+        createGroups();
+
+    </script>
+</html>

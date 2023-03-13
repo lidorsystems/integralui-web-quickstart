@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-	<head>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	  	<title>IntegralUI Web - Quick Start</title>
-		<link rel="stylesheet" href="../../../index.css" />
-		<style type="text/css">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
             .tbs-tool-tab-content {
                 padding: 5px;
                 font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
@@ -18,9 +18,9 @@
                 border: thin solid transparent;
                 cursor: pointer;
                 display: inline-block;
-                margin: 0 0 0 1px;
+                margin: 2px 0 0 1px;
                 opacity: 0.5;
-                padding: 2px;
+                padding: 1px;
             }
             .tbs-toolbar-button:hover {
                 border: thin solid #ccdce8;
@@ -66,38 +66,36 @@
                 --tab-header-hovered-border-color: #8cb1d1;
                 --tab-header-padding: 9px;
             }
-		</style>
-	</head>
-	<body>
-		<h2>TabStrip / Tabs with Toolbar</h2>
-		<div class="sample-block">
-			<iui-tabstrip id="tabstrip-toolbar"
-				allow-animation="true"
-				resource-path="../../../node_modules/integralui-web/icons"
-				tab-spacing="0"
-			> 
-            </iui-tabstrip>
-			<div class="feature-help">
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Tabs with Toolbar</h2>
+        <div class="sample-block">
+            <iui-tabstrip id="tabstrip-toolbar"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-tabstrip>
+            <div class="feature-help">
                 <p><span class="initial-space"></span>A demo of a TabStrip with tabs on left and toolbar buttons on right side.</p>
                 <p><span class="initial-space"></span>TabStrip has a built-in support to add custom content on left or right side. In this case, the right side contains a custom toolbar with buttons. You can modify the content, by using the slot name <span class="code-name">'iui-tabstrip-toolbar-right'</span>.</p>
                 <p><span class="initial-space"></span>Templates on left or right side can contain any kind of custom HTML content or other components.</p>
                 <p><span class="initial-space"></span>In addition, this sample also shows tabs where their header has border with rounded corners.</p>
             </div>
-		</div>
-	</body>
-	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
-	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
-	<script type="module">
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
         import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
         import { IntegralUIAnimationType } from '../../../node_modules/integralui-web/components/integralui.enums.js';
        
         const ctrl = document.querySelector('#tabstrip-toolbar');
 
-		ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.animation = IntegralUIAnimationType.Slide;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
 
-        ctrl.tabs = [
+        let tabs = [
             { 
                 id: 1,
                 text: 'JavaScript',
@@ -125,7 +123,7 @@
         //
 
         let addTabs = function(){
-            ctrl.tabs.forEach(tab => {
+            tabs.forEach(tab => {
                 let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
 
                 ctrlTab.data = tab;
@@ -149,7 +147,7 @@
             let ctrlRightPanel = document.createElement('div');
 
             ctrlRightPanel.classList.add('tbs-toolbar');
-            ctrlRightPanel.setAttribute('slot', 'iui-tabstrip-toolbar-right');
+            ctrlRightPanel.setAttribute('slot', 'toolbar-right');
 
             toolbarIcons.forEach((icon, index) => {
                 let btnElem = document.createElement('div');
@@ -201,5 +199,5 @@
         addTabs();
         addRightPanel();
 
-	</script>
+    </script>
 </html>

@@ -126,6 +126,7 @@ class GridVirtualization extends Component {
                     <IntegralUIGridComponent ref={this.gridRef}
                         allowAnimation={this.state.isAnimationAllowed} 
                         allowDrag={true}
+                        allowDrop={true}
                         columns={this.state.columns} 
                         resourcePath={this.state.currentResourcePath}
                         rows={this.state.rows} 

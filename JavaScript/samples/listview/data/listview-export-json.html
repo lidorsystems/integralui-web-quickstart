@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listview-export"]{
+                --listview-display: inline-block;
+                --listview-width: calc(60% - 200px);
+            }
+            [id="listview-export-result-block"]{
+                border: thin solid #d9d9d9;
+                display: inline-block;
+                height: 300px;
+                overflow: auto;
+                width: calc(40% - 10px);
+            }
+
+            .listview-export-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --button-margin: 10px 5px;
+           }
+            .listview-export-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listview-export-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Export to JSON</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-export"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-listview>
+            <div class="listview-export-panel">
+                <iui-checkbox id="listview-export-selected">Only selected</iui-checkbox>
+                <iui-button id="listview-export-button" allow-animation="true">Export</iui-button>
+            </div>
+            <div id="listview-export-result-block">
+                <pre id="listview-export-result"><code></code></pre>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>IntegralUI ListView component comes with built-in functionality that allows you to export the list data in full or partially to JSON format.</p>
+                <p><span class="initial-space"></span>When exporting the data in full, it is straightforward, you don't need to specify any parameters just call the exporting method. On the other hand, when exporting partial data from the ListView, you need to specify items that you want to export, for example exporting selected items.</p>
+                <p><span class="initial-space"></span>To select items use the CTRL key or SHIFT key. The <strong>MultiExtended</strong> mode allows selection of multiple items in wide range. While SHIFT key is pressed, all items from first to last clicked item will become selected.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+        import { IntegralUIAnimationType, IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Export Panel
+        const ctrlSelectedOnly = document.querySelector('#listview-export-selected');
+        ctrlSelectedOnly.resourcePath = currentResourcePath;
+
+        const ctrlExport = document.querySelector('#listview-export-button');
+
+        let onExport = function(){
+            let data = listview.items;
+
+            // Source is selected items only
+            if (ctrlSelectedOnly.checked)
+                data = listview.getList('selected');
+
+            ctrlResult.innerHTML = listview.exportToJSON(data, null, '   ');
+        }
+
+        ctrlExport.addEventListener("click", () => onExport());
+
+        //
+        // Result settings
+        //
+
+        const ctrlResult = document.querySelector('#listview-export-result');
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-export');
+
+        listview.itemSize = { width: 150, height: 32 }
+        listview.selectionMode = IntegralUISelectionMode.MultiExtended;
+        listview.size = { height: 300 };
+
+        let flatData = [
+            { id: 11, text: "Milk" },
+            { id: 12, text: "Butter" },
+            { id: 13, text: "Cheese" },
+            { id: 14, text: "Yogurt" },
+            { id: 211, text: "BlackBerries" },
+            { id: 212, text: "CranBerries" },
+            { id: 213, text: "StrawBerries" },
+            { id: 241, text: "Oranges" },
+            { id: 242, text: "Lemons" },
+            { id: 261, text: "Avocados" },
+            { id: 262, text: "Bananas" },
+            { id: 263, text: "Dates" },
+            { id: 31, text: "Barley" },
+            { id: 32, text: "Farro" },
+            { id: 33, text: "Millet" },
+            { id: 34, text: "Rice" },
+            { id: 41, text: "Beef" },
+            { id: 42, text: "Chicken" },
+            { id: 43, text: "Turkey" },
+            { id: 44, text: "Pork" },
+            { id: 45, text: "Lamb" },
+            { id: 51, text: "Biscuits" },
+            { id: 52, text: "Cakes" },
+            { id: 53, text: "Candies" },
+            { id: 54, text: "Muffins" },
+            { id: 55, text: "Pastries" },
+            { id: 61, text: "Asparagus" },
+            { id: 62, text: "Broccoli" },
+            { id: 63, text: "Carrots" },
+            { id: 64, text: "Corn" },
+            { id: 65, text: "Lettuce" },
+            { id: 66, text: "Onions" },
+            { id: 67, text: "Pumpkin" },
+            { id: 68, text: "Tomatoes" },
+            { id: 69, text: "Zucchini" }
+        ];
+
+        //
+        // Initialize the Component
+        //
+
+        listview.loadData(flatData);
+
+    </script>
+</html>

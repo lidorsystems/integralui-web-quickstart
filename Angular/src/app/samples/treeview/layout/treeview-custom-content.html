@@ -1,0 +1,15 @@
+<h2>TreeView / Items with Custom Content</h2>
+<div class="sample-block">
+    <iui-treeview #treeview id="treeview-custom-content"
+        [customStyle] = "treeStyle"
+        [items]="items"
+        [itemTemplate]="currentItemTemplate"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-treeview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this demo, We have a tree structure where each item displays a progress bar visualizing the completion of specific operation. Depending on item value, the progress is updated in different colors, where each color represents a progression stage: red, orange, yellow, green and blue.</p>
+        <p><span class="initial-space"></span>For parent items, the progress value is calculated from its children, using an aggregation function.</p>
+    </div>
+</div>

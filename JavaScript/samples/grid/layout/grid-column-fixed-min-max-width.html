@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Grid / Columns Fixed, Min and Max Width</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>Grid / Columns Fixed, Min and Max Width</h2>
+        <div class="sample-block">
+            <iui-grid id="grid-column-fixed-min-max-width"
+                allow-animation="true"
+                auto-size-columns="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                row-height="32"
+                theme="Office"
+            ></iui-grid>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, using the dropdown window from column header you can set up the Minimum and Maximum width for columns and also lock the column width to its current value. The grid also has auto-size for columns enabled, which means any change to column width affects other neighbouring columns so that the whole grid space is occupied.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownbutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridColumnsFixedMinMaxWidthStyle, iuiGridColumnsFixedMinMaxWidthButtonStyle } from './grid-column-fixed-min-max-width.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentTheme = IntegralUITheme.Office;
+
+        let menuList = [
+            { id: 1, text: "Fixed width" },
+            { id: 2, text: "Min width" },
+            { id: 3, text: "Max width" },
+            { id: 8, category: 'separator', enabled: false },
+            { id: 9, category: 'buttons' }
+        ];
+        let currentMaxDropDownItems = 4;
+        let dropDownSize = { width: 210, height: 192 };
+
+        let selectedColumn = {};
+        let isColumnWidthFixed = false;
+        let minValue = 0;
+        let maxValue = 1000;
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-column-fixed-min-max-width');
+
+        grid.allowFocus = false;
+        grid.columns = [
+            { id: 1, headerText: "Order ID", width: 125 },
+            { id: 2, headerText: "Customer", width: 250, maxWidth: 300 },
+            { id: 3, headerText: "Ship Mode", width: 200, visible: false },
+            { 
+                id: 4, 
+                headerText: "Ship Date", 
+                contentAlignment: "center", 
+                format: {
+                    options: {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit"
+                    }
+                },
+                width: 150
+            },
+            { 
+                id: 5, 
+                headerText: "Quantity", 
+                contentAlignment: "right", 
+                format: {
+                    options: {
+                        style: "decimal", 
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    }
+                },
+                width: 120
+            },
+            { 
+                id: 6, 
+                headerText: "Price", 
+                contentAlignment: "right",
+                format: {
+                    options: {
+                        currency: "USD",
+                        style: "currency"
+                    }
+                },
+                width: 150
+            },
+            { 
+                id: 7, 
+                headerText: "Total", 
+                contentAlignment: "right",
+                format: { 
+                    options: { 
+                        currency: "USD", 
+                        style: "currency",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                }, 
+                width: 120
+            }
+        ];
+
+        grid.customStyle = iuiGridColumnsFixedMinMaxWidthStyle;
+
+        grid.rows = [];
+        grid.showFooter = false;
+        grid.showScroll = { horizontal: false }
+        grid.size = { height: 400 }
+
+
+        // Data --------------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+          let result = [];
+
+          data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.headerText;
+
+                    // Delete all fields that will be included in cells
+                    delete row[field];
+
+                    let cell = {
+                        cid: column.id,
+                        colName: field
+                    }
+
+                    // Add cells for existing fields
+                    if (obj[field] !== undefined){
+
+                        if (_commonService.isString(obj[field])){
+                            let fieldValue = Date.parse(obj[field]);
+                            if (obj[field].slice(-1) === 'Z' && !isNaN(fieldValue))
+                                cell.value = new Date(fieldValue);
+                            else
+                                cell.text = obj[field];
+                        }
+                        else
+                            cell.value = obj[field];
+                    }
+                    // Calculate the Total value: sum of (Quantity * Price)
+                    else if (column.id === 7)
+                        cell.value = obj["Quantity"] * obj["Price"];
+
+                    row.cells.push(cell);
+                });
+
+                result.push(row);
+            });
+
+            return result;
+        }
+
+        // Templates -----------------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        let currentDropDownTemplate = (column) => { 
+            return html`
+                <iui-listbox
+                    .allowFocus=${false}
+                    .customStyle=${iuiGridColumnsFixedMinMaxWidthStyle}
+                    .items="${menuList}" 
+                    .itemTemplate="${currentItemTemplate}"
+                    selection-mode="None"
+                    .size="${{ width: dropDownSize.width - 4, height: dropDownSize.height - 4 }}" 
+                    .showScroll="${{ horizontal: false, vertical: false }}"
+                    .theme="${currentTheme}" 
+                ></iui-listbox>
+          `;
+        };
+
+        let currentItemTemplate = (item) => { 
+            switch (item.id){
+                case 1: // Fixed Width
+                    return html`
+                        <div class="item-block">
+                            <iui-checkbox .allowFocus="${false}" .customStyle=${iuiGridColumnsFixedMinMaxWidthStyle} .checked="${isColumnWidthFixed}" @checkedChanged="${(e) => columnFIxedWidthChanged(e)}">Is Column Width Fixed</iui-checkbox>
+                        </div>
+                    `;
+
+                case 2: // Min Width
+                    return html`
+                        <div class="item-block">
+                            <span>Min Width: </span>
+                            <iui-button .customStyle=${iuiGridColumnsFixedMinMaxWidthButtonStyle} @click="${() => changeMinWidth()}">-</iui-button>
+                            <input type="number" .value="${minValue}" @change="${(e) => minValueChanged(e)}" />
+                            <iui-button .customStyle=${iuiGridColumnsFixedMinMaxWidthButtonStyle} @click="${() => changeMinWidth(true)}">+</iui-button>
+                        </div>
+                    `;
+
+                case 3: // Max Width
+                    return html`
+                        <div class="item-block">
+                            <span>Max Width: </span>
+                            <iui-button .customStyle=${iuiGridColumnsFixedMinMaxWidthButtonStyle} @click="${() => changeMaxWidth()}">-</iui-button>
+                            <input type="number" .value="${maxValue}" @change="${(e) => maxValueChanged(e)}" />
+                            <iui-button .customStyle=${iuiGridColumnsFixedMinMaxWidthButtonStyle} @click="${() => changeMaxWidth(true)}">+</iui-button>
+                        </div>
+                    `;
+
+                case 8:
+                    return html`
+                        <hr class="item-separator" />
+                    `;
+
+                case 9:
+                    return html`
+                        <div class="item-block" style="text-align:center">
+                            <iui-button .allowFocus="${false}" .customStyle=${iuiGridColumnsFixedMinMaxWidthStyle} @click="${() => ok()}">Ok</iui-button>
+                            <iui-button .allowFocus="${false}" .customStyle=${iuiGridColumnsFixedMinMaxWidthStyle} @click="${() => cancel()}">Cancel</iui-button>
+                        </div>
+                    `;
+            }
+
+            return null;
+        };
+
+        grid.headerTemplate = (column) => { 
+            return html`
+                <div>
+                    <iui-dropdownbutton data-column-dropdown
+                        .allowAnimation="${true}"
+                        .contentTemplate="${currentDropDownTemplate}"
+                        .data="${column}"
+                        .dropDownAdjustment=${{ left: 32 - dropDownSize.width, top: 7 }}
+                        .dropDownIcon="${false}"
+                        .dropDownSize="${dropDownSize}"
+                        .expanded="${column.selected && column.isDropDownExpanded === true}"
+                        @expandedChanged="${(e) => dropDownExpandedChanged(e, column)}"
+                    >
+                        <img src="../../../node_modules/integralui-web/icons/menu-button.ico" />
+                    </iui-dropdownbutton>
+                    <span class="header-label">${column.headerText}</span>
+                </div>
+          `;
+        };
+
+        //
+        // Methods -----------------------------------------------------------------------------------
+        //
+
+        // DropDownMenu
+
+        let changeMaxWidth = function(flag){
+            let newValue = maxValue;
+
+            if (flag)
+                newValue += 10;
+            else
+                newValue -= 10;
+
+            maxValue = Math.max(0, newValue);
+        }
+
+        let changeMinWidth = function(flag){
+            let newValue = minValue;
+
+            if (flag)
+                newValue += 10;
+            else
+                newValue -= 10;
+
+            minValue = Math.max(0, newValue);
+        }
+
+        let columnFIxedWidthChanged = function(e){
+            isColumnWidthFixed = e.detail.checked;
+        }
+
+        let ok = function(){
+            if (selectedColumn){
+                selectedColumn.fixedWidth = isColumnWidthFixed;
+                selectedColumn.minWidth = minValue;
+                selectedColumn.maxWidth = maxValue;
+            }
+
+            closeDropDown();
+        }
+
+        let cancel = function(){
+            closeDropDown();
+        }
+
+        let closeDropDown = function(){
+            if (selectedColumn){
+                selectedColumn.isDropDownExpanded = false;
+                grid.updateLayout();
+            }
+        }
+
+        let dropDownExpandedChanged = function(e, column){
+            column.isDropDownExpanded = e.detail.expanded;
+
+            if (e.detail.expanded){
+                selectedColumn = column;
+
+                isColumnWidthFixed = selectedColumn.fixedWidth !== undefined ? selectedColumn.fixedWidth : false;
+                minValue = selectedColumn.minWidth !== undefined ? selectedColumn.minWidth : 0;
+                maxValue = selectedColumn.maxWidth !== undefined ? selectedColumn.maxWidth : 1000;
+            }
+
+            grid.updateLayout();
+        }
+
+        let itemSelected = function(e, column){
+            if (e.detail.item){
+                let item = e.detail.item;
+
+                switch (item.key){
+                    default:
+                        e.detail.update = true;
+                        break;
+                }
+
+                menuList.forEach(item => delete item.selected);
+            }
+        }
+
+        let maxValueChanged = function(e){
+            maxValue = Math.max(0, e.target.value);
+        }
+
+        let minValueChanged = function(e){
+            minValue = Math.max(0, e.target.value);
+        }
+
+        //
+        // Initialization ------------------------------------------------------------------------
+        //
+
+        let init = function(){
+            // Load rows from JSON file
+            fetch("grid-column-fixed-min-max-width-data.json") 
+                .then(response => response.json()) 
+                .then(data => {
+                    // Suspend the tree layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    // Load data into the tree view
+                    grid.loadData(convertJSONData(data), null, null, false);
+
+                    // Resume and update the tree layout
+                    grid.resumeLayout();
+            });
+        }
+
+        init();
+
+    </script>
+</html>

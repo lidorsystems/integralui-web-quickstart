@@ -54,10 +54,10 @@ class TreeViewLoadOnDemand extends Component {
 
             let loadTimer = setTimeout(function(){
                 // Get random number of child items
-                let count: number = self.getChildCount();
+                let count = self.getChildCount();
                 for (let i = 1; i <= count; i++){
                     // Create a child item
-                    let childItem: any = {
+                    let childItem = {
                         expanded: false, 
                         hasChildren: self.itemHasChildren(), 
                         items: [],
@@ -93,8 +93,7 @@ class TreeViewLoadOnDemand extends Component {
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme}
                         beforeExpand={(e) => this.onBeforeExpand(e)}
-                        > 
-                    </IntegralUITreeViewComponent>
+                    ></IntegralUITreeViewComponent>
                 </div>
                 <div className="feature-help">
                     <p><span className="initial-space"></span>In above demo, when you click on expanding icon, a new random data is created and then inserted into the expanding item as its children. This process is accompanied with loading animation represented by custom loading icon that replaces the expanding icon for specified item. You can expand multiple items at once and new data will be added accordingly.</p>

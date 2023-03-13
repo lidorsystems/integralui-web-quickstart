@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - TreeGrid / Form Editing</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>TreeGrid / Form Editing</h2>
+		<div class="sample-block">
+			<iui-treegrid id="treegrid-form-editing"
+                allow-animation="true"
+				resource-path="../../../node_modules/integralui-web/icons"
+				theme="Office"
+			></iui-treegrid>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>When <strong>Form Editing</strong> mode is activated, you can select a row and:</p>
+                <ul class="feature-points">
+                    <li>hover over cell in first column and click on Pencil icon to show a Form and start editing</li>
+                    <li>make changes to cell values using editors in the Form</li>
+                    <li>save or cancel any changes using buttons at the bottom of the Form</li>
+                </ul>
+                <p><span class="initial-space"></span>A row is in editing mode when Pencil icon is fully shown, stating that you can edit cell values for that row using editors from the Form. You can edit dates using keyboard, Left/Right arrow keys changes dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
+                <p><span class="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will update the Form with cell values from the selected row. In the process, any changes not saved are cancelled. Clicking again on the Pencil icon, will close the Form.</p>
+                <p><span class="initial-space"></span>You can also activate the editing Form by double-clicking a row. In this case, the editing is activated by handling the <strong>rowDblClick</strong> event and calling the <strong>beginEdit</strong> method.</p>
+                <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+            </div>
+		</div>
+	</body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.treegrid.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let _commonService = new IntegralUICommonService();
+
+		//
+		// TreeGrid settings
+		//
+
+		const treegrid = document.querySelector('#treegrid-form-editing');
+
+		treegrid.columns = [];
+        treegrid.rows = [];
+
+        treegrid.allowFocus = false;
+        treegrid.editMode = IntegralUIEditMode.Form;
+        treegrid.showFooter = false;
+		treegrid.size = { height: 465 }
+
+        treegrid.dataFields = {
+            column: {
+                headerText: 'title'
+            }
+        }
+
+        let shipModeList = [
+            { id: 1, text: "None", value: -1 },
+            { id: 2, text: "Delivery Truck", value: 0 },
+            { id: 3, text: "Regular Air", value: 1 },
+            { id: 4, text: "Express Air", value: 2 }
+        ];
+
+        // Templates -----------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        let currentHeaderTemplate = (column) => { 
+            return html`<span class="header-label">${column.title}</span>`;
+        };
+
+		treegrid.headerTemplate = currentHeaderTemplate;
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            let columnList = [];
+            let rowList = [];
+
+            /////////////////////
+            // Create columns
+            /////////////////////
+
+            // Load other columns from the data source
+            data.columns.forEach(obj => {
+                let column = Object.assign({ headerAlignment: 'center' }, obj);
+
+                columnList.push(column);
+            });
+
+
+            /////////////////////
+            // Create Rows
+            /////////////////////
+
+            data.rows.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                data.columns.forEach(column => {
+                    let field = column.title;
+
+                    // Delete all fields that will be included in cells
+                    delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    let cell = {
+                        cid: column.id,
+                        colName: field
+                    }
+
+                    if (obj[field] !== undefined){
+                        if (_commonService.isString(obj[field])){
+                            let fieldValue = Date.parse(obj[field]);
+                            if (obj[field].slice(-1) === 'Z' && !isNaN(fieldValue))
+                                cell.value = new Date(fieldValue);
+                            else
+                                cell.value = obj[field];
+                        }
+                        else
+                            cell.value = obj[field];
+                    }
+                    // Caluclate the Total value: sum of (Quantity * Price) + Shipping Cost
+                    else if (column.id === 11)
+                        cell.value = obj["Quantity"] * obj["Price"] + obj["Shipping Cost"];
+
+                    row.cells.push(cell);
+                });
+                
+                rowList.push(row);
+            });
+
+            treegrid.columns = columnList;
+            treegrid.rows = rowList;
+        }
+
+        // Editing -------------------------------------------------------------------------------
+
+        treegrid.addEventListener("dataChanged", (e) => treegridDataChanged(e));
+        treegrid.addEventListener("rowDblClick", (e) => treegridRowDblClick(e));
+
+        let treegridDataChanged = function(e){
+            // Update the Total value when Quantity or Price changes
+            if (e.detail.data){
+                let row = e.detail.data;
+
+                let quantityCell = getCellById(row, 6);
+                let priceCell = getCellById(row, 7);
+                let totalCell = getCellById(row, 11);
+
+                if (quantityCell && priceCell && totalCell)
+                    totalCell.value = quantityCell.value * priceCell.value;
+            }
+        }
+
+        let getCellById = function(row, id){
+            let filtered = row.cells.filter(cell => cell.cid === id);
+
+            return filtered.length > 0 ? filtered[0] : null;
+        }
+
+        let treegridRowDblClick = function(e){
+            treegrid.beginEdit(e.detail.row);
+        }
+
+        // Initialize ----------------------------------------------------------------------------
+ 
+        fetch("treegrid-form-editing-data.json") 
+			.then(response => response.json()) 
+			.then(data => {
+                // Suspend the treegrid layout from updates, to increase performance
+                treegrid.suspendLayout();
+
+                // Load data into the treegrid
+                convertJSONData(data);
+
+                // Resume and update the treegrid layout
+                treegrid.resumeLayout();
+            });
+
+	</script>
+</html>

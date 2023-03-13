@@ -24,6 +24,7 @@ class TreeViewOverview extends Component {
             displayMode: IntegralUIItemDisplayMode.Full,
             isAnimationAllowed: true,
             isDragAllowed: true,
+            isDropAllowed: true,
             items: [
                 { 
                     id: 1,
@@ -120,6 +121,7 @@ class TreeViewOverview extends Component {
                    <IntegralUITreeViewComponent id="treeview-overview" ref={this.treeRef}
                         allowAnimation={this.state.isAnimationAllowed}
                         allowDrag={this.state.isDragAllowed}
+                        allowDrop={this.state.isDropAllowed}
                         customStyle={iuiTreeViewOverviewStyle}
                         itemDisplay={this.state.displayMode}
                         items={this.state.items}
@@ -129,11 +131,10 @@ class TreeViewOverview extends Component {
                         selectionMode={this.state.currentSelectionMode}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme} 
-                        > 
-                    </IntegralUITreeViewComponent>
+                    ></IntegralUITreeViewComponent>
                     <div className="feature-help">
                         <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> TreeView</strong> is a native Web Component that displays tree hierarchy of items that can be reordered using advanced drag drop operations. You can load data on demand during run-time from local or remote data sources, and add custom HTML content in each tree item.</p>
-                        <p><span className="initial-space"></span>Above demonstration shows a simple tree hierarchy, each item has an icon and an editable label. When item is hovered, a command button will appear on right side, which when clicked will open a text editor, where you can change the item label.</p>
+                        <p><span className="initial-space"></span>Above demonstration shows a simple tree hierarchy, each item has an icon and a label. When item is hovered, a command button will appear on right side, which when clicked will remove the item from tree hirarachy.</p>
                         <p><span className="initial-space"></span>Custom content (in this case edit button on right side), can appear when item is hovered or selected. You can determine the condition when this content appears, on general level for all items or on individual level for each item separately. The content appearance is determined by the <strong>contentVisibility</strong> property or item field which can accept values from <span className="code-object">IntegralUIContentVisibility</span> enumeration: None, Hover, Select or Both.</p>
                         <p><span className="initial-space"></span>You can reorder items by click and drag over specific item. A dragging window will appear, stating the target item and position at which item can be dropped. During drag drop operations, you can also create a copy of an item by holding the SHIFT key. The dragging window will change its icon, showing a + sign next to the position marker.</p>
                     </div>

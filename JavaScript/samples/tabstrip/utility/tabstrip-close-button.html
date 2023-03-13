@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-	<head>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	  	<title>TabStrip / Tabs with Close Button</title>
-		<link rel="stylesheet" href="../../../index.css" />
-		<style type="text/css">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>TabStrip / Tabs with Close Button</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
             .empty-block {
                 border: thin solid #cecece; 
                 font-size: 2rem;
@@ -23,18 +23,17 @@
                 --tab-header-hovered-background: #d9edfd;
                 --tab-header-hovered-border-color: #8cb1d1;
             }
-		</style>
-	</head>
-	<body>
-		<h2>TabStrip / Tabs with Close Button</h2>
-		<div class="sample-block">
+        </style>
+    </head>
+    <body>
+        <h2>TabStrip / Tabs with Close Button</h2>
+        <div class="sample-block">
             <div id="tabstrip-block">
                 <iui-tabstrip id="tabstrip-close-button"
                     allow-animation="true"
                     resource-path="../../../node_modules/integralui-web/icons"
                     tab-spacing="3"
-                > 
-                </iui-tabstrip>
+                ></iui-tabstrip>
             </div>
             <div class="empty-block">All Tabs are Deleted.</div>
             <div class="feature-help">
@@ -42,11 +41,11 @@
                 <p><span class="initial-space"></span>Whenever you need to add custom content to the tab header, you can use custom template. This template can be shared between all tabs, or you can specify a different template for each tab separately.</p>
                 <p><span class="initial-space"></span>In this case, the template contains an icon, text and a close button, represented by an 'X' icon.</p>
             </div>
-		</div>
-	</body>
-	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
-	<script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
-	<script type="module">
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
+    <script type="module">
         import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
         import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
         import { IntegralUIAnimationType, IntegralUIObjectState, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
@@ -54,12 +53,12 @@
        
         const ctrl = document.querySelector('#tabstrip-close-button');
 
-		ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.animation = IntegralUIAnimationType.Fade;
         ctrl.customStyle = iuiTabStripCloseButtonStyle;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
 
-        ctrl.tabs = [
+        let tabs = [
             { 
                 id: 1,
                 icon: 'library',
@@ -106,7 +105,7 @@
         //
 
         let addTabs = function(){
-            ctrl.tabs.forEach(tab => {
+            tabs.forEach(tab => {
                 var ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
 
                 ctrlTab.data = tab;
@@ -128,17 +127,17 @@
         let closeButtonClicked = function(e, tab){
             // Delete tabs only when left mouse button is clicked
             if (e.which === 1){
-                let tabIndex = ctrl.tabs.indexOf(tab.data);
+                let tabIndex = tabs.indexOf(tab);
                 const tabElems = ctrl.querySelectorAll('iui-tab');
                 if (tabIndex >= 0 && tabIndex < tabElems.length)
                     tabElems[tabIndex].parentNode.removeChild(tabElems[tabIndex]);
-                ctrl.tabs.splice(tabIndex, 1);
+                tabs.splice(tabIndex, 1);
 
                 // Set selection to a new tab 
                 let newSelTab = ctrl.selectedTab;
                 if (tab.state & IntegralUIObjectState.Selected){
-                    let newSelIndex = tabIndex < ctrl.tabs.length ? tabIndex : ctrl.tabs.length - 1;
-                    newSelTab = newSelIndex >= 0 && newSelIndex < ctrl.tabs.length  ? ctrl.tabs[newSelIndex] : null;
+                    let newSelIndex = tabIndex < tabs.length ? tabIndex : tabs.length - 1;
+                    newSelTab = newSelIndex >= 0 && newSelIndex < tabs.length ? tabs[newSelIndex] : null;
                 }
 
                 ctrl.selectedTab = newSelTab;
@@ -151,10 +150,10 @@
 
         let updateContent = function(){
             const tabBlock = document.querySelector('#tabstrip-block');
-            tabBlock.style.display = ctrl.tabs.length > 0 ? 'block' : 'none';
+            tabBlock.style.display = tabs.length > 0 ? 'block' : 'none';
 
             const emptyBlock = document.querySelector('.empty-block');
-            emptyBlock.style.display = ctrl.tabs.length === 0 ? 'block' : 'none';
+            emptyBlock.style.display = tabs.length === 0 ? 'block' : 'none';
         }
 
         // Initialization ------------------------------------------------------------------------
@@ -162,5 +161,5 @@
         addTabs();
         updateContent();
 
-	</script>
+    </script>
 </html>

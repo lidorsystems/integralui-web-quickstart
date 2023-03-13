@@ -18,19 +18,19 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 //import 'rxjs/add/operator/map';
 //import 'rxjs/add/operator/catch';
 
-import 'integralui-web/components/integralui.treeview.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.treeview';
+import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
     templateUrl: './treeview-load-on-demand.html',
     styleUrls: ['./treeview-load-on-demand.css']
 })
-export class TreeViewLoadOnDemandSample {
-    @ViewChild('treeview', { static: false }) treeview: ElementRef;
+export class TreeViewLoadOnDemand {
+    @ViewChild('treeview', { static: false }) treeview!: ElementRef;
 
     public ctrlSize: any = { width: 350, height: 300 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public items: Array<any> = [];
 

@@ -1,0 +1,20 @@
+<h2>TabStrip / Tabs with Context Menu</h2>
+<div class="sample-block">
+    <iui-tabstrip #tabstrip id="tabstrip-contextmenu"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [customStyle]="customStyle"
+        [resourcePath]="currentResourcePath"
+        [selectedTab]="currentSelection"
+        [size]="ctrlSize"
+        [tabTemplate]="currentTabTemplate"
+        [theme]="currentTheme"
+    > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [icon]="tab.icon" [text]="tab.text">
+            <div class="tbs-cmnu-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example where if you right-click on each tab header a context menu will popup. Using the context menu you can add or remove tabs.</p>
+    </div>
+</div>

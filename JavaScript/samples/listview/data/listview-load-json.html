@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listview-load-json"] {
+                --listitem-background: transparent;
+                --listitem-hovered-background: transparent;
+                --listitem-selected-background: transparent;
+
+                --listitem-border-color: transparent;
+                --listitem-hovered-border-color: transparent;
+                --listitem-selected-border-color: transparent;
+           }
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Load Data from JSON</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-load-json" scroll-appearance="Dynamic" theme="Office"></iui-listview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This sample shows how to populate the ListView using JSON file as a data source. The data source has custom data fields, which are mapped to the ones used by the tree view.</p>
+                <p><span class="initial-space"></span>For data binding, use the <strong>dataFields</strong> property of the ListView component. This property accepts an object that replaces the default field names with your own. The other way with custom fields, is to use <strong>loadData</strong> method and set the data fields as function parameter.</p>
+                <p><span class="initial-space"></span>You can find the JSON data file in the same directory as this sample.</p>
+                <p><span class="initial-space"></span>This example also shows dynamic scrolling, the scroll bar will appear only when mouse hovers over ListView space.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownbutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.list.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUIDirection, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiListViewLoadJSONStyle } from './listview-load-json.style.js';
+
+        let currentTheme = IntegralUITheme.Office;
+        let currentResourcePath = "../../../node_modules/integralui-web/icons";
+
+        //
+        // Sample settings
+        //
+
+        // DropDownButton
+        let dropDownDirection = IntegralUIDirection.Left | IntegralUIDirection.Below;
+        let dropDownSize = { width: 125, height: 68 };
+
+            
+        // ListView
+        const listview = document.querySelector('#listview-load-json');
+        
+        let listFields = {
+            icon: 'icon',
+            id: 'itemId',
+            text: 'label'
+        }
+
+        listview.customStyle = iuiListViewLoadJSONStyle;
+
+        listview.items = [];
+        listview.itemSize = { width: 178, height: 128 }
+        listview.resourcePath = currentResourcePath;
+        listview.size = { height: 300 }
+
+        let currentDropDownTemplate = (item) => { 
+            return html`
+                <iui-list 
+                    .items="${item.dropdown.items}" 
+                    .selectedItem="${getDropDownItem(item)}" 
+                    .showScroll="${{ vertical: false }}"
+                    .size="${{ width: dropDownSize.width - 4, height: dropDownSize.height - 4 }}" 
+                    .theme="${currentTheme}" 
+                    @itemClick="${(e) => itemSelected(e, item)}" 
+                    @itemTouch="${(e) => itemSelected(e, item)}"
+                ></iui-list>
+            `;
+        };
+
+        listview.itemTemplate = (item) => { 
+            return html`
+                <div class="lview-dfjson-item-content">
+                    <div class="lview-dfjson-item-top-content">
+                        <div class="lview-dfjson-item-icon">
+                            <span class="lview-dfjson-icons ${item.icon}"></span>
+                        </div>
+                        <span class="lview-dfjson-item-label">${item.label}</span><br />
+                    </div>
+                    <div class="lview-dfjson-item-dropdown">
+                        <iui-dropdownbutton 
+                            .contentTemplate="${currentDropDownTemplate}"
+                            .data="${item}"
+                            .direction="${dropDownDirection}" 
+                            .dropDownSize="${dropDownSize}"
+                            .expanded="${item.selected && item.isDropDownExpanded === true}"
+                            .items="${item.dropdown.items}" 
+                            .resourcePath="${currentResourcePath}"
+                            .theme="${currentTheme}" 
+                            @expandedChanged="${(e) => dropDownExpandedChanged(e, item)}"
+                        >
+                            ${item.dropdown.label}
+                        </iui-dropdownbutton>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        fetch("listview-load-json-data.json") 
+            .then(response => response.json()) 
+            .then(data => {
+                // Suspend the tree layout from updates, to increase performance
+                listview.suspendLayout();
+
+                // Load data into the tree view
+                listview.loadData(data, listFields);
+
+                // Resume and update the tree layout
+                listview.resumeLayout();
+            });
+        
+
+        // DropDownButton Selection --------------------------------------------------------------
+
+        let dropDownExpandedChanged = function(e, item){
+            item.isDropDownExpanded = e.detail.expanded;
+        }
+
+        let getDropDownItem = function(item){
+            let filtered = item.dropdown.items.filter(obj => obj.text === item.dropdown.label);
+
+            return filtered.length > 0 ? filtered[0] : null;
+        }
+
+        let itemSelected = function(e, listItem){
+            console.log("Item is selected: ", e.detail.item);
+
+            listItem.dropdown.label = e.detail.item.text;
+            listItem.isDropDownExpanded = false;
+
+            listview.updateLayout();
+        }
+    </script>
+</html>

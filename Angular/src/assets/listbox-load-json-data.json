@@ -1,0 +1,9 @@
+﻿[
+    { "itemId": 1, "label": "Missed Call From Peter Goodman", "subtext": "Re: Urgent! Help needed?", "date": "Today, 3:06 PM", "itemIcon": "phone" },
+    { "itemId": 2, "label": "From Peter Goodman", "subtext": "Duration 2:15 minutes", "date": "Today, 1:17 PM", "messages": ["Notes: Order is placed"], "itemIcon": "phone" },
+    { "itemId": 3, "label": "To Peter Goodman", "subtext": "Re: Urgent! Help needed?", "date": "Today, 7:40 PM", "messages": ["To: You got the price for this new stock?", "From: Hold on", "From: I can't find it. It will take me some ti..."], "itemIcon": "notes" },
+    { "itemId": 4, "label": "To Frank Anderson", "subtext": "Re: USA stock market", "date": "Yesterday, 7:15 PM", "messages": ["... Suggest yo contact Peter concerning the USA stock market. He is an expert in this field and it will give you the right info..."], "itemIcon": "envelope" },
+    { "itemId": 5, "label": "From Peter Goodman", "subtext": "Duration 1:47 minutes", "date": "Yesterday, 5:34 PM", "messages": ["Notes: We need to purchase a 100,000 shares from this new stock.", "Need more information"], "itemIcon": "phone" },
+    { "itemId": 6, "label": "To Peter Goodman", "subtext": "Duration 7:32 minutes", "date": "Yesterday, 10:23 AM", "messages": ["Notes: We need to purchase a 100,000 shares from this new stock."], "itemIcon": "phone" },
+    { "itemId": 7, "label": "To Peter Goodman", "subtext": "Urgent! Help needed", "date": "Yesterday, 8:25 AM", "itemIcon": "envelope" }
+]

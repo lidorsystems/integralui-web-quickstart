@@ -47,6 +47,7 @@ class DatePickerOverview extends Component {
                         <p><span className="initial-space"></span>The following properties and events are supported:</p>
                         <ul className="feature-points">
                             <li><span className="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+                            <li><span className="code-name">allowFocus</span> - Determines whether component can have the keyboard focus</li>
                             <li><span className="code-name">firstDayOfWeek</span> - Specifies the first day of the week in the calendar</li>
                             <li><span className="code-name">calendarSize</span> - Specifies the calendar width and height in pixels.</li>
                             <li><span className="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>

@@ -1,0 +1,20 @@
+<h2>ListView / Load Data from JSON</h2>
+<div class="sample-block">
+    <iui-listview #listview id="listview-load-json"
+        [allowAnimation]="true"
+        [customStyle]="listStyle"
+        [items]="items"
+        [itemSize]="currentItemSize"
+        [itemTemplate]="currentItemTemplate"
+        [resourcePath]="currentResourcePath"
+        [scrollAppearance]="currentScrollAppearance"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-listview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample shows how to populate the ListView using JSON file as a data source. The data source has custom data fields, which are mapped to the ones used by the tree view.</p>
+        <p><span class="initial-space"></span>For data binding, use the <strong>dataFields</strong> property of the ListView component. This property accepts an object that replaces the default field names with your own. The other way with custom fields, is to use <strong>loadData</strong> method and set the data fields as function parameter.</p>
+        <p><span class="initial-space"></span>You can find the JSON data file in the same directory as this sample.</p>
+        <p><span class="initial-space"></span>This example also shows dynamic scrolling, the scroll bar will appear only when mouse hovers over ListView space.</p>
+    </div>
+</div>

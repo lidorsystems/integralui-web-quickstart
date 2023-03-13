@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -12,23 +12,23 @@
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
+import { html } from 'integralui-web/external/lit-element';
 
-import 'integralui-web/components/integralui.tab.js';
-import 'integralui-web/components/integralui.tabstrip.js';
-import { IntegralUIAnimationType, IntegralUIObjectState } from 'integralui-web/components/integralui.enums.js';
-import { iuiTabStripCloseButtonStyle } from './tabstrip-close-button.style.js';
+import 'integralui-web/components/integralui.tab';
+import 'integralui-web/components/integralui.tabstrip';
+import { IntegralUIAnimationType, IntegralUIObjectState } from 'integralui-web/components/integralui.enums';
+import { iuiTabStripCloseButtonStyle } from './tabstrip-close-button.style';
 
 @Component({
     selector: '',
     templateUrl: './tabstrip-close-button.html',
     styleUrls: ['./tabstrip-close-button.css']
 })
-export class TabStripCloseButtonSample {
-    @ViewChild('tabstrip', { static: false }) tabstrip: ElementRef;
+export class TabStripCloseButton {
+    @ViewChild('tabstrip', { static: false }) tabstrip!: ElementRef;
 
     public currentAnimation: IntegralUIAnimationType = IntegralUIAnimationType.Fade;
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentSelection: any = null;
     public currentTabSpacing: number = 3;
     public customStyle: any = iuiTabStripCloseButtonStyle;
@@ -68,13 +68,13 @@ export class TabStripCloseButtonSample {
     // for properties, methods and events
     //
     currentTabTemplate = (tab: any) => { 
-        let btnIcon = tab.state & IntegralUIObjectState.Hovered || tab.state & IntegralUIObjectState.Selected ? 'assets/integralui-web/icons/close.ico' : 'assets/integralui-web/icons/close-gray.ico';
+        let btnIcon = 'assets/icons/close.ico';
 
         return html`
             <div>
                 <span class="tbs-cbtn-icons ${tab.icon}"></span>
                 <span>${tab.text}</span>
-                <img class="tab-close-button" src=${btnIcon} @mousedown="${(e) => this.closeButtonClicked(e, tab)}" />
+                <img class="tab-close-button" src=${btnIcon} @mousedown="${(e: any) => this.closeButtonClicked(e, tab)}" />
             </div>
         `;
     };
@@ -82,12 +82,12 @@ export class TabStripCloseButtonSample {
     closeButtonClicked(e: any, tab: any){
         // Delete tabs only when left mouse button is clicked
         if (e.which === 1){
-            let tabIndex = this.tabs.indexOf(tab.data);
+            let tabIndex = this.tabs.indexOf(tab);
             this.tabs.splice(tabIndex, 1);
 
             // Set selection to a new tab 
             let newSelTab = this.currentSelection;
-            if (tab.state & IntegralUIObjectState.Selected){
+            if (tab.selected){
                 let newSelIndex = tabIndex < this.tabs.length ? tabIndex : this.tabs.length - 1;
                 newSelTab = newSelIndex >= 0 && newSelIndex < this.tabs.length  ? this.tabs[newSelIndex] : null;
             }

@@ -59,10 +59,10 @@ class SplitContainerOverview extends Component {
                         theme={this.state.currentTheme}
                         splitterMoving={(e) => this._onSplitterMoving(e)}
                         >
-                        <div slot="iui-panel1">
+                        <div slot="panel1">
                             <span className="spltc-ovw-panel-content">{this.state.panel1Data.content}</span>
                         </div>
-                        <div slot="iui-panel2">
+                        <div slot="panel2">
                             <span className="spltc-ovw-panel-content">{this.state.panel2Data.content}</span>
                         </div>
                     </IntegralUISplitContainerComponent>

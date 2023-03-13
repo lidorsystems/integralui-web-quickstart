@@ -1,10 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import 'integralui-web/components/integralui.rating.js';
-import 'integralui-web/components/integralui.treegrid.js';
-import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
-import { IntegralUIEditorType, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.rating';
+import 'integralui-web/components/integralui.treegrid';
+import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
+import { IntegralUIEditorType, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -12,13 +12,13 @@ import { IntegralUIEditorType, IntegralUISelectionMode, IntegralUITheme } from '
     styleUrls: ['./treegrid-overview.css']
 })
 export class TreeGridOverview {
-    @ViewChild('treegrid', { static: false }) treegrid: ElementRef;
+    @ViewChild('treegrid', { static: false }) treegrid!: ElementRef;
 
-    private _commonService: IntegralUICommonService  = null;
+    private _commonService!: IntegralUICommonService;
 
     public columns: Array<any> = [];
     public ctrlSize: any = { width: 800, height: 400 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentSelectionMode: IntegralUISelectionMode = IntegralUISelectionMode.MultiExtended;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public rows: Array<any> = [];
@@ -54,14 +54,14 @@ export class TreeGridOverview {
     // Data --------------------------------------------------------------------------------------
 
     private convertJSONData(data: any){
-        let result = [];
+        let result: Array<any> = [];
 
-        data.forEach(obj => {
+        data.forEach((obj: any) => {
             // Copy all fields from JSON data and add a new field 'cells'
             let row = Object.assign({ cells: [] }, obj);
 
             // Loop through all columns and create cells accordingly
-            this.columns.forEach(column => {
+            this.columns.forEach((column: any) => {
                 let field = column.id === 1 ? 'isChecked' : column.headerText;
 
                 // Delete all fields that will be included in cells, except for the field 'Title'
@@ -97,7 +97,7 @@ export class TreeGridOverview {
         let self = this;
 
         // Use HTTP service to get data from the specified JSON file
-        self.http.get("./assets/treegrid-overview-data.json").subscribe((data: Array<any>) => {
+        self.http.get("./assets/treegrid-overview-data.json").subscribe((data: any) => {
             // Suspend the tree layout from updates, to increase performance
             self.treegrid.nativeElement.suspendLayout();
 

@@ -1,0 +1,24 @@
+<h2 class="feature-title">Grid / Cells with DatePicker</h2>
+<div class="feature-content" #application>
+    <div class="sample-block">
+        <iui-grid #grid id="grid-editors-datepicker"
+            [allowAnimation]="true"
+            [allowFocus]="false"
+            [columns]="columns"
+            [customStyle]="customStyle"
+            [editMode]="currentEditMode"
+            [resourcePath]="currentResourcePath"
+            [rowHeight]="32"
+            [rows]="rows"
+            [rowTemplate]="currentRowTemplate"
+            [showFooter]="false"
+            [size]="ctrlSize"
+            [theme]="currentTheme"
+            (valueChanging)="isDateInRange($event)"
+        ></iui-grid>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of grid cells with date picker. Whenever a cell under Date column is clicked, a dropdown calendar will appear from where you can select a new date.</p>
+        <p><span class="initial-space"></span>For demonstrations purposes only, you can select dates between 2016 and 2022. This restriction is set in this sample code when cell value is changing.</p>
+    </div>
+</div>

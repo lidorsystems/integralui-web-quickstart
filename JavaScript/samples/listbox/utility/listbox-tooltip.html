@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Items with Tooltip</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-tooltip"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                show-groups="true"
+                theme="Office"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, each item has a tooltip attached. Whenever the mouse cursor is moved above the item, a tooltip will appear showing the item text.</p>
+                <p><span class="initial-space"></span>Tooltip is fully customizable, you can set the initial delay, how long the tooltip will remain visible, its position etc.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.tooltip.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUICheckMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Tooltip settings
+        //
+
+        let tooltipSettings = {
+            autoPopDelay: 3000,
+            enabled: true,
+            initialDelay: 500,
+            position: 'mouse',
+            showMarker: true
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-tooltip');
+
+        listbox.groups = [
+            { name: "Sci-Fi", expanded: false },
+            { name: "Adventure" },
+            { name: "Action" },
+            { name: "Drama" },
+            { name: "Music", expanded: false },
+            { name: "Comedy" },
+            { name: "Biography" },
+            { name: "Crime" },
+            { name: "Western", expanded: false },
+            { name: "Horror" },
+            { name: "Romance" }
+        ];
+
+        listbox.items = [
+            { id: 1, text: "Star Trek", group: "Sci-Fi" },
+            { id: 2, text: "Cast Away", group: "Adventure"  },
+            { id: 3, text: "Gladiator", group: "Action" },
+            { id: 4, text: "Malèna", group: "Drama" },
+            { id: 5, text: "Moulin Rouge", group: "Music" },
+            { id: 6, text: "Snatch", group: "Comedy"  },
+            { id: 7, text: "A Beautiful Mind", group: "Biography"  },
+            { id: 8, text: "Black Hawk Down", group: "Crime" },
+            { id: 9, text: "Django Unchained", group: "Western"  },
+            { id: 10, text: "Man of Steel", group: "Sci-Fi" },
+            { id: 11, text: "The Ring", group: "Horror" },
+            { id: 12, text: "40 Days and 40 Nights", group: "Romance" },
+            { id: 13, text: "Minority Report", group: "Sci-Fi" },
+            { id: 14, text: "Scary Movie 3", group: "Comedy" },
+            { id: 15, text: "Walk the Line", group: "Music"  },
+            { id: 16, text: "How to Lose a Guy in 10 Days", group: "Romance" },
+            { id: 17, text: "The Dark Knight", group: "Crime"  },
+            { id: 18, text: "American Psycho", group: "Horror"},
+            { id: 19, text: "The Grand Budapest Hotel", group: "Drama" },
+            { id: 20, text: "The Wolf of Wall Street", group: "Comedy" }
+        ];
+        
+        listbox.checkMode = IntegralUICheckMode.ThreeState;
+        listbox.size = { width: 350, height: 300 }
+        listbox.theme = currentTheme;
+
+        listbox.itemTemplate = (item) => { 
+            return html`
+                <div>
+                    <iui-tooltip
+                        .enabled=${tooltipSettings.enabled}
+                        .settings=${Object.assign({ title: item.type === 'group' ? item.name : item.text }, tooltipSettings )}
+                        .theme=${currentTheme}
+                    >
+                        ${item.type === 'group'
+                            ? html`<span>${item.name}</span>`
+                            : html`<span>${item.text}</span>`
+                        }
+                    </iui-tooltip>
+                </div>
+            `;
+        };
+
+    </script>
+</html>

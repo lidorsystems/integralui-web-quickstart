@@ -21,11 +21,11 @@
 				show-buttons="true"
 				theme="Office"
 			>
-				<div slot="iui-panel1">
-					<span class="spltc-ovw-panel-content" id="iui-panel1-content"></span>
+				<div slot="panel1">
+					<span class="spltc-ovw-panel-content" id="panel1-content"></span>
 				</div>
-				<div slot="iui-panel2">
-					<span class="spltc-ovw-panel-content" id="iui-panel2-content"></span>
+				<div slot="panel2">
+					<span class="spltc-ovw-panel-content" id="panel2-content"></span>
 				</div>
 			</iui-splitcontainer>
 			<div class="feature-help">
@@ -58,10 +58,10 @@
 		// SplitContainer Content
 		//
 
-        const panel1Content = document.querySelector('#iui-panel1-content');
+        const panel1Content = document.querySelector('#panel1-content');
 		panel1Content.textContent = ctrl.panel1.content;
 
-        const panel2Content = document.querySelector('#iui-panel2-content');
+        const panel2Content = document.querySelector('#panel2-content');
 		panel2Content.textContent = ctrl.panel2.content;
 
 		// 

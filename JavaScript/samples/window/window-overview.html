@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Window / Overview</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+            #window-block {
+                margin-top: 10px;
+            }
+            #window-block .feature-help {
+                margin-top: 450px;
+            }
+            div[slot="content"] {
+                height: 100%;
+            }
+            [id="window-overview-1"], [id="window-overview-2"] {
+                --window-icon-margin: 2px 0 0 2px;
+            }
+		</style>
+	</head>
+	<body>
+        <div id="window-block" style="overflow:hidden; position:relative;">
+            <h2>Window / Overview</h2>
+            <div class="sample-block">
+                <iui-window id="window-overview-1"
+                    allow-animation="true"
+                    icon-url="../../node_modules/integralui-web/icons/menu-button.ico"
+                    parent-id="window-block"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    text="Window 1"
+                    theme="Office"
+                    visible="true"
+                >
+                    <div slot="content">
+                        <iui-panel>
+                            Content of Window 1
+                        </iui-panel>
+                    </div>
+                </iui-window>
+                <iui-window id="window-overview-2"
+                    allow-animation="true"
+                    icon-url="../../node_modules/integralui-web/icons/calendar-dark.ico"
+                    parent-id="window-block"
+                    resource-path="../../node_modules/integralui-web/icons"
+                    text="Window 2"
+                    theme="Office"
+                    visible="true"
+                >
+                    <div slot="content">
+                        <iui-panel>
+                            Content of Window 2
+                        </iui-panel>
+                    </div>
+                </iui-window>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Window</strong> is a native Web Component that represents a resizable window. It consists of header with icon, title, command buttons and content container. You can add any custom HTML content to window header and body.</p>
+                    <p><span class="initial-space"></span>The demonstration above shows only the basic features available in Window component like moving, resizing and changing the window state from/to Normal, Minimized or Maximized. In addition, you can close (destroy) or hide the window during run-time.</p>
+                    <p><span class="initial-space"></span>By default, window during run-time will be attached to page body, but if you provide a parent id the window will be restricted to its parent space.</p>
+                    <p><span class="initial-space"></span>Some of the properties and events available:</p>
+                    <ul class="feature-points">
+                        <li><span class="code-name">maxSize and minSize</span> - Specifies the mazimum and minimum size the window can have</li>
+                        <li><span class="code-name">parentId</span> - Specifies the id value of parent element that will contain this window</li>
+                        <br/>
+                        <li><span class="code-name">positionChanged</span> - Occurs when window position changes</li>
+                        <li><span class="code-name">sizeChanged</span> - Occurs when window size changes</li>
+                        <li><span class="code-name">visibleChanged</span> - Occurs when window visibility is changed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.window.js"></script>
+	<script type="module">
+        // Window 1
+        const win1 = document.querySelector('#window-overview-1');
+
+        win1.position = { top: 150, left: 250 }
+        win1.selected = true;
+        win1.size = { width: 250, height: 300 }
+
+        let panel1 = win1.querySelector('iui-panel');
+        if (panel1)
+            panel1.contentAlignment = { vertical: 'middle' }
+
+        // Window 2
+        const win2 = document.querySelector('#window-overview-2');
+
+        win2.position = { top: 75, left: 100 }
+        win2.size = { width: 250, height: 300 }
+
+        let panel2 = win2.querySelector('iui-panel');
+        if (panel2)
+            panel2.contentAlignment = { vertical: 'middle' }
+	</script>
+</html>

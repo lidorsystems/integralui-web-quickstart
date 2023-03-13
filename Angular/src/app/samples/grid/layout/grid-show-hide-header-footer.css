@@ -1,0 +1,10 @@
+.sample-block-show-hide-header-footer iui-checkbox {
+    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-3.png);
+    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-3.png);
+    --checkbox-btn-width: 32px;
+    --checkbox-btn-height: 14px;
+}
+
+.sample-block-show-hide-header-footer .control-panel {
+    margin: 10px 3px;
+}

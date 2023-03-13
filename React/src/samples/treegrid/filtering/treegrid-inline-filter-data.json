@@ -1,0 +1,312 @@
+﻿{
+    "columns": [
+        { "id": 2, "title": "OrderID", "contentAlignment": "center", "width": 60 },
+        { "id": 3, "title": "Customer", "width": 150 },
+        { "id": 4, "title": "Product Name", "width": 250 },
+        { 
+            "id": 5, 
+            "title": "Order Date", 
+            "contentAlignment": "center",
+            "filterType": "Date", 
+            "filterSettings": {
+                "calendarSize": { "width": 275, "height": 225 }
+            },
+            "format": { 
+                "locales": "en-GB",
+                "options": { 
+                    "year": "numeric",
+                    "month": "short",
+                    "day": "2-digit"
+                }
+            }, 
+            "width": 150
+        },
+        { "id": 6, "title": "Quantity", "filterType": "Numeric", "contentAlignment": "right", "width": 80 },
+        { 
+            "id": 7, 
+            "title": "Price", 
+            "contentAlignment": "right",
+            "filterType": "Numeric", 
+            "format": { 
+                "options": { 
+                    "currency": "USD", 
+                    "style": "currency",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "width": 80
+        },
+        { "id": 8, "title": "Ship Mode", "width": 120 },
+        { 
+            "id": 9, 
+            "title": "Shipping Cost", 
+            "contentAlignment": "right",
+            "filterType": "Numeric", 
+            "format": { 
+                "options": { 
+                    "currency": "USD", 
+                    "style": "currency",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "width": 100
+        },
+        { 
+            "id": 10, 
+            "title": "Ship Date", 
+            "contentAlignment": "center",
+            "filterType": "Date", 
+            "filterSettings": {
+                "calendarSize": { "width": 275, "height": 225 }
+            },
+            "format": { 
+                "locales": "en-GB",
+                "options": { 
+                    "year": "numeric",
+                    "month": "short",
+                    "day": "2-digit"
+                }
+            }, 
+            "width": 150
+        },
+        { 
+            "id": 11, 
+            "title": "Total", 
+            "contentAlignment": "right",
+            "filterType": "Numeric", 
+            "format": { 
+                "options": { 
+                    "currency": "USD", 
+                    "style": "currency",
+                    "minimumFractionDigits": 2,
+                    "maximumFractionDigits": 2
+                }
+            }, 
+            "width": 120
+        }
+    ],
+    "rows" : [
+        { 
+            "OrderID": "112",
+            "Customer": "Kevin MacIntyre",
+            "Product Name": "Eldon Base for stackable storage shelf, platinum",
+            "Order Date": "2019-08-19T00:00:00.000Z",
+            "Quantity": 6,
+            "Price": 38.94,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 35,
+            "Ship Date": "2019-08-26T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "293",
+            "Customer": "Barry French",
+            "Product Name": "1.7 Cubic Foot Compact 'Cube' Office Refrigerators",
+            "Order Date": "2019-09-07T00:00:00.000Z",
+            "Quantity": 49,
+            "Price": 208.16,
+            "Ship Mode": "Delivery Truck",
+            "Shipping Cost": 68.02,
+            "Ship Date": "2019-09-14T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "312",
+            "Customer": "Jack Garza",
+            "Product Name": "Cardinal Slant-D® Ring Binder, Heavy Gauge Vinyl",
+            "Order Date": "2019-11-28T00:00:00.000Z",
+            "Quantity": 27,
+            "Price": 8.69,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 2.99,
+            "Ship Date": "2019-12-04T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "483",
+            "Customer": "Clay Rozendal",
+            "Product Name": "R380",
+            "Order Date": "2020-01-10T00:00:00.000Z",
+            "Quantity": 30,
+            "Price": 195.99,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 3.99,
+            "Ship Date": "2020-01-17T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "515",
+            "Customer": "Carlos Soltero",
+            "Product Name": "Holmes HEPA Air Purifier",
+            "Order Date": "2020-03-03T00:00:00.000Z",
+            "Quantity": 19,
+            "Price": 21.78,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 5.94,
+            "Ship Date": "2020-03-11T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "534",
+            "Customer": "Alan Barnes",
+            "Product Name": "G.E. Longer-Life Indoor Recessed Floodlight Bulbs",
+            "Order Date": "2020-04-15T00:00:00.000Z",
+            "Quantity": 21,
+            "Price": 6.64,
+            "Ship Mode": "Express Air",
+            "Shipping Cost": 4.95,
+            "Ship Date": "2020-04-22T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "613",
+            "Customer": "Carl Jackson",
+            "Product Name": "Angle-D Binders with Locking Rings",
+            "Order Date": "2020-06-11T00:00:00.000Z",
+            "Quantity": 12,
+            "Price": 7.3,
+            "Ship Mode": "Delivery Truck",
+            "Shipping Cost": 7.72,
+            "Ship Date": "2020-06-18T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "649",
+            "Customer": "Don Miller",
+            "Product Name": "SAFCO Mobile Desk Side File, Wire Frame",
+            "Order Date": "2020-07-05T00:00:00.000Z",
+            "Quantity": 22,
+            "Price": 42.76,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 6.220,
+            "Ship Date": "2020-07-12T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "655",
+            "Customer": "Monica Federle",
+            "Product Name": "SAFCO Commercial Wire Shelving, Black",
+            "Order Date": "2020-09-09T00:00:00.000Z",
+            "Quantity": 19,
+            "Price": 138.14,
+            "Ship Mode": "Express Air",
+            "Shipping Cost": 27.5,
+            "Ship Date": "2020-09-16T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "678",
+            "Customer": "Dorothy Badders",
+            "Product Name": "Xerox 198",
+            "Order Date": "2020-09-12T00:00:00.000Z",
+            "Quantity": 44,
+            "Price": 4.98,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 8.33,
+            "Ship Date": "2020-09-19T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "807",
+            "Customer": "Neola Schneider",
+            "Product Name": "Xerox 1980",
+            "Order Date": "2020-10-27T00:00:00.000Z",
+            "Quantity": 45,
+            "Price": 4.28,
+            "Ship Mode": "Delivery Truck",
+            "Shipping Cost": 6.18,
+            "Ship Date": "2020-11-03T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "826",
+            "Customer": "Julia West",
+            "Product Name": "Advantus Map Pennant Flags and Round Head Tacks",
+            "Order Date": "2020-12-11T00:00:00.000Z",
+            "Quantity": 32,
+            "Price": 3.95,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 2,
+            "Ship Date": "2020-12-20T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "868",
+            "Customer": "Carlos Daly",
+            "Product Name": "Holmes HEPA Air Purifier",
+            "Order Date": "2021-02-15T00:00:00.000Z",
+            "Quantity": 27,
+            "Price": 21.78,
+            "Ship Mode": "Express Air",
+            "Shipping Cost": 5.94,
+            "Ship Date": "2021-02-24T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "891",
+            "Customer": "Eugene Barchas",
+            "Product Name": "DS/HD IBM Formatted Diskettes, 200/Pack - Staples",
+            "Order Date": "2021-03-01T00:00:00.000Z",
+            "Quantity": 31,
+            "Price": 47.98,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 3.61,
+            "Ship Date": "2021-03-10T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "933",
+            "Customer": "Claudia Miner",
+            "Product Name": "Wilson Jones 1' Hanging DublLock® Ring Binders",
+            "Order Date": "2021-05-07T00:00:00.000Z",
+            "Quantity": 15,
+            "Price": 5.28,
+            "Ship Mode": "Delivery Truck",
+            "Shipping Cost": 2.99,
+            "Ship Date": "2021-05-16T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "995",
+            "Customer": "Neola Schneider",
+            "Product Name": "Ultra Commercial Grade Dual Valve Door Closer",
+            "Order Date": "2021-06-11T00:00:00.000Z",
+            "Quantity": 46,
+            "Price": 39.89,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 3.04,
+            "Ship Date": "2021-06-23T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "998",
+            "Customer": "Allen Rosenblatt",
+            "Product Name": "#10-4 1/8' x 9 1/2' Premium Diagonal Seam Envelopes",
+            "Order Date": "2021-08-07T00:00:00.000Z",
+            "Quantity": 16,
+            "Price": 15.74,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 1.39,
+            "Ship Date": "2021-08-14T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "1154",
+            "Customer": "Sylvia Foulston",
+            "Product Name": "Hon 4-Shelf Metal Bookcases",
+            "Order Date": "2021-08-11T00:00:00.000Z",
+            "Quantity": 44,
+            "Price": 100.98,
+            "Ship Mode": "Delivery Truck",
+            "Shipping Cost": 26.22,
+            "Ship Date": "2021-08-18T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "1192",
+            "Customer": "Nicole Hansen",
+            "Product Name": "Lesro Sheffield Collection Coffee Table, End Table, Center Table, Corner Table",
+            "Order Date": "2021-09-21T00:00:00.000Z",
+            "Quantity": 11,
+            "Price": 71.37,
+            "Ship Mode": "Express Air",
+            "Shipping Cost": 69,
+            "Ship Date": "2021-09-28T00:00:00.000Z"
+        },
+        { 
+            "OrderID": "1344",
+            "Customer": "Jim Radford",
+            "Product Name": "g520",
+            "Order Date": "2021-10-30T00:00:00.000Z",
+            "Quantity": 15,
+            "Price": 65.99,
+            "Ship Mode": "Regular Air",
+            "Shipping Cost": 5.26,
+            "Ship Date": "2021-11-07T00:00:00.000Z"
+        }
+    ]
+}

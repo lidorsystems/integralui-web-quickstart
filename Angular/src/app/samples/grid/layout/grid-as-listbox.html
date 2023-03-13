@@ -1,0 +1,22 @@
+<h2 class="feature-title">Grid / Grid as ListBox</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-as-listbox"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [autoSizeColumns]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [resourcePath]="currentResourcePath"
+        [rowHeight]="64"
+        [rows]="rows"
+        [rowTemplate]="currentRowTemplate"
+        [showFooter]="false"
+        [showHeader]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of Grid component that act as a ListBox. The column header and footer are hidden and templates are used to add custom HTML content in grid cells.</p>
+        <p><span class="initial-space"></span>On first look, you cannot tell whether the above control is a Grid or a ListBox. By CSS modifications and templates, the Grid appears as a simple list. In this example, we have chosen to show a list of device drivers.</p>
+    </div>
+</div>

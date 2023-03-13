@@ -1,0 +1,35 @@
+[id="sample-block-sidebar-alignment"]{
+    height: 400px;
+    padding: 10px;
+    position: relative;
+}
+[id="sample-block-sidebar-alignment-panel"]{
+    --panel-background: white;
+    --panel-border-color: #d5d5d5;
+    --panel-height: calc(100% - 2px);
+}
+.sample-block-sidebar-control-panel {
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+
+    --radio-button-display: block;
+    --radio-button-margin: 5px 0;
+}
+.sample-block-sidebar-control-panel label {
+    display: block;
+    margin-bottom: 10px;
+}
+.sdbr-alg-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -o-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+

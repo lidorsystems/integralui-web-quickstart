@@ -1,0 +1,17 @@
+/* Changes to the Button */
+[id="listview-button-load-json"] {
+    --button-margin: 185px 190px;
+    --button-position: absolute;
+    --button-width: 120px;
+    --button-z-index: 1;
+}
+
+[id="listview-load-json"] {
+    --listitem-background: transparent;
+    --listitem-hovered-background: transparent;
+    --listitem-selected-background: transparent;
+
+    --listitem-border-color: transparent;
+    --listitem-hovered-border-color: transparent;
+    --listitem-selected-border-color: transparent;
+}

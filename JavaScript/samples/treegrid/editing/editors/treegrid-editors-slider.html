@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - TreeGrid / Cells with Slider</title>
+        <link rel="stylesheet" href="../../../../../index.css" />
+		<style type="text/css">
+            [id="treegrid-editors-slider"] {
+                --editor-progress-background: #f5f5f5;
+                --editor-progress-border: 0;
+                --editor-progress-margin: 9px 0 0 0;
+                --editor-progress-padding: 0;
+                --editor-progress-content-background: #48c548;
+                --editor-progress-label-top: -3px;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>TreeGrid / Cells with Slider</h2>
+		<div class="sample-block">
+			<iui-treegrid id="treegrid-editors-slider"
+                allow-animation="true"
+                row-height="32"
+			></iui-treegrid>
+		</div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In this demo, the Progress column displays a slider visualizing the completion of specific operation. You can change the progression using the Slider from 0 to 100%. This also changes the progression value of parent rows. Depending on current state, the progression is displayed in different colors: red, orange, yellow, green and blue. For parent rows, the progress value is aggregated from its children, using custom function.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../../../node_modules/integralui-web/components/integralui.slider.js"></script>
+	<script type="module" src="../../../../../node_modules/integralui-web/components/integralui.treegrid.js"></script>
+	<script type="module">
+        import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from '../../../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiTreeGridEditorsSliderStyle } from './treegrid-editors-slider.style.js';
+
+        let currentResourcePath = '../../../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#treegrid-editors-slider');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 2, headerText: "Summary", width: 500 },
+            { 
+                id: 3, 
+                contentAlignment: "center", 
+                headerText: "Progress", 
+                headerAlignment: "center", 
+                editorType: IntegralUIEditorType.Slider,
+                editorSettings: {
+                    editOnFocus: true,
+                    showLabel: true
+                },
+                width: 150
+            },
+            { id: 4, headerText: "Status", headerAlignment: "center", contentAlignment: "center", width: 120  },
+            { id: 5, headerText: "Assignee", width: 150 }
+        ];
+
+        grid.customStyle = iuiTreeGridEditorsSliderStyle;
+        grid.editMode = IntegralUIEditMode.Custom;
+        grid.resourcePath = currentResourcePath;
+
+        grid.rows = [
+            { 
+                id: 1, 
+                cells: [{ cid: 2, text: "Theme Park Construction" }, { cid: 3 }, { cid: 4, text: "In Progress" } ],
+                rows: [
+                    { 
+                        id: 11,
+                        cells: [{ cid: 2, text: "Site Preparations" }, { cid: 3 }, { cid: 4, text: "Open" }, { cid: 5, text: "Steven Beck" } ],
+                        rows: [
+                            { 
+                                id: 111,
+                                expanded: false,
+                                cells: [{ cid: 2, text: "Location Map" }, { cid: 3 }, { cid: 4, text: "In Progress" } ],
+                                rows: [
+                                    { 
+                                        id: 1111,
+                                        cells: [{ cid: 2, text: "Relocate trees" }, { cid: 3, value: 100 }, { cid: 4, text: "Resolved" }, { cid: 5, text: "Unassigned" } ]
+                                    },
+                                    { 
+                                        id: 1112,
+                                        cells: [{ cid: 2, text: "Relocate Elves" }, { cid: 3, value: 78 }, { cid: 4, text: "Reopened" }, { cid: 5, text: "Bruno Klein" } ]
+                                    },
+                                    { 
+                                        id: 1113,
+                                        cells: [{ cid: 2, text: "Bulldoze the hills" }, { cid: 3, value: 40 }, { cid: 4, text: "Open" }, { cid: 5, text: "Kamal Fuller" } ]
+                                    },
+                                    { 
+                                        id: 1114,
+                                        cells: [{ cid: 2, text: "Remove waste rock and soil" }, { cid: 3, value: 90 }, { cid: 4, text: "In Progress" }, { cid: 5, text: "Ryan Foley" } ]
+                                    },
+                                    { 
+                                        id: 1115,
+                                        cells: [{ cid: 2, text: "Build access road" }, { cid: 3, value: 28 }, { cid: 4, text: "Open" }, { cid: 5, text: "Ryan Foley" } ]
+                                    }
+                                ]
+                            },
+                            { 
+                                id: 112,
+                                cells: [{ cid: 2, text: "Dig escape tunnels for staff" }, { cid: 3, value: 71 }, { cid: 4, text: "Open" }, { cid: 5, text: "Kamal Fuller" } ]
+                            },
+                            { 
+                                id: 113,
+                                cells: [{ cid: 2, text: "Build a transparent dome over the theme park" }, { cid: 3 }, { cid: 4, text: "Reopened" }, { cid: 5, text: "Kamal Fuller" } ],
+                                rows: [
+                                    { 
+                                        id: 1131,
+                                        cells: [{ cid: 2, text: "Check seismic activity" }, { cid: 3, value: 85 }, { cid: 4, text: "In Progress" }, { cid: 5, text: "David Holden" } ]
+                                    }
+                                ]
+                            },
+                            { 
+                                id: 114,
+                                cells: [{ cid: 2, text: "Install entrance checkpoints" }, { cid: 3, value: 50 }, { cid: 4, text: "Open" }, { cid: 5, text: "Ryan Foley" } ]
+                            }
+                        ]
+                    },
+                    { 
+                        id: 12,
+                        cells: [{ cid: 2, text: "Marketing + PR activities" }, { cid: 3 }, { cid: 4, text: "In Progress" }, { cid: 5, text: "Aurelia Rivers" } ],
+                        rows: [
+                            { 
+                                id: 121,
+                                expanded: false,
+                                cells: [{ cid: 2, text: "New folders" }, { cid: 3 }, { cid: 4, text: "Open" } ],
+                                rows: [
+                                    { 
+                                        id: 1211,
+                                        cells: [{ cid: 2, text: "Advertising" }, { cid: 3, value: 0 }, { cid: 4, text: "To Do" }, { cid: 5, text: "Unassigned" } ]
+                                    },
+                                    { 
+                                        id: 1212,
+                                        cells: [{ cid: 2, text: "Backlog Breakdown Plugin requirements" }, { cid: 3, value: 0 }, { cid: 4, text: "To Do" }, { cid: 5, text: "Unassigned" } ]
+                                    },
+                                    { 
+                                        id: 1213,
+                                        cells: [{ cid: 2, text: "30-minute TV advertisement for prime-time broadcast/superbowl etc." }, { cid: 3, value: 0 }, { cid: 4, text: "To Do" }, { cid: 5, text: "Bert Gibbs" } ]
+                                    },
+                                    { 
+                                        id: 1214,
+                                        cells: [{ cid: 2, text: "Celebrity endorsements" }, { cid: 3, value: 90 }, { cid: 4, text: "To Do" }, { cid: 5, text: "Isabella Parsons" } ]
+                                    }
+                                ]
+                            },
+                            { 
+                                id: 122,
+                                cells: [{ cid: 2, text: "Anti-PR campaign to discredit safety of competing theme parks" }, { cid: 3, value: 76 }, { cid: 4, text: "In Progress" }, { cid: 5, text: "Bert Gibbs" } ]
+                            }
+                        ]
+                    },
+                    { 
+                        id: 13,
+                        cells: [{ cid: 2, text: "Rides + attractions" }, { cid: 3 }, { cid: 4, text: "Open" }, { cid: 5, text: "Theodore Reese" } ],
+                        rows: [
+                            { 
+                                id: 131,
+                                cells: [{ cid: 2, text: "Redefine the Standard Model of particle physics" }, { cid: 3, value: 25 }, { cid: 4, text: "Open" }, { cid: 5, text: "Benjamin Oliver" } ]
+                            },
+                            { 
+                                id: 132,
+                                cells: [{ cid: 2, text: "Arrange black hole insurance" }, { cid: 3, value: 100 }, { cid: 4, text: "Complete" }, { cid: 5, text: "Benjamin Oliver" } ]
+                            },
+                            { 
+                                id: 133,
+                                cells: [{ cid: 2, text: "Automatic hyper-drive engine warm up when enemy ships are close" }, { cid: 3, value: 5 }, { cid: 4, text: "Open" }, { cid: 5, text: "George Thornton" } ]
+                            },
+                            { 
+                                id: 134,
+                                cells: [{ cid: 2, text: "Use reverse hyper-driving to accumulate energy on braking" }, { cid: 3, value: 15 }, { cid: 4, text: "Open" }, { cid: 5, text: "Larissa Olsen" } ]
+                            },
+                            { 
+                                id: 135,
+                                cells: [{ cid: 2, text: "Fuel Efficiency" }, { cid: 3, value: 30 }, { cid: 4, text: "Open" }, { cid: 5, text: "Blaze Lester" } ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        grid.showFooter = false;
+		grid.size = { height: 450 }
+        grid.theme = currentTheme;
+  
+        // Events --------------------------------------------------------------------------------
+
+        window.onbeforeunload = function(){
+            grid.removeEventListener("valueChanged", sliderValueChanged);
+        };
+
+        let sliderValueChanged = function(e){
+            let parent = grid.getRowParent(e.detail.row);
+
+            while (parent){
+                // Update progress value for all parent cells
+                updateProgressValue(parent);
+
+                parent = grid.getRowParent(parent);
+            }
+
+            grid.updateView();
+        }
+
+        grid.addEventListener("valueChanged", sliderValueChanged);
+
+        // General -------------------------------------------------------------------------------
+
+        let getEditorSettings = function(cell){
+            return cell.editorSettings || {};
+        }
+
+        let getParentProgressFromChildren = function(parent){
+            let progressCell = grid.getCellByColumnId(parent.cells, 3);
+
+            if (parent.rows && parent.rows.length > 0){
+                // Prevent changes to the parent progress
+                // The value is average of children progression value
+                progressCell.editorSettings = { showProgress: true }
+
+                let result = 0;
+                parent.rows.forEach(row => {
+                    result += getParentProgressFromChildren(row); 
+                })
+
+                progressCell.value = result / parent.rows.length;
+                updateProgressValueStyle(progressCell);
+            }
+
+            return progressCell.value || 0;
+        }
+
+        let updateProgressValue = function(row){
+            let progressCell = grid.getCellByColumnId(row.cells, 3); 
+            if (progressCell){
+                progressCell.value = getParentProgressFromChildren(row);
+                updateProgressValueStyle(progressCell);
+            }
+        }
+
+        let updateProgressValueStyle = function(cell){
+            if (cell){
+                let editorSettings = getEditorSettings(cell);
+
+                // Red
+                if (cell.value < 25) 
+                    editorSettings.style = { background: '#ed3b3b' }
+                // Orange
+                else if (cell.value < 50)
+                    editorSettings.style = { background: '#ff9c38' }
+                // Yellow
+                else if (cell.value < 75)
+                    editorSettings.style = { background: '#ffe819' }
+                // Green
+                else if (cell.value < 95)
+                    editorSettings.style = { background: '#48c548' }
+                // Blue
+                else
+                    editorSettings.style = { background: '#489dc5' }
+            }
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        let init = function(){
+            grid.rows.forEach(row => updateProgressValue(row));
+        }
+
+        init();
+
+	</script>
+</html>

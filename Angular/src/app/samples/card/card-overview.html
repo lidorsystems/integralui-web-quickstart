@@ -1,0 +1,30 @@
+<h2>Card / Overview</h2>
+<div class="sample-block">
+    <iui-card #card id="card-overview"
+        [footer]="{ back: false }"
+        [header]="{ back: false }"
+        [selected]="true"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (mouseUp)="flipCard($event)"
+    >
+        <div slot="front-header">
+            <span>Header</span>
+        </div>
+        <div slot="front-content">
+            <span>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.</span>
+        </div>
+        <div slot="front-footer">
+            <span>Footer</span>
+        </div>
+
+        <div slot="back-content">
+            <div>Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.</div>
+        </div>
+    </iui-card>
+    <div class="feature-help">
+        <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Card</strong> is a native Web Component that represents a content container. It consists of front and back side each with its own header, footer and content in the middle.</p>
+        <p><span class="initial-space"></span>The demonstration above shows only the basic features available in Card component. You can add custom HTML content inside each header, content or footer. Furthermore, card appearance is customizable via CSS.</p>
+        <p><span class="initial-space"></span>In this example, the front side contains header, content and footer while the back side only the content is filled. By clicking anywhere on the Card, you can flip its side.</p>
+    </div>
+</div>

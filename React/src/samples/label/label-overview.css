@@ -1,0 +1,46 @@
+/* Block with Animated Labels */
+.animated-block {
+    display: inline-block;
+    vertical-align: top;
+    width: 300px;
+}
+.animated-block input {
+    border: 0;
+    font-size: 1rem;
+    padding: 7px 4px;
+}
+.animated-block input:focus {
+    outline: none !important;
+}
+.animated-block iui-label {
+    --label-display: block;
+    --label-margin: 10px 0;
+}
+
+/* Block with Label Alignments */
+.alignment-block {
+    display: inline-block;
+    margin-left: 50px;
+    vertical-align: top;
+}
+.alignment-block input {
+    border: 0;
+    font-size: 1rem;
+    padding: 5px;
+}
+.alignment-block input:focus {
+    outline: none !important;
+}
+.alignment-block iui-label {
+    --label-background: #cecece;
+    --label-display: block;
+    --label-focused-background: #6ea9db;
+    --label-focused-color: white;
+    --label-margin: 10px 0;
+
+    --label-value-padding: 5px;
+}
+
+.alignment-block iui-select {
+    --select-margin: 0 0 20px 0;
+}

@@ -1,0 +1,22 @@
+<h2>TabStrip / Scroll To Specific Tab</h2>
+<div class="sample-block">
+    <iui-tabstrip #tabstrip id="tabstrip-scrollto"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [scrollMode]="currentScrollMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    >
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text" [theme]="currentTheme">
+            <div class="tbs-scrollto-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="tabstrip-scrollto-panel">
+        <label>Scroll to: </label>
+        <iui-select [allowAnimation]="true" [items]="tabs" [resourcePath]="currentResourcePath" [theme]="currentTheme" (selectedIndexChanged)="scrollToChanged($event)"></iui-select>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, there are multiple tabs and you can select the tab that you want to appear in view by scrolling to it.</p>
+    </div>
+</div>

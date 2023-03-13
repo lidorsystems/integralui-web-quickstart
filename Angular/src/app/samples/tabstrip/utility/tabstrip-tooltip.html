@@ -1,0 +1,19 @@
+<h2>TabStrip / Tabs with Tooltip</h2>
+<div class="sample-block">
+    <iui-tabstrip #tabstrip id="tabstrip-tooltip"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabTemplate]="currentTabTemplate"
+        [theme]="currentTheme"
+    > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [icon]="tab.icon" [text]="tab.text">
+            <div class="tbs-tooltip-tab-content">{{tab.body}}</div>
+        </iui-tab>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, each tab header has a tooltip attached. Whenever the mouse cursor is moved above the tab header, a tooltip will appear showing the tab title.</p>
+        <p><span class="initial-space"></span>Tooltip is fully customizable, you can set the initial delay, how long the tooltip will remain visible, its position etc.</p>
+    </div>
+</div>

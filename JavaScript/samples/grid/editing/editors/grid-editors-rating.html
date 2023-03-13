@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Cells with Rating</title>
+		<link rel="stylesheet" href="../../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Cells with Rating</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-editors-rating"
+                allow-animation="true"
+                row-height="28"
+			></iui-grid>
+		</div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In this example, the default gold star that represents a rating are replaced by a white star on gray and red background. By clicking inside the rating space and move the cursor while you hold the left mouse button, you can change the rating value for each grid cell individually. You can also change the rating by single click or with mouse scroll.</p>
+            <p><span class="initial-space"></span>Whenever rating changes, the console log displays a message from the event fired when cell value changes.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.rating.js"></script>
+	<script type="module">
+        import { html } from '../../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditorType, IntegralUIIncrementMode, IntegralUITheme } from '../../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridEditorsRatingStyle } from './grid-editors-rating.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentResourcePath = '../../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-editors-rating');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 2, headerText: "Title", width: 300 },
+            { id: 3, headerText: "Year", headerAlignment: "center", contentAlignment: "center", width: 70 },
+            { 
+                id: 4, 
+                headerText: "Rating", 
+                headerAlignment: "center", 
+                contentAlignment: "center", 
+                editorType: IntegralUIEditorType.Rating,
+                editorSettings: {
+                    editOnFocus: true,
+                    increment: IntegralUIIncrementMode.Partial,
+                    stepSize: 22
+                },
+                width: 150, 
+                fixedWidth: true
+            }
+        ];
+
+        grid.resourcePath = currentResourcePath;
+        grid.rows = [];
+        grid.showFooter = false;
+		grid.size = { width: 600, height: 400 }
+        
+		grid.customStyle = iuiGridEditorsRatingStyle;
+        grid.theme = currentTheme;
+
+        // Events --------------------------------------------------------------------------------
+
+        window.onbeforeunload = function(){
+            grid.removeEventListener("valueChanged", cellValueChanged);
+        };
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            grid.rows = [];
+
+            data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.headerText;
+
+                    // Add Title to the row text
+                    if (field === 'Title')
+                        row.text = obj[field];
+
+                    // Delete all fields that will be included in cells, except for the field 'Title'
+                    if (column.headerText !== 'Title')
+                        delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    if (obj[field] !== undefined){
+                        let cell = {
+                            cid: column.id,
+                            colName: field
+                        }
+
+                        if (_commonService.isString(obj[field]))
+                            cell.text = obj[field];
+                        else
+                            cell.value = obj[field];
+
+                        row.cells.push(cell);
+                    }
+                });
+
+                grid.rows.push(row);
+            });
+        }
+  
+        // Events --------------------------------------------------------------------------------
+
+        let cellValueChanged = function(e){
+            // Only handle if the value changes for the cell with a rating
+            if (e.detail.cell.cid === 4)
+                console.log("Rating for " + e.detail.row.text + " has changed to: ", e.detail.value);
+        }
+
+        grid.addEventListener("valueChanged", cellValueChanged);
+
+        // Initialization ------------------------------------------------------------------------
+
+        let init = function(){
+            let self = this;
+
+            fetch('./grid-editors-rating-data.json') 
+                .then(response => response.json()) 
+                .then(data => {
+                    let self = this;
+
+                    // Suspend the grid layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    convertJSONData(data);
+        
+                    // Resume and update the grid layout
+                    grid.resumeLayout();
+                });
+        }
+
+        init();
+	</script>
+</html>

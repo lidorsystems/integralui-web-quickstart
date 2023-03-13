@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Multi-line Headers</title>
+		<link rel="stylesheet" href="../../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Multi-line Headers</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-multi-line-headers"
+                allow-animation="true"
+                auto-size-columns="true"
+                row-height="28"
+			></iui-grid>
+		</div>
+        <div class="feature-help">
+        </div>
+	</body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditMode, IntegralUIEditorType, IntegralUIDateFormat, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridMultiLineHeadersStyle } from './grid-multi-line-headers.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        let deliveryOptions = [
+            { text: "None", value: -1 },
+            { text: "Delivery Truck", value: 0 },
+            { text: "Regular Air", value: 1 },
+            { text: "Express Air", value: 2 }
+        ];
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-multi-line-headers');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 1, editorType: IntegralUIEditorType.CheckBox, width: 30, fixedWidth: true },
+            { id: 2, title: 'ID', headerAlignment: 'center', contentAlignment: 'right', width: 40, fixedWidth: true },
+            { id: 3, title: 'Customer', width: 200 },
+            { 
+                id: 4, 
+                title: 'Order Details',
+                headerAlignment: 'center',
+                columns: [
+                    { 
+                        id: 41, 
+                        title: 'Product', 
+                        headerAlignment: 'center',
+                        columns: [
+                            { id: 411, title: 'Name', width: 150 },
+                            { id: 412, title: 'Qty', headerAlignment: 'center', contentAlignment: 'right', width: 60 },
+                            { 
+                                id: 413, 
+                                title: 'Price', 
+                                headerAlignment: 'center', 
+                                contentAlignment: 'right', 
+                                format: { 
+                                    options: { 
+                                        currency: 'USD', 
+                                        style: 'currency',
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }
+                                }, 
+                               width: 90
+                            }
+                        ]
+                    },
+                    { 
+                        id: 42, 
+                        title: 'Shipping Info', 
+                        headerAlignment: 'center', 
+                        contentAlignment: 'center', 
+                        columns: [
+                            { 
+                                id: 421, 
+                                title: 'Delivery', 
+                                editorType: IntegralUIEditorType.DropDownList, 
+                                editorSettings: { 
+                                    allowAnimation: true,
+                                    dropDownAdjustment: { top: 8 },
+                                    items: deliveryOptions
+                                }, 
+                                headerAlignment: 'center', 
+                                width: 150
+                            },
+                            { 
+                                id: 422, 
+                                title: 'Cost', 
+                                headerAlignment: 'center',
+                                contentAlignment: 'right', 
+                                format: { 
+                                    options: { 
+                                        currency: 'USD', 
+                                        style: 'currency',
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }
+                                }, 
+                                width: 90
+                            },
+                            { 
+                                id: 423, 
+                                title: 'Date', 
+                                editorType: IntegralUIEditorType.Date,
+                                editorSettings: {
+                                    allowAnimation: true,
+                                    dropDownAdjustment: { top: 6 },
+                                    locales: 'en-GB',
+                                    format: IntegralUIDateFormat.Custom,
+                                    formatOptions: {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: '2-digit'
+                                    }
+                                },
+                                headerAlignment: 'center', 
+                                contentAlignment: 'center', 
+                                width: 120
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        grid.editMode = IntegralUIEditMode.Custom;
+        grid.resourcePath = currentResourcePath;
+        grid.rows = [
+            { id: 1, cells: [{ cid: 1 }, { cid: 2, text: '112' }, { cid: 3, text: 'Kevin MacIntyre' }, { cid: 411, text: 'Eldon Base for stackable storage shelf, platinum' }, { cid: 412, value: 6 }, { cid: 413, value: 38.94 }, { cid: 421, value: 1 }, { cid: 422, value: 35.00 }, { cid: 423, value: new Date(2018, 9, 20) }] },
+            { id: 2, cells: [{ cid: 1, value: true }, { cid: 2, text: '293' }, { cid: 3, text: 'Barry French' }, { cid: 411, text: '1.7 Cubic Foot Compact "Cube" Office Refrigerators' }, { cid: 412, value: 49 }, { cid: 413, value: 208.16 }, { cid: 421, value: 0 }, { cid: 422, value: 68.02 }, { cid: 423, value: new Date(2019, 2, 11) }] },
+            { id: 5, cells: [{ cid: 1 }, { cid: 2, text: '483' }, { cid: 3, text: 'Clay Rozendal' }, { cid: 411, text: 'R380' }, { cid: 412, value: 30 }, { cid: 413, value: 195.99 }, { cid: 421, value: 1 }, { cid: 422, value: 3.99 }, { cid: 423, value: new Date(2020, 0, 17) }] },
+            { id: 7, cells: [{ cid: 1 }, { cid: 2, text: '534' }, { cid: 3, text: 'Alan Barnes' }, { cid: 411, text: 'G.E. Longer-Life Indoor Recessed Floodlight Bulbs' }, { cid: 412, value: 21 }, { cid: 413, value: 6.64 }, { cid: 421, value: 2 }, { cid: 422, value: 4.95 }, { cid: 423, value: new Date(2020, 3, 22) }] },
+            { id: 8, cells: [{ cid: 1 }, { cid: 2, text: '678' }, { cid: 3, text: 'Dorothy Badders' }, { cid: 411, text: 'Xerox 198' }, { cid: 412, value: 37 }, { cid: 413, value: 4.98 }, { cid: 421, value: 1 }, { cid: 422, value: 8.33 }, { cid: 423, value: new Date(2020, 8, 19) }] },
+            { id: 3, cells: [{ cid: 1, value: true }, { cid: 2, text: '643' }, { cid: 3, text: 'Monica Federle' }, { cid: 411, text: 'SAFCO Commercial Wire Shelving, Black' }, { cid: 412, value: 21 }, { cid: 413, value: 138.14 }, { cid: 421, value: 2 }, { cid: 422, value: 27.50 }, { cid: 423, value: new Date(2020, 6, 5) }] },
+            { id: 4, cells: [{ cid: 1 }, { cid: 2, text: '868' }, { cid: 3, text: 'Carlos Daly' }, { cid: 411, text: 'Holmes HEPA Air Purifier' }, { cid: 412, value: 32 }, { cid: 413, value: 21.78 }, { cid: 421, value: 1 }, { cid: 422, value: 5.94 }, { cid: 423, value: new Date(2020, 7, 9) }] },
+            { id: 9, cells: [{ cid: 1 }, { cid: 2, text: '933' }, { cid: 3, text: 'Claudia Miner' }, { cid: 411, text: "Wilson Jones 1' Hanging DublLock® Ring Binders" }, { cid: 412, value: 15 }, { cid: 413, value: 5.28 }, { cid: 421, value: 0 }, { cid: 422, value: 2.99 }, { cid: 423, value: new Date(2021, 4, 16) }] },
+            { id: 10, cells: [{ cid: 1 }, { cid: 2, text: '995' }, { cid: 3, text: 'Neola Schneider' }, { cid: 411, text: 'Ultra Commercial Grade Dual Valve Door Closer' }, { cid: 412, value: 26 }, { cid: 413, value: 39.89 }, { cid: 421, value: 1 }, { cid: 422, value: 3.04 }, { cid: 423, value: new Date(2021, 5, 23) }] },
+            { id: 6, cells: [{ cid: 1 }, { cid: 2, text: '1154' }, { cid: 3, text: 'Sylvia Foulston' }, { cid: 411, text: 'Hon 4-Shelf Metal Bookcases' }, { cid: 412, value: 44 }, { cid: 413, value: 100.98 }, { cid: 421, value: 0 }, { cid: 422, value: 26.22 }, { cid: 423, value: new Date(2021, 11, 16) }] }
+        ];
+
+        grid.showFooter = false;
+		grid.size = { height: 510 }
+        
+		grid.customStyle = iuiGridMultiLineHeadersStyle;
+        grid.theme = currentTheme;
+
+
+        // Templates -----------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        grid.headerTemplate = (column) => { 
+            return html`<span class="header-label">${column.title}</span>`;
+        };
+
+    </script>
+</html>

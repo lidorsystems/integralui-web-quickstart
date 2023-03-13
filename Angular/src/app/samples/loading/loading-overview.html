@@ -1,0 +1,24 @@
+<h2>ListBox / Overview</h2>
+<div class="sample-block" id="sample-block-loading-overview">
+    <iui-panel id="sample-block-loading-content" [contentAlignment] = "{ vertical: 'middle' }" [enabled]="isPanelEnabled">
+        <iui-button [allowAnimation]="true" [allowFocus]="false" (click)="onLoadClicked()">Start Loading</iui-button>
+    </iui-panel>
+    <iui-loading 
+        [parentId]="'sample-block-loading-overview'"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        [value]="loadValue"
+        (loadComplete)="onLoadComplete()"
+    ></iui-loading>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> Loading</strong> is a native Web Component that shows animations during loading progression. It is fully customizable via CSS.</p>
+    <p><span class="initial-space"></span>The following features are available.</p>
+    <ul class="feature-points">
+        <li><span class="code-name">Animations</span> - There are animations when loading starts, during progression and when it ends</li>
+        <li><span class="code-name">Dynamic Resize</span> - Adjustments to component size during dynamic resize of parent container</li>
+        <li><span class="code-name">Events</span> - There are events fired when progession value changes and on load completion</li>
+        <li><span class="code-name">Progression</span> - Each progression from one state to another is animated, with option to start, update or end the loading from code</li>
+        <li><span class="code-name">Size</span> - Component can have custom width and height</li>
+    </ul>
+</div>

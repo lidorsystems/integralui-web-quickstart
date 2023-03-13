@@ -36,7 +36,7 @@ class ButtonGroupOverview extends Component {
             <div>
                 <h2>ButtonGroup / Overview</h2>
                 <div className="sample-block" id="buttongroup-overview">
-                    <IntegralUIButtonGroupComponent selectionMode={this.state.currentSelectionMode} theme={this.state.currentTheme} buttonPressed={(e) => this.onButtonPressed(e)}>
+                    <IntegralUIButtonGroupComponent allowFocus={false} selectionMode={this.state.currentSelectionMode} theme={this.state.currentTheme} buttonPressed={(e) => this.onButtonPressed(e)}>
                         <IntegralUIButtonComponent pressed={true}>Button 1</IntegralUIButtonComponent>
                         <IntegralUIButtonComponent>Button 2</IntegralUIButtonComponent>
                         <IntegralUIButtonComponent>Button 3</IntegralUIButtonComponent>
@@ -47,6 +47,7 @@ class ButtonGroupOverview extends Component {
                         <p><span className="initial-space"></span>The following properties and events are supported:</p>
                         <ul className="feature-points">
                             <li><span className="code-name">allowAnimation</span> - Determines whether component appearance is animated or not</li>
+                            <li><span className="code-name">allowFocus</span> - Determines whether buttons can have the keyboard focus</li>
                             <li><span className="code-name">controlStyle</span> - Specifies an object that contains all style settings for the component</li>
                             <li><span className="code-name">data</span> - Specifies an object that holds data related to the component</li>
                             <li><span className="code-name">enabled</span> - Determines whether the component is enabled or disabled</li>

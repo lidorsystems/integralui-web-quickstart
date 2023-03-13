@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Grid / Sorting from Column Menu</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>Grid / Sorting from Column Menu</h2>
+        <div class="sample-block">
+            <iui-grid id="grid-sorting-column-menu"
+                allow-animation="true"
+                auto-size-columns="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                row-height="32"
+                theme="Office"
+            ></iui-grid>
+            <div class="feature-help">
+                <p><span class="initial-space"></span></p>
+            </div>
+        </div>
+    </body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownbutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.list.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUISortOrder, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridSortingColumnMenuStyle } from './grid-sorting-column-menu.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentTheme = IntegralUITheme.Office;
+
+        let sortColumn = null;
+        let sorting = IntegralUISortOrder.None;
+        let sortingMenu = [
+            { icon: 'icons sort-ascending', text: 'Sort Ascending', key: 'SORT_ASCENDING' },
+            { icon: 'icons sort-descending', text: 'Sort Descending', key: 'SORT_DESCENDING' }
+        ];
+
+        let menuList = [];
+        let currentMaxDropDownItems = 6;
+        let dropDownSize = { width: 175, height: 225 };
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-sorting-column-menu');
+
+        grid.allowFocus = false;
+        grid.columns = [
+            { id: 1, headerText: "Order ID", width: 125 },
+            { id: 2, headerText: "Customer", width: 250 },
+            { id: 3, headerText: "Ship Mode", width: 200, visible: false },
+            { 
+                id: 4, 
+                headerText: "Ship Date", 
+                contentAlignment: "center", 
+                format: {
+                    options: {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit"
+                    }
+                },
+                width: 150
+            },
+            { 
+                id: 5, 
+                headerText: "Quantity", 
+                contentAlignment: "right", 
+                format: {
+                    options: {
+                        style: "decimal", 
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    }
+                },
+                width: 120
+            },
+            { 
+                id: 6, 
+                headerText: "Price", 
+                contentAlignment: "right",
+                format: {
+                    options: {
+                        style: "currency", 
+                        currency: "USD"
+                    }
+                },
+                width: 150
+            }
+        ];
+
+        grid.customStyle = iuiGridSortingColumnMenuStyle;
+
+        grid.rows = [];
+        grid.showFooter = false;
+        grid.showScroll = { horizontal: false }
+        grid.size = { height: 400 }
+
+
+        // Templates -----------------------------------------------------------------------------------
+
+        //
+        // Currently when using templates, the LitElement binding syntax is required
+        // for properties, methods and events
+        //
+
+        let currentDropDownTemplate = (column) => { 
+            return html`
+                <iui-list 
+                    .allowFocus=${false}
+                    .customStyle=${iuiGridSortingColumnMenuStyle}
+                    .items="${menuList}" 
+                    .maxVisibleItems="${currentMaxDropDownItems}"
+                    .selectedItem="${getItemFromColumn(column)}" 
+                    .size="${{ width: dropDownSize.width - 4, height: dropDownSize.height - 4 }}" 
+                    .theme="${currentTheme}" 
+                    @itemClick="${(e) => itemSelected(e, column)}" 
+                    @itemTouch="${(e) => itemSelected(e, column)}"
+                ></iui-list>
+          `;
+        };
+
+        grid.headerTemplate = (column) => { 
+            return html`
+                <div>
+                    <iui-dropdownbutton data-column-dropdown
+                        .contentTemplate="${currentDropDownTemplate}"
+                        .data="${column}"
+                        .dropDownAdjustment=${{ left: 32 - dropDownSize.width, top: 7 }}
+                        .dropDownIcon="${false}"
+                        .dropDownSize="${dropDownSize}"
+                        .expanded="${column.selected && column.isDropDownExpanded === true}"
+                        .items="${menuList}"
+                        @expandedChanged="${(e) => dropDownExpandedChanged(e, column)}"
+                    >
+                        <img src="../../../node_modules/integralui-web/icons/menu-button.ico" />
+                    </iui-dropdownbutton>
+                    <span class="header-label">${column.headerText}</span>
+                </div>
+          `;
+        };
+
+        // Data --------------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+          let result = [];
+
+          data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.headerText;
+
+                    // Delete all fields that will be included in cells, except for the field 'Title'
+                    delete row[field];
+
+                    // Only add cells for existing fields
+                    if (obj[field] !== undefined){
+                        let cell = {
+                            cid: column.id,
+                            colName: field
+                        }
+
+                        if (_commonService.isString(obj[field])){
+                            let fieldValue = Date.parse(obj[field]);
+                            if (obj[field].slice(-1) === 'Z' && !isNaN(fieldValue))
+                                cell.value = new Date(fieldValue);
+                            else
+                                cell.text = obj[field];
+                        }
+                        else
+                            cell.value = obj[field];
+
+                        row.cells.push(cell);
+                    }
+                });
+
+                result.push(row);
+            });
+
+            return result;
+        }
+
+        //
+        // Methods -----------------------------------------------------------------------------------
+        //
+
+        let getColumnFromItem = function(item){
+            if (item){
+                let filtered = grid.columns.filter(column => column.id === item.key);
+
+                return filtered.length > 0 ? filtered[0] : null;
+            }
+
+            return null;
+        }
+
+        let getItemIcon = function(item){
+           return item && item.checked ? 'icons checked-icon' : 'icons';
+        }
+
+        // DropDownMenu
+        let createDropDownMenuList = function(){
+            let columnList  = [];
+
+            grid.columns.forEach(column => {
+                let item = { 
+                    key: column.id, 
+                    text: column.headerText, 
+                    checked: column.visible !== false
+                }
+
+                item.icon = getItemIcon(item);
+
+                columnList.push(item);
+            });
+
+            menuList = sortingMenu.concat(columnList);
+        }
+
+
+        let dropDownExpandedChanged = function(e, column){
+            column.isDropDownExpanded = e.detail.expanded;
+            grid.updateLayout();
+        }
+
+        let getItemFromColumn = function(column){
+            if (column){
+                let filtered = menuList.filter(obj => obj.id === column.id);
+
+                return filtered.length > 0 ? filtered[0] : null;
+            }
+
+            return null;
+        }
+
+        let itemSelected = function(e, column){
+            if (e.detail.item){
+                let item = e.detail.item;
+
+                switch (item.key){
+                    case 'SORT_ASCENDING':
+                        applySorting(column, IntegralUISortOrder.Ascending);
+                        break;
+
+                    case 'SORT_DESCENDING':
+                        applySorting(column, IntegralUISortOrder.Descending);
+                        break;
+                    
+                    default:
+                        e.detail.item.checked = !e.detail.item.checked;
+                        e.detail.item.icon = getItemIcon(e.detail.item);
+
+                        let changedColumn = getColumnFromItem(e.detail.item);
+                        if (changedColumn)
+                            changedColumn.visible = e.detail.item.checked;
+
+                        e.detail.update = true;
+                        break;
+                }
+
+                menuList.forEach(item => delete item.selected);
+            }
+        }
+
+        // Sorting -------------------------------------------------------------------------------
+
+        let applySorting = function(column, order){
+            if (column){
+                if (column.id === 4)
+                    grid.sort(column, order, comparer);
+                else
+                    grid.sort(column, order);
+
+                sortColumn = column;
+                sorting = order;
+
+                column.isDropDownExpanded = false;
+                grid.updateLayout();
+            }
+        }
+
+        let comparer = (firstRow, secondRow) => {
+            let x = getCellValue(firstRow);
+            let y = getCellValue(secondRow);
+
+            x = x ? x.valueOf() : null;
+            y = y ? y.valueOf() : null;
+
+            switch (sorting){
+                case IntegralUISortOrder.Ascending:
+                    if (x < y)
+                        return -1;
+                    else if (x > y)
+                        return 1;
+                    break;
+
+                case IntegralUISortOrder.Descending:
+                    if (x > y)
+                        return -1;
+                    else if (x < y)
+                        return 1;
+                    break;
+
+                // no default
+            }
+
+            return 0;
+        }
+        
+        let getCellValue = function(row){
+            let cellValue = null;
+
+            if (sortColumn && row.cells){
+                for (let j = 0; j < row.cells.length; j++){
+                    if (row.cells[j].cid === sortColumn.id){
+                        cellValue = row.cells[j].value;
+                        break;
+                    }
+                }
+            }
+
+            return cellValue;
+        }
+
+        //
+        // Initialization ------------------------------------------------------------------------
+        //
+
+        let init = function(){
+            // Create a dropdown list from sorting menu and all columns
+            createDropDownMenuList();
+
+            // Load rows from JSON file
+            fetch("grid-sorting-column-menu-data.json") 
+                .then(response => response.json()) 
+                .then(data => {
+                    // Suspend the tree layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    // Load data into the tree view
+                    grid.loadData(convertJSONData(data), null, null, false);
+
+                    // Resume and update the tree layout
+                    grid.resumeLayout();
+            });
+        }
+
+        init();
+
+    </script>
+</html>

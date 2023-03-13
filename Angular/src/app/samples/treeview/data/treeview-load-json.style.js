@@ -1,8 +1,8 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiTreeViewLoadJSONStyle = css`
     .project-icons {
-        background-image: url(assets/integralui-web/resources/project.png);
+        background-image: url(assets/resources/project.png);
         background-repeat: no-repeat;
         display: inline-block;
         overflow: hidden;

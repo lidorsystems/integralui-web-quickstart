@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { html, LitElement } from 'lit-element';
+//import { html, LitElement } from 'lit-element.js';
 
 import { IntegralUIAnimationType, IntegralUITabDisplayMode, IntegralUITabScrollMode, IntegralUITabStripPlacement, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
 
@@ -16,7 +16,7 @@ class TabStripOverview extends Component {
         this.state = {
             currentAnimation: IntegralUIAnimationType.Slide,
             currentDisplayMode: IntegralUITabDisplayMode.AutoSized,
-            currentResourcePath: '../integralui-web/icons',
+            currentResourcePath: '../../integralui-web/icons',
             currentScrollMode: IntegralUITabScrollMode.InBound,
             currentSelection: null,
             currentTabSpacing: 3,
@@ -94,15 +94,20 @@ class TabStripOverview extends Component {
                         {tabs}
                     </IntegralUITabStripComponent>
                     <div className="feature-help">
-                        <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> TabStrip</strong> is a native Web Component that allows you to create tabbed content using tabs placed in different orientations.</p>
-                        <p><span className="initial-space"></span>When you have many tabs that cannot appear in the TabStrip space all at the same time, it is best to enable scrolling. By default, scrolling is disabled.</p>
-                        <p><span className="initial-space"></span>There are three scrolling modes:</p>
+                        <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> TabStrip</strong> is a native Web Component that allows you to create tabbed content using tabs placed in single or multiple lines on specific side.</p>
+                        <p><span className="initial-space"></span>The following features are supported:</p>
                         <ul className="feature-points">
-                            <li><span className="code-object">None</span> - scrolling disabled, scroll buttons will not appear</li>
-                            <li><span className="code-object">InBound</span> - scrolling enabled, scroll buttons appear next to each other</li>
-                            <li><span className="code-object">OutBound</span> - scrolling enabled, scroll buttons appear on left/right or up/down side</li>
+                            <li><span className="code-object">Animations</span> - tab content is animated using Fade or Slide animations</li>
+                            <li><span className="code-object">Customizable Appearance</span> - you can customize appearance of all tabs in general using CSS or for individualy for each tab using inline styles</li>
+                            <li><span className="code-object">Drag and Drop</span> - allows you to reorder tabs during run-time</li>
+                            <li><span className="code-object">Multiline tabs</span> - arranges tabs in multiple lines</li>
+                            <li><span className="code-object">Scrolling</span> - different modes of scrolling</li>
+                            <li><span className="code-object">Tab Alignment</span> - aligns tabs to top/left, middle or bottom/right side within the tab strip</li>
+                            <li><span className="code-object">Tab Placement</span> - tabs can be placed on each side: Top, Right, Bottom or Left</li>
+                            <li><span className="code-object">Tab Orientataion</span> - tabs can appear with Horizontal or Vertical orientation</li>
+                            <li><span className="code-object">Templates</span> - each tab header can have custom HTML elements arranged in custom layouts</li>
+                            <li><span className="code-object">Toolbars</span> - in top and border placement, tab strip can have custom HTML content like toolbar on left and right side</li>
                         </ul>
-                        <p><span className="initial-space"></span>To reorder tabs, you can use drag drop. Just select a tab and drag it over other tabs. An empty space will appear showing the target position.</p>
                     </div>
                 </div>
             </div>

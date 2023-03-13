@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / How to Show/Hide Header and Footer</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+			.sample-block-show-hide-header-footer iui-checkbox {
+				--checkbox-btn-checked-background-image: url(../../../resources/checkbox/checkbox-checked-3.png);
+				--checkbox-btn-unchecked-background-image: url(../../../resources/checkbox/checkbox-unchecked-3.png);
+				--checkbox-btn-width: 32px;
+				--checkbox-btn-height: 14px;
+			}
+
+            .sample-block-show-hide-header-footer .control-panel {
+                margin: 10px 3px;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>Grid / How to Show/Hide Header and Footer</h2>
+		<div class="sample-block-show-hide-header-footer">
+			<iui-grid id="grid-show-hide-header-footer"
+                allow-animation="true"
+                row-height="40"
+				resource-path="../../../node_modules/integralui-web/icons"
+				theme="Office"
+			></iui-grid>
+            <div class="control-panel">
+                <iui-checkbox id="check-header" allow-animation="true" checked="true">Header</iui-checkbox>
+                <iui-checkbox id="check-footer" allow-animation="true" checked="true">Footer</iui-checkbox>
+                <iui-checkbox id="check-grid-lines" allow-animation="true" checked="true">Grid Lines</iui-checkbox>
+            </div>
+		</div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In this demo, clicking on check boxes in control panel below the grid, you can set whether grid header or footer are visible or not.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { styleMap } from '../../../node_modules/integralui-web/external/style-map.js';
+
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIGridLines, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridShowHideHeaderFooterStyle } from './grid-show-hide-header-footer.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        //
+        // Control Panel
+        //
+
+        // Header
+		const cbHeader = document.querySelector('#check-header');
+
+        let onHeaderChanged = function(e){
+            grid.showHeader = !grid.showHeader;
+            grid.scrollPos({ x: 0, y: 0 });
+        }
+
+        cbHeader.addEventListener("checkedChanged", onHeaderChanged);
+
+        // Footer
+		const cbFooter = document.querySelector('#check-footer');
+
+        let onFooterChanged = function(e){
+            grid.showFooter = !grid.showFooter;
+        }
+
+        cbFooter.addEventListener("checkedChanged", onFooterChanged);
+
+        // Grid Lines
+		const cbGridLines = document.querySelector('#check-grid-lines');
+
+        let onGridLinesChanged = function(e){
+            grid.gridLines = grid.gridLines === IntegralUIGridLines.Both ? IntegralUIGridLines.None : IntegralUIGridLines.Both;
+        }
+
+        cbGridLines.addEventListener("checkedChanged", onGridLinesChanged);
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-show-hide-header-footer');
+
+        grid.allowFocus = false;
+		grid.columns = [];
+        grid.rows = [];
+		grid.size = { height: 500 }
+
+		grid.customStyle = iuiGridShowHideHeaderFooterStyle;
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            // Create columns
+            grid.columns = [];
+
+            data.columns.forEach(obj => {
+                let column = Object.assign({ groupText: obj.title, headerAlignment: 'center' }, obj);
+                if (column.id !== 1 && column.id !== 11 && column.id !== 15)
+                    column.allowDrag = false;
+
+                // Set Footer
+                // Because there are fixed columns, they must have some footer text so that they appear aligned with non-fixed columns footer
+                column.footerText = '.';
+
+                // Set description for Total Volume, it will appear under Rating column
+                if (column.id === 6)
+                    column.footerText = 'Total';
+                 
+                grid.columns.push(column);
+            });
+
+            // Create rows
+            grid.rows = [];
+
+            data.rows.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                data.columns.forEach(column => {
+                    let field = column.id === 1 ? 'isChecked' : column.title;
+
+                    // Delete all fields that will be included in cells
+                    delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    let cell = {
+                        cid: column.id,
+                        colName: field
+                    }
+
+                    if (obj[field] !== undefined){
+                        if (!column.editorType && _commonService.isString(obj[field]))
+                            cell.text = obj[field];
+                        else
+                            cell.value = obj[field];
+                    }
+
+                    // Change text color based on cell value
+                    updateCellColor(cell);
+
+                    row.cells.push(cell);
+                });
+
+                grid.rows.push(row);
+            });
+        }
+        
+        // Templates -----------------------------------------------------------------------------
+
+        grid.footerTemplate = (column) => { 
+            switch (column.id){
+                case 6: // Total description
+                    return html`<strong>${column.footerText}</strong>`;
+
+                case 7: // Total Volume
+                    return html`<strong>${getFooterDisplayValue(column)}</strong>`;
+
+                default: // Hide the '.' from foom footer for otheer columns
+                    return html`<span style="opacity:0">${column.footerText}</span>`;
+            }
+        };
+
+        grid.headerTemplate = (column) => { 
+            return html`<span class="header-label">${column.title}</span>`;
+        };
+
+        grid.rowTemplate = (row, cell) => { 
+            switch (cell.cid){
+                case 2:
+                    return html`<div style=${styleMap({ display: 'inline-block', marginTop: '3px' })}>
+                            <div><strong>${row.Stock}</strong></div>
+                            <div>${row.Company}</div>
+                        </div>`;
+
+                case 6:
+                    return html`<span class="iui-editor-label">${getCellValue(cell.value)}</span>`;    
+            }
+
+            return null;
+        };
+
+        let getCellValue = function(value){
+            switch (value){
+                case 1:
+                    return '⇊ Strong Sell'
+                case 2:
+                    return '↘ Sell'
+                case 4:
+                    return '↗ Buy'
+                case 5:
+                    return '⇈ Strong Buy'
+                default:
+                    return '⇄ Neutral'
+            }
+        }
+
+        let getFooterDisplayValue = function(column){
+            return _commonService.convertValue(column.footerValue, column.format);
+        }
+
+        let updateCellColor = function(cell){
+            if (cell.cid === 4 || cell.cid === 5 || cell.cid === 12)
+                cell.style = { color: cell.value === 0 ? '#999999' : (cell.value > 0 ? '#45a145' : '#db4f4f') }
+            else if (cell.cid === 6)
+                cell.style = { color: cell.value === 3 ? '#999999' : (cell.value > 3 ? '#4088db' : '#db4f4f') }
+        }
+
+        // Random Values -----------------------------------------------------------------------------
+
+        let updateData = function(){
+            let numRows = grid.rows.length;
+            // Change random set of records
+            let numRecords = Math.floor(Math.random() * numRows) + 1;
+            let currentRecords = [];
+            while(currentRecords.length < numRecords){
+                let change =  Math.floor(Math.random() * numRows);
+                if(currentRecords.indexOf(change) === -1) currentRecords.push(change);
+            }
+            
+            // Change to Stock Values
+            let currentStockChange =  Math.floor(Math.random() * 5);
+            let currentValues = [];
+            while(currentValues.length < numRecords){
+                let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+                let change = Math.random() * 1 * currentStockChange * plusOrMinus;
+                currentValues.push(change);
+            }
+
+            // Change to Ratings
+            let currentRatings = [];
+            while(currentRatings.length < numRecords){
+                let change = Math.floor(Math.random() * 5) + 1;
+                currentRatings.push(change);
+            }
+
+            // Change to Volume
+            let currentVolumeChange =  Math.floor(Math.random() * 10000);
+            let currentVolumes = [];
+            while(currentVolumes.length < numRecords){
+                let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+                let change = Math.floor(Math.random() * numRecords) * currentVolumeChange * plusOrMinus;
+                currentVolumes.push(change);
+            }
+
+            // Change to P/E
+            let currentPEChange =  Math.floor(Math.random() * 5) * 0.1;
+            let currentPEValues = [];
+            while(currentPEValues.length < numRecords){
+                let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+                let change = Math.floor(Math.random() * numRecords) * currentPEChange * plusOrMinus;
+                currentPEValues.push(change);
+            }
+
+            // Change to Div Yield
+            let currentDivYieldChange =  Math.random() * 0.0001;
+            let currentDivYieldValues = [];
+            while(currentDivYieldValues.length < numRecords){
+                let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+                let change = Math.floor(Math.random() * numRecords) * currentDivYieldChange * plusOrMinus;
+                currentDivYieldValues.push(change);
+            }
+
+            let currentData = grid.rows;
+            for (let i = 0; i < currentRecords.length; i++){
+                let index = currentRecords[i];
+                let currentRow = currentData[index];
+                let stockCell = getCellId(currentRow, 3);
+
+                // Change
+                updateCellValue(currentRow, 5, currentValues[i]);
+                // Change %
+                updateCellValue(currentRow, 4, currentValues[i]);
+                // Last
+                updateCellValue(currentRow, 3, currentValues[i]);
+                // Rating
+                if (countInterval % numRecords === 0)
+                    updateCellValue(currentRow, 6, currentRatings[i]);
+                // Volume
+                updateCellValue(currentRow, 7, currentVolumes[i]);
+                // P/E
+                if (countInterval % numRecords * 2 === 0)
+                    updateCellValue(currentRow, 9, currentPEValues[i]);
+                // Div Yield
+                if (countInterval % 15 === 0)
+                    updateCellValue(currentRow, 12, currentDivYieldValues[i]);
+                // All Time Low
+                updateCellValue(currentRow, 13, stockCell.value);
+                // All Time High
+                updateCellValue(currentRow, 14, stockCell.value);
+            }
+
+            // Volume
+            let totalVolume = 0;
+            currentData.forEach(row => {
+                totalVolume += getNewVolume(row, 7);
+            });
+
+            updateFooterVolumeValue(totalVolume);
+
+            // Update the grid view with current data
+            grid.updateView();
+        }
+
+        let getCellId = function(row, id){
+            let filtered = row.cells.filter(obj => obj.cid === id);
+            return filtered.length > 0 ? filtered[0] : null;
+        }  
+
+        let getNewVolume = function(row, id){
+            let cell = getCellId(row, id);
+            return cell.value;
+        }
+
+        let updateCellValue = function(row, id, newValue){
+            let cell = getCellId(row, id);
+
+            switch (id){
+                case 3: // Last
+                    cell.value += newValue;
+                    break;
+
+                case 4: // Change %
+                    let stockCell = getCellId(row, 3);
+
+                    if (stockCell && stockCell.value > 0)
+                        cell.value = newValue / stockCell.value;
+                    break;
+
+                case 5: // Change
+                    cell.value = newValue;
+                    break;
+
+                case 7: // Volume
+                    cell.value = Math.max(0, cell.value + newValue);
+                    break;
+
+                case 9: // P/E
+                    cell.value = Math.max(0, cell.value + newValue);
+                    break;
+
+                case 12: // Div Yield
+                    cell.value = Math.max(0, cell.value + newValue);
+                    break;
+
+                case 13: // All Time Low
+                    cell.value = Math.min(cell.value, newValue);
+                    break;
+
+                case 14: // All Time High
+                    cell.value = Math.max(cell.value, newValue);
+                    break;
+
+                default:
+                    cell.value = newValue;
+                    break;
+            }
+
+            updateCellColor(cell);
+        }
+
+        let updateFooterVolumeValue = function(value){
+            let column = grid.getColumnById(7);
+            if (column)
+                column.footerValue = value;
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        let initTimeout = null;
+        let changeInterval = null;
+        let countInterval = 0;
+
+        let init = function(){
+            let self = this;
+
+            fetch('./grid-show-hide-header-footer-data.json') 
+                .then(response => response.json()) 
+                .then(data => {
+                    let self = this;
+
+                    // Suspend the grid layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    convertJSONData(data);
+        
+                    // Resume and update the grid layout
+                    grid.resumeLayout();
+
+                    initTimeout = setTimeout(function(){
+                        changeInterval = setInterval(function(){
+                            updateData();
+                            countInterval++;
+                        }, 150);
+                    }, 1000);
+                });
+        }
+
+        init();
+
+        // Destruction ---------------------------------------------------------------------------
+        
+        window.onbeforeunload = function(){
+            cbHeader.removeEventListener("checkedChanged", onHeaderChanged);
+            cbFooter.removeEventListener("checkedChanged", onFooterChanged);
+            cbGridLines.removeEventListener("checkedChanged", onGridLinesChanged);
+
+            if (changeInterval)
+                clearInterval(changeInterval);
+
+            if (initTimeout)
+                clearTimeout(initTimeout);
+
+            changeInterval = null;
+            initTimeout = null;
+        };
+	</script>
+</html>

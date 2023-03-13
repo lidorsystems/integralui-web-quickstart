@@ -1,0 +1,17 @@
+div[slot="front-content"] {
+    padding: 7px;
+}
+div[slot="back-content"] {
+    padding: 10px;
+}
+[id="card-overview"] {
+    /* Front */
+    --card-front-header-border-radius: 15px;
+    --card-front-header-padding: 7px 10px;
+    --card-front-border-radius: 15px;
+    --card-front-footer-padding: 3px 10px;
+
+    /* Back */
+     --card-back-border-radius: 15px;
+
+}

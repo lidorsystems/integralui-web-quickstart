@@ -1,0 +1,20 @@
+<h2>ListView / Cards</h2>
+<div class="sample-block">
+    <iui-listview #listview id="listview-cards"
+        [allowAnimation]="true"
+        [allowDrag]="true"
+        [allowDrop]="true"
+        [customStyle]="listStyle"
+        [items]="items"
+        [itemSize]="currentItemSize"
+        [itemTemplate]="currentItemTemplate"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-listview>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>Above demonstration shows vertical layout where Cards appear with information about movies set in front and back of the card. By clicking on card header, you can flip the card and show the card's back side.</p>
+        <p><span class="initial-space"></span>Each card has two sides, front and back. The front side shows a header with movie title, the movie genre represented by an icon and a Rating which you can change. The back side shows gerenral description about the movie.</p>
+        <p><span class="initial-space"></span>In addition, you can reorder items by left-click and drag over specific card. The drag and drop is dynamic, meaning while dragging a card other cards will move to make space showing where the card will be dropped. You can also create a copy of the Card by holding the SHIFT key. The dragging window will show copy/paste icon in center and on drop it a copy of dragged card will be placed.</p>
+    </div>
+</div>

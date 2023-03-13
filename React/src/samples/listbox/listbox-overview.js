@@ -18,11 +18,25 @@ class ListBoxOverview extends Component {
 
         this.state = {
             ctrlSize: { width: 500, height: 400 },
-            currentResourcePath: 'integralui-web/icons',
+            currentResourcePath: '../integralui-web/icons',
             currentSelectionMode: IntegralUISelectionMode.MultiExtended,
             currentTheme: IntegralUITheme.Office,
+            groups: [
+                { name: "sci-fi", expanded: false },
+                { name: "adventure" },
+                { name: "action" },
+                { name: "drama" },
+                { name: "music" },
+                { name: "comedy" },
+                { name: "biography" },
+                { name: "crime" },
+                { name: "western" },
+                { name: "horror" },
+                { name: "romance" }
+            ],
             isAnimationAllowed: true,
             isDragAllowed: true,
+            isDropAllowed: true,
             items: [
                 { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
                 { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
@@ -46,6 +60,8 @@ class ListBoxOverview extends Component {
                 { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8.2 }
             ]
         }
+
+        this.state.items.forEach(item => item.group = item.icon);
     }
 
     //
@@ -74,14 +90,21 @@ class ListBoxOverview extends Component {
     // In addition when using IntegralUI components, the React wrappers are not needed in this case
     //
     currentItemTemplate = (item) => { 
-        return html`
-            <div class="lbox-ovw-item-content">
-                <span class="lbox-ovw-icons ${item.icon}"></span>
-                <span class="lbox-ovw-title">${item.text}</span>
-                <span class="lbox-ovw-year">${item.year}</span>
-                <iui-rating division="2" max="5" .resourcePath=${this.state.currentResourcePath} .value=${item.rating} @valueChanged="${(e) => this.ratingValueChanged(e, item)}"></iui-rating>
-            </div>
-        `;
+        if (item.type === 'group')
+            return html`
+                <div class="lbox-ovw-item-content">
+                    <span class="lbox-ovw-icons ${item.name}"></span>
+                    <span class="lbox-ovw-name">${item.name}</span>
+                </div>
+            `;
+        else
+            return html`
+                <div class="lbox-ovw-item-content">
+                    <span class="lbox-ovw-title">${item.text}</span>
+                    <span class="lbox-ovw-year">${item.year}</span>
+                    <iui-rating .allowFocus="${false}" division="2" max="5" .resourcePath=${this.state.currentResourcePath} .value=${item.rating} @valueChanged="${(e) => this.ratingValueChanged(e, item)}"></iui-rating>
+                </div>
+            `;
     };
 
     // Update ------------------------------------------------------------------------------------
@@ -94,11 +117,14 @@ class ListBoxOverview extends Component {
                     <IntegralUIListBoxComponent
                         allowAnimation={this.state.isAnimationAllowed}
                         allowDrag={this.state.isDragAllowed}
+                        allowDrop={this.state.isDropAllowed}
                         customStyle={iuiListBoxOverviewStyle}
+                        groups={this.state.groups}
                         items={this.state.items}
                         itemTemplate={this.currentItemTemplate}
                         resourcePath={this.state.currentResourcePath}
                         selectionMode={this.state.currentSelectionMode}
+                        showGroups={true}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme}
                     > 

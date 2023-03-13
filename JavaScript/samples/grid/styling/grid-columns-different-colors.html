@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Columns in Different Colors</title>
+		<link rel="stylesheet" href="../../../index.css" />
+		<style type="text/css">
+            [id="grid-columns-different-colors"] {
+                --editor-label-margin: 2px 0;
+            }
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Columns in Different Colors</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-columns-different-colors"
+                allow-animation="true"
+				resource-path="../../../node_modules/integralui-web/icons"
+                row-height="24"
+                selection-mode="None"
+				theme="Office"
+			></iui-grid>
+			<div class="feature-help">
+                <p><span class="initial-space"></span>In this example, each column has different colors for its header, body and footer. This is done withing the code by setting inline style for each column.</p>
+            </div>
+		</div>
+	</body>
+	<script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module">
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-columns-different-colors');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { 
+                id: 1, 
+                headerText: 'Header1', 
+                footerText: 'Footer1', 
+                style: {
+                    header: { background: '#ab3737', borderColor: '#872d2d', color: 'white' },
+                    body: { background: '#fac5c5' },
+                    footer: { background: '#ff6363' }
+                },
+                width: 200
+            },
+            { 
+                id: 2, 
+                headerText: 'Header2', 
+                footerText: 'Footer2', 
+                style: {
+                    header: { background: '#30914c', borderColor: '#266e3b', color: 'white' },
+                    body: { background: '#9ce6b1' },
+                    footer: { background: '#4bc96f' }
+                },
+                width: 250
+            },
+            { 
+                id: 3, 
+                headerText: 'Header3', 
+                footerText: 'Footer3', 
+                style: {
+                    header: { background: '#345d8c', borderColor: '#29486b', color: 'white' },
+                    body: { background: '#b9d1ed' },
+                    footer: { background: '#5796de' }
+                },
+                width: 120,
+            }
+		];
+
+        grid.rows = [
+            { id: 1, cells: [{ cid: 1, text: "Cell 11" }, { cid: 2, text: "Cell 12" }, {  cid: 3, text: "Cell 13" }] },
+            { id: 2, cells: [{ cid: 1, text: "Cell 21" }, {  cid: 2, text: "Cell 22" }, { cid: 3, text: "Cell 23" }] },
+            { id: 3, cells: [{ cid: 1, text: "Cell 31" }, {  cid: 2, text: "Cell 32" }, { cid: 3, text: "Cell 33" }] },
+            { id: 4, cells: [{ cid: 1, text: "Cell 41" }, {  cid: 2, text: "Cell 42" }, { cid: 3, text: "Cell 43" }] },
+            { id: 5, cells: [{ cid: 1, text: "Cell 51" }, {  cid: 2, text: "Cell 52" }, { cid: 3, text: "Cell 53" }] },
+            { id: 6, cells: [{ cid: 1, text: "Cell 61" }, {  cid: 2, text: "Cell 62" }, { cid: 3, text: "Cell 63" }] },
+            { id: 7, cells: [{ cid: 1, text: "Cell 71" }, {  cid: 2, text: "Cell 72" }, { cid: 3, text: "Cell 73" }] },
+            { id: 8, cells: [{ cid: 1, text: "Cell 81" }, {  cid: 2, text: "Cell 82" }, { cid: 3, text: "Cell 83" }] },
+            { id: 9, cells: [{ cid: 1, text: "Cell 91" }, {  cid: 2, text: "Cell 92" }, { cid: 3, text: "Cell 93" }] }
+        ];
+
+		grid.size = { width: 700, height: 300 }
+    </script>
+</html>

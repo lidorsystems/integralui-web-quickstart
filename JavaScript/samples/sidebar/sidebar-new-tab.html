@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="sample-block-sidebar-new-tab"]{
+                height: 400px;
+                padding: 10px;
+                position: relative;
+            }
+            [id="sample-block-sidebar-content"]{
+                --panel-background: white;
+                --panel-border-color: #d5d5d5;
+                --panel-color: #808080;
+                --panel-font-size: 1.5rem;
+                --panel-font-style: italic;
+                --panel-height: calc(100% - 2px);
+            }
+            .sdbr-new-tab-content {
+                padding: 5px;
+                font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+                font-size: 1.1em;
+            }
+            [id="tabstrip-new-tab"]{
+                --tab-header-hovered-background: #d9edfd;
+                --tab-header-hovered-border-color: #8cb1d1;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>SideBar / Open New Tab on Demand</h2>
+        <div class="sample-block" id="sample-block-sidebar-new-tab">
+            <iui-sidebar id="sidebar-new-tab" allow-animation="true" parent-id="sample-block-sidebar-new-tab" resource-path="../../node_modules/integralui-web/icons" theme="Office"> 
+            </iui-sidebar>
+            <iui-panel id="sample-block-sidebar-content">
+                Sample Content Block
+            </iui-panel>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>This sample shows how to load new tab on demand into the SideBar, using the last tab with '+' icon.</p>
+            <p><span class="initial-space"></span>The last tab is modified using custom template to change its appearance to a loading icon whenever is selected. In this case, whenever the '+' is clicked a new tab is added into the SideBar, which becomes selected and expanded. In additon the tab with '+' icon is prevented to appear as selected, clicking on it will only add new tabs.</p>
+            <p><span class="initial-space"></span>You can use JSON file or any other data source, for demonstration purposes the sample shows a loading icon whenever a new tab is loaded. You can customize this behavior in code.</p>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.sidebar.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <script type="module">
+        import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { styleMap } from '../../node_modules/integralui-web/external/style-map.js';
+
+        import { iuiSideBarNewTabStyle } from './sidebar-new-tab.style.js';
+        import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
+        import { IntegralUIPlacement, IntegralUISpeedMode, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentTheme = IntegralUITheme.Office;
+ 
+        //
+        // Panel settings
+        //
+
+        const ctrlPanel = document.querySelector('#sample-block-sidebar-content');
+
+        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        //
+        // SideBar settings
+        //
+
+        const ctrl = document.querySelector('#sidebar-new-tab');
+
+        let tabIcons = [
+            'tab-icon library',
+            'tab-icon album',
+            'tab-icon star-empty',
+            'tab-icon notes',
+            'tab-icon sports'
+        ]
+
+        let tabs = [
+            { id: 999, key: 'NEW' }
+        ];
+
+        ctrl.animationSpeed = IntegralUISpeedMode.Fast;
+        ctrl.autoHide = false;
+        ctrl.expanded = false;
+        ctrl.customStyle = iuiSideBarNewTabStyle;
+        ctrl.placement = IntegralUIPlacement.Left;
+        ctrl.size = { width: 400, height: 200 };
+        ctrl.theme = currentTheme;
+
+        // Templates -----------------------------------------------------------------------------
+
+        let isLoading = false;
+   
+        ctrl.tabTemplate = (tab) => { 
+            if (tab && tab.key === 'NEW'){
+                let btnIcon = isLoading ? '../../node_modules/integralui-web/icons/load.gif' : '../../node_modules/integralui-web/icons/plus-24.png';
+                let btnClass = isLoading ? 'new-tab-button-loading' : 'new-tab-button';
+
+                return html`
+                    <div class="new-tab-block" @mousedown="${(e) => addNewTab(e, tab)}">
+                        <img class=${btnClass} src=${btnIcon} />
+                    </div>
+                `;
+            }
+
+            return null;
+        };
+
+        // Methods -------------------------------------------------------------------------------
+
+        //
+        // Create a list of tabs
+        //
+
+        let addTabs = function(){
+            tabs.forEach(tab => {
+                let ctrlTab = createNewTabElement(tab);
+                ctrl.appendChild(ctrlTab);
+            });
+        }
+
+        let addNewTab = function(e, tab){
+            // Add new tab only when left mouse button is clicked
+            if (e.which === 1){
+
+                if (tabs.length > 5)
+                    alert('In this example, you can load up to 5 tabs');
+                else {
+                    // Replace the '+' icon with a loading icon
+                    isLoading = true;
+                    ctrl.refresh();
+
+                    // Once the loading animation is active you can load tab from a custom data source (local or remote), like a JSON file
+                    setTimeout(function(){
+                        let newTabIndex = tabs.indexOf(tab.data);
+                        let newTab = { id: tabs.length, icon: tabIcons[tabs.length - 1], text: "Tab " + tabs.length }
+
+                        // Create new Tab Element
+                        const tabElems = ctrl.querySelectorAll('iui-tab');
+                        let ctrlTab = createNewTabElement(newTab);
+                        ctrl.insertBefore(ctrlTab, tabElems[tabElems.length - 1]);
+
+                        // Add the new Tab object to the SideBar
+                        tabs.splice(newTabIndex, 0, newTab);
+
+                        // Select the new tab after small delay (time for DOM to refresh the content)
+                        setTimeout(function(){
+                            ctrl.selectedTab = newTab;
+                        }, 1);
+
+                        isLoading = false;
+                    }, 1000);
+                }
+            }
+
+            e.stopPropagation();
+        }
+
+        let createNewTabElement = function(tab){
+            let ctrlTab = document.createElement('iui-tab', { is: IntegralUITab });
+
+            ctrlTab.data = tab;
+            
+            let tabContent = document.createElement('div');
+            tabContent.classList.add('sdbr-new-tab-content');
+            tabContent.textContent = "Content of " + tab.text;
+            ctrlTab.appendChild(tabContent);
+
+            return ctrlTab;
+        }
+        
+        // Events --------------------------------------------------------------------------------
+
+        ctrl.addEventListener("beforeSelect", (e) => beforeTabSelection(e));
+
+        // Cancel selection if an user clicks in space between '+' icon and the tab border
+        // This is because of default style settings that provide small padding between custom content and tab header space
+        // If this padding is zero, this event is not required
+        let beforeTabSelection = function(e){
+            if (e.detail.tab && e.detail.tab.key === 'NEW')
+                e.detail.cancel = true; 
+        }
+
+        // Initialization ------------------------------------------------------------------------
+
+        addTabs();
+
+    </script>
+</html>

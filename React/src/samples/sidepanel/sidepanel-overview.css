@@ -1,0 +1,40 @@
+[id="sample-block-sidepanel-overview"]{
+    height: 500px;
+    padding: 10px;
+    position: relative;
+}
+.sidepanel-overview-content {
+    padding: 10px;
+}
+.sidepanel-overview-content > div {
+    margin: 0 0 10px 0;
+    text-align: left;
+}
+[id="sample-block-sidepanel-overview-content"]{
+    --panel-background: white;
+    --panel-border-color: #d5d5d5;
+    --panel-height: calc(100% - 12px);
+    --panel-padding: 5px;
+}
+.sample-block-sidepanel-control-panel {
+    display: inline-block;
+    text-align: center;
+    width: 300px;
+
+    --radio-button-margin: 10px 0 0 0;
+
+    --button-margin: 20px 0 0 0;
+    --button-width: 75px;
+}
+.sdbr-pnl-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -o-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}

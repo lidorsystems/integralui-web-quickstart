@@ -1,0 +1,11 @@
+/* Changes to the Button */
+[id="listbox-button-load-json"] {
+    --button-margin: 185px 190px;
+    --button-position: absolute;
+    --button-width: 120px;
+    --button-z-index: 1;
+}
+
+[id="listbox-load-json"] {
+    --listitem-content-padding: 3px;
+}

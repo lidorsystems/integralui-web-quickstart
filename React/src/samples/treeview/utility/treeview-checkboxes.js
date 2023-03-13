@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
-import { classMap } from 'integralui-web/external/class-map.js';
+import { classMap } from 'integralui-web/external/class-map';
 
 import IntegralUIButtonComponent from 'integralui-web/wrappers/react.integralui.button.js';
 import IntegralUIListComponent from 'integralui-web/wrappers/react.integralui.list.js';
@@ -134,7 +134,7 @@ class TreeViewCheckBoxes extends Component {
                 { id: 7, text: "Video Games" },
                 { id: 8, text: "Watches", icon: "clock" }
             ],
-            listSize: {  width: 375, height: 335 },
+            listSize: {  width: 375, height: 333 },
             options: [
                 { id: 1, text: "Unchecked" },
                 { id: 2, text: "Indeterminate" },
@@ -328,7 +328,7 @@ class TreeViewCheckBoxes extends Component {
         return (
             <div>
                 <h2>TreeView / CheckBoxes</h2>
-                <div className="sample-block">
+                <div className="sample-block-treeview-checkboxes">
                     <div className="tree-block">
                         <IntegralUITreeViewComponent id="treeview-checkboxes" ref={this.treeRef}
                             allowAnimation={this.state.isAnimationAllowed}

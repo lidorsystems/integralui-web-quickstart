@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Grid / Dynamic Resize with a Window</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            #window-block {
+                margin-top: 10px;
+                height: 600px;
+            }
+            div[slot="content"] {
+                height: calc(100% - 2px);
+            }
+            [id="grid-window-dynamic-resize"] iui-grid {
+                --grid-height: 100%;
+                --grid-editing-margin: 6px 0;
+                --editor-label-padding: 6px 0 0 0;
+            }
+            .feature-help {
+                margin-top: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Grid / Dynamic Resize with a Window</h2>
+        <div id="window-block" style="overflow:hidden; position:relative;">
+            <div class="sample-block">
+                <iui-window id="grid-window-dynamic-resize"
+                    allow-animation="true"
+                    parent-id="window-block"
+                    resource-path="../../../node_modules/integralui-web/icons"
+                    text="Grid with Dynamic Resize"
+                    theme="Office"
+                    visible="true"
+                >
+                    <div slot="content">
+                        <iui-grid id="grid-form-editing"
+                            allow-animation="true"
+                            auto-size-columns="true"
+                            resource-path="../../../node_modules/integralui-web/icons"
+                            row-height="30"
+                            theme="Office"
+                        ></iui-grid>
+                    </div>
+                </iui-window>
+            </div>
+        </div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In this example we have a resizable window with Grid. To resize a window, move the cursor over window border and left-click and move to any direction, the window content will also update. In addition you can Minimize or Maximize the windows from buttons in window header. Windows have a parent container set, which restricts them to move or resize within its parent boundaries. Window's appearance is customizable with CSS, including border space for resize.</p>
+            <p><span class="initial-space"></span>Whenever the window is resized, the grid also changes its size. In addition, autoSizeColumns option is enabled which makes all columns in the grid to occupy the whole grid space. You can only resize columns within the grid without showing any horizontal scrollbar.</p>
+            <p><span class="initial-space"></span>The Grid also demonstrates editing with a Form. To edit a row, click in the first cell (the pencil icon) or double-click a row. A Form will appear where you can edit cell values for that row, using built-in editors depending on value types. Once finished you can save the changes or cancel them by clicking Save or Cancel buttons at the end of the Form.</p>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.window.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUIEditMode, IntegralUITheme, IntegralUIWindowState } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-form-editing');
+
+        grid.columns = [];
+        grid.rows = [];
+
+        grid.allowFocus = false;
+        grid.editMode = IntegralUIEditMode.Form;
+        grid.showFooter = false;
+        grid.showScroll = { horizontal: false }
+
+        grid.dataFields = {
+            column: {
+                headerText: 'title'
+            }
+        }
+
+        //
+        // Window settings
+        //
+
+        const winBlock = document.querySelector('#window-block');
+        const win = document.querySelector('#grid-window-dynamic-resize');
+
+        win.position = { top: 25, left: 50 }
+        win.selected = true;
+        win.size = { width: 800, height: 450 }
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            let columnList = [];
+            let rowList = [];
+
+            /////////////////////
+            // Create columns
+            /////////////////////
+
+            // Load other columns from the data source
+            data.columns.forEach(obj => {
+                let column = Object.assign({ headerAlignment: 'center' }, obj);
+
+                columnList.push(column);
+            });
+
+
+            /////////////////////
+            // Create Rows
+            /////////////////////
+
+            data.rows.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                data.columns.forEach(column => {
+                    let field = column.title;
+
+                    // Delete all fields that will be included in cells
+                    delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    let cell = {
+                        cid: column.id,
+                        colName: field
+                    }
+
+                    if (obj[field] !== undefined){
+                        if (_commonService.isString(obj[field])){
+                            let fieldValue = Date.parse(obj[field]);
+                            if (obj[field].slice(-1) === 'Z' && !isNaN(fieldValue))
+                                cell.value = new Date(fieldValue);
+                            else
+                                cell.value = obj[field];
+                        }
+                        else
+                            cell.value = obj[field];
+                    }
+                    // Caluclate the Total value: sum of (Quantity * Price) + Shipping Cost
+                    else if (column.id === 11)
+                        cell.value = obj["Quantity"] * obj["Price"] + obj["Shipping Cost"];
+
+                    row.cells.push(cell);
+                });
+                
+                rowList.push(row);
+            });
+
+            grid.columns = columnList;
+            grid.rows = rowList;
+        }
+
+        // Dynamic Resize ------------------------------------------------------------------------
+
+        let windowClosing = function(e){
+            e.detail.cancel = true;
+
+            alert('Closing of window in this example is disabled');
+        }
+
+        let windowSizeChanged = function(e){
+            grid.updateLayout();
+        }
+
+        window.onbeforeunload = function(){
+            win.removeEventListener("closing", windowClosing);
+            win.removeEventListener("sizeChanged", windowSizeChanged);
+
+            if (resizeObserver)
+                resizeObserver.disconnect();
+        };
+
+        win.addEventListener("closing", windowClosing);
+        win.addEventListener("sizeChanged", windowSizeChanged);
+
+        let resizeObserver = new ResizeObserver(entries => {
+            if (entries && entries.length > 0 && entries[0].contentRect){
+                if (win.state === IntegralUIWindowState.Maximized)
+                    win.size = { 
+                        width: entries[0].contentRect.width - 6, // window border width is set to 3px
+                        height: entries[0].contentRect.height - 6
+                    }
+            }
+        });
+
+        resizeObserver.observe(winBlock);
+
+        // Editing -------------------------------------------------------------------------------
+
+        grid.addEventListener("dataChanged", (e) => gridDataChanged(e));
+        grid.addEventListener("rowDblClick", (e) => gridRowDblClick(e));
+
+        let gridDataChanged = function(e){
+            // Update the Total value when Quantity or Price changes
+            if (e.detail.data){
+                let row = e.detail.data;
+
+                let quantityCell = getCellById(row, 6);
+                let priceCell = getCellById(row, 7);
+                let totalCell = getCellById(row, 11);
+
+                if (quantityCell && priceCell && totalCell)
+                    totalCell.value = quantityCell.value * priceCell.value;
+            }
+        }
+
+        let getCellById = function(row, id){
+            let filtered = row.cells.filter(cell => cell.cid === id);
+
+            return filtered.length > 0 ? filtered[0] : null;
+        }
+
+        let gridRowDblClick = function(e){
+            grid.beginEdit(e.detail.row);
+        }
+
+        // Templates -----------------------------------------------------------------------------
+
+        grid.headerTemplate = (column) => { 
+            return html`<span class="header-label">${column.title}</span>`;
+        };
+
+        // Initialize ----------------------------------------------------------------------------
+ 
+        fetch("grid-window-dynamic-resize-data.json") 
+            .then(response => response.json()) 
+            .then(data => {
+                // Suspend the grid layout from updates, to increase performance
+                grid.suspendLayout();
+
+                // Load data into the grid
+                convertJSONData(data);
+
+                // Resume and update the grid layout
+                grid.resumeLayout();
+            });
+
+    </script>
+</html>

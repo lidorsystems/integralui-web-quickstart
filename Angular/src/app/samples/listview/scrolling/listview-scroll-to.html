@@ -1,0 +1,33 @@
+<h2>ListView / Scroll To Specific Item</h2>
+<div class="sample-block">
+    <iui-listview #listview id="listview-scrollto"
+        [items]="items"
+        [itemSize]="currentItemSize"
+        [resourcePath]="currentResourcePath"
+        [scrollAppearance]="currentScrollAppearance"
+        [scrollMode]="currentScrollMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-listview>
+    <div class="listview-scrollto-panel">
+        <label>Scroll to: </label>
+        <iui-select [allowAnimation]="true" [items]="items" [resourcePath]="currentResourcePath" [theme]="currentTheme" (selectedIndexChanged)="scrollToChanged($event)"></iui-select>
+        <br/>
+        <label>Scroll Mode: </label>
+        <iui-radiogroup (buttonChecked)="onScrollModeChecked($event)">
+            <iui-radiobutton>Horizontal</iui-radiobutton>
+            <iui-radiobutton [checked]="true">Vertical</iui-radiobutton>
+        </iui-radiogroup>
+        <br/>
+        <label>Scroll Appearance: </label>
+        <iui-radiogroup (buttonChecked)="onScrollAppearanceChecked($event)">
+            <iui-radiobutton [checked]="true">Static</iui-radiobutton>
+            <iui-radiobutton>Dynamic</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, there are multiple items and you can select the item that you want to appear in view by scrolling to it.</p>
+        <p><span class="initial-space"></span>ListView arranges items in two directions: Horizontally or Vertically. You can choose how items are scrolled by selecting the scroll mode: Horizontal or Vertical.</p>
+        <p><span class="initial-space"></span>You can also choose how scroll bar appears, there are two options: Static and Dynamic. With Static appearance, the scroll bar is always visible when there are more items than currently present in the view. On the other hand, with Dynamic appearance, the scroll bar will appear only when mouse hovers over ListView space.</p>
+    </div>
+</div>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - TreeView / Drag Drop Events</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="treeview-dragdrop-events"]{
+                --treeview-display: inline-block;
+                --treeview-height: 100%;
+                --treeview-width: 45%;
+            }
+            [id="treeview-dragdrop-events-log"] {
+                --listbox-border: 0;
+                --listbox-margin: 0;
+                --listbox-height: calc(100% - 41px);
+                
+                --listitem-padding: 5px 0;
+                --listitem-white-space: normal;
+            }
+            .sample-block-treeview-dragdrop-events {
+                height: 300px;
+                padding: 4px;
+                
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .sample-event-block {
+                background: white;
+                border: thin solid #d9d9d9;
+                display: inline-block;
+                height: 100%;
+                margin: 0 0 0 32px;
+                overflow: hidden;
+                width: calc(55% - 44px);
+                
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .sample-event-block button {
+                float: right;
+                margin: 5px 5px 5px 12px;
+                padding: 5px; 
+                width: 75px;
+            }
+            .sample-event-block p {
+                border-bottom: thin solid #e5e5e5;
+                margin: 0; 
+                padding: 10px 5px; 
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Drag Drop Events</h2>
+        <div class="sample-block-treeview-dragdrop-events">
+            <iui-treeview id="treeview-dragdrop-events" resource-path="../../../node_modules/integralui-web/icons" selection-mode="MultiExtended" theme="Office"></iui-treeview>
+            <div class="sample-event-block">
+                <button id="treeview-dragdrop-events-button">Clear</button>
+                <p>Event log:</p>
+                <iui-listbox id="treeview-dragdrop-events-log"
+                    allow-animation="true"
+                    allow-focus="false"
+                    resource-path="../../../node_modules/integralui-web/icons"
+                    theme="Office"
+                ></iui-listbox>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this demo, you are free to drag and drop items one by one within the TreeView. When item is dragged over a different item, you can drop it above, below or as a child of the target item. In this particular example, if you drag an item over the <strong><i>"Downloads"</i></strong> item, you can only drop it above or below the item but not as a child, the drag and drop is cancelled within the <strong>dragOver</strong> event handler.</p>
+                <p><span class="initial-space"></span>To see which event is fired and in what order, the list on right logs all drag and drop events that occur, where at top position shows the last event fired. The list shows event name, information about the source and target item, position and how many times the event fires.</p>
+                <p><span class="initial-space"></span>Here is a list of available drag and drop events:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">dragEnd</span> - occurs when HTML5 drag and drop operation ends over TreeView space</li>
+                    <li><span class="code-name">dragEnter</span> - occurs when item is dragged over TreeView space for the first time</li>
+                    <li><span class="code-name">dragDrop</span> - occurs when item drops within the TreeView</li>
+                    <li><span class="code-name">dragLeave</span> - occurs when dragged item leaves the TreeView space</li>
+                    <li><span class="code-name">dragOver</span> - occurs when item is dragged over other items and TreeView space</li>
+                    <li><span class="code-name">dragStart</span> - occurs  when HTML5 drag and drop operation starts over TreeView space</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiTreeViewDDEventStyle } from './treeview-dragdrop-events.style.js';
+
+        //
+        // Sample settings
+        //
+            
+        // TreeView settings
+        const ctrl = document.querySelector('#treeview-dragdrop-events');
+        
+        ctrl.allowDrag = true;
+        ctrl.allowDrop = true;
+        ctrl.autoExpand = true;
+
+        ctrl.items = [
+            { 
+                id: 1,
+                text: "Favorites",
+                items: [
+                    { id: 11, pid: 1, text: "Desktop" },
+                    { id: 12, pid: 1, text: "Downloads" }
+                ]
+            },
+            { 
+                id: 2,
+                text: "Libraries",
+                items: [
+                    { 
+                        id: 21, 
+                        pid: 2, 
+                        text: "Documents", 
+                        items: [
+                            { id: 211, pid: 21, text: "My Documents" },
+                            { id: 212, pid: 21, text: "Public Documents" }
+                        ]
+                    },
+                    { id: 22, pid: 2, text: "Music" },
+                    { id: 23, pid: 2, text: "Pictures" },
+                    { id: 24, pid: 2, text: "Videos" }
+                ]
+            },
+            { 
+                id: 3,
+                text: "Computer",
+                expanded: false,
+                items: [
+                    { id: 31, pid: 3, text: "Local Disk (C:)" },
+                    { id: 32, pid: 3, text: "Storage (D:)" }
+                ]
+            },
+            { id: 4, text: "Network" },
+            { id: 5, text: "Recycle Bin" }
+        ];
+
+        // Event List settings
+        const evList = document.querySelector('#treeview-dragdrop-events-log');
+           
+        evList.allowFocus = false;
+        evList.customStyle = iuiTreeViewDDEventStyle;
+        evList.itemTemplate = (ev) => { 
+            return html`
+                <div>
+                    ${ev.count ? html`<span class="sample-event-count">${ev.count}</span>` : html``} 
+                    <span class="sample-event-name">${ev.name}</span>
+                    ${ev.cancelled ? html`<span class="sample-event-cancelled"> cancelled</span>` : html``} 
+                </div>
+                <div>
+                    ${ev.info} ${ev.position !== undefined ? html`<span class="sample-event-value">at position: ${ev.position}</span>` : html``} 
+                </div>
+            `;
+        };
+       
+        evList.items = [];
+
+        // Clear Button
+        const btnClear = document.querySelector('#treeview-dragdrop-events-button');
+
+        btnClear.addEventListener("click", (e) => clearEventLog(e));
+
+        let clearEventLog = function(){
+            evList.items.length = 0;
+            evList.updateLayout();
+        }
+
+        //
+        // Events
+        //
+
+        let currentEvent = {
+            cancelled: false,
+            count: 0,
+            name: '',
+            position: -1,
+            target: null
+        }
+
+        ctrl.addEventListener("dragStart", (e) => listDragStart(e));
+        ctrl.addEventListener("dragEnter", (e) => listDragEnter(e));
+        ctrl.addEventListener("dragOver", (e) => listDragOver(e));
+        ctrl.addEventListener("dragLeave", (e) => listDragLeave(e));
+        ctrl.addEventListener("dragDrop", (e) => listDragDrop(e));
+        ctrl.addEventListener("dragEnd", (e) => listDragEnd(e));
+
+        let listDragStart = function(e){
+            updateCurrentEvent(e, 'dragStart', true);
+
+            currentEvent.info = 'fired when dragging of ' + e.detail.dragObj.text + ' starts';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+
+        let listDragEnter = function(e){
+            updateCurrentEvent(e, 'dragEnter');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' enters the component space';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+        
+        let listDragOver = function(e){
+            updateCurrentEvent(e, 'dragOver');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' is dragged over ';
+            currentEvent.info += currentEvent.target ? ' target: ' + currentEvent.target.text : 'component space';
+
+            if (e.detail.dropPos === 0 && e.detail.targetObj && e.detail.targetObj.text === 'Downloads')
+                e.detail.cancel = true;
+
+            currentEvent.cancelled = e.detail.cancel;
+
+            if (currentEvent.count == 0)
+                evList.items.unshift(currentEvent); 
+            else 
+                evList.items[0].count = currentEvent.count;
+
+            evList.updateLayout();
+        }
+        
+        let listDragLeave = function(e){
+            updateCurrentEvent(e, 'dragLeave');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' leaves the component space';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+        
+        let listDragDrop = function(e){
+            updateCurrentEvent(e, 'dragDrop');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' drops over ';
+            currentEvent.info += currentEvent.target ? ' target: ' + currentEvent.target.text : 'component space';
+           
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+
+        let listDragEnd = function(e){
+            updateCurrentEvent(e, 'dragEnd', true);
+
+            currentEvent.info = 'fired when drag drop operation ends';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+
+        let updateCurrentEvent = function(e, name, skip){
+            let count = currentEvent.count;
+
+            if (name === currentEvent.name){
+                if (e.detail.targetObj){
+                    if (e.detail.targetObj === currentEvent.target){
+                        if (e.detail.dropPos === currentEvent.position)
+                            count++;
+                        else
+                            count = 0;
+                    }
+                    else {
+                        count = 0;
+                    }
+                }
+                else if (e.detail.dropPos === currentEvent.position)
+                    count++;
+                else
+                    count = 0;
+            }
+            else
+                count = 0;
+
+            currentEvent = {
+                count: count,
+                name: name,
+                position: !skip ? e.detail.dropPos : undefined,
+                target: e.detail.targetObj
+            }
+        }
+
+    </script>
+</html>

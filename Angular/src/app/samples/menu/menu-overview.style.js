@@ -1,8 +1,8 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiMenuOverviewStyle = css`
     .icons-medium {
-        background: url(assets/integralui-web/resources/icons-x24.png) no-repeat 0 0;
+        background: url(assets/resources/icons-x24.png) no-repeat 0 0;
         display: inline-block;
         overflow: hidden;
         padding: 0;

@@ -4,7 +4,6 @@
         <iui-tabstrip id="tabstrip-toolbar"
             [allowAnimation]="true"
             [animation]="currentAnimation"
-            [tabs]="tabs"
             [resourcePath]="currentResourcePath"
             [size]="ctrlSize"
             [tabSpacing]="currentTabSpacing"
@@ -12,7 +11,7 @@
             <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text">
                 <div class="tbs-tool-tab-content">{{tab.body}}</div>
             </iui-tab>
-            <div class="tbs-toolbar" slot="iui-tabstrip-toolbar-right">
+            <div class="tbs-toolbar" slot="toolbar-right">
                 <div *ngFor="let icon of toolbarIcons; let i = index" [ngClass]="getToolButtonClass(i, icon)" (click)="toolbarButtonClicked(i)"><span></span></div>
             </div>
         </iui-tabstrip>

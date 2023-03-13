@@ -1,0 +1,20 @@
+<h2>TabStrip / Switch Tab Groups with ComboBox</h2>
+<div class="sample-block">
+    <iui-tabstrip #tabstrip id="tabstrip-tab-groups"
+        [allowAnimation]="true"
+        [animation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [selectedTab]="currentSelection"
+        [size]="ctrlSize"
+    > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text">
+            <div class="tbs-tab-groups-tab-content">Content of {{tab.text}}</div>
+        </iui-tab>
+        <div slot="toolbar-right">
+            <iui-select id="tab-groups-select" [allowAnimation]="true" [items]="options" [resourcePath]="currentResourcePath" [size]="ctrlSelectSize" (selectedIndexChanged)="groupChanged($event)"></iui-select>
+        </div>
+    </iui-tabstrip>
+    <div class="feature-help">
+        <p><span class="initial-space"></span> An example that shows how you can change the tab list using the Select component. Depending on current option selected, a different set of tabs is shown.</p>
+    </div>
+</div>

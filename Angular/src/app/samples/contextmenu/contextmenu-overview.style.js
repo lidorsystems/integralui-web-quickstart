@@ -1,9 +1,9 @@
-import { css } from 'lit-element';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiContextMenuOverviewStyle = css`
     .cmnu-icons-medium
     {
-        background: url(../../resources/icons-x24.png) no-repeat 0 0;
+        background: url(assets/resources/icons-x24.png) no-repeat 0 0;
         display: inline-block;
         overflow: hidden;
         padding: 0;

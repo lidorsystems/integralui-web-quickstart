@@ -1,35 +1,23 @@
-/*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
-
-  This file is part of the "IntegralUI Web" Library. 
-                                                                   
-  The contents of this file are subject to the IntegralUI Web License, and may not be used except in compliance with the License.
-  A copy of the License should have been installed in the product's root installation directory or it can be found at
-  http://www.lidorsystems.com/products/web/studio/license-agreement.aspx.
-                                                            
-  This SOFTWARE is provided "AS IS", WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language 
-  governing rights and limitations under the License. Any infringement will be prosecuted under applicable laws.                           
-*/
-
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { html } from 'integralui-web/external/lit-element.js';
-import 'integralui-web/components/integralui.listbox.js';
-import 'integralui-web/components/integralui.rating.js';
-import { IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import { iuiListBoxOverviewStyle } from './listbox-overview.style.js';
+import { html } from 'integralui-web/external/lit-element';
+import 'integralui-web/components/integralui.listbox';
+import 'integralui-web/components/integralui.rating';
+import { IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { iuiListBoxOverviewStyle } from './listbox-overview.style';
 
 @Component({
     selector: '',
     templateUrl: './listbox-overview.html'
 })
-export class ListBoxOverviewSample {
-    @ViewChild('listbox', { static: false }) listbox: ElementRef;
+export class ListBoxOverview {
+    @ViewChild('listbox', { static: false }) listbox!: ElementRef;
 
     public ctrlSize: any = { width: 500, height: 400 };
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentResourcePath: string = 'assets/icons';
     public currentSelectionMode: IntegralUISelectionMode = IntegralUISelectionMode.MultiExtended;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiListBoxOverviewStyle;
+    public groups: Array<any> = [];
     public items: Array<any> = [];
 
     //
@@ -37,17 +25,38 @@ export class ListBoxOverviewSample {
     // for properties, methods and events
     //
     currentItemTemplate = (item: any) => { 
-        return html`
-            <div class="lbox-ovw-item-content">
-                <span class="lbox-ovw-icons ${item.icon}"></span>
-                <span class="lbox-ovw-title">${item.text}</span>
-                <span class="lbox-ovw-year">${item.year}</span>
-                <iui-rating division="2" max="5" .resourcePath=${this.currentResourcePath} .value=${item.rating} @valueChanged="${(e) => this.ratingValueChanged(e, item)}"></iui-rating>
-            </div>
-        `;
+        if (item.type === 'group')
+            return html`
+                <div class="lbox-ovw-item-content">
+                    <span class="lbox-ovw-icons ${item.name}"></span>
+                    <span class="lbox-ovw-name">${item.name}</span>
+                </div>
+            `;
+        else
+            return html`
+                <div class="lbox-ovw-item-content">
+                    <span class="lbox-ovw-title">${item.text}</span>
+                    <span class="lbox-ovw-year">${item.year}</span>
+                    <iui-rating .allowFocus="${false}" division="2" max="5" .resourcePath=${this.currentResourcePath} .value=${item.rating} @valueChanged="${(e: any) => this.ratingValueChanged(e, item)}"></iui-rating>
+                </div>
+            `;
     };
 
     constructor(){
+        this.groups = [
+            { name: "sci-fi", expanded: false },
+            { name: "adventure" },
+            { name: "action" },
+            { name: "drama" },
+            { name: "music" },
+            { name: "comedy" },
+            { name: "biography" },
+            { name: "crime" },
+            { name: "western" },
+            { name: "horror" },
+            { name: "romance" }
+        ];
+
         this.items = [
             { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
             { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
@@ -70,6 +79,8 @@ export class ListBoxOverviewSample {
             { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8.1 },
             { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8.2 }
         ];
+
+        this.items.forEach((item: any) => item.group = item.icon);
     } 
 
     ngAfterViewInit(){

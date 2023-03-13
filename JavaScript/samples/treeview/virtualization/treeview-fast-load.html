@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="treeview-fast-load"]{
+                --treeview-display: inline-block;
+            }
+
+            .treeview-fast-load-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 200px;
+
+                --button-display: block;
+                --button-margin: 5px 0;
+            }
+            .treeview-fast-load-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .treeview-fast-load-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Fast Load</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-fast-load"
+                allow-animation="true"
+                allow-focus="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-treeview>
+            <div class="treeview-fast-load-panel">
+                <table cellpadding="3">
+                    <tr>
+                        <td>Max items: </td>
+                        <td class="align-left"><input id="num-items" type="number" min="1" max="100000" style="width:75px" integer /></td>
+                    </tr>
+                    <tr>
+                        <td>Levels: </td>
+                        <td class="align-left"><input id="num-levels" type="number" min="0" max="100" style="width:75px" integer /></td>
+                    </tr>
+                </table>
+                <div align="center" style="margin-top:20px">
+                    <iui-button id="add">Add</iui-button>
+                    <iui-button id="clear">Clear</iui-button>
+                </div>
+                <div align="center" style="margin-top:20px">
+                    <iui-button id="expand-all">Expand All</iui-button>
+                    <iui-button id="collapse-all">Collapse All</iui-button>
+                </div>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In above demo, you can choose how many items to display in the TreeView. For demonstration purposes only, a limit is set to 100,000 items. In real scenario, the only limit is how much data the browser can handle. By clicking on the Add button, the TreeView is populated with custom data.</p>
+                <p><span class="initial-space"></span>To start a drag and drop operation, left-click on a item and move the mouse cursor, so that you can reorder items during run-time. In this example, there are no restrictions set, and you can drag and drop a item and place it above or below another item. However, if you want you can set conditions and provide custom drag drop operations on your own.</p>
+                <p><span class="initial-space"></span>You can also navigate among items using the keyboard. All standard operations are supported: Left, Right, Up, Down, PageUp, PageDown, Home and End.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.item.js';
+        import { IntegralUIAnimationType, IntegralUISelectionMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Control Panel
+        let itemCount = 0;
+        const numItems = document.querySelector('#num-items');
+        numItems.value = 50000;
+
+        const numLevels = document.querySelector('#num-levels');
+        numLevels.value = 3;
+
+        const btnList = document.querySelectorAll('iui-button');
+        btnList.forEach(btn => {
+            btn.allowAnimation = true;
+            btn.theme = IntegralUITheme.Office;
+        });
+
+        // Add Button
+        const btnAdd = document.querySelector('#add');
+        btnAdd.addEventListener("click", (e) => onAddClicked(e));
+
+        let onAddClicked = function(e){
+            treeview.suspendLayout();
+
+            onClearClicked(e);
+            addItems(null, 0);
+
+            treeview.resumeLayout();
+        }
+  
+        // Clear Button
+        const btnClear = document.querySelector('#clear');
+        btnClear.addEventListener("click", (e) => onClearClicked(e));
+
+        let onClearClicked = function(e){
+            itemCount = 0;
+
+            treeview.clearItems();
+            treeview.updateLayout();
+        }
+      
+        // Expand All Button
+        const btnExpandAll = document.querySelector('#expand-all');
+        btnExpandAll.addEventListener("click", (e) => onExpandAllClicked(e));
+
+        let onExpandAllClicked = function(e){
+            treeview.expand();
+        }
+  
+        // Collapse All Button
+        const btnCollapseAll = document.querySelector('#collapse-all');
+        btnCollapseAll.addEventListener("click", (e) => onCollapseAllClicked(e));
+
+        let onCollapseAllClicked = function(e){
+            treeview.collapse();
+        }
+  
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-fast-load');
+        
+        treeview.allowDrag = true;
+        treeview.allowDrop = true;
+        treeview.items = [];
+        treeview.selectionMode = IntegralUISelectionMode.One;
+        treeview.size = { width: 350, height: 300 };
+
+        //
+        // Methods -------------------------------------------------------------------------------
+        //
+
+        let addItems = function(parent, level){
+            if (level > numLevels.value)
+                return;
+                
+            let numChilds = getRandomNumber(level);    
+            for (let i = 0; i < numChilds; i++){
+                if (itemCount < numItems.value){
+                    let item = {
+                        text : 'Item ' + (itemCount + 1).toString(),
+                        id: itemCount,
+                        expanded : false,
+                        items: []
+                    };
+
+                    treeview.addItem(item, parent);
+                    itemCount++;
+                
+                    addItems(item, level + 1);
+                }
+            }
+        }
+                
+        // Make sure each item has a random set of child items
+        let getRandomNumber = function(level){
+            let nCount = 1 + Math.floor(Math.random() * 10);
+            
+            if (level === 0){
+                if (numLevels.value == 0)
+                    nCount = numItems.value;
+                else {
+                    let derivative = 1;
+                    for (let k = 1; k <= numLevels.value; k++)
+                        derivative = (derivative * nCount) + 1;
+
+                    nCount = numItems.value / derivative + 1;
+                    if (nCount < 1000)
+                        nCount = 1000;
+                }
+            }
+            
+            return nCount;
+        }
+    </script>
+</html>

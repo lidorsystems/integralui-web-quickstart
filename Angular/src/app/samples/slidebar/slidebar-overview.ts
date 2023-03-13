@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2020 Lidor Systems. All rights reserved.
+  Copyright © 2016-2022 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -13,9 +13,9 @@
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import 'integralui-web/components/integralui.slidebar.js';
-import 'integralui-web/components/integralui.slide.js';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import 'integralui-web/components/integralui.slidebar';
+import 'integralui-web/components/integralui.slide';
+import { IntegralUISlideDisplayMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -23,7 +23,8 @@ import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
     styleUrls: ['./slidebar-overview.css']
 })
 export class SlideBarOverviewSample {
-    public currentResourcePath: string = 'assets/integralui-web/icons';
+    public currentDisplayMode: string = IntegralUISlideDisplayMode.Stream;
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public isAnimationAllowed: boolean = true;
     public slides: Array<any> = [];
@@ -32,11 +33,18 @@ export class SlideBarOverviewSample {
         this.slides = [
             { text: "Slide 1" },
             { text: "Slide 2" },
-            { text: "Slide 3" }
+            { text: "Slide 3" },
+            { text: "Slide 4" },
+            { text: "Slide 5" }
         ];
     } 
 
-    onSlideBarClicked(index){
+    onSlideBarClicked(index: number){
         console.log("SlideBar with index: " + index + " is clicked");
     }
+
+    onButtonChecked(e: any){
+        this.currentDisplayMode = e.detail.index === 1 ? IntegralUISlideDisplayMode.Carousel : IntegralUISlideDisplayMode.Stream;
+    }
+
 }

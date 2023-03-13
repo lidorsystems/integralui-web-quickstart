@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - ListBox / CheckBoxes</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .app-block {
+                width: 800px;
+                height: 400px;
+                
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .app-panel {
+                display: inline-block;
+                margin-left: 20px;
+                width: calc(60% - 25px);
+                
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .ctrl-block {
+                float: left;
+                width: 40%;
+                height: 100%;
+            }
+
+            iui-button {
+                --button-margin: 8px 0 5px 3px;
+                --button-padding: 5px;
+                --button-vertical-align: top;
+                --button-width: 100px;
+
+            }
+            iui-select {
+                --select-display: inline-block;
+                --select-margin: 10px 2px 0 2px;
+                --select-width: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / CheckBoxes</h2>
+        <div class="sample-block">
+            <div class="app-block">
+                <div class="ctrl-block">
+                    <iui-listbox id="listbox-checkboxes"
+                        allow-animation="true" 
+                        resource-path="../../../node_modules/integralui-web/icons" 
+                        scroll-appearance="Dynamic"
+                        show-groups="true" 
+                        theme="Office"
+                    ></iui-listbox>
+                </div>
+                <div class="app-panel">
+                    <label>List of items depending on their check state: </label><br />
+                    <label style="display:inline-block;margin: 20px 3px 0 5px;vertical-align:top;">State: </label>
+                    <iui-select allow-animation="true" max-dropdown-items="2" theme="Office"></iui-select>
+                    <iui-button theme="Office">Show</iui-button><br />
+                    <iui-list id="simple-list" theme="Office"></iui-list>
+                    <br style="clear:both;"/>
+                </div>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example each ListBox item has a check box, shown before its label. Check boxes are added to the ListBox using the &lt;span&gt; element with custom check box image as background.</p>
+                <p><span class="initial-space"></span>The demo simulates cascading changes to the checkbox. Whenever item's check box value changes, all parent and child items updates their check box value.</p>
+                <p><span class="initial-space"></span>In addition, from DropDown on the right, you can select which items are displayed in the right list: unchecked, indeterminated or checked.</p>
+                <p><span class="initial-space"></span>This example also shows dynamic scrolling, the scroll bar will appear only when mouse hovers over ListBox space.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.list.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import { iuiListBoxCheckBoxesStyle } from './listbox-checkboxes.style.js';
+
+        //
+        // Sample settings
+        //
+
+        // Button
+        const ctrlButton = document.querySelector('iui-button');
+        ctrlButton.allowFocus = false;
+
+        // List
+        const ctrlList = document.querySelector('#simple-list');
+
+        ctrlList.allowFocus = false;
+        ctrlList.items = [];
+        ctrlList.size = {  width: 375, height: 335 }
+
+        // Select
+        const ctrlSelect = document.querySelector('iui-select');
+        ctrlSelect.items = [
+            { id: 1, text: "Unchecked" },
+            { id: 2, text: "Checked" }
+        ];
+        ctrlSelect.selectedIndex = 1;
+
+        let selOption = 'Checked';
+
+        // ListBox
+        const listbox = document.querySelector('#listbox-checkboxes');
+
+        listbox.customStyle = iuiListBoxCheckBoxesStyle;
+        listbox.size = { height: 395 }
+
+        listbox.groups = [
+            { name: "Books", expanded: false },
+            { name: "Electronics" },
+            { name: "Music" },
+            { name: "Software", expanded: false },
+            { name: "Sports" }
+        ];
+
+        listbox.items = [
+            { id: 11, text: "Art", group: "Books"  },
+            { id: 12, text: "Economics", group: "Books" },
+            { id: 13, text: "Investing", group: "Books", checked: true },
+            { id: 14, text: "Management", group: "Books" },
+            { id: 15, text: "Small Business", group: "Books" },
+            { id: 16, text: "Health", group: "Books", checked: true },
+            { id: 17, text: "Literature", group: "Books" },
+            { id: 18, text: "Astronomy", group: "Books" },
+            { id: 19, text: "Mathematics", group: "Books" },
+            { id: 21, text: "Camera", icon: "camera", group: "Electronics", checked: true },
+            { id: 22, text: "Cell Phones", group: "Electronics", checked: true },
+            { id: 23, text: "Video Game Consoles", group: "Electronics" },
+            { id: 31, text: "Blues", group: "Music" },
+            { id: 32, text: "Classic Rock", group: "Music", checked: true },
+            { id: 33, text: "Pop", group: "Music" },
+            { id: 34, text: "Jazz", group: "Music" },
+            { id: 41, text: "Games", group: "Software", checkState: 'checked' },
+            { id: 42, text: "Operating Systems", group: "Software" },
+            { id: 43, text: "Network & Servers", group: "Software" },
+            { id: 44, text: "Security", group: "Software" },
+            { id: 51, text: "Baseball", group: "Sports" },
+            { id: 52, text: "Martial Arts", group: "Sports", checked: true },
+            { id: 53, text: "Running", group: "Sports" },
+            { id: 54, text: "Tennis", group: "Sports" }
+        ];
+
+        // Item Template Content -----------------------------------------------------------------
+
+        listbox.itemTemplate = (item) => { 
+            if (item.type === 'group')
+                return html`
+                    <div>
+                        <span class="lbox-ovw-name">${item.name}</span>
+                    </div>
+                `;
+            else
+                return html`
+                    <div>
+                        <span class=${classMap(getCheckBoxClass(item))} @mousedown="${(e) => checkItem(e, item)}"></span>
+                        <span class="lbox-cbox-item-label">${item.text}</span>
+                    </div>
+                `;
+        };
+
+        let getCheckBoxClass = function(item){
+            let cbClass = { 'lbox-item-cbox': true };
+
+            if (item.checked)
+                cbClass['lbox-item-cbox-checked'] = true;
+
+            return cbClass;
+        }
+
+        let checkItem = function(e, item){
+            if (e.which === 1 && item){
+                item.checked = item.checked !== undefined ? !item.checked : true;
+                listbox.refresh();
+            }
+
+            e.stopPropagation();
+        }
+
+        // Check List ----------------------------------------------------------------------------
+
+        ctrlButton.addEventListener("click", () => showCheckList());
+
+        let showCheckList = function(){
+            let checkedList = [];
+
+            listbox.items.forEach(item => {
+                if (selOption === 'Checked' && item.checked === true)
+                    checkedList.push({ text: item.text });
+                else if (selOption === 'Unchecked' && item.checked !== true)
+                    checkedList.push({ text: item.text });
+            });
+
+            ctrlList.items = checkedList;
+        }
+
+        ctrlSelect.addEventListener("afterSelect", (e) => onDropDownItemSelected(e));
+
+        let onDropDownItemSelected = function(e){
+            if (e.detail.item)
+                switch (e.detail.item.id){
+                    case 1:
+                        selOption = 'Unchecked';
+                        break;
+
+                    default:
+                        selOption = 'Checked';
+                        break;
+                }
+        } 
+
+        // Initialization ------------------------------------------------------------------------
+
+        showCheckList();
+
+    </script>
+</html>

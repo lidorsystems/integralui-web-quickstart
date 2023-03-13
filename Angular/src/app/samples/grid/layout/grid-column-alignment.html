@@ -1,0 +1,46 @@
+<h2 class="feature-title">Grid / Column Alignment</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-column-alignment"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [columns]="columns"
+        [footerTemplate]="currentFooterTemplate"
+        [rowHeight]="24"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-grid>
+    <div class="sample-block-column-alignment">
+        <label>Selected Column: </label>
+        <iui-select [allowAnimation]="true" [items]="selectOptions" [maxDropDownItems]="5" [theme]="currentTheme" (afterSelect)="onColumnSelectionChanged($event)"></iui-select>
+        <label>Header alignment: </label>
+        <iui-radiogroup id="header-alignment" [selectedIndex]="headerAlignmentIndex" (buttonChecked)="onHeaderAlignmentChecked($event)">
+            <iui-radiobutton>Left</iui-radiobutton>
+            <iui-radiobutton>Center</iui-radiobutton>
+            <iui-radiobutton>Right</iui-radiobutton>
+        </iui-radiogroup>
+        <label>Content alignment: </label>
+        <iui-radiogroup id="content-alignment" [selectedIndex]="contentAlignmentIndex" (buttonChecked)="onContentAlignmentChecked($event)">
+            <iui-radiobutton>Left</iui-radiobutton>
+            <iui-radiobutton>Center</iui-radiobutton>
+            <iui-radiobutton>Right</iui-radiobutton>
+        </iui-radiogroup>
+        <label>Footer alignment: </label>
+        <iui-radiogroup id="footer-alignment" [selectedIndex]="footerAlignmentIndex" (buttonChecked)="onFooterAlignmentChecked($event)">
+            <iui-radiobutton>Left</iui-radiobutton>
+            <iui-radiobutton>Center</iui-radiobutton>
+            <iui-radiobutton>Right</iui-radiobutton>
+        </iui-radiogroup>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>A demonstration on how to change alignment of column header, content and footer in Grid component. By clicking on radio-buttons on right panel, you can change the alignment of each cell for currently selected column. By default column's content is aligned to the left.</p>
+        <p><span class="initial-space"></span>Each column object has three fields which allows you to horizontally align the content of cells that belong to specified column.</p>
+        <ul class="feature-points">
+            <li><span style="color:#c60d0d">headerAlignment</span> - aligns the content of column header</li>
+            <li><span style="color:#c60d0d">contentAlignment</span> - aligns the content of column body</li>
+            <li><span style="color:#c60d0d">footerAlignment</span> - aligns the content of column footer</li>
+        </ul>
+        <p><span class="initial-space"></span>In case of footer, in this example it makes sense to show some data only in the footer for 'Total' column, showing the sumary from all current records. Regardless, each column has its own separate footer with its own alignment.</p>
+    </div>
+</div>

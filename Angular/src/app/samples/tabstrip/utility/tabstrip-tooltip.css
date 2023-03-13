@@ -1,0 +1,11 @@
+.tbs-tooltip-tab-content {
+    padding: 5px;
+    font-family: Calibri, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+[id="tabstrip-tooltip"]{
+    --tab-header-border-radius: 7px 7px 0 0;
+    --tab-header-hovered-background: #d9edfd;
+    --tab-header-hovered-border-color: #8cb1d1;
+    --tab-header-padding: 9px;
+}

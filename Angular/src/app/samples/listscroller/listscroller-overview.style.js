@@ -1,9 +1,9 @@
-import { css } from 'integralui-web/external/lit-element.js';
+import { css } from 'integralui-web/external/lit-element';
 
 export const iuiListScrollerOverviewStyle = css`
     .lscrl-ovw-icons
     {
-        background: url(assets/integralui-web/resources/movie-genres.png) no-repeat 0 0;
+        background: url(assets/resources/movie-genres.png) no-repeat 0 0;
         display: inline-block;
         padding: 0;
         margin: 3px 0;

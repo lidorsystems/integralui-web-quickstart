@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            /* Changes to the tree item layout*/
+            [id="treeview-radiobuttons"] {
+                --treeitem-expand-box-margin: 3px 5px 0 0;
+                --treeitem-padding: 2px 0;
+
+                --radio-button-margin: 0;
+                --radio-button-padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>TreeView / Items with Radio Buttons</h2>
+        <div class="sample-block">
+            <iui-treeview id="treeview-radiobuttons"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                theme="Office"
+            ></iui-treeview>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, some items have a Radio Button shown before their label. Only one radio button is checked per item level that have the same parent.</p>
+                <p><span class="initial-space"></span>Showing radio buttons is optional for each item individually. Once set, all items with radio buttons that have the same parent belong to the same radio group.</p>
+                <p><span class="initial-space"></span>Whenever a radio button is checked, the <span class="code-object">checkedChanged</span> event is fired carrying data: the item object and its checked state.</p>
+                <p><span class="initial-space"></span>You can customize the appearance of radio buttons using custom CSS properties or styles.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module">
+
+        //
+        // TreeView settings
+        //
+
+        const treeview = document.querySelector('#treeview-radiobuttons');
+
+        treeview.items = [
+            { 
+                id: 1,
+                text: "Favorites",
+                items: [
+                    { id: 11, pid: 1, text: "Desktop", allowRadioButton: true },
+                    { id: 12, pid: 1, text: "Downloads", allowRadioButton: true, checked: true }
+                ]
+            },
+            { 
+                id: 2,
+                text: "Libraries",
+                items: [
+                    { 
+                        id: 21, 
+                        pid: 2, 
+                        text: "Documents", 
+                        allowRadioButton: true,
+                        expanded: false,
+                        items: [
+                            { id: 211, pid: 21, text: "My Documents", allowRadioButton: true, checked: true },
+                            { id: 212, pid: 21, text: "Public Documents", allowRadioButton: true }
+                        ]
+                    },
+                    { id: 22, pid: 2, text: "Music", allowRadioButton: true },
+                    { id: 23, pid: 2, text: "Pictures", allowRadioButton: true, checked: true },
+                    { id: 24, pid: 2, text: "Videos", allowRadioButton: true }
+                ]
+            },
+            { 
+                id: 3,
+                text: "Computer",
+                checked: true,
+                items: [
+                    { id: 31, pid: 3, text: "Local Disk (C:)", allowRadioButton: true },
+                    { id: 32, pid: 3, text: "Storage (D:)", allowRadioButton: true, checked: true }
+                ]
+            },
+            { id: 4, text: "Network" },
+            { id: 5, text: "Recycle Bin" }
+        ];
+        
+        treeview.size = { width: 350, height: 300 }
+
+
+        let onItemRadioChecked = function(e){
+            console.log(e.detail.item.text + " is now " + e.detail.checked);
+        }
+
+        treeview.addEventListener("checkedChanged", (e) => onItemRadioChecked(e));
+
+    </script>
+</html>

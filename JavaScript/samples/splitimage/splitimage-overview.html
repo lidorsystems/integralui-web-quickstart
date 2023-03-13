@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Quick Start</title>
+		<link rel="stylesheet" href="../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>SplitImage / Overview</h2>
+		<div class="sample-block">
+            <iui-splitimage  id="splitimage-overview">
+                <img slot="image1" src="treegrid-image-1.png" />
+                <img slot="image2" src="treegrid-image-2.png" />
+            </iui-splitimage>
+			<div class="feature-help">
+	            <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> SplitImage</strong> is a native Web Component that allows you to visually compare differences between two images or custom HTML elements.</p>
+	            <p><span class="initial-space"></span>There are two slots where you can put custom HTML content for comparison and using a splitter you can slide too see the changes. In addition, horizontal and vertical orientation for the splitter is available. The splitter will appear whenever you move the mouse cursor over the SplitImage component.</p>
+                <p><span class="initial-space"></span>List of some properties and events available:</p>
+                <ul class="feature-points">
+	                <li><span class="code-name">orientation</span> - Specifies the orientation of the splitter: Horizontal or Vertical</li>
+	                <li><span class="code-name">splitterDistance</span> - Specifies the position of the splitter from top/left side of the component</li>
+	                <li><span class="code-name">splitterSize</span> - Specifies the thickness of the splitter</li>
+	                <br/>
+	                <li><span class="code-name">splitterMoved</span> - Occurs after spliterDistance value changes</li>
+	                <li><span class="code-name">splitterMoving</span> - Occurs before spliterDistance value changes</li>
+	            </ul>
+			</div>
+		</div>
+	</body>
+	<script type="module" src="../../node_modules/integralui-web/components/integralui.splitimage.js"></script>
+	<script type="module">
+		const ctrl = document.querySelector('#splitimage-overview');
+
+        ctrl.splitterDistance = 390;
+	</script>
+</html>

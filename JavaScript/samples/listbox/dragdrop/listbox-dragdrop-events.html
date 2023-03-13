@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - ListBox / Drag Drop Events</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-dragdrop-events"]{
+                --listbox-display: inline-block;
+                --listbox-height: 100%;
+                --listbox-width: 45%;
+            }
+            [id="listbox-dragdrop-events-log"] {
+                --listbox-border: 0;
+                --listbox-margin: 0;
+                --listbox-height: calc(100% - 41px);
+                
+                --listitem-padding: 5px 0;
+                --listitem-white-space: normal;
+            }
+            .sample-block-listbox-dragdrop-events {
+                height: 400px;
+                padding: 4px;
+                
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .sample-event-block {
+                background: white;
+                border: thin solid #d9d9d9;
+                display: inline-block;
+                height: 100%;
+                margin: 0 0 0 32px;
+                overflow: hidden;
+                width: calc(55% - 44px);
+                
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .sample-event-block button {
+                float: right;
+                margin: 5px 5px 5px 12px;
+                padding: 5px; 
+                width: 75px;
+            }
+            .sample-event-block p {
+                border-bottom: thin solid #e5e5e5;
+                margin: 0; 
+                padding: 10px 5px; 
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Drag Drop Events</h2>
+        <div class="sample-block-listbox-dragdrop-events">
+            <iui-listbox id="listbox-dragdrop-events" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-listbox>
+            <div class="sample-event-block">
+                <button id="listbox-dragdrop-events-button">Clear</button>
+                <p>Event log:</p>
+                <iui-listbox id="listbox-dragdrop-events-log"
+                    allow-animation="true"
+                    allow-focus="false"
+                    resource-path="../../../node_modules/integralui-web/icons"
+                    theme="Office"
+                ></iui-listbox>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this demo, you are free to drag and drop items one by one within the ListBox. When item is dragged over a different item, you can drop it above or below the target item. In this particular example, you cannot drop items above or below the <strong><i>"Gladiator"</i></strong> item, the above and below positions are disabled within the <strong>dragOver</strong> event handler.</p>
+                <p><span class="initial-space"></span>To see which event is fired and in what order, the list on right logs all drag and drop events that occur, from newest to the oldest event fired. The list shows event name, information about the source and target item, position and how many times the event fires.</p>
+                <p><span class="initial-space"></span>Here is a list of available drag and drop events:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">dragEnd</span> - occurs when HTML5 drag and drop operation ends over ListBox space</li>
+                    <li><span class="code-name">dragEnter</span> - occurs when item is dragged over ListBox space for the first time</li>
+                    <li><span class="code-name">dragDrop</span> - occurs when item drops within the ListBox</li>
+                    <li><span class="code-name">dragLeave</span> - occurs when dragged item leaves the ListBox space</li>
+                    <li><span class="code-name">dragOver</span> - occurs when item is dragged over other items and ListBox space</li>
+                    <li><span class="code-name">dragStart</span> - occurs  when HTML5 drag and drop operation starts over ListBox space</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiListBoxDDEventStyle } from './listbox-dragdrop-events.style.js';
+
+        //
+        // Sample settings
+        //
+            
+        // ListBox settings
+        const ctrl = document.querySelector('#listbox-dragdrop-events');
+        
+        ctrl.allowDrag = true;
+        ctrl.allowDrop = true;
+        
+        ctrl.items = [
+            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
+            { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
+            { id: 3, icon: "action", text: "Gladiator", year: "2000", rating: 8.5 },
+            { id: 4, icon: "drama", text: "Malèna", year: "2000", rating: 7.5 },
+            { id: 5, icon: "music", text: "Moulin Rouge", year: "2001", rating: 7.6 },
+            { id: 6, icon: "comedy", text: "Snatch", year: "2000", rating: 8.3  },
+            { id: 7, icon: "biography", text: "A Beautiful Mind", year: "2001", rating: 8.2  },
+            { id: 8, icon: "crime", text: "Black Hawk Down", year: "2001", rating: 7.7 },
+            { id: 9, icon: "western", text: "Django Unchained", year: "2012", rating: 8.5  },
+            { id: 10, icon: "sci-fi", text: "Man of Steel", year: "2013", rating: 7.2 },
+            { id: 11, icon: "horror", text: "The Ring", year: "2002", rating: 7.1 },
+            { id: 12, icon: "romance", text: "40 Days and 40 Nights", year: "2002", rating: 5.6 },
+            { id: 13, icon: "sci-fi", text: "Minority Report", year: "2002", rating: 7.7 },
+            { id: 14, icon: "comedy", text: "Scary Movie 3", year: "2003", rating: 5.5 },
+            { id: 15, icon: "music", text: "Walk the Line", year: "2005", rating: 7.9  },
+            { id: 16, icon: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6.4 },
+            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
+            { id: 18, icon: "horror", text: "American Psycho", year: "2000", rating: 7.6 },
+            { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8.1 },
+            { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8.2 }
+        ];
+
+        // Event List settings
+        const evList = document.querySelector('#listbox-dragdrop-events-log');
+           
+        evList.allowFocus = false;
+        evList.customStyle = iuiListBoxDDEventStyle;
+        evList.itemTemplate = (ev) => { 
+            return html`
+                <div>
+                    ${ev.count ? html`<span class="sample-event-count">${ev.count}</span>` : html``} 
+                    <span class="sample-event-name">${ev.name}</span>
+                    ${ev.cancelled ? html`<span class="sample-event-cancelled"> cancelled</span>` : html``} 
+                </div>
+                <div>
+                    ${ev.info} ${ev.position ? html`<span class="sample-event-value">at position: ${ev.position}</span>` : html``} 
+                </div>
+            `;
+        };
+       
+        evList.items = [];
+
+        // Clear Button
+        const btnClear = document.querySelector('#listbox-dragdrop-events-button');
+
+        btnClear.addEventListener("click", () => clearEventLog());
+
+        let clearEventLog = function(){
+            evList.items.length = 0;
+            evList.updateLayout();
+        }
+
+        //
+        // Events
+        //
+
+        let currentEvent = {
+            cancelled: false,
+            count: 0,
+            name: '',
+            position: -1,
+            target: null
+        }
+
+        ctrl.addEventListener("dragStart", (e) => listDragStart(e));
+        ctrl.addEventListener("dragEnter", (e) => listDragEnter(e));
+        ctrl.addEventListener("dragOver", (e) => listDragOver(e));
+        ctrl.addEventListener("dragLeave", (e) => listDragLeave(e));
+        ctrl.addEventListener("dragDrop", (e) => listDragDrop(e));
+        ctrl.addEventListener("dragEnd", (e) => listDragEnd(e));
+
+        let listDragStart = function(e){
+            updateCurrentEvent(e, 'dragStart', true);
+
+            currentEvent.info = 'fired when dragging of ' + e.detail.dragObj.text + ' starts';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+
+        let listDragEnter = function(e){
+            updateCurrentEvent(e, 'dragEnter');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' enters the component space';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+        
+        let listDragOver = function(e){
+            updateCurrentEvent(e, 'dragOver');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' is dragged over ';
+            currentEvent.info += currentEvent.target ? ' target: ' + currentEvent.target.text : 'component space';
+
+            if (e.detail.targetObj){
+                if (e.detail.targetObj.text === 'Gladiator')
+                    e.detail.cancel = true;
+                else if (e.detail.targetObj.text === 'Cast Away' && e.detail.dropPos === 2)
+                    e.detail.cancel = true;
+                else if (e.detail.targetObj.text === 'Malèna' && e.detail.dropPos === 1)
+                    e.detail.cancel = true;
+            }
+
+            currentEvent.cancelled = e.detail.cancel;
+
+            if (currentEvent.count == 0)
+                evList.items.unshift(currentEvent); 
+            else 
+                evList.items[0].count = currentEvent.count;
+
+            evList.updateLayout();
+        }
+        
+        let listDragLeave = function(e){
+            updateCurrentEvent(e, 'dragLeave');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' leaves the component space';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+        
+        let listDragDrop = function(e){
+            updateCurrentEvent(e, 'dragDrop');
+
+            currentEvent.info = 'fired when ' + e.detail.dragObj.text + ' drops over ';
+            currentEvent.info += currentEvent.target ? ' target: ' + currentEvent.target.text : 'component space';
+            
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+
+        let listDragEnd = function(e){
+            updateCurrentEvent(e, 'dragEnd', true);
+
+            currentEvent.info = 'fired when drag drop operation ends';
+            evList.items.unshift(currentEvent); 
+            evList.updateLayout();
+        }
+
+        let updateCurrentEvent = function(e, name, skip){
+            let count = currentEvent.count;
+
+            if (name === currentEvent.name){
+                if (e.detail.targetObj){
+                    if (e.detail.targetObj === currentEvent.target){
+                        if (e.detail.dropPos === currentEvent.position)
+                            count++;
+                        else
+                            count = 0;
+                    }
+                    else {
+                        count = 0;
+                    }
+                }
+                else if (e.detail.dropPos === currentEvent.position)
+                    count++;
+                else
+                    count = 0;
+            }
+            else
+                count = 0;
+
+            currentEvent = {
+                count: count,
+                name: name,
+                position: !skip ? e.detail.dropPos : undefined,
+                target: e.detail.targetObj
+            }
+        }
+
+    </script>
+</html>

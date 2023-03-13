@@ -1,0 +1,24 @@
+<h2>ListView / Export to JSON</h2>
+<div class="sample-block">
+    <iui-listview #listview id="listview-export"
+        [allowAnimation]="true"
+        [items]="items"
+        [itemSize]="currentItemSize"
+        [resourcePath]="currentResourcePath"
+        [selectionMode]="currentSelectionMode"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-listview>
+    <div class="listview-export-panel">
+        <iui-checkbox [resourcePath]="currentResourcePath" [checked]="selectedOnly" (checkedChanged)="selectedOnlyChanged($event)">Only selected</iui-checkbox><br/>
+        <iui-button [allowAnimation]="true" (click)="onExport()">Export</iui-button>
+    </div>
+    <div id="listview-export-result-block">
+        <pre><code>{{result}}</code></pre>
+    </div>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>IntegralUI ListView component comes with built-in functionality that allows you to export the list data in full or partially to JSON format.</p>
+        <p><span class="initial-space"></span>When exporting the data in full, it is straightforward, you don't need to specify any parameters just call the exporting method. On the other hand, when exporting partial data from the ListView, you need to specify items that you want to export, for example exporting selected items.</p>
+        <p><span class="initial-space"></span>To select items use the CTRL key or SHIFT key. The <strong>MultiExtended</strong> mode allows selection of multiple items in wide range. While SHIFT key is pressed, all items from first to last clicked item will become selected.</p>
+    </div>
+</div>

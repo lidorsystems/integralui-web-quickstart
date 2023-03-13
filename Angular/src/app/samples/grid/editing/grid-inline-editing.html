@@ -1,0 +1,31 @@
+<h2 class="feature-title">Grid / Inline Editing</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-inline-editing"
+        [allowAnimation]="true"
+        [allowFocus]="true"
+        [columns]="columns"
+        [customStyle]="gridStyle"
+        [editMode]="currentEditMode"
+        [resourcePath]="currentResourcePath"
+        [rowHeight]="30"
+        [rows]="rows" 
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (valueChanged)="cellValueChanged($event)"
+    ></iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>When <strong>Inline Editing</strong> mode is activated, you can:</p>
+        <ul class="feature-points">
+            <li>hover over cell in first column and click on Pencil icon to start editing mode or press ENTER when cell is focused to activate the editor, or</li>
+            <li>you can also start editing by clicking on Edit button in the last column</li>
+            <li>make changes to cell values using editors when cell is focused</li>
+            <li>delete a row using the Remove button in the last column</li>
+            <li>save or cancel any changes using buttons in the last column</li>
+        </ul>
+        <p><span class="initial-space"></span>With inline editing you can select and edit a specific row using built-in editors depending on column data type. There are different kinds of editors available that you can choose from: CheckBox, Date, DropList, Numeric, Progress, Rating, Slider and Text.</p>
+        <p><span class="initial-space"></span>A row is in editing mode when Pencil icon is fully shown, stating that you can edit cell values for that row using editors when cell is focused. You can edit dates with mouse, when cell is clicked a dropdown Calendar will appear or using a keyboard, with Left/Right arrow keys change dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
+        <p><span class="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will cancel any changes not saved. Clicking again on the Pencil icon, will close the editor.</p>
+        <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In addition, any change to cell values fires the <span class="code-name">valueChanged</span> event, like in this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+    </div>
+</div>

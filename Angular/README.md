@@ -2,13 +2,13 @@
 
 This application contains samples for each component included in the [IntegralUI Web](http://www.lidorsystems.com/products/web/studio/) product package. It can help you to get started quickly with learning about the components and write tests immediatelly.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
 
 ## Dependencies
 
 This app requires only the following library:
 
-Angular - v9.1 and above
+Angular - v15.1 and above
 
 ## Development server
 
@@ -37,7 +37,7 @@ The application will start displaying the main window with links to all componen
 
 You may use this quick-start application for the limited purposes of demonstrations, trials or design-time evaluations.
 
-Copyright (c) 2016-2021 Lidor Systems. All rights reserved.
+Copyright (c) 2016-2023 Lidor Systems. All rights reserved.
 
 This project has been released under the IntegralUI Web License, and may not be used except in compliance with the License.
 A copy of the License should have been installed in the product's root installation directory or it can be found here: [License Agreement](http://www.lidorsystems.com/products/web/studio/license-agreement.aspx).

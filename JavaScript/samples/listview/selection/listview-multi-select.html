@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listview-multiselect"]{
+                --listview-display: inline-block;
+                --listview-width: calc(60% - 200px);
+            }
+            [id="list-multiselect"]{
+                --list-display: inline-block;
+                --list-width: calc(40% - 10px);
+            }
+
+            .listview-multiselect-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --radio-button-display: block;
+                --radio-button-margin: 5px 0;
+            }
+            .listview-multiselect-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listview-multiselect-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListView / Select Multiple Items</h2>
+        <div class="sample-block">
+            <iui-listview id="listview-multiselect"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-listview>
+            <div class="listview-multiselect-panel">
+                <label>Selection Mode: </label>
+                <iui-radiogroup id="multiselect">
+                    <iui-radiobutton checked="true">None</iui-radiobutton>
+                    <iui-radiobutton>One</iui-radiobutton>
+                    <iui-radiobutton>MultiSimple</iui-radiobutton>
+                    <iui-radiobutton>MultiExtended</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <iui-list id="list-multiselect"></iui-list>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>A demonstration of different selection types available in ListView component. By selecting an option from <strong>Select</strong> component above, you can change the current selected mode. There are four acceptable values:</p>
+                <ul class="feature-points">
+                    <li><span class="code-object">None</span> - selection is disabled</li>
+                    <li><span class="code-object">One</span> - Only one item is selectable</li>
+                    <li><span class="code-object">MultiSimple</span> - Multiple items are selectable using mouse clicks without CTRL key</li>
+                    <li><span class="code-object">MultiExtended</span> - Multiple items are selectabl using mouse clicks with CTRL and SHIFT key</li>
+                </ul>
+                <p><span class="initial-space"></span>In multi-selection mode, items can become selected using the CTRL key or SHIFT key. The <strong>MultiExtended</strong> mode allows selection of multiple items in wide range. While SHIFT key is pressed, all items from first to last clicked item will become selected.</p>
+                <p><span class="initial-space"></span>List on the right, shows which items are currently selected. To retrieve this list, you can use the <span class="code-object">getList</span> method with key value <span style="color:#0000ff">'selected'</span>.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.list.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listview.js"></script>
+    <script type="module">
+        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.item.js';
+        import { IntegralUIAnimationType, IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Multi Select Panel
+        const ctrlMultiSelect = document.querySelector('#multiselect');
+
+        ctrlMultiSelect.resourcePath = currentResourcePath;
+
+        ctrlMultiSelect.selectedIndex = 1;
+
+        let onMultiSelectChecked = function(e){
+            switch (e.detail.index){
+                case 1: 
+                    listview.selectionMode = IntegralUISelectionMode.One;
+                    break;
+
+                case 2: 
+                    listview.selectionMode = IntegralUISelectionMode.MultiSimple;
+                    break;
+
+                case 3: 
+                    listview.selectionMode = IntegralUISelectionMode.MultiExtended;
+                    break;
+
+                default: 
+                    listview.selectionMode = IntegralUISelectionMode.None;
+                    break;
+            }
+        }
+
+        ctrlMultiSelect.addEventListener("buttonChecked", (e) => onMultiSelectChecked(e));
+
+        //
+        // ListView settings
+        //
+
+        const listview = document.querySelector('#listview-multiselect');
+
+        listview.itemSize = { width: 150, height: 32 }
+        listview.size = { height: 300 };
+
+        let flatData = [
+            { id: 11, text: "Milk" },
+            { id: 12, text: "Butter" },
+            { id: 13, text: "Cheese" },
+            { id: 14, text: "Yogurt" },
+            { id: 211, text: "BlackBerries" },
+            { id: 212, text: "CranBerries" },
+            { id: 213, text: "StrawBerries" },
+            { id: 241, text: "Oranges" },
+            { id: 242, text: "Lemons" },
+            { id: 261, text: "Avocados" },
+            { id: 262, text: "Bananas" },
+            { id: 263, text: "Dates" },
+            { id: 31, text: "Barley" },
+            { id: 32, text: "Farro" },
+            { id: 33, text: "Millet" },
+            { id: 34, text: "Rice" },
+            { id: 41, text: "Beef" },
+            { id: 42, text: "Chicken" },
+            { id: 43, text: "Turkey" },
+            { id: 44, text: "Pork" },
+            { id: 45, text: "Lamb" },
+            { id: 51, text: "Biscuits" },
+            { id: 52, text: "Cakes" },
+            { id: 53, text: "Candies" },
+            { id: 54, text: "Muffins" },
+            { id: 55, text: "Pastries" },
+            { id: 61, text: "Asparagus" },
+            { id: 62, text: "Broccoli" },
+            { id: 63, text: "Carrots" },
+            { id: 64, text: "Corn" },
+            { id: 65, text: "Lettuce" },
+            { id: 66, text: "Onions" },
+            { id: 67, text: "Pumpkin" },
+            { id: 68, text: "Tomatoes" },
+            { id: 69, text: "Zucchini" }
+        ];
+
+        //
+        // Initialize the Component
+        //
+
+        listview.loadData(flatData);
+
+        //
+        // List settings
+        //
+
+        const ctrlList = document.querySelector('#list-multiselect');
+
+        ctrlList.allowFocus = false;
+        ctrlList.items = [];
+        ctrlList.size = { height: 300 };
+
+        // Change the list on selection
+        let onSelectionChanged = function(e){
+            updateSelectedList();
+        }
+
+        let updateSelectedList = function(){
+            let selList = listview.getList('selected');
+
+            ctrlList.items = selList.map(item => { return { id: item.id, text: item.text } });
+
+            ctrlList.updateLayout();
+        }
+
+        listview.addEventListener("selectionChanged", (e) => onSelectionChanged(e));
+
+    </script>
+</html>

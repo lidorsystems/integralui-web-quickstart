@@ -35,7 +35,7 @@
 	<script type="module">
 		import { html } from '../../node_modules/integralui-web/external/lit-element.js';
         import IntegralUICommonService from '../../node_modules/integralui-web/services/integralui.common.service.js';
-        import { IntegralUIEditorType, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
         import { iuiTreeGridAddRowDynamicallyStyle } from './treegrid-add-row-dynamically.style.js';
 
         let _commonService = new IntegralUICommonService();
@@ -53,6 +53,8 @@
                 cancelEdit(currentEditRow);
 
             insertRowInGrid();
+            treegrid.beginEdit(currentEditRow);
+
             setFocusToCell();
         }
 
@@ -66,6 +68,8 @@
                 cancelEdit(currentEditRow);
 
             insertRowInGrid(treegrid.selectedRow);
+            treegrid.beginEdit(currentEditRow);
+
             setFocusToCell();
         }
 
@@ -78,6 +82,9 @@
 		//
 
 		const treegrid = document.querySelector('#treegrid-add-row-dynamically');
+
+		treegrid.customStyle = iuiTreeGridAddRowDynamicallyStyle;
+        treegrid.editMode = IntegralUIEditMode.Custom;
 
 		treegrid.columns = [
             { 
@@ -111,8 +118,6 @@
             },
             { id: 7, contentAlignment: "center", editorType: IntegralUIEditorType.Custom, width: 120, fixedWidth: true }
 		];
-
-		treegrid.customStyle = iuiTreeGridAddRowDynamicallyStyle;
         
         treegrid.rows = [
             { 
@@ -168,6 +173,8 @@
         //
 
         let cancelEdit = async function(row){
+            treegrid.endEdit();
+
             if (isNewRow)
                 removeRow(row);
 
@@ -251,6 +258,7 @@
             if (row){
                 updateEditStatus(row);
                 currentEditRow = row;
+                treegrid.beginEdit(currentEditRow);
 
                 setFocusToCell(focusCell);
             }
@@ -346,6 +354,8 @@
             }
 
             await setFocusToCell(focusCell);
+
+            treegrid.endEdit(true);
 
             resetEditor();
             isNewRow = false;

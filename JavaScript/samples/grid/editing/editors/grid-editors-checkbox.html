@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	  	<title>IntegralUI Web - Grid / Cells with CheckBox</title>
+		<link rel="stylesheet" href="../../../../index.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<h2>Grid / Cells with CheckBox</h2>
+		<div class="sample-block">
+			<iui-grid id="grid-editors-checkbox"
+                allow-animation="true"
+                row-height="28"
+			></iui-grid>
+		</div>
+        <div class="feature-help">
+            <p><span class="initial-space"></span>In above demo, the Grid has one column with check boxes. If checkbox in column header is clicked, all checkboxes will become checked or unchecked.</p>
+        </div>
+	</body>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+	<script type="module" src="../../../../node_modules/integralui-web/components/integralui.rating.js"></script>
+	<script type="module">
+        import { html } from '../../../../node_modules/integralui-web/external/lit-element.js';
+
+        import IntegralUICommonService from '../../../../node_modules/integralui-web/services/integralui.common.service.js';
+        import { IntegralUICheckState, IntegralUIEditorType, IntegralUITheme } from '../../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiGridEditorsCheckBoxStyle } from './grid-editors-checkbox.style.js';
+
+        let _commonService = new IntegralUICommonService();
+
+        let currentResourcePath = '../../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+		//
+		// Grid settings
+		//
+
+		const grid = document.querySelector('#grid-editors-checkbox');
+
+        grid.allowFocus = false;
+
+		grid.columns = [
+            { id: 1, editorType: IntegralUIEditorType.CheckBox, fixedWidth: true, headerAlignment: "center", width: 30 },
+            { id: 2, headerText: "Title", width: 300 },
+            { id: 3, headerText: "Year", headerAlignment: "center", contentAlignment: "center", width: 70 },
+            { 
+                id: 4, 
+                headerText: "Rating", 
+                headerAlignment: "center", 
+                contentAlignment: "center", 
+                editorType: IntegralUIEditorType.Rating,
+                editorSettings: {
+                    editOnFocus: false
+                },
+                width: 150, 
+                fixedWidth: true
+            },
+            { id: 5, headerText: "Released", headerAlignment: "center", contentAlignment: "center", width: 180 }
+        ];
+
+		grid.customStyle = iuiGridEditorsCheckBoxStyle;
+        grid.resourcePath = currentResourcePath;
+        grid.rows = [];
+        grid.showFooter = false;
+		grid.size = { width: 800, height: 400 }
+        
+        grid.theme = currentTheme;
+
+        // Data ----------------------------------------------------------------------------------
+
+        let convertJSONData = function(data){
+            grid.rows = [];
+
+            data.forEach(obj => {
+                // Copy all fields from JSON data and add a new field 'cells'
+                let row = Object.assign({ cells: [] }, obj);
+
+                // Loop through all columns and create cells accordingly
+                grid.columns.forEach(column => {
+                    let field = column.id === 1 ? 'isChecked' : column.headerText;
+
+                    // Delete all fields that will be included in cells, except for the field 'Title'
+                    if (column.headerText !== 'Title')
+                        delete row[field];
+
+                    // Each row should have a cell for check box column, otherwise only add cells for existing fields
+                    if (column.id === 1 || obj[field] !== undefined){
+                        let cell = {
+                            cid: column.id,
+                            colName: field
+                        }
+
+                        if (_commonService.isString(obj[field]))
+                            cell.text = obj[field];
+                        else
+                            cell.value = obj[field];
+
+                        row.cells.push(cell);
+                    }
+                });
+
+                grid.rows.push(row);
+            });
+
+            updateColumnCheckValue(grid.rows, 1);
+        }
+        
+        let updateColumnCheckValue = function(listRows, id){
+            let column = grid.getColumnById(id);
+            if (column){
+                let filtered = listRows.filter(row => {
+                    let cell = getCellWithCheckBox(row.cells, column.id);
+                    return cell ? cell.value : false;
+                });
+
+                // Column checkbox value has three states
+                // Depending on how many rows are checked, the column checkbox value can be either
+                // Checked, Indeterminate or Unchecked
+                if (filtered.length === listRows.length)
+                    column.value = IntegralUICheckState.Checked;
+                else if (filtered.length > 0)
+                    column.value = IntegralUICheckState.Indeterminate;
+                else
+                    column.value = IntegralUICheckState.Unchecked;
+
+                grid.refresh();
+            }
+        }
+  
+        // Events --------------------------------------------------------------------------------
+
+        window.onbeforeunload = function(){
+            grid.removeEventListener("valueChanged", cellValueChanged);
+        };
+
+        let cellValueChanged = function(e){
+            // Update the checkbox in column header, based on check box values in all rows
+            // Only handle if the value changes for the cell with a checkbox
+            if (e.detail.cell.cid === 1)
+                updateColumnCheckValue(grid.rows, e.detail.cell.cid);
+        }
+
+        grid.addEventListener("valueChanged", cellValueChanged);
+
+        // General -------------------------------------------------------------------------------
+
+        let columnCheckStateChanged = function(e, column){
+            if (column){
+                column.value = e.detail.checkState;
+
+                // Update checkbox value for all rows, based on column checkbox value
+                if (column.value !== IntegralUICheckState.Indeterminate)
+                    grid.rows.forEach(row => {
+                        let cell = getCellWithCheckBox(row.cells, column.id);
+                        if (cell)
+                            cell.value = column.value === IntegralUICheckState.Checked ? true : false;
+                    });
+
+                grid.updateLayout();
+            }
+        }
+
+        let getCellWithCheckBox = function(list, id){
+            return grid.getCellByColumnId(list, id);
+        }
+
+        // Templates -----------------------------------------------------------------------------
+
+        grid.headerTemplate = (column) => { 
+            if (column.id === 1)
+                return html`<iui-checkbox 
+                        .allowFocus=${false}
+                        .checkState=${column.value}
+                        .customStyle=${iuiGridEditorsCheckBoxStyle} 
+                        .resourcePath=${currentResourcePath} 
+                        .threeState=${true} 
+                        @checkStateChanged=${(e) => columnCheckStateChanged(e, column)}
+                    ></iui-checkbox>
+                `;
+
+            return null;
+        };
+
+        // Initialization ------------------------------------------------------------------------
+
+        let init = function(){
+            let self = this;
+
+            fetch('./grid-editors-checkbox-data.json') 
+                .then(response => response.json()) 
+                .then(data => {
+                    let self = this;
+
+                    // Suspend the grid layout from updates, to increase performance
+                    grid.suspendLayout();
+
+                    convertJSONData(data);
+        
+                    // Resume and update the grid layout
+                    grid.resumeLayout();
+                });
+        }
+
+        init();
+	</script>
+</html>

@@ -4,7 +4,7 @@ import { html } from 'integralui-web/external/lit-element.js';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
 import IntegralUIButtonComponent from 'integralui-web/wrappers/react.integralui.button.js';
 import IntegralUIGridComponent from 'integralui-web/wrappers/react.integralui.grid.js';
-import { IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
 
 import { iuiGridAddRowDynamicallyStyle } from './grid-add-row-dynamically.style.js';
 
@@ -54,6 +54,7 @@ class GridAddRowDynamically extends Component {
                 { id: 7, contentAlignment: "center", editorType: IntegralUIEditorType.Custom, width: 120, fixedWidth: true }
             ],
             ctrlSize: { width: 850, height: 350 },
+            currentEditMode: IntegralUIEditMode.Custom,
             currentResourcePath: '../integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
             isAnimationAllowed: true,
@@ -88,10 +89,14 @@ class GridAddRowDynamically extends Component {
             this.cancelEdit(this.currentEditRow);
 
         this.insertRowInGrid();
+        this.gridRef.current.beginEdit(this.currentEditRow);
+
         this.setFocusToCell();
     }
 
     async cancelEdit(row){
+        this.gridRef.current.endEdit();
+
         if (this.isNewRow)
             this.removeRow(row);
 
@@ -177,6 +182,7 @@ class GridAddRowDynamically extends Component {
         if (row){
             this.updateEditStatus(row);
             this.currentEditRow = row;
+            this.gridRef.current.beginEdit(this.currentEditRow);
 
             this.setFocusToCell(focusCell);
         }
@@ -307,6 +313,7 @@ class GridAddRowDynamically extends Component {
 
         await this.setFocusToCell(focusCell);
 
+        this.gridRef.current.endEdit(true);
         this.resetEditor();
         this.isNewRow = false;
     }
@@ -388,9 +395,9 @@ class GridAddRowDynamically extends Component {
                     <IntegralUIButtonComponent allowAnimation={this.state.isAnimationAllowed} size={this.state.buttonSize} theme={this.state.currentTheme} onClick={() => this.addRow()}>Add Row</IntegralUIButtonComponent>
                     <IntegralUIGridComponent ref={this.gridRef}
                         allowAnimation={this.state.isAnimationAllowed} 
-                        allowFocus={true}
                         columns={this.state.columns} 
                         customStyle={iuiGridAddRowDynamicallyStyle}
+                        editMode={this.state.currentEditMode}
                         resourcePath={this.state.currentResourcePath}
                         rowHeight={32}
                         rows={this.state.rows} 

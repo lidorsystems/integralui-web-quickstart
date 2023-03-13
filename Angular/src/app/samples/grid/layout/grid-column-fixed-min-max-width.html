@@ -1,0 +1,22 @@
+<h2 class="feature-title">Grid / Columns Fixed, Min and Max Width</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-column-fixed-min-max-width"
+        [allowAnimation]="true"
+        [allowFocus]="false"
+        [autoSizeColumns]="true"
+        [columns]="columns"
+        [customStyle]="customStyle"
+        [headerTemplate]="currentHeaderTemplate"
+        [rowHeight]="32"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [showFooter]="false"
+        [showScroll]="gridScrolling"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+    ></iui-grid>
+    <br style="clear:both;"/>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, using the dropdown window from column header you can set up the Minimum and Maximum width for columns and also lock the column width to its current value. The grid also has auto-size for columns enabled, which means any change to column width affects other neighbouring columns so that the whole grid space is occupied.</p>
+    </div>
+</div>

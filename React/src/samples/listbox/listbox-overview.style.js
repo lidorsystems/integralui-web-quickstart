@@ -7,6 +7,15 @@ export const iuiListBoxOverviewStyle = css`
         padding: 3px;
         margin: 1px 0;
     }
+    .lbox-ovw-name
+    {
+        display: inline-block;
+        margin-left: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
     .lbox-ovw-title
     {
         display: inline-block;
@@ -15,13 +24,13 @@ export const iuiListBoxOverviewStyle = css`
         text-overflow: ellipsis;
         vertical-align: middle;
         white-space: nowrap;
-        width: 45%;
+        width: calc(100% - 200px);
     }
     .lbox-ovw-year
     {
         display: inline-block;
         text-align: center;
-        width: 25%;
+        width: 100px;
     }
     .lbox-ovw-icons
     {
@@ -72,6 +81,10 @@ export const iuiListBoxOverviewStyle = css`
     .western
     {
         background-position: -120px -24px;
+    }
+
+    .iui-listgroup-expand-box {
+        margin: 10px 3px 0 0;
     }
 
     /* Changes to the Rating component inside the ListBox Item */

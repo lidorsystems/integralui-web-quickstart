@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-export"]{
+                --listbox-display: inline-block;
+                --listbox-width: calc(60% - 200px);
+            }
+            [id="listbox-export-result-block"]{
+                border: thin solid #d9d9d9;
+                display: inline-block;
+                height: 300px;
+                overflow: auto;
+                width: calc(40% - 10px);
+            }
+
+            .listbox-export-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --button-margin: 10px 5px;
+           }
+            .listbox-export-panel label {
+                display: block;
+                margin: 10px 0 10px 10px;
+            }
+            .listbox-export-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Export to JSON</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-export"
+                allow-animation="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                show-groups="true"
+                theme="Office"
+            ></iui-listbox>
+            <div class="listbox-export-panel">
+                <iui-checkbox id="listbox-export-groups" checked="true">Show Groups</iui-checkbox>
+                <iui-checkbox id="listbox-export-selected">Only selected</iui-checkbox>
+                <iui-button id="listbox-export-button" allow-animation="true">Export</iui-button>
+            </div>
+            <div id="listbox-export-result-block">
+                <pre id="listbox-export-result"><code></code></pre>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>IntegralUI ListBox component comes with built-in functionality that allows you to export the list data in full or partially to JSON format.</p>
+                <p><span class="initial-space"></span>When exporting the data in full, it is straightforward, you don't need to specify any parameters just call the exporting method. On the other hand, when exporting partial data from the ListBox, you need to specify items that you want to export, for example exporting selected items.</p>
+                <p><span class="initial-space"></span>To select items use the CTRL key or SHIFT key. The <strong>MultiExtended</strong> mode allows selection of multiple items in wide range. While SHIFT key is pressed, all items from first to last clicked item will become selected.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUIAnimationType, IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        // Export Panel
+        const ctrlShowGroups = document.querySelector('#listbox-export-groups');
+        ctrlShowGroups.resourcePath = currentResourcePath;
+
+        let onShowGroups = function(e){
+            listbox.showGroups = e.detail.checked;
+        }
+        ctrlShowGroups.addEventListener("checkedChanged", (e) => onShowGroups(e));
+
+
+        const ctrlSelectedOnly = document.querySelector('#listbox-export-selected');
+        ctrlSelectedOnly.resourcePath = currentResourcePath;
+
+        const ctrlExport = document.querySelector('#listbox-export-button');
+
+        let onExport = function(){
+            let data = listbox.items;
+
+            // Source is selected items only
+            if (ctrlSelectedOnly.checked)
+                data = listbox.getList('selected');
+
+            ctrlResult.innerHTML = listbox.exportToJSON(data, null, '   ');
+        }
+
+        ctrlExport.addEventListener("click", () => onExport());
+
+        //
+        // Result settings
+        //
+
+        const ctrlResult = document.querySelector('#listbox-export-result');
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-export');
+
+        listbox.selectionMode = IntegralUISelectionMode.MultiExtended;
+        listbox.size = { height: 300 };
+
+        listbox.groups = [
+            { name: "Dairy" },
+            { name: "Fruits", expanded: false },
+            { name: "Grains" },
+            { name: "Meat" },
+            { name: "Sweets", expanded: false },
+            { name: "Vegetables" }
+        ];
+
+        let flatData = [
+            { id: 11, text: "Milk", group: "Dairy" },
+            { id: 12, text: "Butter", group: "Dairy" },
+            { id: 13, text: "Cheese", group: "Dairy" },
+            { id: 14, text: "Yogurt", group: "Dairy" },
+            { id: 211, text: "BlackBerries", group: "Fruits" },
+            { id: 212, text: "CranBerries", group: "Fruits" },
+            { id: 213, text: "StrawBerries", group: "Fruits" },
+            { id: 241, text: "Oranges", group: "Fruits" },
+            { id: 242, text: "Lemons", group: "Fruits" },
+            { id: 261, text: "Avocados", group: "Fruits" },
+            { id: 262, text: "Bananas", group: "Fruits" },
+            { id: 263, text: "Dates", group: "Fruits" },
+            { id: 31, text: "Barley", group: "Grains" },
+            { id: 32, text: "Farro", group: "Grains" },
+            { id: 33, text: "Millet", group: "Grains" },
+            { id: 34, text: "Rice", group: "Grains" },
+            { id: 41, text: "Beef", group: "Meat" },
+            { id: 42, text: "Chicken", group: "Meat" },
+            { id: 43, text: "Turkey", group: "Meat" },
+            { id: 44, text: "Pork", group: "Meat" },
+            { id: 45, text: "Lamb", group: "Meat" },
+            { id: 51, text: "Biscuits", group: "Sweets" },
+            { id: 52, text: "Cakes", group: "Sweets" },
+            { id: 53, text: "Candies", group: "Sweets" },
+            { id: 54, text: "Muffins", group: "Sweets" },
+            { id: 55, text: "Pastries", group: "Sweets" },
+            { id: 61, text: "Asparagus", group: "Vegetables" },
+            { id: 62, text: "Broccoli", group: "Vegetables" },
+            { id: 63, text: "Carrots", group: "Vegetables" },
+            { id: 64, text: "Corn", group: "Vegetables" },
+            { id: 65, text: "Lettuce", group: "Vegetables" },
+            { id: 66, text: "Onions", group: "Vegetables" },
+            { id: 67, text: "Pumpkin", group: "Vegetables" },
+            { id: 68, text: "Tomatoes", group: "Vegetables" },
+            { id: 69, text: "Zucchini", group: "Vegetables" }
+        ];
+
+        //
+        // Initialize the Component
+        //
+
+        listbox.loadData(flatData);
+
+    </script>
+</html>
