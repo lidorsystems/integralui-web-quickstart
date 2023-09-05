@@ -1,0 +1,9 @@
+[id="contextmenu-custom-template-panel"] {
+    --iui-panel-font-size: 1rem;
+    --iui-panel-margin: 10px 0;
+    --iui-panel-height: 300px;
+}
+.contextmenu-custom-template-block {
+    transform: scale(2.5);
+    transition: transform 0.1s ease-in-out;
+}

@@ -118,6 +118,7 @@ class ListBoxOverview extends Component {
                         allowAnimation={this.state.isAnimationAllowed}
                         allowDrag={this.state.isDragAllowed}
                         allowDrop={this.state.isDropAllowed}
+                        animateInit={true}
                         customStyle={iuiListBoxOverviewStyle}
                         groups={this.state.groups}
                         items={this.state.items}

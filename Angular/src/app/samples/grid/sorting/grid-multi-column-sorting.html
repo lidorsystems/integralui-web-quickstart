@@ -1,0 +1,35 @@
+<h2 class="feature-title">Grid / Multi Column Sorting</h2>
+<div class="feature-content" #application>
+    <iui-grid #grid id="grid-multi-column-sorting"
+        [allowAnimation]="true"
+        [columns]="columns"
+        [rows]="rows"
+        [resourcePath]="currentResourcePath"
+        [selectedColumn]="currentSelectedColumn"
+        [showFooter]="false"
+        [size]="ctrlSize"
+        [sortMode]="currentSortMode"
+        [theme]="currentTheme"
+        (columnSortClick)="onColumnSortClick($event)"
+    > 
+    </iui-grid>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>This sample demonstrates sorting by multiple columns in the Grid component. Each column have the following options:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowSort</span> - true or undefined if column is sortable and false if not, by default is sortable</li>
+            <li><span class="code-name">comparer</span> - specifies a custom function used for sorting</li>
+            <li><span class="code-name">sorting</span> - specifies the column's sort order: Ascending, Descending or None</li>
+        </ul>
+        <p><span class="initial-space"></span>If column is sortable a sort button will appear in column header on right side. Depending on column's sort order, the button icon will change accordingly. To reset the column's sorting, click on sort button and change the sort order to None (up/down icons appear together).</p>
+        <p><span class="initial-space"></span>Whenever the sort button is clicked, the <span class="code-name">columnSortClick</span> event is fired. This event allows you to cancel the default sorting operations and specify your own comparer function and sorting order for clicked column.</p><br/>
+        <p><span class="initial-space"></span>When sorting is done by multiple columns, the order of sorting columns determines the result, starting from first sorting column to the last. To change the result, rearrange the order of sorting columns. For example:</p>
+        <ol class="feature-points">
+            <li>At first sort by 'Continents/Countries' column by clicking on sort button and set the order to Ascending (up arrow)</li>
+            <li>Then sort by 'Date' column by setting the sort order to Descending, down arrow</li>
+            <li>The Grid data is sorted first by: 'Continents/Countries' then by 'Date'</li>
+            <li>Reset the sorting by clicking on up arrow for 'Continents/Countries' column, this will remove column from sorting, the sort button icon will change to up/down arrow.</li>
+            <li>Click again on  up arrow for 'Continents/Countries' column, to set the sort order to Asecnding</li>
+            <li>The Grid data is now sorted by 'Date' and then by 'Continents/Countries'.</li>
+        </ol>
+    </div>
+</div>

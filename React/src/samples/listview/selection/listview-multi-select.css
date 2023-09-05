@@ -1,10 +1,10 @@
 [id="listview-multiselect"]{
-    --listview-display: inline-block;
-    --listview-width: calc(60% - 200px);
+    --iui-listview-display: inline-block;
+    --iui-listview-width: calc(60% - 200px);
 }
 [id="list-multiselect"]{
-    --list-display: inline-block;
-    --list-width: calc(40% - 10px);
+    --iui-list-display: inline-block;
+    --iui-list-width: calc(40% - 10px);
 }
 
 .listview-multiselect-panel {
@@ -13,8 +13,8 @@
     vertical-align: top;
     width: 170px;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .listview-multiselect-panel label {
     display: block;

@@ -63,7 +63,7 @@ class TabStripScrollMode extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-scrollmode"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         scrollMode={this.state.currentScrollMode}
                         size={this.state.ctrlSize}

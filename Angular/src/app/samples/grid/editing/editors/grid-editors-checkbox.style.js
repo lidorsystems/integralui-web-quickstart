@@ -2,16 +2,16 @@ import { css } from 'integralui-web/external/lit-element';
 
 export const iuiGridEditorsCheckBoxStyle = css`
     .iui-checkbox {
-        --checkbox-border: 0;
-        --checkbox-margin: 0;
-        --checkbox-padding: 0;
+        --iui-checkbox-border: 0;
+        --iui-checkbox-margin: 0;
+        --iui-checkbox-padding: 0;
 
-        --checkbox-btn-margin: 0;
-        --checkbox-btn-checked-background-image: url(assets/icons/checkbox-checked.ico);
-        --checkbox-btn-indeterminate-background-image: url(assets/icons/checkbox-indeterminate.ico);
-        --checkbox-btn-unchecked-background-image: url(assets/icons/checkbox-unchecked.ico);
+        --iui-checkbox-btn-margin: 0;
+        --iui-checkbox-btn-checked-background-image: url(app/integralui/icons/checkbox-checked.ico);
+        --iui-checkbox-btn-indeterminate-background-image: url(app/integralui/icons/checkbox-indeterminate.ico);
+        --iui-checkbox-btn-unchecked-background-image: url(app/integralui/icons/checkbox-unchecked.ico);
 
-        --checkbox-content-display: none;
+        --iui-checkbox-content-display: none;
     }
 
     .iui-editor-label, .iui-rating {

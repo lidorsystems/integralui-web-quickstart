@@ -1,0 +1,15 @@
+<h2>Menu / Separator with Label</h2>
+<div class="sample-block">
+    <iui-menu #menu id="menu-separator-label"
+        [customStyle]="customStyle"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        (menuClick)="menuItemClick($event)"
+    >
+    </iui-menu>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>In this example, menu separators have customizable label. Each separator can have custom appearance set in CSS shared among all menus or you can set separators in different colors and other settings with inline styles.</p>
+        <p><span class="initial-space"></span>Under <strong>'File'</strong> menu, you will find separators in <i>Blue</i> and <i>Gray</i> colors with different settings. The blue separator uses general CSS settings, while the gray separator uses inline styles.</p>
+    </div>
+</div>

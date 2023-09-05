@@ -75,7 +75,7 @@ class TabStripAnimationTypes extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-animtypes"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme} 

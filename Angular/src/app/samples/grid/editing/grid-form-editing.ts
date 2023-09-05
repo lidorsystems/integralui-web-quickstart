@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { html } from 'integralui-web/external/lit-element';
 
+import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.grid';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
 import { IntegralUIEditMode, IntegralUITheme, IntegralUIVisibility } from 'integralui-web/components/integralui.enums';
@@ -25,6 +26,7 @@ export class GridFormEditing {
     public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Form;
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
+    public isValidationInUse: boolean = true;
     public rows: Array<any> = [];
 
     public gridFields: any = {
@@ -59,9 +61,9 @@ export class GridFormEditing {
         data.columns.forEach((obj: any) => {
             let column = Object.assign({ headerAlignment: 'center' }, obj);
 
-            column.editorSetting = { 
-                visible:IntegralUIVisibility.None
-            }
+            // Set callback function for ShipMode, uses Custom data validation
+            if (column.id === 12 && column.validation)
+                column.validation.rules[0].callback = this.validateShipMode;
 
             this.columns.push(column);
         });
@@ -126,6 +128,14 @@ export class GridFormEditing {
         });
     }
 
+    useValidationChanged(e: any){
+        this.isValidationInUse = e.detail.checked;
+    }
+
+    validateShipMode(value: number){
+        return value >= 0;
+    }
+
     // Editing -----------------------------------------------------------------------------------
 
     gridDataChanged(e: any){
@@ -140,6 +150,10 @@ export class GridFormEditing {
             if (quantityCell && priceCell && totalCell)
                 totalCell.value = quantityCell.value * priceCell.value;
         }
+    }
+
+    gridDataInvalid(e: any){
+        alert("Some data fields are invalid!");
     }
 
     getCellById(row: any, id: any){

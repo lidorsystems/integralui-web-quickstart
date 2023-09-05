@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="listbox-dragdrop-overview"]{
-                --listbox-display: inline-block;
+                --iui-listbox-display: inline-block;
             }
             .sample-block-ddlb-overview-panel {
                 margin-top: 20px;
@@ -21,8 +21,8 @@
                 vertical-align: top;
                 width: 150px;
 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
             }
             .sample-block-ddlb-control-panel label {
                 display: block;
@@ -50,7 +50,7 @@
                 </iui-radiogroup>
             </div>
             <div class="feature-help">
-                <p><span class="initial-space"></span>In this sample you can drag drop items within the same ListBox. There are two different ways to drag and drop items:
+                <p><span class="initial-space"></span>In this sample you can drag drop items within the same ListBox. There are two different ways to drag and drop items:</p>
                 <ul class="feature-points">
                     <li><span class="code-name">Static</span> - a drop marker appears with information about target item and an icon that shows drop position: Up or Down</li>
                     <li><span class="code-name">Dynamic</span> - a window with a list of dragged items appears and while dragging it all other items will move making space where items can drop</li>
@@ -127,6 +127,7 @@
         
         ctrl.allowDrag = true;
         ctrl.allowDrop = true;
+        ctrl.animateInit = true;
 
         ctrl.groups = [
             { name: "sci-fi" },

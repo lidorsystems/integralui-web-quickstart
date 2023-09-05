@@ -23,15 +23,20 @@ class PopOverOverview extends Component {
             currentTheme: IntegralUITheme.Office,
             isPopoverActive: false,
             popoverSettings: {
+                animation: {
+                    delay: 0,
+                    duration: 250,
+                    translateValue: 25
+                },
                 activation: 'manual',
                 autoPopDelay: 3000,
                 closeButton: true,
                 enabled: true,
                 header: true,
-                initialDelay: 500,
+                initialDelay: 0,
                 position: 'right',
                 showMarker: true,
-                title: 'PopOver Title'
+                title: 'PopOver Title',
             }
         }
     }
@@ -117,6 +122,8 @@ class PopOverOverview extends Component {
                         <p><span className="initial-space"></span>If activation is set to 'manual', the popup will remain active until it's closed by changing the popOverShow property to false. If popOverShow property is not specified, then the popover will appear on mouse enter.</p>
                         <p><span className="initial-space"></span>The following properties are supported:</p>
                         <ul className="feature-points">
+                            <li><span className="code-name">allowAnimation</span> - determines whether animations are allowed or not, default is true</li>
+                            <li><span className="code-name">animation</span> - specifies the delay, duration and translate value</li>
                             <li><span className="code-name">activation</span> - specifies whether the popup is activated manually or automatically</li>
                             <li><span className="code-name">autoPopDelay</span> - specifies the time in milliseconds for PopOver to remain visible</li>
                             <li><span className="code-name">closeButton</span> - determines whether the close button is visible in the header</li>

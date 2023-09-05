@@ -34,7 +34,6 @@ export class TabStripCloseButton {
     public customStyle: any = iuiTabStripCloseButtonStyle;
     public ctrlSize: any = { width: 600, height: 300 };
     public tabs: Array<any> = [];
-    public toolbarIcons: Array<string> = ['tbs-tool-watch', 'tbs-tool-charts', '', 'tbs-tool-favorite'];
 
     constructor(){
         this.tabs = [

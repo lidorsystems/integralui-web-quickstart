@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-highlight-dragover"]{
+                --iui-listbox-display: inline-block;
+            }
+            .sample-block-ddlb-overview-panel {
+                margin-top: 20px;
+                text-align: center;
+                width: 350px;
+            }
+            .sample-block-highlight-dragover-control-panel {
+                display: inline-block;
+                margin: 0 0 0 20px;
+                text-align: left;
+                vertical-align: top;
+                width: 150px;
+
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
+            }
+            .sample-block-highlight-dragover-control-panel label {
+                display: block;
+                margin: 12px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Highlight Target on Drag Over</h2>
+        <div class="sample-block-listbox-highlight-dragover">
+            <iui-listbox id="listbox-highlight-dragover"></iui-listbox>
+            <div class="sample-block-highlight-dragover-control-panel">
+                <label>Drag Drop Mode: </label>
+                <iui-radiogroup id="dragdrop-mode">
+                    <iui-radiobutton checked="true">Static</iui-radiobutton>
+                    <iui-radiobutton>Dynamic</iui-radiobutton>
+                </iui-radiogroup>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, some of the items don't allow drops over their space. Whenever an item is dragged over some target item, its border color will change to <span style="color:green">'green'</span> if drop is allowed, otherwise if not allowed will appear in <span style="color:red">'red'</span>.</p>
+                <p><span class="initial-space"></span>This change of border color for target item is achieved by setting inline style in code, within the handler for <span class="code-name">dragOver</span> event.</p>
+                <p><span class="initial-space"></span>You can also set the way drag and drop works:</p>
+                    <ul class="feature-points">
+                        <li><span class="code-name">Static</span> - a drop marker appears with information about target item and an icon that shows drop position: Up or Down</li>
+                        <li><span class="code-name">Dynamic</span> - a window with a list of dragged items appears and while dragging all other items will move making space where items can drop</li>
+                    </ul>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUIDragDropMode, IntegralUISelectionMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+   
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Sample settings
+        //
+       
+        // Drag Drop Mode
+        const ctrlDDMode = document.querySelector('#dragdrop-mode');
+        ctrlDDMode.theme = currentTheme;
+        
+        ctrlDDMode.resourcePath = currentResourcePath;
+        ctrlDDMode.addEventListener("buttonChecked", (e) => onDragDropModeChecked(e));
+
+        let onDragDropModeChecked = function(e){
+            switch (e.detail.index){
+                case 0: 
+                    ctrl.dragDropMode = IntegralUIDragDropMode.Static;
+                    break;
+
+                default: 
+                    ctrl.dragDropMode = IntegralUIDragDropMode.Dynamic;
+                    break;
+            }
+        }
+     
+        // ListBox settings
+        const ctrl = document.querySelector('#listbox-highlight-dragover');
+        
+        ctrl.allowDrag = true;
+        ctrl.allowDrop = true;
+        ctrl.dragDropMode = IntegralUIDragDropMode.Static;
+
+        ctrl.items = [
+            { id: 111, text: "DiRT 3", group: "Driving/Racing" },
+            { id: 112, text: "Ridge Racer Unbounded", group: "Driving/Racing" },
+            { id: 113, text: "TrackMania 2", group: "Driving/Racing" },
+            { id: 121, text: "Dark Souls 2", group: "Role-Playing" },
+            { id: 122, text: "Mass Effect 3", group: "Role-Playing" },
+            { id: 123, text: "The Elder Scrolls V: Skyrim", group: "Role-Playing" },
+            { id: 124, text: "Divinity: Original Sin", group: "Role-Playing" },
+            { id: 125, text: "Fallout: New Vegas", group: "Role-Playing" },
+            { id: 131, text: "Diablo 3", group: "Action" },
+            { id: 132, text: "Gears of War", group: "Action" },
+            { id: 133, text: "F.E.A.R.", group: "Action" },
+            { id: 134, text: "Path of Exile", group: "Action" },
+            { id: 135, text: "Grand Theft Auto IV", group: "Action" },
+            { id: 136, text: "Divine Divinity", group: "Action" },
+            { id: 137, text: "The Witcher 2", group: "Action" },
+            { id: 141, text: "Battlefield: Bad Company 2", group: "Shooter" },
+            { id: 142, text: "Call of Duty: Black Ops", group: "Shooter" },
+            { id: 143, text: "BioShock Infinite", group: "Shooter" },
+            { id: 144, text: "Crysis 2", group: "Shooter" },
+            { id: 211, text: "FIFA 14", group: "Sports" },
+            { id: 212, text: "Madden NFL 25", group: "Sports" },
+            { id: 221, text: "Assassin's Creed IV", group: "Adventure" },
+            { id: 222, text: "Tomb Raider", group: "Adventure" },
+            { id: 223, text: "Metal Gear Solid V", group: "Adventure" },
+            { id: 311, text: "Battlefield 4", group: "First-Person" },
+            { id: 312, text: "Call of Duty: Ghosts", group: "First-Person" },
+            { id: 313, text: "Killzone: Shadow Fall", group: "First-Person" },
+            { id: 321, text: "Rayman Legends", group: "Platformer" },
+            { id: 322, text: "Rogue Legacy", group: "Platformer" },
+            { id: 323, text: "1001 Spikes", group: "Platformer" },
+            { id: 333, text: "Final Fantasy XIV Online", group: "MMO" }
+        ];
+
+        ctrl.resourcePath = currentResourcePath;
+        ctrl.selectionMode = IntegralUISelectionMode.MultiExtended;
+        ctrl.size = { width: 500, height: 400 }
+        ctrl.theme = currentTheme;
+
+        // Events --------------------------------------------------------------------------------
+
+        let currentTarget = null;
+
+        ctrl.addEventListener("dragOver", (e) => listDragOver(e));
+        ctrl.addEventListener("dragEnd", () => listDragEnd());
+
+        let listDragEnd = function(){
+            clearTarget();
+
+            currentTarget = null;
+        }
+
+        let listDragOver = function(e){
+            clearTarget();
+
+            currentTarget = e.detail.targetObj;
+
+            if (currentTarget && 
+                ((currentTarget.id > 121 && currentTarget.id < 125) ||
+                (currentTarget.id >= 211 && currentTarget.id <= 223) ||
+                (currentTarget.id === 313))){
+                targetNotAllowed();
+                e.detail.cancel = true;
+            }
+            else
+                targetAllowed();
+
+            ctrl.refresh();
+        }
+
+        let clearTarget = function(){
+            if (currentTarget)
+                currentTarget.style = undefined;
+        }
+
+        let targetAllowed = function(){
+            if (currentTarget)
+                currentTarget.style = { 
+                    normal: { borderColor: 'green' }
+                }
+        }
+
+        let targetNotAllowed = function(){
+            if (currentTarget)
+                currentTarget.style = { 
+                    normal: { borderColor: 'red' }
+                }
+        }
+
+
+    </script>
+</html>

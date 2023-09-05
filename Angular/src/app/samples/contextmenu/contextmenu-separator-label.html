@@ -1,0 +1,17 @@
+<h2>ContextMenu / Separator with Label</h2>
+<div class="sample-block">
+    <iui-contextmenu #contextmenu
+        [customStyle]="customStyle"
+        [settings]="menuSettings"
+        [theme]="currentTheme"
+        (menuClick)="menuItemClick($event)"
+    >
+        <div class="cmnu-separator-label-block" id="menu-block">
+            <span>Right click to open the context menu</span>
+        </div>
+    </iui-contextmenu>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>An example where separators have customizable labels. Each separator can have cuistom appearance set in CSS shared among all menus or you can set separators in different colors and other settings with inline styles.</p>
+    <p><span class="initial-space"></span>Once Context Menu appears, you will find separators in <i>Blue</i> and <i>Green</i> colors with different settings. The blue separator uses general CSS settings, while the green separator uses inline styles.</p>
+</div>

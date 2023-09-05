@@ -12,16 +12,16 @@
                 font-size: 1.1em;
             }
             [id="tabstrip-multiline"]{
-                --tabstrip-display: inline-block;
-                --tabstrip-width: calc(100% - 175px);
+                --iui-tabstrip-display: inline-block;
+                --iui-tabstrip-width: calc(100% - 175px);
 
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
-                --tab-header-padding: 9px;
-                --tab-header-text-align: center;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-padding: 9px;
+                --iui-tab-header-text-align: center;
 
-                --tab-header-border2: 5px solid #bcbcbc;
-                --tab-header-border-color: #bcbcbc;
+                --iui-tab-header-border2: 5px solid #bcbcbc;
+                --iui-tab-header-border-color: #bcbcbc;
             }
 
             .tabstrip-multiline-panel {
@@ -30,8 +30,8 @@
                 vertical-align: top;
                 width: 150px;
 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
             }
             .tabstrip-multiline-panel label {
                 display: block;
@@ -111,7 +111,7 @@
  
         const ctrl = document.querySelector('#tabstrip-multiline');
 
-        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.contentAnimation = IntegralUIAnimationType.Slide;
         ctrl.displayMode = IntegralUITabDisplayMode.Justified;
         ctrl.navigation = IntegralUITabNavigationMode.Multiline;
         ctrl.tabStripPlacement = IntegralUITabStripPlacement.Top;

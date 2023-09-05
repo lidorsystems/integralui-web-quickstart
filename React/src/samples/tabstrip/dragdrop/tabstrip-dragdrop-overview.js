@@ -77,7 +77,7 @@ class TabStripDragDropOverview extends Component {
                     <IntegralUITabStripComponent
                         allowAnimation={this.state.isAnimationAllowed}
                         allowDrag={this.state.isDragAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         customStyle={iuiTabStripDragDropOverviewStyle}
                         resourcePath={this.state.currentResourcePath}
                         selectedTab={this.state.currentSelection}

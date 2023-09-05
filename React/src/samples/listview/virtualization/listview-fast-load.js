@@ -79,6 +79,7 @@ class ListViewFastLoad extends Component {
                 <h2>ListView / Fast Load</h2>
                 <div className="sample-block">
                     <IntegralUIListViewComponent id="listview-fast-load" ref={this.listRef}
+                        allowAnimation={false}
                         allowDrag={true}
                         allowDrop={true}
                         allowFocus={true}

@@ -5,6 +5,6 @@
 }
 
 [id="tabstrip-close-button"]{
-    --tab-header-hovered-background: #d9edfd;
-    --tab-header-hovered-border-color: #8cb1d1;
+    --iui-tab-header-hovered-background: #d9edfd;
+    --iui-tab-header-hovered-border-color: #8cb1d1;
 }

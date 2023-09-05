@@ -8,7 +8,7 @@
         <style type="text/css">
             /* Changes to the tree item layout*/
             [id="treeview-overview"] {
-                --treeitem-expand-box-margin: 4px 5px 0 0;
+                --iui-treeitem-expand-box-margin: 4px 5px 0 0;
             }
         </style>
     </head>
@@ -16,15 +16,12 @@
         <h2>TreeView / Overview</h2>
         <div class="sample-block">
             <iui-treeview id="treeview-overview"
-                allow-animation="true"
                 allow-drag="true"
                 allow-drop="true"
                 item-display="Full"
                 resource-path="../../node_modules/integralui-web/icons"
                 selection-mode="MultiExtended"
-                theme="Office"
-            > 
-            </iui-treeview>
+            ></iui-treeview>
             <div class="feature-help">
                 <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> TreeView</strong> is a native Web Component that displays tree hierarchy of items that can be reordered using advanced drag drop operations. You can load data on demand during run-time from local or remote data sources, and add custom HTML content in each tree item.</p>
                 <p><span class="initial-space"></span>Above demonstration shows a simple tree hierarchy, each item has an icon and a label. When item is hovered, a command button will appear on right side, which when clicked will remove the item from tree hirarachy.</p>
@@ -65,6 +62,7 @@
 
         const treeview = document.querySelector('#treeview-overview');
 
+        treeview.animateInit = true;
         treeview.customStyle = iuiTreeViewOverviewStyle;
         treeview.items = [
             { 

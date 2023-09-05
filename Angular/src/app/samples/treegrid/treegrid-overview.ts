@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import 'integralui-web/components/integralui.rating';
 import 'integralui-web/components/integralui.treegrid';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
-import { IntegralUIEditorType, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { IntegralUIEditMode, IntegralUIEditorType, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -18,6 +18,7 @@ export class TreeGridOverview {
 
     public columns: Array<any> = [];
     public ctrlSize: any = { width: 800, height: 400 };
+    public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Custom;
     public currentResourcePath: string = 'assets/icons';
     public currentSelectionMode: IntegralUISelectionMode = IntegralUISelectionMode.MultiExtended;
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;

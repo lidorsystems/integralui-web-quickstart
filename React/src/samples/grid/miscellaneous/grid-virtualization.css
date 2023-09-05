@@ -1,0 +1,12 @@
+[id="grid-virtualization"] .sample-block-panel iui-button {
+    --iui-button-margin: 0 5px;
+}
+[id="grid-virtualization"] .sample-block-panel iui-numeric {
+    --iui-numeric-display: inline-block;
+    --iui-numeric-margin: 0 25px 0 0;
+}
+[id="grid-virtualization"] .sample-block-panel span {
+    display: inline-block;
+    margin-top: 3px;
+    vertical-align: top;
+}

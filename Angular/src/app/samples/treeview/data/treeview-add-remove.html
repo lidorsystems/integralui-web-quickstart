@@ -1,14 +1,17 @@
 <h2>TreeView / Add-Remove Items from Code</h2>
 <div class="sample-block">
-    <div id="treeview-addremove" [ngStyle]="{ display: this.items.length > 0 ? 'inline-block' : 'none' }">
+    <div id="treeview-addremove" [ngStyle]="{ display: !isTreeEmpty ? 'inline-block' : 'none' }">
         <iui-treeview #treeview
             [items]="items"
             [resourcePath]="currentResourcePath"
             [size]="ctrlSize"
             [theme]="currentTheme"
+            (clear)="treeClear($event)"
+            (itemAdded)="treeItemAdded($event)"
+            (itemRemoved)="treeItemRemoved($event)"
         ></iui-treeview>
     </div>
-    <div class="empty-block" [ngStyle]="{ display: this.items.length === 0 ? 'inline-block' : 'none' }">TreeView is empty.</div>
+    <div class="empty-block" [ngStyle]="{ display: isTreeEmpty ? 'inline-block' : 'none' }">TreeView is empty.</div>
     <div class="treeview-addremove-panel">
         <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onAddClicked()">Add</iui-button>
         <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onAddChildClicked()">Add Child</iui-button>
@@ -23,6 +26,7 @@
         </div>
         <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onClearClicked()">Clear</iui-button>
     </div>
+    <iui-toaster #toaster [duration]="3000"></iui-toaster>
     <div class="feature-help">
         <p><span class="initial-space"></span>An example that demonstrates adding and removal od items manually from code using buttons.</p>
         <p><span class="initial-space"></span>You can add items at the end, before or after a specific item (in this case the selected item) or at specific position.</p>

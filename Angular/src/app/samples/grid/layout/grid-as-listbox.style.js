@@ -56,18 +56,18 @@ export const iuiGridAsListBoxStyle = css`
 
 
     .iui-button {
-        --button-background: white;
-        --button-border-color: #c8c8c8;
-        --button-color: #e05d20;
-        --button-cursor: pointer;
-        --button-margin: 16px 0;
-        --button-padding: 5px;
-        --button-width: 75px;
+        --iui-button-background: white;
+        --iui-button-border-color: #c8c8c8;
+        --iui-button-color: #e05d20;
+        --iui-button-cursor: pointer;
+        --iui-button-margin: 16px 0;
+        --iui-button-padding: 5px;
+        --iui-button-width: 75px;
     }
     .iui-button-hovered {
 
-        --button-hovered-background: #e05d20;
-        --button-hovered-border-color: #c25421;
+        --iui-button-hovered-background: #e05d20;
+        --iui-button-hovered-border-color: #c25421;
         color: white;
     }
 `;

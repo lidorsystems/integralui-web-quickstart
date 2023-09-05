@@ -6,9 +6,9 @@ div[slot="content"] {
     height: calc(100% - 2px);
 }
 [id="grid-window-block-dynamic-resize"] iui-grid {
-    --grid-height: 100%;
-    --grid-editing-margin: 6px 0;
-    --editor-label-padding: 6px 0 0 0;
+    --iui-grid-height: 100%;
+    --iui-grid-editing-margin: 6px 0;
+    --iui-editor-label-padding: 6px 0 0 0;
 }
 .feature-help {
     margin-top: 15px;

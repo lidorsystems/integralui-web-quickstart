@@ -40,13 +40,16 @@ export class ListBoxFastLoad {
     }
 
     addItems(){
+        let list = [];
         for (let i = 0; i < this.numItems; i++){
             let item = {
                 id: i + 1,
                 text : 'Item ' + (i + 1).toString()
             };
 
-            this.listbox.nativeElement.addItem(item);
+            list.push(item);
         }
+
+        this.listbox.nativeElement.addItem(list);
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "integralui-web-quickstart",
-  "version": "23.1.0",
+  "version": "23.3.0",
   "description": "IntegralUI Web Quick Start - A demo application that contains samples for each component included in the IntegralUI Web library",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -13,12 +13,12 @@ export const iuiGridFixedColumnsStyle = css`
 
     /* DropDownList */
     .iui-select {
-        --select-margin: 4px 0 0 0;
+        --iui-select-margin: 4px 0 0 0;
     }
 
     iui-dropdownbutton {
-        --dropdownbutton-float: right;
-        --dropdownbutton-height: 16px;
+        --iui-dropdownbutton-float: right;
+        --iui-dropdownbutton-height: 16px;
         opacity: 0;
     }
 

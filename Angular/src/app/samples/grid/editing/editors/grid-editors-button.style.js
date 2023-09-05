@@ -8,6 +8,6 @@ export const iuiGridEditorsButtonStyle = css`
         margin: 12px 3px 0 0
     }
     .iui-button {
-        --button-margin: 4px;
+        --iui-button-margin: 4px;
     }
 `;

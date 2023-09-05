@@ -2,8 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { html } from 'integralui-web/external/lit-element';
 
 import 'integralui-web/components/integralui.treeview';
-import { IntegralUIItemDisplayMode, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
-import { iuiTreeViewOverviewStyle } from './treeview-overview.style';
+import { IntegralUIItemDisplayMode, IntegralUISelectionMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import { iuiTreeViewOverviewStyle } from './treeview-overview.style.js';
 
 @Component({
     selector: '',

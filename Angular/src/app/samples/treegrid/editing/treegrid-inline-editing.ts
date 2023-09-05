@@ -2,10 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { html } from 'integralui-web/external/lit-element';
 
+import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.datepicker';
 import 'integralui-web/components/integralui.treegrid';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
-import { IntegralUIEditMode, IntegralUITheme, IntegralUIVisibility } from 'integralui-web/components/integralui.enums';
+import { IntegralUIEditMode, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 import { iuiTreeGridInlineEditingStyle } from './treegrid-inline-editing.style';
 
 // Import editor components
@@ -27,7 +28,8 @@ export class TreeGridInlineEditing {
     public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Inline;
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
-    public gridStyle: any = iuiTreeGridInlineEditingStyle;
+    public treegridStyle: any = iuiTreeGridInlineEditingStyle;
+    public isValidationInUse: boolean = true;
     public rows: Array<any> = [];
 
     constructor(private http: HttpClient){
@@ -37,7 +39,7 @@ export class TreeGridInlineEditing {
     ngAfterViewInit(){
         this.treegrid.nativeElement.headerTemplate = this.currentHeaderTemplate;
 
-        // Load data into the Grid from a JSON file
+        // Load data into the TreeGrid from a JSON file
         this.loadFromJSON();
     }
 
@@ -56,10 +58,6 @@ export class TreeGridInlineEditing {
         // Load other columns from the data source
         data.columns.forEach((obj: any) => {
             let column = Object.assign({ headerAlignment: 'center' }, obj);
-
-            column.editorSetting = { 
-                visible: IntegralUIVisibility.None
-            }
 
             this.columns.push(column);
         });
@@ -113,17 +111,20 @@ export class TreeGridInlineEditing {
 
         // Use HTTP service to get data from the specified JSON file
         self.http.get("./assets/treegrid-inline-editing-data.json").subscribe((data: any) => {
-            // Suspend the grid layout from updates, to increase performance
+            // Suspend the treegrid layout from updates, to increase performance
             self.treegrid.nativeElement.suspendLayout();
 
-            // Load data into the grid
+            // Load data into the treegrid
             self.convertJSONData(data);
     
-            // Resume and update the grid layout
+            // Resume and update the treegrid layout
             self.treegrid.nativeElement.resumeLayout();
         });
     }
 
+    useValidationChanged(e: any){
+        this.isValidationInUse = e.detail.checked;
+    }
 
     // Editing -----------------------------------------------------------------------------------
 
@@ -143,6 +144,10 @@ export class TreeGridInlineEditing {
         let filtered = row.cells.filter((cell: any) => cell.cid === id);
 
         return filtered.length > 0 ? filtered[0] : null;
+    }
+
+    treegridDataInvalid(e: any){
+        alert("Some data fields are invalid!");
     }
 
     // Templates ---------------------------------------------------------------------------------

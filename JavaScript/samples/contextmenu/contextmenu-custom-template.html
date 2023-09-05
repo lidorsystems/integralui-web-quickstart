@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="contextmenu-custom-template-panel"] {
+                --iui-panel-font-size: 1rem;
+                --iui-panel-margin: 10px 0;
+                --iui-panel-height: 300px;
+            }
+            .contextmenu-custom-template-block {
+                transform: scale(2.5);
+                transition: transform 0.1s ease-in-out;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ContextMenu / Custom Template</h2>
+        <div class="sample-block">
+            <iui-contextmenu id="contextmenu-custom-template" resource-path="../../node_modules/integralui-web/icons"> 
+                <iui-panel id="contextmenu-custom-template-panel">
+                    <div class="contextmenu-custom-template-block">
+                        Sample Content Block
+                    </div>
+                </iui-panel>
+            </iui-contextmenu>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of a Context Menu with custom template. Instead of just label, the <strong>'Zoom'</strong> menu item has a set of buttons for zoom-in and zoom-out and label that shows current zoom value in middle.</p>
+                <p><span class="initial-space"></span>Clicking on these buttons, will change the view below, in range from 25% to 500%. Appearance of these buttons is done using custom CSS and functionality set in code by handling events from the custom menu template.</p>
+                <p><span class="initial-space"></span>In addition, to close the menu you can click on <strong>'Zoom'</strong> label or any other menu item or outside the menu space. However the menu will remain active while buttons are clicked, this is set in code by handling events.</p>
+                <p><span class="initial-space"></span>You can create custom templates that can be shared between all menus or each menu item can have a different template, based on condtions set in your code. To create templates, you can use any custom HTML elements and arrange them in custom layouts.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module">
+        import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiMenuCustomTemplateStyle } from './contextmenu-custom-template.style.js';
+   
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Panel
+        //
+        const ctrlPanel = document.querySelector('#contextmenu-custom-template-panel');
+
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        // Sample Block
+        const block = document.querySelector('.contextmenu-custom-template-block');
+        
+        //
+        // Menu settings
+        //
+        const ctrl = document.querySelector('#contextmenu-custom-template');
+
+        ctrl.customStyle = iuiMenuCustomTemplateStyle;
+
+        ctrl.settings = {
+            items: [
+                { text: "Context Menu", type: "header" },
+                { text: "History" },
+                { text: "Downloads" },
+                { text: "Bookmarks" },
+                { text: "Extensions" },
+                { text: "Zoom", zoomValue: 250 },
+                { text: "Print" },
+                { type: "separator" },
+                { text: "Exit" }
+            ]
+        }
+  
+        // Templates ----------------------------------------------------------------------------
+
+        let zoomInterval = null;
+
+        let preventClosing = function(e){
+            removeZoomInterval();
+            e.stopPropagation();
+        }
+
+        let removeZoomInterval = function(){
+            if (zoomInterval)
+                clearInterval(zoomInterval);
+
+            zoomInterval = null;
+        }
+
+        let updateBlockSettings = function(value){
+            if (block)
+                block.style.transform = 'scale(' + value / 100 + ')';
+        }
+
+        let zoomIn = function(e, item){
+            removeZoomInterval();
+
+            zoomInterval = setInterval(function(){
+                item.zoomValue = Math.min(500, item.zoomValue + 10);
+                ctrl.refresh();
+
+                updateBlockSettings(item.zoomValue);
+            }, 50);
+
+            e.stopPropagation();
+        }
+
+        let zoomOut = function(e, item){
+            removeZoomInterval();
+
+            zoomInterval = setInterval(function(){
+                item.zoomValue = Math.max(25, item.zoomValue - 10);
+                ctrl.refresh();
+
+                updateBlockSettings(item.zoomValue);
+            }, 50);
+            
+            e.stopPropagation();
+        }
+
+        ctrl.itemTemplate = (item) => { 
+            if (item.text === 'Zoom')
+                return html`
+                    <div class="contextmenu-cstpl-block">
+                        <span class="contextmenu-cstpl-label">${item.text}</span>
+                        <div class="contextmenu-cstpl-zoom-block" @mouseup="${(e) => preventClosing(e)}">
+                            <span class="contextmenu-cstpl-zoom-out" @mousedown="${(e) => zoomOut(e, item)}">-</span>
+                            <span class="contextmenu-cstpl-zoom-value">${item.zoomValue}%</span>
+                            <span class="contextmenu-cstpl-zoom-in" @mousedown="${(e) => zoomIn(e, item)}">+</span>
+                        </div>
+                    </div>
+                `;
+
+            return null;
+        };
+
+    </script>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "integralui-web-quickstart-angular",
-  "version": "23.1.0",
+  "version": "23.3.0",
   "author": "Lidor Systems",
   "license": "SEE LICENSE in LICENSE.md",
   "scripts": {
@@ -20,7 +20,7 @@
     "@angular/platform-browser": "^15.1.0",
     "@angular/platform-browser-dynamic": "^15.1.0",
     "@angular/router": "^15.1.0",
-    "integralui-web": "~23.1.0",
+    "integralui-web": "~23.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

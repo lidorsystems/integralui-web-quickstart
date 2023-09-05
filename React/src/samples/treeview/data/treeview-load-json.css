@@ -1,13 +1,13 @@
 /* Changes to the Button */
 [id="treeview-button-load-json"] {
-    --button-margin: 185px 140px;
-    --button-position: absolute;
-    --button-width: 120px;
-    --button-z-index: 1;
+    --iui-button-margin: 185px 140px;
+    --iui-button-position: absolute;
+    --iui-button-width: 120px;
+    --iui-button-z-index: 1;
 }
 
 /* Changes to the TreeView */
 [id="treeview-load-json"] {
-    --treeitem-treeitem-content-padding: 3px;
-    --treeitem-expand-box-margin: 4px 5px 0 0;
+    --iui-treeitem-treeitem-content-padding: 3px;
+    --iui-treeitem-expand-box-margin: 4px 5px 0 0;
 }

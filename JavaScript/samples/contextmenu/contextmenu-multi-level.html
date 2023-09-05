@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .cmnu-multi-level-block {
+                background: white;
+                border: thin solid gray;
+                width: 800px;
+                height: 300px;
+            }
+            .cmnu-multi-level-block span {
+                color: #808080;
+                cursor: default;
+                display: block;
+                margin: 140px auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ContextMenu / Multi-Level</h2>
+        <div class="sample-block">
+            <iui-contextmenu id="contextmenu-multi-level"> 
+                <div class="cmnu-multi-level-block" id="menu-block">
+                    <span>Right click to open the context menu</span>
+                </div>
+            </iui-contextmenu>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of Context Menu with sub-menus in multiple levels. Clicking on menu item, will show a message box, stating the menu item that was clicked. The message box will appear only if the menu item don't have any child menus.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module">
+        import { iuiContextMenuMultiLevelStyle } from './contextmenu-multi-level.style.js';
+
+        const ctrl = document.querySelector('#contextmenu-multi-level');
+
+        ctrl.customStyle = iuiContextMenuMultiLevelStyle;
+
+        ctrl.settings = {
+            items: [
+                { id: 10, text: "Books", type: "header" },
+                { id: 11, text: "Art" },
+                { 
+                    id: 12,
+                    text: "Business",
+                    icon: "icons-medium people",
+                    items: [
+                        { id: 121, pid: 12, text: "Economics" },
+                        { 
+                            id: 122,
+                            pid: 12,
+                            text: "Investing", 
+                            icon: "icons-medium economics",
+                            items: [
+                                { id: 1221, pid: 122, text: "Bonds" },
+                                { id: 1222, pid: 122, text: "Options" },
+                                { id: 1223, pid: 122, text: "Stocks" }
+                            ]
+                        },
+                        { id: 123, pid: 12, text: "Management" },
+                        { id: 124, pid: 12, text: "Small Business" }
+                    ]
+                },
+                { id: 13, text: "Health", icon: "icons-medium heart" },
+                { id: 14, text: "Literature" },
+                { 
+                    id: 15,
+                    text: "Science",
+                    items: [
+                        { id: 151, pid: 15, text: "Astronomy" },
+                        { id: 152, pid: 15, text: "Mathematics" },
+                        { id: 153, pid: 15, text: "Evolution" },
+                        { id: 154, pid: 15, text: "Nature" }
+                    ]
+                }
+            ]
+        }
+
+        // Events --------------------------------------------------------------------------------
+
+        ctrl.addEventListener("menuClick", (e) => menuItemClick(e));
+
+        let isThereChildMenus = function(item){
+            return item.items && item.items.length > 0 ? true : false;
+        }
+
+        let menuItemClick = function(e){
+            let currentMenuItem = e.detail.item;
+
+            if (currentMenuItem && !isThereChildMenus(currentMenuItem))
+                alert("Menu item: " + currentMenuItem.text + " is clicked.");
+        }
+
+        // Initialization ------------------------------------------------------------------------
+                
+        // For menu items without icon, add an empty icon
+        let setEmptyItemIcon = function(list){
+            list.forEach(item => {
+                if (item.type !== 'header' && !item.icon) 
+                    item.icon = "menu-mlvl-icons-empty"
+
+                setEmptyItemIcon(item.items || []);
+            });
+        }
+
+        setEmptyItemIcon(ctrl.settings.items);
+
+    </script>
+</html>

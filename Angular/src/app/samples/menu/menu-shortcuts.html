@@ -1,0 +1,16 @@
+<h2>Menu / Shortcuts</h2>
+<div class="sample-block">
+    <iui-menu #menu id="menu-shortcuts"
+        [customStyle]="customStyle"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [theme]="currentTheme"
+        (menuClick)="menuItemClick($event)"
+    ></iui-menu>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of menu with shortcuts. Some of the menu items have a shortcut key attached. Whenever the combination of keys set in the shortcut is pressed, the <span class="code-name">menuClick</span> event will fire. Shortcuts will call the same function as the menu item is clicked. In this case, an alert box will popup.</p>
+        <p><span class="initial-space"></span>You can create custom shortcuts with different combinations of CTRL, SHIFT, ALT and function or regular keys.</p>
+        <p><span class="initial-space"></span>In addition, you can customize the shortcut label with CSS.</p>
+    </div>
+</div>

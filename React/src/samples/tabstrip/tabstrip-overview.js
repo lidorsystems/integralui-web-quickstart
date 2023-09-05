@@ -80,7 +80,7 @@ class TabStripOverview extends Component {
                     <IntegralUITabStripComponent
                         allowAnimation={this.state.isAnimationAllowed}
                         allowDrag={this.state.isDragAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         customStyle={iuiTabStripOverviewStyle}
                         resourcePath={this.state.currentResourcePath}
                         scrollMode={this.state.currentScrollMode} 

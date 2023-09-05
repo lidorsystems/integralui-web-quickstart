@@ -1,0 +1,11 @@
+[id="menu-separator-label"] {
+    --iui-menuitem-root-margin: 0 10px 0 3px;
+    --iui-menuitem-root-width: 55px;
+    --iui-menuitem-width: 150px;
+
+    --iui-menuitem-separator-background: #bfd2f5;
+    --iui-menuitem-separator-content-background: #bfd2f5;
+    --iui-menuitem-separator-content-border-color: #bfd2f5;
+    --iui-menuitem-separator-content-font-weight: bold;
+    --iui-menuitem-separator-content-padding: 5px 4px 5px 3px;
+}

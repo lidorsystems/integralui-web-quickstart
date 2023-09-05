@@ -10,13 +10,13 @@ export const iuiGridMultiLineHeadersStyle = css`
 
     /* DatePicker */
     .iui-datepicker {
-        --datepicker-margin: 7px 0 0 0;
-        --header-expand-box-margin: 0;
+        --iui-datepicker-margin: 7px 0 0 0;
+        --iui-header-expand-box-margin: 0;
     }
 
     /* DropDownList */
     .iui-select {
-        --select-margin: 5px 0 0 0;
-        --header-expand-box-margin: 0 2px;
+        --iui-select-margin: 5px 0 0 0;
+        --iui-header-expand-box-margin: 0 2px;
     }
 `;

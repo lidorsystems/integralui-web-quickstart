@@ -48,6 +48,6 @@ export const iuiGridEditorsRadioButtonStyle = css`
 
     /* RadioButton */
     iui-radiobutton {
-        --radio-button-btn-margin: 0;
+        --iui-radio-button-btn-margin: 0;
     }
 `;

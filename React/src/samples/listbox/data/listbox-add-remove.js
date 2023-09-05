@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import { IntegralUITheme, IntegralUIToastType } from 'integralui-web/components/integralui.enums.js';
 
 import IntegralUIButtonComponent from 'integralui-web/wrappers/react.integralui.button.js';
 import IntegralUINumericComponent from 'integralui-web/wrappers/react.integralui.numeric.js';
 import IntegralUIListBoxComponent from 'integralui-web/wrappers/react.integralui.listbox.js';
+import IntegralUIToasterComponent from 'integralui-web/wrappers/react.integralui.toaster.js';
 
 import './listbox-add-remove.css';
 
@@ -27,6 +28,7 @@ class ListBoxAddRemove extends Component {
 
         this.itemCount = 0;
         this.listRef = React.createRef();
+        this.toasterRef = React.createRef();
     }
 
     //
@@ -37,8 +39,10 @@ class ListBoxAddRemove extends Component {
     onAddClicked(e){
         let newItem = this.createNewItem();
 
+        this.initContent();
+
         this.listRef.current.addItem(newItem);
-        this.updateContent(newItem);
+        this.updateSelection(newItem);
     }
 
     // Insert After Button
@@ -48,8 +52,10 @@ class ListBoxAddRemove extends Component {
         else {
             let newItem = this.createNewItem();
 
+            this.initContent();
+
             this.listRef.current.insertItemAfter(newItem, this.state.currentSelection);
-            this.updateContent();
+            this.updateSelection(newItem);
         }
     }
 
@@ -60,8 +66,10 @@ class ListBoxAddRemove extends Component {
         else {
             let newItem = this.createNewItem();
 
+            this.initContent();
+
             this.listRef.current.insertItemBefore(newItem, this.state.currentSelection);
-            this.updateContent();
+            this.updateSelection(newItem);
         }
     }
 
@@ -73,8 +81,10 @@ class ListBoxAddRemove extends Component {
         if (insertPos >= 0 && (insertPos < itemCount || itemCount === 0)){
             let newItem = this.createNewItem();
 
+            this.initContent();
+
             this.listRef.current.insertItemAt(newItem, insertPos);
-            this.updateContent(newItem);
+            this.updateSelection(newItem);
         }
     }
 
@@ -91,18 +101,18 @@ class ListBoxAddRemove extends Component {
                 newSelItem = this.listRef.current.getNextItem(selItem);
                 
             this.listRef.current.removeItem(selItem);
-            this.updateContent(newSelItem);
+            this.updateSelection(newSelItem);
         }
     }
 
     // Remove At Button
-    onRemoveAtClicked(e){
+    async onRemoveAtClicked(e){
         let itemCount = this.state.items.length;
         let removePos = this.state.removeAtValue;
 
         if (removePos >= 0 && removePos < itemCount){
-            this.listRef.current.removeItemAt(removePos);
-            this.updateContent();
+            await this.listRef.current.removeItemAt(removePos);
+            this.updateSelection(this.state.items[removePos]);
         }
     }
 
@@ -111,12 +121,12 @@ class ListBoxAddRemove extends Component {
     }
 
     // Clear Button
-    onClearClicked(e){
-        this.listRef.current.clearItems();
+    async onClearClicked(e){
+        await this.listRef.current.clearItems();
         this.itemCount = 0;
 
         this.setState({ currentSelection: null });
-        this.listRef.current.updateLayout();
+        this.updateSelection();
     }
 
     createNewItem(){
@@ -126,19 +136,55 @@ class ListBoxAddRemove extends Component {
         return { id: this.itemCount, text: "Item " + this.itemCount }
     }
 
-    updateContent(item){
-        if (item)
-            this.setState({ currentSelection: item });
+    // Events ------------------------------------------------------------------------------------
 
-        this.listRef.current.updateLayout();
+    listClear(){
+        this.toasterRef.current.show({ text: 'The list is cleared', type: IntegralUIToastType.Success });
+
+        this.updateContent();
     }
 
-    onItemsChanged(){
-        this.setState({ isListEmpty: this.listRef.current.props.items.length === 0 });
+    listItemAdded(e){
+        if (e.detail.item){
+            let message = 'The ' + e.detail.item.text + ' is added to the list';
+            message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+            this.toasterRef.current.show({ text: message, type: IntegralUIToastType.Success });
+        }
+
+        this.updateContent();
     }
 
-    onItemSelectionChanged(e){
+    listItemRemoved(e){
+        if (e.detail.item){
+            let message = 'The ' + e.detail.item.text + ' is removed from the list';
+            message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+            this.toasterRef.current.show({ text: message, type: IntegralUIToastType.Success });
+        }
+        else 
+            this.toasterRef.current.show({ text: 'EMPTY ITEM', type: IntegralUIToastType.Error });
+
+        this.updateContent();
+    }
+
+    listSelectionChanged(e){
         this.setState({ currentSelection: e.detail.item });
+    }
+
+    // Update ------------------------------------------------------------------------------------
+
+    initContent(){
+        if (this.state.items.length === 0)
+            this.setState({ isListEmpty: false });
+    }
+
+    updateSelection(item){
+        this.setState({ currentSelection: item });
+    }
+
+    updateContent(){
+        this.setState({ isListEmpty: this.listRef.current.props.items.length === 0 });
     }
 
     render() {
@@ -146,17 +192,17 @@ class ListBoxAddRemove extends Component {
             <div>
                 <h2>ListBox / Add-Remove Items from Code</h2>
                 <div className="sample-block">
-                    <div id="listbox-addremove" style={{ display: this.state.items.length > 0 ? 'inline-block' : 'none' }}>
+                    <div id="listbox-addremove" style={{ display: !this.state.isListEmpty ? 'inline-block' : 'none' }}>
                         <IntegralUIListBoxComponent ref={this.listRef}
                             items={this.state.items}
                             resourcePath={this.state.currentResourcePath}
                             selectedItem={this.state.currentSelection}
                             size={this.state.ctrlSize}
                             theme={this.state.currentTheme}
-                            itemAdded={() => this.onItemsChanged()}
-                            itemRemoved={() => this.onItemsChanged()}
-                            clear={() => this.onItemsChanged()}
-                            selectionChanged={(e) => this.onItemSelectionChanged(e)}
+                            clear={() => this.listClear()}
+                            itemAdded={(e) => this.listItemAdded(e)}
+                            itemRemoved={(e) => this.listItemRemoved(e)}
+                            selectionChanged={(e) => this.listSelectionChanged(e)}
                         ></IntegralUIListBoxComponent>
                     </div>
                     <div className="listbox-addremove-empty-block" style={{ display: this.state.isListEmpty ? 'inline-block' : 'none' }}>ListBox is empty.</div>
@@ -173,6 +219,7 @@ class ListBoxAddRemove extends Component {
                         </div>
                         <IntegralUIButtonComponent allowAnimation={this.state.isAnimationAllowed} theme={this.state.currentTheme} onClick={() => this.onClearClicked(0)}>Clear</IntegralUIButtonComponent>
                     </div>
+                    <IntegralUIToasterComponent duration={3000} ref={this.toasterRef}></IntegralUIToasterComponent>
                     <div className="feature-help">
                         <p><span className="initial-space"></span>An example that demonstrates adding and removal od items manually from code using buttons.</p>
                         <p><span className="initial-space"></span>You can add items at the end, before or after a specific item (in this case the selected item) or at specific position.</p>

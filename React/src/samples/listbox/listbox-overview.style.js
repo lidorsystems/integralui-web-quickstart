@@ -89,13 +89,13 @@ export const iuiListBoxOverviewStyle = css`
 
     /* Changes to the Rating component inside the ListBox Item */
     .lbox-ovw-item-content iui-rating {
-        --rating-background: transparent;
-        --rating-border: 0;
-        --rating-cursor: pointer;
-        --rating-display: inline-block;
-        --rating-margin: auto;
+        --iui-rating-background: transparent;
+        --iui-rating-border: 0;
+        --iui-rating-cursor: pointer;
+        --iui-rating-display: inline-block;
+        --iui-rating-margin: auto;
         vertical-align: middle;
 
-        --rating-content-image: url(../../resources/rating/star-empty-white.png);
+        --iui-rating-content-image: url(../../resources/rating/star-empty-white.png);
     }
 `;

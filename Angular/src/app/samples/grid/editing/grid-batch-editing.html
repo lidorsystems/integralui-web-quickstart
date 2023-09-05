@@ -1,5 +1,8 @@
 <h2 class="feature-title">Grid / Batch Editing</h2>
 <div class="feature-content" id="grid-batch-editing" #application>
+    <div align="right">
+        <iui-checkbox [allowFocus]="false" [checked]="isValidationInUse" [resourcePath]="currentResourcePath" [theme]="currentTheme" (checkedChanged)="useValidationChanged($event)">Use Validation</iui-checkbox><br/>
+    </div>
     <iui-grid #grid
         [allowAnimation]="true"
         [editMode]="currentEditMode"
@@ -11,7 +14,9 @@
         [showFooter]="false"
         [size]="ctrlSize"
         [theme]="currentTheme"
+        [useValidation]="isValidationInUse"
         (dataChanged)="gridDataChanged($event)"
+        (dataInvalid)="gridDataInvalid($event)"
     ></iui-grid>
     <div class="sample-block-panel">
         <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="saveChanges(true)">Save Changes</iui-button>
@@ -27,5 +32,6 @@
         <p><span class="initial-space"></span>Any changes to cell values are highlight (orange color), so you can easily see what is changed within the Grid. However, these changes are only temporary and if not saved they will be cancelled. Using the last column you can remove a row or if changes are made to cancel them within that row. Finally to complete the editing process, you can save all changes or cancel them using the buttons below the grid.</p>
         <p><span class="initial-space"></span>You can edit dates using keyboard, Left/Right arrow keys changes dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
         <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity, Price and Shipping Cost values.</p>
+        <p><span class="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
     </div>
 </div>

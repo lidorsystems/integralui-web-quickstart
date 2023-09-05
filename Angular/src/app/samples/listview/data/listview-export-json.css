@@ -1,6 +1,6 @@
 [id="listview-export"]{
-    --listview-display: inline-block;
-    --listview-width: calc(60% - 200px);
+    --iui-listview-display: inline-block;
+    --iui-listview-width: calc(60% - 200px);
 }
 [id="listview-export-result-block"]{
     border: thin solid #d9d9d9;
@@ -16,7 +16,7 @@
     vertical-align: top;
     width: 170px;
 
-    --button-margin: 10px 5px;
+    --iui-button-margin: 10px 5px;
 }
 .listview-export-panel label {
     display: block;

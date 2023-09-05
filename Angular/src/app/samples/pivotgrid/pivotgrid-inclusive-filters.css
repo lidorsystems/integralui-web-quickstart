@@ -1,6 +1,6 @@
 [id="pivotgrid-inclusive-filter"] {
-    --pivotgrid-display: inline-block;
-    --pivotgrid-width: calc(100% - 280px);
+    --iui-pivotgrid-display: inline-block;
+    --iui-pivotgrid-width: calc(100% - 280px);
 }
 
 .sbp-pgrd-incl-flt {
@@ -18,6 +18,6 @@
 }
 
 .sbp-pgrd-incl-flt iui-button {
-    --button-display: block;
-    --button-margin: 7px 0 0 0;
+    --iui-button-display: block;
+    --iui-button-margin: 7px 0 0 0;
 }

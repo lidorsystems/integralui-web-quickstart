@@ -4,12 +4,12 @@
     font-size: 1.1em;
 }
 [id="tabstrip-orientation"]{
-    --tabstrip-display: inline-block;
-    --tabstrip-width: calc(100% - 175px);
+    --iui-tabstrip-display: inline-block;
+    --iui-tabstrip-width: calc(100% - 175px);
 
-    --tab-header-hovered-background: #d9edfd;
-    --tab-header-hovered-border-color: #8cb1d1;
-    --tab-header-padding: 9px;
+    --iui-tab-header-hovered-background: #d9edfd;
+    --iui-tab-header-hovered-border-color: #8cb1d1;
+    --iui-tab-header-padding: 9px;
 }
 
 .tabstrip-orientation-panel {
@@ -18,8 +18,8 @@
     vertical-align: top;
     width: 150px;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .tabstrip-orientation-panel label {
     display: block;

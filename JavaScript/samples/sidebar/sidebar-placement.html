@@ -14,17 +14,17 @@
             }
             [id="sample-block-sidebar-placement-panel"]{
                 
-                --panel-background: white;
-                --panel-border-color: #d5d5d5;
-                --panel-height: calc(100% - 2px);
+                --iui-panel-background: white;
+                --iui-panel-border-color: #d5d5d5;
+                --iui-panel-height: calc(100% - 2px);
             }
             .sample-block-sidebar-control-panel {
                 display: inline-block;
                 text-align: left;
                 width: 150px;
 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
             }
             .sample-block-sidebar-control-panel label {
                 display: block;
@@ -90,7 +90,7 @@
 
         const ctrlPanel = document.querySelector('#sample-block-sidebar-placement-panel');
 
-        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
         ctrlPanel.theme = currentTheme;
 
         // Placement

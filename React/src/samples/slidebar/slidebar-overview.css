@@ -13,5 +13,5 @@
     text-align: center;
 }
 .sample-block-slidebar-overview iui-slidebar {
-    --slidebar-margin: 0 auto 30px auto;
+    --iui-slidebar-margin: 0 auto 30px auto;
 }

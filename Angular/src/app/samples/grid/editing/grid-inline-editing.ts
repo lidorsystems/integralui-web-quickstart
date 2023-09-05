@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { html } from 'integralui-web/external/lit-element';
 
+import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.datepicker';
 import 'integralui-web/components/integralui.grid';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
@@ -28,6 +29,7 @@ export class GridInlineEditing {
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public gridStyle: any = iuiGridInlineEditingStyle;
+    public isValidationInUse: boolean = true;
     public rows: Array<any> = [];
 
     constructor(private http: HttpClient){
@@ -120,6 +122,9 @@ export class GridInlineEditing {
         });
     }
 
+    useValidationChanged(e: any){
+        this.isValidationInUse = e.detail.checked;
+    }
 
     // Editing -----------------------------------------------------------------------------------
 
@@ -139,6 +144,10 @@ export class GridInlineEditing {
         let filtered = row.cells.filter((cell: any) => cell.cid === id);
 
         return filtered.length > 0 ? filtered[0] : null;
+    }
+
+    gridDataInvalid(e: any){
+        alert("Some data fields are invalid!");
     }
 
     // Templates ---------------------------------------------------------------------------------

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
 
+import IntegralUICheckBoxComponent from 'integralui-web/wrappers/react.integralui.checkbox.js';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
 import IntegralUITreeGridComponent from 'integralui-web/wrappers/react.integralui.treegrid.js';
-import { IntegralUIEditMode, IntegralUITheme, IntegralUIVisibility } from 'integralui-web/components/integralui.enums.js';
+import { IntegralUIEditMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
 
-import gridData from './treegrid-form-editing-data.json';
+import treegridData from './treegrid-form-editing-data.json';
 
 // Import editor components
 import 'integralui-web/components/integralui.datepicker.js';
@@ -22,33 +23,26 @@ class TreeGridFormEditing extends Component {
 
         this._commonService = new IntegralUICommonService();
 
-        this.shipModeList = [
-            { id: 1, text: "None", value: -1 },
-            { id: 2, text: "Delivery Truck", value: 0 },
-            { id: 3, text: "Regular Air", value: 1 },
-            { id: 4, text: "Express Air", value: 2 }
-        ];
-
         this.state = {
             columns: [],
             ctrlSize: { height: 465 },
             currentEditMode: IntegralUIEditMode.Form,
             currentResourcePath: '../../integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
-            gridFields: {
+            treegridFields: {
                 column: {
                     headerText: 'title'
                 }
             },
-            isAnimationAllowed: true,
+            isValidationInUse: true,
             rows: []
         }
         
-        this.gridRef = React.createRef();
+        this.treegridRef = React.createRef();
     }
 
     componentDidMount(){
-        this.convertJSONData(gridData);
+        this.convertJSONData(treegridData);
     }
 
     //
@@ -57,7 +51,7 @@ class TreeGridFormEditing extends Component {
 
     // Editing -----------------------------------------------------------------------------------
 
-    gridDataChanged(e){
+    treegridDataChanged(e){
         // Update the Total value when Quantity or Price changes
         if (e.detail.data){
             let row = e.detail.data;
@@ -71,20 +65,18 @@ class TreeGridFormEditing extends Component {
         }
     }
 
+    treegridDataInvalid(e){
+        alert("Some data fields are invalid!");
+    }
+
     getCellById(row, id){
         let filtered = row.cells.filter(cell => cell.cid === id);
 
         return filtered.length > 0 ? filtered[0] : null;
     }
 
-    gridRowDblClick(e){
-        this.gridRef.current.beginEdit(e.detail.row);
-    }
-
-    saveChanges(keep){
-        // Calling endEdit will complete the editing process
-        // If called with true, it will save any changes
-        this.gridRef.current.endEdit(keep);
+    treegridRowDblClick(e){
+        this.treegridRef.current.beginEdit(e.detail.row);
     }
 
     // Templates ---------------------------------------------------------------------------------
@@ -107,9 +99,8 @@ class TreeGridFormEditing extends Component {
         data.columns.forEach(obj => {
             let column = Object.assign({ headerAlignment: 'center' }, obj);
 
-            column.editorSetting = { 
-                visible:IntegralUIVisibility.None
-            }
+            if (column.id === 12 && column.validation)
+                column.validation.rules[0].callback = this.validateShipMode;
 
             columnList.push(column);
         });
@@ -147,10 +138,10 @@ class TreeGridFormEditing extends Component {
                     else
                         cell.value = obj[field];
                 }
-                // Caluclate the Total value: sum of (Quantity * Price) + Shipping Cost
+                // Calculate the Total value: sum of (Quantity * Price) + Shipping Cost
                 else if (column.id === 11)
                     cell.value = obj["Quantity"] * obj["Price"] + obj["Shipping Cost"];
-
+                    
                 row.cells.push(cell);
             });
             
@@ -160,6 +151,14 @@ class TreeGridFormEditing extends Component {
         this.setState({ columns: columnList, rows: rowList });
     }
 
+    useValidationChanged(e){
+        this.setState({ isValidationInUse: e.detail.checked });
+    }
+
+    validateShipMode(value){
+        return value >= 0;
+    }
+
     // Update ------------------------------------------------------------------------------------
 
     render() {
@@ -167,21 +166,25 @@ class TreeGridFormEditing extends Component {
             <div>
                 <h2>TreeGrid / Form Editing</h2>
                 <div className="sample-block" id="treegrid-form-editing">
-                    <IntegralUITreeGridComponent ref={this.gridRef}
+                    <div align="right">
+                        <IntegralUICheckBoxComponent allowFocus={false} checked={this.state.isValidationInUse} resourcePath={this.state.currentResourcePath} theme={this.state.currentTheme} checkedChanged={(e) => this.useValidationChanged(e)}>Use Validation</IntegralUICheckBoxComponent><br/>
+                    </div>
+                    <IntegralUITreeGridComponent ref={this.treegridRef}
                         allowAnimation={this.state.isAnimationAllowed} 
                         allowFocus={false}
                         editMode={this.state.currentEditMode}
-                        expandColumnIndex={this.state.expandColumnIndex}
                         columns={this.state.columns} 
-                        dataFields={this.state.gridFields}
+                        dataFields={this.state.treegridFields}
                         headerTemplate={this.currentHeaderTemplate}
                         resourcePath={this.state.currentResourcePath}
                         rows={this.state.rows} 
                         showFooter={false}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme}
-                        dataChanged={(e) => this.gridDataChanged(e)}
-                        rowDblClick={(e) => this.gridRowDblClick(e)}
+                        useValidation={this.state.isValidationInUse}
+                        dataChanged={(e) => this.treegridDataChanged(e)}
+                        dataInvalid={(e) => this.treegridDataInvalid(e)}
+                        rowDblClick={(e) => this.treegridRowDblClick(e)}
                     ></IntegralUITreeGridComponent>
                     <div className="feature-help">
                         <p><span className="initial-space"></span>When <strong>Form Editing</strong> mode is activated, you can select a row and:</p>
@@ -194,6 +197,7 @@ class TreeGridFormEditing extends Component {
                         <p><span className="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will update the Form with cell values from the selected row. In the process, any changes not saved are cancelled. Clicking again on the Pencil icon, will close the Form.</p>
                         <p><span className="initial-space"></span>You can also activate the editing Form by double-clicking a row. In this case, the editing is activated by handling the <strong>rowDblClick</strong> event and calling the <strong>beginEdit</strong> method.</p>
                         <p><span className="initial-space"></span>When changes are saved, the <span className="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+                        <p><span className="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
                     </div>
                 </div>
             </div>

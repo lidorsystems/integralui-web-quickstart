@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2022 Lidor Systems. All rights reserved.
+  Copyright © 2016-2023 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -23,7 +23,8 @@ import { iuiContextMenuOverviewStyle } from './contextmenu-overview.style';
     templateUrl: './contextmenu-overview.html',
     styleUrls: ['./contextmenu-overview.css']
 })
-export class ContextMenuOverviewSample {
+export class ContextMenuOverview {
+    public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiContextMenuOverviewStyle;
     public fontWeight: string = 'bold';

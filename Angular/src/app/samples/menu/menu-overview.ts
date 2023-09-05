@@ -1,5 +1,5 @@
 /*
-  Copyright © 2016-2022 Lidor Systems. All rights reserved.
+  Copyright © 2016-2023 Lidor Systems. All rights reserved.
 
   This file is part of the "IntegralUI Web" Library. 
                                                                    
@@ -22,12 +22,11 @@ import { iuiMenuOverviewStyle } from './menu-overview.style';
     templateUrl: './menu-overview.html',
     styleUrls: ['./menu-overview.css']
 })
-export class MenuOverviewSample {
+export class MenuOverview {
     public ctrlSize: any = { width: 700 };
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiMenuOverviewStyle;
-    public isAnimationAllowed: boolean = false;
     public items: Array<any> = [];
 
     constructor(){

@@ -108,6 +108,7 @@ class TreeViewFastLoad extends Component {
                 <h2>TreeView / Fast Load</h2>
                 <div className="sample-block">
                     <IntegralUITreeViewComponent id="treeview-fast-load" ref={this.treeRef}
+                        allowAnimation={false}
                         allowDrag={true}
                         allowDrop={true}
                         allowFocus={true}

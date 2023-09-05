@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="treeview-fast-load"]{
-                --treeview-display: inline-block;
+                --iui-treeview-display: inline-block;
             }
 
             .treeview-fast-load-panel {
@@ -16,8 +16,8 @@
                 vertical-align: top;
                 width: 200px;
 
-                --button-display: block;
-                --button-margin: 5px 0;
+                --iui-button-display: block;
+                --iui-button-margin: 5px 0;
             }
             .treeview-fast-load-panel label {
                 display: block;
@@ -32,7 +32,6 @@
         <h2>TreeView / Fast Load</h2>
         <div class="sample-block">
             <iui-treeview id="treeview-fast-load"
-                allow-animation="true"
                 allow-focus="true"
                 resource-path="../../../node_modules/integralui-web/icons"
             ></iui-treeview>
@@ -66,10 +65,7 @@
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
     <script type="module">
-        import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.item.js';
-        import { IntegralUIAnimationType, IntegralUISelectionMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
-       
-        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
 
         // Control Panel
         let itemCount = 0;
@@ -131,10 +127,10 @@
 
         const treeview = document.querySelector('#treeview-fast-load');
         
+        treeview.allowAnimation = false;
         treeview.allowDrag = true;
         treeview.allowDrop = true;
         treeview.items = [];
-        treeview.selectionMode = IntegralUISelectionMode.One;
         treeview.size = { width: 350, height: 300 };
 
         //

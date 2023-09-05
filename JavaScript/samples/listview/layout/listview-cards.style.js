@@ -118,9 +118,9 @@ export const iuiListViewCardsStyle = css`
 
     /* Changes to the Rating component inside the Card */
     .iui-listview iui-rating {
-        --rating-border-color: transparent;
-        --rating-cursor: pointer;
-        --rating-margin: auto;
+        --iui-rating-border-color: transparent;
+        --iui-rating-cursor: pointer;
+        --iui-rating-margin: auto;
     }
 
     /* List item */

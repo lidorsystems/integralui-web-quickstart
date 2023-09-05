@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-	<head>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	  	<title>IntegralUI Web - TreeGrid / Inline Editing</title>
-		<link rel="stylesheet" href="../../../index.css" />
-		<style type="text/css">
-		</style>
-	</head>
-	<body>
-		<h2>TreeGrid / Inline Editing</h2>
-		<div class="sample-block">
-			<iui-treegrid id="treegrid-inline-editing"
-                allow-animation="true"
-				resource-path="../../../node_modules/integralui-web/icons"
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - TreeGrid / Inline Editing</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>TreeGrid / Inline Editing</h2>
+        <div class="sample-block">
+            <div align="right">
+                <iui-checkbox id="use-validation">Use Validation</iui-checkbox><br/>
+            </div>
+            <iui-treegrid id="treegrid-inline-editing"
                 row-height="30"
-				theme="Office"
-			></iui-treegrid>
-			<div class="feature-help">
+            ></iui-treegrid>
+            <div class="feature-help">
                 <p><span class="initial-space"></span>When <strong>Inline Editing</strong> mode is activated, you can:</p>
                 <ul class="feature-points">
                     <li>hover over cell in first column and click on Pencil icon to start editing mode or press ENTER when cell is focused to activate the editor, or</li>
@@ -30,41 +30,67 @@
                 <p><span class="initial-space"></span>A row is in editing mode when Pencil icon is fully shown, stating that you can edit cell values for that row using editors when cell is focused. You can edit dates with mouse, when cell is clicked a dropdown Calendar will appear or using a keyboard, with Left/Right arrow keys change dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
                 <p><span class="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will cancel any changes not saved. Clicking again on the Pencil icon, will close the editor.</p>
                 <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In addition, any change to cell values fires the <span class="code-name">valueChanged</span> event, like in this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+                <p><span class="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
             </div>
-		</div>
-	</body>
+        </div>
+    </body>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
-	<script type="module" src="../../../node_modules/integralui-web/components/integralui.treegrid.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.treegrid.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
-	<script type="module">
+    <script type="module">
         import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
         import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
         import { IntegralUIEditMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
         import { iuiTreeGridInlineEditingStyle } from './treegrid-inline-editing.style.js';
 
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
         let _commonService = new IntegralUICommonService();
 
-		//
-		// TreeGrid settings
-		//
+        //
+        // CheckBox
+        //
 
-		const treegrid = document.querySelector('#treegrid-inline-editing');
+        const ctrlCheck = document.querySelector('#use-validation');
 
-		treegrid.columns = [];
+        ctrlCheck.checked = true;
+        ctrlCheck.resourcePath = currentResourcePath;
+        ctrlCheck.theme = currentTheme;
+    
+        ctrlCheck.addEventListener("checkedChanged", (e) => useValidationChanged(e));
+
+        let useValidationChanged = function(e){
+            treegrid.useValidation = e.detail.checked;
+        }
+
+        //
+        // TreeGrid settings
+        //
+
+        const treegrid = document.querySelector('#treegrid-inline-editing');
+
+        treegrid.columns = [];
         treegrid.rows = [];
 
-		treegrid.customStyle = iuiTreeGridInlineEditingStyle;
+        treegrid.customStyle = iuiTreeGridInlineEditingStyle;
         treegrid.editMode = IntegralUIEditMode.Inline;
         treegrid.showFooter = false;
-		treegrid.size = { height: 400 }
+        treegrid.resourcePath = currentResourcePath;
+        treegrid.size = { height: 400 }
+        treegrid.theme = currentTheme;
+        treegrid.useValidation = true;
 
-        let shipModeList = [
-            { id: 1, text: "None", value: -1 },
-            { id: 2, text: "Delivery Truck", value: 0 },
-            { id: 3, text: "Regular Air", value: 1 },
-            { id: 4, text: "Express Air", value: 2 }
-        ];
+        treegrid.dataFields = {
+            editing: {
+                cancel: "Abbrechen",
+                edit: "Bearbeiten",
+                remove: "Löschen",
+                save: "Sparen",
+            }
+        }
 
         // Templates -----------------------------------------------------------------------------
 
@@ -77,7 +103,7 @@
             return html`<span class="header-label">${column.title}</span>`;
         };
 
-		treegrid.headerTemplate = currentHeaderTemplate;
+        treegrid.headerTemplate = currentHeaderTemplate;
 
         // Data ----------------------------------------------------------------------------------
 
@@ -145,6 +171,7 @@
 
         // Editing -------------------------------------------------------------------------------
 
+        treegrid.addEventListener("dataInvalid", (e) => treegridDataInvalid(e));
         treegrid.addEventListener("valueChanged", (e) => cellValueChanged(e));
 
         let cellValueChanged = function(e){
@@ -165,11 +192,15 @@
             return filtered.length > 0 ? filtered[0] : null;
         }
 
+        let treegridDataInvalid = function(e){
+            alert("Some data fields are invalid!");
+        }
+
         // Initialize ----------------------------------------------------------------------------
  
         fetch("treegrid-inline-editing-data.json") 
-			.then(response => response.json()) 
-			.then(data => {
+            .then(response => response.json()) 
+            .then(data => {
                 // Suspend the treegrid layout from updates, to increase performance
                 treegrid.suspendLayout();
 
@@ -180,5 +211,5 @@
                 treegrid.resumeLayout();
             });
 
-	</script>
+    </script>
 </html>

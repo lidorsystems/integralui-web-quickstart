@@ -8,9 +8,9 @@
         <style type="text/css">
             /* Changes to the tree item layout*/
             [id="treeview-highlight"] {
-                --treeitem-expand-box-margin: 3px 5px 0 0;
-                --treeitem-padding: 2px 0;
-                --treeitem-border-width: 2px 2px 2px 4px;
+                --iui-treeitem-expand-box-margin: 3px 5px 0 0;
+                --iui-treeitem-padding: 2px 0;
+                --iui-treeitem-border-width: 2px 2px 2px 4px;
            }
         </style>
     </head>
@@ -31,7 +31,7 @@
     </body>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
     <script type="module">
-        import { IntegralUICheckMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
 
         let currentTheme = IntegralUITheme.Office;
 
@@ -131,7 +131,6 @@
         treeview.theme = currentTheme;
 
         // Highlight items with custom style
-
         let hightlightStyle = {
             borderLeftColor: '#56c756',
             borderLeftWidth: '4px',

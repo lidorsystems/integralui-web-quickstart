@@ -7,14 +7,14 @@ export const iuiGridFilteringOverviewStyle = css`
     }
 
     iui-dropdownbutton {
-        --dropdownbutton-float: right;
-        --dropdownbutton-height: 16px;
-        --dropdownbutton-background: transparent;
-        --dropdownbutton-border-color: transparent;
+        --iui-dropdownbutton-float: right;
+        --iui-dropdownbutton-height: 16px;
+        --iui-dropdownbutton-background: transparent;
+        --iui-dropdownbutton-border-color: transparent;
     }
     .iui-grid-column-header-selected iui-dropdownbutton {
-        --dropdownbutton-background: #e5e5e5;
-        --dropdownbutton-border-color: #cecece;
+        --iui-dropdownbutton-background: #e5e5e5;
+        --iui-dropdownbutton-border-color: #cecece;
     }
 
     .filter-button
@@ -28,17 +28,17 @@ export const iuiGridFilteringOverviewStyle = css`
     }
 
     iui-button {
-        --button-margin: 0 5px;
-        --button-padding: 5px 10px;
+        --iui-button-margin: 0 5px;
+        --iui-button-padding: 5px 10px;
     }
     iui-numeric {
         display: inline-block;
     }
 
     iui-select {
-        --select-header-padding: 5px;
-        --select-header-hovered-padding: 5px;
-        --select-header-selected-padding: 5px;
+        --iui-select-header-padding: 5px;
+        --iui-select-header-hovered-padding: 5px;
+        --iui-select-header-selected-padding: 5px;
         display: inline-block;
         margin-right: 5px;
     }

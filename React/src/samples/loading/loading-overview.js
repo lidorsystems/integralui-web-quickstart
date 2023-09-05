@@ -59,7 +59,7 @@ class LoadingOverview extends Component {
             <div>
                 <h2>Loading / Overview</h2>
                 <div className="sample-block" id="sample-block-loading-overview">
-                    <IntegralUIPanelComponent id="sample-block-loading-content" contentAlignment = {{ vertical: 'middle' }} enabled={this.state.isPanelEnabled}>
+                    <IntegralUIPanelComponent id="sample-block-loading-content" contentAlignment = {{ horizontal: 'center', vertical: 'middle' }} enabled={this.state.isPanelEnabled}>
                         <IntegralUIButtonComponent allowAnimation={this.state.isAnimationAllowed} allowFocus={false} onClick={() => this.onLoadClicked()}>Start Loading</IntegralUIButtonComponent>
                     </IntegralUIPanelComponent>
                     <IntegralUILoadingComponent 

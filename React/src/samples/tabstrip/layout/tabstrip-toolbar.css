@@ -53,8 +53,8 @@
 }
 
 [id="tabstrip-toolbar"]{
-    --tab-header-border-radius: 7px 7px 0 0;
-    --tab-header-hovered-background: #d9edfd;
-    --tab-header-hovered-border-color: #8cb1d1;
-    --tab-header-padding: 9px;
+    --iui-tab-header-border-radius: 7px 7px 0 0;
+    --iui-tab-header-hovered-background: #d9edfd;
+    --iui-tab-header-hovered-border-color: #8cb1d1;
+    --iui-tab-header-padding: 9px;
 }

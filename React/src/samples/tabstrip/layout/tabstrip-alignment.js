@@ -76,7 +76,7 @@ class TabStripTabAlignment extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-alignment"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}
                         tabAlignment={this.state.currentAlignment}
@@ -85,7 +85,7 @@ class TabStripTabAlignment extends Component {
                         {tabs}
                     </IntegralUITabStripComponent>
                     <div className="tabstrip-alignment-panel">
-                        <label>Animation Type: </label>
+                        <label>Alignment: </label>
                         <IntegralUIRadioGroupComponent theme={this.state.currentTheme} buttonChecked={(e) => this.onAlignmentChecked(e)}>
                             <IntegralUIRadioButtonComponent checked={true}>TopLeft</IntegralUIRadioButtonComponent>
                             <IntegralUIRadioButtonComponent>Middle</IntegralUIRadioButtonComponent>

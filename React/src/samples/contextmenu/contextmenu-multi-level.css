@@ -1,0 +1,13 @@
+.cmnu-multi-level-block {
+    background: white;
+    border: thin solid gray;
+    width: 800px;
+    height: 300px;
+}
+.cmnu-multi-level-block span {
+    color: #808080;
+    cursor: default;
+    display: block;
+    margin: 140px auto;
+    text-align: center;
+}

@@ -1,5 +1,5 @@
 .pagesize-block {
-    --select-display: inline-block;
+    --iui-select-display: inline-block;
 }
 .pagesize-block span {
     display: inline-block;
@@ -7,11 +7,11 @@
     vertical-align: top;    
 }
 .sample-block-panel iui-button {
-    --button-margin: 0 5px;
+    --iui-button-margin: 0 5px;
 }
 .sample-block-panel iui-numeric {
-    --numeric-display: inline-block;
-    --numeric-margin: 0 25px 0 0;
+    --iui-numeric-display: inline-block;
+    --iui-numeric-margin: 0 25px 0 0;
 }
 .sample-block-panel span {
     display: inline-block;

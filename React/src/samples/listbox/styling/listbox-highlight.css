@@ -1,9 +1,9 @@
 [id="listbox-highlight"] {
-    --listitem-padding: 2px 0 2px 10px;
-    --listitem-border-width: 2px 2px 2px 4px;
-    --listitem-hovered-border-width: 2px 2px 2px 4px;
-    --listitem-selected-border-width: 2px 2px 2px 4px;
+    --iui-listitem-padding: 2px 0 2px 10px;
+    --iui-listitem-border-width: 2px 2px 2px 4px;
+    --iui-listitem-hovered-border-width: 2px 2px 2px 4px;
+    --iui-listitem-selected-border-width: 2px 2px 2px 4px;
 
-    --listitem-content-transform: scale(1);
-    --listitem-content-hovered-transform: scale(1);
+    --iui-listitem-content-transform: scale(1);
+    --iui-listitem-content-hovered-transform: scale(1);
 }

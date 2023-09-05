@@ -10,16 +10,16 @@ export const iuiTreeGridCustomHeaderFooterStyle = css`
 
     /* Header with CheckBox */
     .iui-checkbox {
-        --checkbox-border: 0;
-        --checkbox-margin: 0;
-        --checkbox-padding: 0;
+        --iui-checkbox-border: 0;
+        --iui-checkbox-margin: 0;
+        --iui-checkbox-padding: 0;
 
-        --checkbox-btn-margin: 0;
-        --checkbox-btn-checked-background-image: url(../../../node_modules/integralui-web/icons/checkbox-checked.ico);
-        --checkbox-btn-indeterminate-background-image: url(../../../node_modules/integralui-web/icons/checkbox-indeterminate.ico);
-        --checkbox-btn-unchecked-background-image: url(../../../node_modules/integralui-web/icons/checkbox-unchecked.ico);
+        --iui-checkbox-btn-margin: 0;
+        --iui-checkbox-btn-checked-background-image: url(../../../node_modules/integralui-web/icons/checkbox-checked.ico);
+        --iui-checkbox-btn-indeterminate-background-image: url(../../../node_modules/integralui-web/icons/checkbox-indeterminate.ico);
+        --iui-checkbox-btn-unchecked-background-image: url(../../../node_modules/integralui-web/icons/checkbox-unchecked.ico);
 
-        --checkbox-content-display: none;
+        --iui-checkbox-content-display: none;
     }
 
     .iui-editor-checkbox {

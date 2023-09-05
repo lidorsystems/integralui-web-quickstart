@@ -1,6 +1,6 @@
 [id="treeview-fast-load"]{
-    --treeview-display: inline-block;
-    --treeitem-transition-duration: 0s;
+    --iui-treeview-display: inline-block;
+    --iui-treeitem-transition-duration: 0s;
 }
 
 .treeview-fast-load-panel {
@@ -9,8 +9,8 @@
     vertical-align: top;
     width: 200px;
 
-    --button-display: block;
-    --button-margin: 5px 0;
+    --iui-button-display: block;
+    --iui-button-margin: 5px 0;
 }
 .treeview-fast-load-panel label {
     display: block;

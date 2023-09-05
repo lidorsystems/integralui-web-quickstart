@@ -1,5 +1,5 @@
 [id="listbox-dragdrop-overview"]{
-    --listbox-display: inline-block;
+    --iui-listbox-display: inline-block;
 }
 .sample-block-ddlb-overview-panel {
     margin-top: 20px;
@@ -13,8 +13,8 @@
     vertical-align: top;
     width: 150px;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .sample-block-ddlb-control-panel label {
     display: block;

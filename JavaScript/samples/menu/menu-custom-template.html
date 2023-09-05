@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            [id="menu-custom-template"] {
+                --iui-menuitem-root-margin: 0 10px 0 3px;
+                --iui-menuitem-padding: 5px;
+                --iui-menuitem-width: 200px;
+
+                --iui-menuitem-content-template-display: block;
+            }
+
+            [id="menu-custom-template-panel"] {
+                --iui-panel-font-size: 1rem;
+                --iui-panel-margin: 10px 0;
+                --iui-panel-height: 300px;
+            }
+            .menu-custom-template-block {
+                transform: scale(2.5);
+                transition: transform 0.1s ease-in-out;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Menu / Custom Template</h2>
+        <div class="sample-block">
+            <iui-menu id="menu-custom-template" resource-path="../../node_modules/integralui-web/icons"></iui-menu>
+            <iui-panel id="menu-custom-template-panel">
+                <div class="menu-custom-template-block">
+                    Sample Content Block
+                </div>
+            </iui-panel>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of a Menu with custom template. Instead of just label, the <strong>'Zoom'</strong> menu item has a set of buttons for zoom-in and zoom-out and label that shows current zoom value in middle.</p>
+                <p><span class="initial-space"></span>Clicking on these buttons will zoom in or zoom out the block element below, from 25% to 500%. Appearance of these buttons is done using custom CSS and functionality set in code by handling events from the custom menu template.</p>
+                <p><span class="initial-space"></span>In addition, to close the menu you can click on <strong>'Zoom'</strong> label or any other menu item or outside the menu space. However the menu will remain active while buttons are clicked, this is set in code by handling events.</p>
+                <p><span class="initial-space"></span>You can create custom templates that can be shared between all menus or each menu item can have a different template, based on condtions set in your code. To create templates, you can use any custom HTML elements and arrange them in custom layouts.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.menu.js"></script>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module">
+        import { html } from '../../node_modules/integralui-web/external/lit-element.js';
+        import { IntegralUITheme } from '../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiMenuCustomTemplateStyle } from './menu-custom-template.style.js';
+   
+        let currentTheme = IntegralUITheme.Office;
+
+        //
+        // Panel
+        //
+        const ctrlPanel = document.querySelector('#menu-custom-template-panel');
+
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
+        ctrlPanel.theme = currentTheme;
+
+        // Sample Block
+        const block = document.querySelector('.menu-custom-template-block');
+        
+        //
+        // Menu settings
+        //
+        const ctrl = document.querySelector('#menu-custom-template');
+
+        ctrl.customStyle = iuiMenuCustomTemplateStyle;
+        ctrl.theme = currentTheme;
+
+        ctrl.items = [
+            { 
+                text: "Menu",
+                items: [
+                    { text: "History" },
+                    { text: "Downloads" },
+                    { text: "Bookmarks" },
+                    { text: "Extensions" },
+                    { text: "Zoom", zoomValue: 250 },
+                    { text: "Print" },
+                    { type: "separator" },
+                    { text: "Exit" }
+                ]
+             }
+        ];
+  
+        // Templates ----------------------------------------------------------------------------
+
+        let zoomInterval = null;
+
+        let preventClosing = function(e){
+            removeZoomInterval();
+            e.stopPropagation();
+        }
+
+        let removeZoomInterval = function(){
+            if (zoomInterval)
+                clearInterval(zoomInterval);
+
+            zoomInterval = null;
+        }
+
+        let updateBlockSettings = function(value){
+            if (block)
+                block.style.transform = 'scale(' + value / 100 + ')';
+        }
+
+        let zoomIn = function(e, item){
+            removeZoomInterval();
+
+            zoomInterval = setInterval(function(){
+                item.zoomValue = Math.min(500, item.zoomValue + 10);
+                ctrl.refresh();
+
+                updateBlockSettings(item.zoomValue);
+            }, 50);
+
+            e.stopPropagation();
+        }
+
+        let zoomOut = function(e, item){
+            removeZoomInterval();
+
+            zoomInterval = setInterval(function(){
+                item.zoomValue = Math.max(25, item.zoomValue - 10);
+                ctrl.refresh();
+
+                updateBlockSettings(item.zoomValue);
+            }, 50);
+            
+            e.stopPropagation();
+        }
+
+        ctrl.itemTemplate = (item) => { 
+            if (item.text === 'Zoom')
+                return html`
+                    <div class="menu-cstpl-block">
+                        <span class="menu-cstpl-label">${item.text}</span>
+                        <div class="menu-cstpl-zoom-block" @mouseup="${(e) => preventClosing(e)}">
+                            <span class="menu-cstpl-zoom-out" @mousedown="${(e) => zoomOut(e, item)}">-</span>
+                            <span class="menu-cstpl-zoom-value">${item.zoomValue}%</span>
+                            <span class="menu-cstpl-zoom-in" @mousedown="${(e) => zoomIn(e, item)}">+</span>
+                        </div>
+                    </div>
+                `;
+
+            return null;
+        };
+
+        // Initialization ------------------------------------------------------------------------
+
+        ctrl.updateLayout();
+
+    </script>
+</html>

@@ -1,6 +1,7 @@
 <h2>PopOver / Overview</h2>
 <div class="sample-block">
     <iui-popover #popover
+        [contentTemplate]="currentContentTemplate"
         [customStyle]="customStyle"
         [enabled]="popoverSettings.enabled"
         [resourcePath]="currentResourcePath"
@@ -21,6 +22,8 @@
         <p><span class="initial-space"></span>If activation is set to 'manual', the popup will remain active until it's closed by changing the popOverShow property to false. If popOverShow property is not specified, then the popover will appear on mouse enter.</p>
         <p><span class="initial-space"></span>The following properties are supported:</p>
         <ul class="feature-points">
+            <li><span class="code-name">allowAnimation</span> - determines whether animations are allowed or not, default is true</li>
+            <li><span class="code-name">animation</span> - specifies the delay, duration and translate value</li>
             <li><span class="code-name">activation</span> - specifies whether the popup is activated manually or automatically</li>
             <li><span class="code-name">autoPopDelay</span> - specifies the time in milliseconds for PopOver to remain visible</li>
             <li><span class="code-name">closeButton</span> - determines whether the close button is visible in the header</li>

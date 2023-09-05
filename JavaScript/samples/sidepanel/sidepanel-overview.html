@@ -19,20 +19,20 @@
                 text-align: left;
             }
             [id="sample-block-sidepanel-overview-content"]{
-                --panel-background: white;
-                --panel-border-color: #d5d5d5;
-                --panel-height: calc(100% - 12px);
-                --panel-padding: 5px;
+                --iui-panel-background: white;
+                --iui-panel-border-color: #d5d5d5;
+                --iui-panel-height: calc(100% - 12px);
+                --iui-panel-padding: 5px;
             }
             .sample-block-sidepanel-control-panel {
                 display: inline-block;
                 text-align: center;
                 width: 300px;
 
-                --radio-button-margin: 10px 0 0 0;
+                --iui-radio-button-margin: 10px 0 0 0;
 
-                --button-margin: 20px 0 0 0;
-                --button-width: 75px;
+                --iui-button-margin: 20px 0 0 0;
+                --iui-button-width: 75px;
             }
             .sdbr-pnl-tab-content {
                 padding: 5px;
@@ -101,7 +101,7 @@
 
         const ctrlPanel = document.querySelector('#sample-block-sidepanel-overview-content');
 
-        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
         ctrlPanel.theme = currentTheme;
 
         // Placement

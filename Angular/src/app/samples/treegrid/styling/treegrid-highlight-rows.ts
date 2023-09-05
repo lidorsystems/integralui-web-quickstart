@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.treegrid';
-import { IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 import { iuiTreeGridHighlightRowsStyle } from './treegrid-highlight-rows.style';
 
 @Component({
@@ -15,6 +15,7 @@ export class TreeGridHighlightRows {
 
     public columns: Array<any> = [];
     public ctrlSize: any = { height: 400 };
+    public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Custom;
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiTreeGridHighlightRowsStyle;

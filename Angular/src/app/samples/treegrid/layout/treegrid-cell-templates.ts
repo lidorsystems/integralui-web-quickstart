@@ -5,7 +5,7 @@ import { styleMap } from 'integralui-web/external/style-map';
 
 import 'integralui-web/components/integralui.button';
 import 'integralui-web/components/integralui.treegrid';
-import { IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 import { iuiTreeGridCellTemplatesStyle } from './treegrid-cell-templates.style';
 
 @Component({
@@ -18,6 +18,7 @@ export class TreeGridCellTemplates {
 
     public columns: Array<any> = [];
     public ctrlSize: any = { width: 900, height: 450 };
+    public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Custom;
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiTreeGridCellTemplatesStyle;

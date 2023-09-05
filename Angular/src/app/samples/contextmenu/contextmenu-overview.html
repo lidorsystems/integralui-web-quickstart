@@ -3,6 +3,7 @@
     <iui-contextmenu #contextmenu
         [customStyle]="customStyle"
         [enabled]="menuSettings.enabled"
+        [resourcePath]="currentResourcePath"
         [settings]="menuSettings"
         [theme]="currentTheme"
         (menuClick)="menuItemClick($event)"

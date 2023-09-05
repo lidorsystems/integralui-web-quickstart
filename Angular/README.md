@@ -16,7 +16,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Installation
 
-Open the nodejs command prompt, go to application directory and type: 
+The IntegralUI Web components are already present in the application directory (src/app/integralui), you only need to install the Angular libraries. Open the nodejs command prompt, go to application directory and type: 
 
 ```bash
 npm install

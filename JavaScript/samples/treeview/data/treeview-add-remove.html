@@ -16,6 +16,8 @@
             }
             [id="treeview-addremove"]{
                 display: inline-block;
+
+                --iui-treeitem-border-color: #e5e5e5;
             }
             .treeview-addremove-panel {
                 display: inline-block;
@@ -23,8 +25,8 @@
                 vertical-align: top;
                 width: 200px;
 
-                --button-display: block;
-                --button-margin: 5px 0;
+                --iui-button-display: block;
+                --iui-button-margin: 5px 0;
             }
             .treeview-addremove-panel label {
                 display: block;
@@ -37,11 +39,11 @@
                 display: inline-block;
             }
             .inline-block {
-                --button-display: inline-block;
-                --button-vertical-align: middle;
+                --iui-button-display: inline-block;
+                --iui-button-vertical-align: middle;
 
-                --numeric-display: inline-block;
-                --numeric-vertical-align: middle;
+                --iui-numeric-display: inline-block;
+                --iui-numeric-vertical-align: middle;
            }
         </style>
     </head>
@@ -50,7 +52,6 @@
         <div class="sample-block">
             <div id="treeview-addremove">
                 <iui-treeview
-                    allow-animation="true"
                     resource-path="../../../node_modules/integralui-web/icons"
                 ></iui-treeview>
             </div>
@@ -68,6 +69,7 @@
                     <iui-button id="remove-at">Remove At</iui-button><iui-numeric id="remove-pos" min="0" max="100"></iui-numeric>
                 </div>
                 <iui-button id="clear">Clear</iui-button>
+                <iui-toaster></iui-toaster>
             </div>
             <div class="feature-help">
                 <p><span class="initial-space"></span>An example that demonstrates adding and removal od items manually from code using buttons.</p>
@@ -89,10 +91,18 @@
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.numeric.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.toaster.js"></script>
     <script type="module">
-        import { IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUITheme, IntegralUIToastType } from '../../../node_modules/integralui-web/components/integralui.enums.js';
         
         let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        //
+        // Toaster settings
+        //
+
+        const toaster = document.querySelector('iui-toaster');
+        toaster.duration = 3000;
 
         // Control Panel
         let insertPos = 0;
@@ -112,9 +122,10 @@
         let onAddClicked = function(e){
             let newItem = createNewItem();
 
+            initContent();
+
             treeview.addItem(newItem);
             treeview.selectedItem = newItem;
-            updateContent();
         }
 
         // Add Child Button
@@ -124,8 +135,9 @@
         let onAddChildClicked = function(e){
             let newItem = createNewItem();
 
+            initContent();
+
             treeview.addItem(newItem, treeview.selectedItem);
-            updateContent();
         }
 
         // Insert After Button
@@ -138,9 +150,10 @@
             else {
                 let newItem = createNewItem();
 
+                initContent();
+
                 treeview.insertItemAfter(newItem, treeview.selectedItem);
                 treeview.selectedItem = newItem;
-                updateContent();
             }
         }
 
@@ -154,9 +167,10 @@
             else {
                 let newItem = createNewItem();
 
+                initContent();
+
                 treeview.insertItemBefore(newItem, treeview.selectedItem);
                 treeview.selectedItem = newItem;
-                updateContent();
             }
         }
 
@@ -167,17 +181,12 @@
 
         let onInsertAtClicked = function(e){
             let parent = treeview.getItemParent(treeview.selectedItem);
-            let childCount = parent && parent.items ? parent.items.length : treeview.items.length;
+            let newItem = createNewItem();
 
-            let insertPos = numInsertAt.value >= childCount && childCount > 0 ? childCount - 1 : numInsertAt.value;
+            initContent();
 
-            if (insertPos >= 0 && insertPos < childCount){
-                let newItem = createNewItem();
-
-                treeview.insertItemAt(newItem, insertPos, parent);
-                treeview.selectedItem = newItem;
-                updateContent();
-            }
+            treeview.insertItemAt(newItem, numInsertAt.value, parent);
+            treeview.selectedItem = newItem;
         }
 
         const numInsertAt = document.querySelector('#insert-pos');
@@ -195,7 +204,6 @@
                 treeview.removeItem(treeview.selectedItem);
 
                 treeview.selectedItem = treeview.getPrevItem(treeview.selectedItem);
-                updateContent();
             }
         }
 
@@ -206,14 +214,8 @@
 
         let onRemoveAtClicked = function(e){
             let parent = treeview.getItemParent(treeview.selectedItem);
-            let childCount = parent && parent.items ? parent.items.length : treeview.items.length;
-            let removePos = numRemoveAt.value >= childCount && childCount > 0 ? childCount - 1 : numRemoveAt.value;
 
-            if (removePos >= 0 && removePos < childCount){
-                treeview.removeItemAt(removePos, parent);
-
-                updateContent();
-            }
+            treeview.removeItemAt(numRemoveAt.value, parent);
         }
 
         const numRemoveAt = document.querySelector('#remove-pos');
@@ -234,7 +236,6 @@
                 itemCount = 0;
 
             treeview.selectedItem = null;
-            updateContent();
         }
 
         //
@@ -256,16 +257,59 @@
 		treeview.size = { width: 350, height: 310 }
 
         //
+        // Events
+        //
+
+        treeview.addEventListener("clear", (e) => treeClear(e));
+        treeview.addEventListener("itemAdded", (e) => treeItemAdded(e));
+        treeview.addEventListener("itemRemoved", (e) => treeItemRemoved(e));
+
+        let treeClear = function(e){
+            toaster.show({ text: 'The tree is cleared', type: IntegralUIToastType.Success });
+
+            updateContent();
+        }
+
+        let treeItemAdded = function(e){
+            if (e.detail.item){
+                let message = 'The ' + e.detail.item.text + ' is added to the tree';
+                message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+                toaster.show({ text: message, type: IntegralUIToastType.Success });
+            }
+
+            updateContent();
+        }
+
+        let treeItemRemoved = function(e){
+            if (e.detail.item){
+                let message = 'The ' + e.detail.item.text + ' is removed from the tree';
+                message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+                toaster.show({ text: message, type: IntegralUIToastType.Success });
+            }
+            else 
+                toaster.show({ text: 'EMPTY ITEM', type: IntegralUIToastType.Error });
+
+            updateContent();
+        }
+
+        //
         // Initialize the Component
         //
 
+        const itemBlock = document.querySelector('#treeview-addremove');
+        const emptyBlock = document.querySelector('.empty-block');
+
+        let initContent = function(){
+            if (treeview.items.length === 0){
+                itemBlock.style.display = 'inline-block';
+                emptyBlock.style.display = 'none';
+            }
+        }
+
         let updateContent = function(){
-            treeview.updateLayout();
-
-            const itemBlock = document.querySelector('#treeview-addremove');
             itemBlock.style.display = treeview.items.length > 0 ? 'inline-block' : 'none';
-
-            const emptyBlock = document.querySelector('.empty-block');
             emptyBlock.style.display = treeview.items.length === 0 ? 'inline-block' : 'none';
         }
 

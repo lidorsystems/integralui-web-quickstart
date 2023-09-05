@@ -20,8 +20,8 @@
             }
 
             [id="tabstrip-close-button"]{
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
             }
         </style>
     </head>
@@ -48,12 +48,12 @@
     <script type="module">
         import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
         import IntegralUITab from '../../../node_modules/integralui-web/components/integralui.tab.js';
-        import { IntegralUIAnimationType, IntegralUIObjectState, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUIAnimationType, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
         import { iuiTabStripCloseButtonStyle } from './tabstrip-close-button.style.js';
        
         const ctrl = document.querySelector('#tabstrip-close-button');
 
-        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.contentAnimation = IntegralUIAnimationType.Fade;
         ctrl.customStyle = iuiTabStripCloseButtonStyle;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
@@ -87,7 +87,7 @@
         //
 
         let currentTabTemplate = (tab) => { 
-            let btnIcon = tab.state & IntegralUIObjectState.Hovered || tab.state & IntegralUIObjectState.Selected ? '../../../node_modules/integralui-web/icons/close.ico' : '../../../node_modules/integralui-web/icons/close-gray.ico';
+            let btnIcon = tab === ctrl.selectedTab ? '../../node_modules/integralui-web/icons/close.ico' : '../../node_modules/integralui-web/icons/close-gray.ico';
 
             return html`
                 <div>
@@ -135,7 +135,7 @@
 
                 // Set selection to a new tab 
                 let newSelTab = ctrl.selectedTab;
-                if (tab.state & IntegralUIObjectState.Selected){
+                if (tab === newSelTab){
                     let newSelIndex = tabIndex < tabs.length ? tabIndex : tabs.length - 1;
                     newSelTab = newSelIndex >= 0 && newSelIndex < tabs.length ? tabs[newSelIndex] : null;
                 }

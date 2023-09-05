@@ -91,7 +91,7 @@ class SidePanelOverview extends Component {
                             <div>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.</div>
                         </div>
                     </IntegralUISidePanelComponent>
-                    <IntegralUIPanelComponent id="sample-block-sidepanel-overview-content" contentAlignment={{ vertical: 'middle' }}>
+                    <IntegralUIPanelComponent id="sample-block-sidepanel-overview-content" contentAlignment={{ horizontal: 'center', vertical: 'middle' }}>
                         <div className="sample-block-sidepanel-control-panel">
                             <label>Placement: </label>
                             <IntegralUIRadioGroupComponent theme={this.state.currentTheme} buttonChecked={(e) => this.onPlacementChecked(e)}>

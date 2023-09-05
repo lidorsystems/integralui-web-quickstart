@@ -13,7 +13,15 @@ import { ButtonGroupOverviewSample } from './samples/buttongroup/buttongroup-ove
 import { CalendarOverviewSample } from './samples/calendar/calendar-overview';
 import { CardOverview } from './samples/card/card-overview';
 import { CheckBoxOverviewSample } from './samples/checkbox/checkbox-overview';
-import { ContextMenuOverviewSample } from './samples/contextmenu/contextmenu-overview';
+
+import { ContextMenuOverview } from './samples/contextmenu/contextmenu-overview';
+import { ContextMenuCheckBoxes } from './samples/contextmenu/contextmenu-checkbox';
+import { ContextMenuCustomTemplate } from './samples/contextmenu/contextmenu-custom-template';
+import { ContextMenuHeader } from './samples/contextmenu/contextmenu-header';
+import { ContextMenuMultiLevel } from './samples/contextmenu/contextmenu-multi-level';
+import { ContextMenuRadioButtons } from './samples/contextmenu/contextmenu-radiobuttons';
+import { ContextMenuSeparatorLabel } from './samples/contextmenu/contextmenu-separator-label';
+
 import { DatePickerOverviewSample } from './samples/datepicker/datepicker-overview';
 import { DialogOverviewSample } from './samples/dialog/dialog-overview';
 import { DockPanelOverview } from './samples/dockpanel/dockpanel-overview';
@@ -57,6 +65,7 @@ import { GridShowHideHeaderFooter } from './samples/grid/layout/grid-show-hide-h
 import { GridPaginationOverview } from './samples/grid/pagination/grid-pagination-overview';
 //Sorting
 import { GridSortingOverview } from './samples/grid/sorting/grid-sorting-overview';
+import { GridMultiColumnSorting } from './samples/grid/sorting/grid-multi-column-sorting';
 // Styling
 import { GridCellsDifferentColors } from './samples/grid/styling/grid-cells-different-colors';
 import { GridColumnsDifferentColors } from './samples/grid/styling/grid-columns-different-colors';
@@ -112,7 +121,15 @@ import { ListViewTooltip } from './samples/listview/utility/listview-tooltip';
 import { ListViewFastLoad } from './samples/listview/virtualization/listview-fast-load';
 
 import { LoadingOverview } from './samples/loading/loading-overview';
-import { MenuOverviewSample } from './samples/menu/menu-overview';
+
+import { MenuOverview } from './samples/menu/menu-overview';
+import { MenuCheckBox } from './samples/menu/menu-checkbox';
+import { MenuCustomTemplate } from './samples/menu/menu-custom-template';
+import { MenuRadioButtons } from './samples/menu/menu-radiobuttons';
+import { MenuSeparatorLabel } from './samples/menu/menu-separator-label';
+import { MenuShortcuts } from './samples/menu/menu-shortcuts';
+import { MenuVertical } from './samples/menu/menu-vertical';
+
 import { NumericOverviewSample } from './samples/numeric/numeric-overview';
 import { PaginatorOverviewSample } from './samples/paginator/paginator-overview';
 
@@ -241,7 +258,13 @@ const routes: Routes = [
                 { path: 'calendar-overview', component: CalendarOverviewSample },
                 { path: 'card-overview', component: CardOverview },
                 { path: 'checkbox-overview', component: CheckBoxOverviewSample },
-                { path: 'contextmenu-overview', component: ContextMenuOverviewSample },
+                { path: 'contextmenu/overview', component: ContextMenuOverview },
+                { path: 'contextmenu/checkbox', component: ContextMenuCheckBoxes },
+                { path: 'contextmenu/custom-template', component: ContextMenuCustomTemplate },
+                { path: 'contextmenu/header', component: ContextMenuHeader },
+                { path: 'contextmenu/multi-level', component: ContextMenuMultiLevel },
+                { path: 'contextmenu/radiobuttons', component: ContextMenuRadioButtons },
+                { path: 'contextmenu/separator-label', component: ContextMenuSeparatorLabel },
                 { path: 'datepicker-overview', component: DatePickerOverviewSample },
                 { path: 'dialog-overview', component: DialogOverviewSample },
                 { path: 'dockpanel-overview', component: DockPanelOverview },
@@ -277,6 +300,7 @@ const routes: Routes = [
                 { path: 'grid/layout/show-hide-header-footer', component: GridShowHideHeaderFooter },
                 { path: 'grid/pagination/pagination-overview', component: GridPaginationOverview },
                 { path: 'grid/sorting/sorting-overview', component: GridSortingOverview },
+                { path: 'grid/sorting/multi-column-sorting', component: GridMultiColumnSorting },
                 { path: 'grid/styling/cells-different-colors', component: GridCellsDifferentColors },
                 { path: 'grid/styling/columns-different-colors', component: GridColumnsDifferentColors },
                 { path: 'grid/styling/rows-different-colors', component: GridRowsDifferentColors },
@@ -324,7 +348,13 @@ const routes: Routes = [
                 { path: 'listview/utility/listview-tooltip', component: ListViewTooltip },
                 { path: 'listview/virtualization/listview-fast-load', component: ListViewFastLoad },
                 { path: 'loading/loading-overview', component: LoadingOverview },
-                { path: 'menu-overview', component: MenuOverviewSample },
+                { path: 'menu/overview', component: MenuOverview },
+                { path: 'menu/checkbox', component: MenuCheckBox },
+                { path: 'menu/custom-template', component: MenuCustomTemplate },
+                { path: 'menu/radiobuttons', component: MenuRadioButtons },
+                { path: 'menu/separator-label', component: MenuSeparatorLabel },
+                { path: 'menu/shortcuts', component: MenuShortcuts },
+                { path: 'menu/vertical', component: MenuVertical },
                 { path: 'numeric-overview', component: NumericOverviewSample },
                 { path: 'paginator-overview', component: PaginatorOverviewSample },
                 { path: 'pivotgrid/overview', component: PivotGridOverview },
@@ -440,7 +470,13 @@ const routes: Routes = [
         CalendarOverviewSample,
         CardOverview,
         CheckBoxOverviewSample,
-        ContextMenuOverviewSample,
+        ContextMenuOverview,
+        ContextMenuCheckBoxes,
+        ContextMenuCustomTemplate,
+        ContextMenuHeader,
+        ContextMenuMultiLevel,
+        ContextMenuRadioButtons,
+        ContextMenuSeparatorLabel,
         DatePickerOverviewSample,
         DialogOverviewSample,
         DockPanelOverview,
@@ -474,6 +510,7 @@ const routes: Routes = [
         GridMultiLineHeaders,
         GridPaginationOverview,
         GridSortingOverview,
+        GridMultiColumnSorting,
         GridCellsDifferentColors,
         GridColumnsDifferentColors,
         GridRowCustomToolbar,
@@ -523,7 +560,13 @@ const routes: Routes = [
         ListViewTooltip,
         ListViewFastLoad,
         LoadingOverview,
-        MenuOverviewSample,
+        MenuOverview,
+        MenuCheckBox,
+        MenuCustomTemplate,
+        MenuRadioButtons,
+        MenuSeparatorLabel,
+        MenuShortcuts,
+        MenuVertical,
         NumericOverviewSample,
         PaginatorOverviewSample,
         PivotGridOverview,

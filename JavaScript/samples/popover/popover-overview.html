@@ -63,15 +63,17 @@
                 <p><span class="initial-space"></span>If activation is set to 'manual', the popup will remain active until it's closed by changing the popOverShow property to false. If popOverShow property is not specified, then the popover will appear on mouse enter.</p>
                 <p><span class="initial-space"></span>The following properties are supported:</p>
                 <ul class="feature-points">
-                    <li><span class="code-name">activation</span> - specifies whether the popup is activated manually or automatically</li>
-                    <li><span class="code-name">autoPopDelay</span> - specifies the time in milliseconds for PopOver to remain visible</li>
-                    <li><span class="code-name">closeButton</span> - determines whether the close button is visible in the header</li>
-                    <li><span class="code-name">enabled</span> - determines whether the PopOver is enabled or disabled</li>
-                    <li><span class="code-name">header</span> - determines whether the popover has a header</li>
-                    <li><span class="code-name">initialDelay</span> - specifies the time in milliseconds prior PopOver is shown</li>
-                    <li><span class="code-name">position</span> - determines where the PopOver will appear: above, below, left or right side of the target element or at mouse position</li>
-                    <li><span class="code-name">showMarker</span> - when true, an arrow marker will be displayed for the PopOver window</li>
-                    <li><span class="code-name">title</span> - a text displayed in the header</li>
+	                <li><span class="code-name">allowAnimation</span> - determines whether animations are allowed or not, default is true</li>
+	                <li><span class="code-name">animation</span> - specifies the delay, duration and translate value</li>
+	                <li><span class="code-name">activation</span> - specifies whether the popup is activated manually or automatically</li>
+	                <li><span class="code-name">autoPopDelay</span> - specifies the time in milliseconds for PopOver to remain visible</li>
+	                <li><span class="code-name">closeButton</span> - determines whether the close button is visible in the header</li>
+	                <li><span class="code-name">enabled</span> - determines whether the PopOver is enabled or disabled</li>
+	                <li><span class="code-name">header</span> - determines whether the popover has a header</li>
+	                <li><span class="code-name">initialDelay</span> - specifies the time in milliseconds prior PopOver is shown</li>
+	                <li><span class="code-name">position</span> - determines where the PopOver will appear: above, below, left or right side of the target element or at mouse position</li>
+	                <li><span class="code-name">showMarker</span> - when true, an arrow marker will be displayed for the PopOver window</li>
+	                <li><span class="code-name">title</span> - a text displayed in the header</li>
                 </ul>
 			</div>
 		</div>
@@ -102,15 +104,20 @@
         ctrl.visible = false;
  		ctrl.size = { width: 400, height: 250 }
         ctrl.settings = {
+            animation: {
+                delay: 0,
+                duration: 250,
+                translateValue: 25
+            },
             activation: 'manual',
             autoPopDelay: 3000,
             closeButton: true,
             enabled: true,
             header: true,
-            initialDelay: 100,
+            initialDelay: 0,
             position: 'right',
             showMarker: true,
-            title: 'PopOver Title'
+            title: 'PopOver Title',
         };
 
 		// Events --------------------------------------------------------------------------------

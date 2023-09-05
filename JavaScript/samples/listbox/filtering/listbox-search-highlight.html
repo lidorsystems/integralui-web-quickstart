@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-search-highlight"] {
+                --iui-listitem-padding: 2px 0 2px 10px;
+                --iui-listitem-border-width: 2px 2px 2px 4px;
+                --iui-listitem-hovered-border-width: 2px 2px 2px 4px;
+                --iui-listitem-selected-border-width: 2px 2px 2px 4px;
+
+                --iui-listitem-content-transform: scale(1);
+                --iui-listitem-content-hovered-transform: scale(1);
+            }
+
+           .listbox-search-highlight-panel {
+                display: inline-block;
+                width: 354px;
+
+                --iui-button-margin: 0 0 5px 5px;
+                --iui-button-vertical-align: top;
+                --iui-button-width: 75px;
+            }
+            .listbox-search-highlight-panel label {
+                display: inline-block;
+                margin: 7px 5px 0 0;
+                vertical-align: top;
+            }
+            .listbox-search-highlight-panel input {
+                border: thin solid #d2d2d2;
+                margin: 2px 0 0 0;
+                padding: 5px;
+                transition: all 0.25s ease-in-out;
+                vertical-align: top;
+                width: calc(100% - 175px); 
+            }
+            .listbox-search-highlight-panel input:focus {
+                border-color: #6ea9db;
+                box-shadow: 0 0 0 1px #6ea9db;
+                outline: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Search and Highlight</h2>
+        <div class="sample-block">
+            <div class="listbox-search-highlight-panel">
+                <label>Search: </label>
+                <input id="listbox-input-search" />
+                <iui-button id="apply-filter">Filter</iui-button>
+            </div>
+            <iui-listbox id="listbox-search-highlight"
+                allow-filter="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                show-groups="true"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, you can search for specific country in the list using a search box. When there is a match, instead of filtering the list, the item(s) found are highlighted via custom CSS classes.</p>
+                <p><span class="initial-space"></span>To get the search result instead of filtering the list, the <strong>IntegralUI Filter Service</strong> is in use that allows you to check whether items pass the matching criteria. Then based on the result, items are highlighted accordingly, appearing clearly than others and showing a check mark on the right side.</p>
+                <p><span class="initial-space"></span>You can change the filter operation to something different in code, like: 'Begins with', 'Ends with', 'Does not contain', 'Equals' etc. just to name a few of available filtering operations in <strong>IntegralUI Filter Service</strong>.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import IntegralUIFilterService from '../../../node_modules/integralui-web/services/integralui.filter.service.js';
+        import { iuiListBoxSearchHighlightStyle } from './listbox-search-highlight.style.js';
+
+        let _filterService = new IntegralUIFilterService();
+
+
+        //
+        // Search Filter Panel
+        //
+        let currentFilterValue = '';
+
+        const inputFilter = document.querySelector('#listbox-input-search');
+
+        let onSearchChange = function(e){
+            currentFilterValue = e.target.value;
+            applyFilter();
+        }
+
+        let onSearchKeyDown = function(e){
+            if (e.keyCode === 13) // ENTER
+                applyFilter();
+        }
+
+        inputFilter.addEventListener("input", (e) => onSearchChange(e));
+        inputFilter.addEventListener("keydown", (e) => onSearchKeyDown(e));
+
+        // Filter Button
+        const btnFilter = document.querySelector('#apply-filter');
+        btnFilter.addEventListener("click", (e) => onFilterClicked(e));
+
+        let onFilterClicked = function(e){
+            applyFilter();
+        }
+
+        let applyFilter = function(){
+            // Filter ListBox based on search value
+            let params = {
+                caseSensitive: false,
+                conditions: { 
+                    value: currentFilterValue,
+                    operation: '[]' // Contains
+                }
+            }
+
+            listbox.items.forEach(item => {
+                item.isHighlighted = _filterService.match(item.text, params.conditions, params.caseSensitive) ? true : false;
+            });
+
+            listbox.refresh();
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-search-highlight');
+
+        listbox.animateInit = true;
+        listbox.customStyle = iuiListBoxSearchHighlightStyle;
+
+        listbox.groups = [
+            { name: "Europe" },
+            { name: "North America" },
+            { name: "South America" },
+            { name: "Asia" },
+            { name: "Africa" }
+        ];
+
+        listbox.items = [
+            { id: 1, text: "Austria", group: "Europe" },
+            { id: 2, text: "Brazil", group: "South America" },
+            { id: 3, text: "Belgium", group: "Europe" },
+            { id: 4, text: "Canada", group: "North America" },
+            { id: 5, text: "UK", group: "Europe" },
+            { id: 6, text: "France", group: "Europe" },
+            { id: 7, text: "Germany", group: "Europe" },
+            { id: 8, text: "India", group: "Asia" },
+            { id: 9, text: "Poland", group: "Europe" },
+            { id: 10, text: "Spain", group: "Europe" },
+            { id: 11, text: "Turkey", group: "Europe" },
+            { id: 12, text: "USA", group: "North America" },
+            { id: 13, text: "Ireland", group: "Europe" },
+            { id: 14, text: "Argentina", group: "South America" },
+            { id: 15, text: "China", group: "Asia" },
+            { id: 16, text: "Egypt", group: "Africa" },
+            { id: 17, text: "Italy", group: "Europe" },
+            { id: 18, text: "South-Africa", group: "Africa" },
+            { id: 19, text: "Japan", group: "Asia" },
+            { id: 20, text: "Mexico", group: "North America" },
+            { id: 21, text: "Netherlands", group: "Europe" },
+            { id: 22, text: "Nigeria", group: "Africa" },
+            { id: 23, text: "Saudi-Arabia", group: "Asia" },
+            { id: 24, text: "South-Korea", group: "Asia" },
+            { id: 25, text: "Sweden", group: "Europe" }
+        ];
+
+        listbox.size = { width: 350, height: 300 };
+
+        // Templates -----------------------------------------------------------------------------
+
+        let getItemIcon = function(){
+            return item.text.toLowerString();
+        }
+
+        listbox.itemTemplate = (item) => { 
+            if (item.type === 'item')
+                return html`<div class=${classMap({ "listbox-search-highlight-item": true, "listbox-search-highlight-false": currentFilterValue !== '', "listbox-search-highlight-true": item.isHighlighted })}>
+                        <span class="listbox-search-highlight-flags ${item.text.toLowerCase()}"></span>
+                        <span class="listbox-search-highlight-country">${item.text}</span>
+                        <div class=${classMap({ "listbox-search-highlight-box": true, "listbox-search-highlight-box-checked": item.isHighlighted })}>
+                            <span class="listbox-search-highlight-check"></span>
+                        </div>
+                    </div>`;
+
+            return null;
+        }
+
+    </script>
+</html>

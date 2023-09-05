@@ -14,7 +14,7 @@ class TreeViewRadioButtons extends Component {
             ctrlSize: { width: 350, height: 300 },
             currentResourcePath: '../../integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
-            isAnimationAllowed: true,
+            isAnimationAllowed: false,
             items: [
                 { 
                     id: 1,

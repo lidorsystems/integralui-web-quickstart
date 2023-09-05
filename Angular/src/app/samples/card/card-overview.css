@@ -6,12 +6,12 @@ div[slot="back-content"] {
 }
 [id="card-overview"] {
     /* Front */
-    --card-front-header-border-radius: 15px;
-    --card-front-header-padding: 7px 10px;
-    --card-front-border-radius: 15px;
-    --card-front-footer-padding: 3px 10px;
+    --iui-card-front-header-border-radius: 15px;
+    --iui-card-front-header-padding: 7px 10px;
+    --iui-card-front-border-radius: 15px;
+    --iui-card-front-footer-padding: 3px 10px;
 
     /* Back */
-     --card-back-border-radius: 15px;
+     --iui-card-back-border-radius: 15px;
 
 }

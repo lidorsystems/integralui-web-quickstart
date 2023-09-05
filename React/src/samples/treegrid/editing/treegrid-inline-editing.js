@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
 
+import IntegralUICheckBoxComponent from 'integralui-web/wrappers/react.integralui.checkbox.js';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
 import IntegralUITreeGridComponent from 'integralui-web/wrappers/react.integralui.treegrid.js';
 import { IntegralUIEditMode, IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
-import 'integralui-web/components/integralui.datepicker.js';
 
-import gridData from './treegrid-inline-editing-data.json';
+import treegridData from './treegrid-inline-editing-data.json';
 import { iuiTreeGridInlineEditingStyle } from './treegrid-inline-editing.style.js';
 
 // Import editor components
@@ -31,14 +31,15 @@ class TreeGridInlineEditing extends Component {
             currentResourcePath: '../../integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
             isAnimationAllowed: true,
+            isValidationInUse: true,
             rows: []
         }
         
-        this.gridRef = React.createRef();
+        this.treegridRef = React.createRef();
     }
 
     componentDidMount(){
-        this.convertJSONData(gridData);
+        this.convertJSONData(treegridData);
     }
 
     //
@@ -63,6 +64,10 @@ class TreeGridInlineEditing extends Component {
         let filtered = row.cells.filter(cell => cell.cid === id);
 
         return filtered.length > 0 ? filtered[0] : null;
+    }
+
+    treegridDataInvalid(e){
+        alert("Some data fields are invalid!");
     }
 
     // Templates ---------------------------------------------------------------------------------
@@ -134,6 +139,10 @@ class TreeGridInlineEditing extends Component {
         this.setState({ columns: columnList, rows: rowList });
     }
 
+    useValidationChanged(e){
+        this.setState({ isValidationInUse: e.detail.checked });
+    }
+
     // Update ------------------------------------------------------------------------------------
 
     render() {
@@ -141,7 +150,10 @@ class TreeGridInlineEditing extends Component {
             <div>
                 <h2>TreeGrid / Inline Editing</h2>
                 <div className="sample-block" id="treegrid-inline-editing">
-                    <IntegralUITreeGridComponent ref={this.gridRef}
+                    <div align="right">
+                        <IntegralUICheckBoxComponent allowFocus={false} checked={this.state.isValidationInUse} resourcePath={this.state.currentResourcePath} theme={this.state.currentTheme} checkedChanged={(e) => this.useValidationChanged(e)}>Use Validation</IntegralUICheckBoxComponent><br/>
+                    </div>
+                    <IntegralUITreeGridComponent ref={this.treegridRef}
                         allowAnimation={this.state.isAnimationAllowed} 
                         columns={this.state.columns} 
                         customStyle={iuiTreeGridInlineEditingStyle}
@@ -153,6 +165,8 @@ class TreeGridInlineEditing extends Component {
                         showFooter={false}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme}
+                        useValidation={this.state.isValidationInUse}
+                        dataInvalid={(e) => this.treegridDataInvalid(e)}
                         valueChanged={(e) => this.cellValueChanged(e)}
                     ></IntegralUITreeGridComponent>
                     <div className="feature-help">
@@ -168,6 +182,7 @@ class TreeGridInlineEditing extends Component {
                         <p><span className="initial-space"></span>A row is in editing mode when Pencil icon is fully shown, stating that you can edit cell values for that row using editors when cell is focused. You can edit dates with mouse, when cell is clicked a dropdown Calendar will appear or using a keyboard, with Left/Right arrow keys change dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
                         <p><span className="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will cancel any changes not saved. Clicking again on the Pencil icon, will close the editor.</p>
                         <p><span className="initial-space"></span>When changes are saved, the <span className="code-name">dataChanged</span> event is fired, which you can handle in your code. In addition, any change to cell values fires the <span className="code-name">valueChanged</span> event, like in this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+                        <p><span className="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
                     </div>
                 </div>
             </div>

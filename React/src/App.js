@@ -13,7 +13,15 @@ import ButtonGroupOverview from './samples/buttongroup/buttongroup-overview.js';
 import CalendarOverview from './samples/calendar/calendar-overview.js';
 import CardOverview from './samples/card/card-overview.js';
 import CheckBoxOverview from './samples/checkbox/checkbox-overview.js';
+
 import ContextMenuOverview from './samples/contextmenu/contextmenu-overview.js';
+import ContextMenuCheckBoxes from './samples/contextmenu/contextmenu-checkbox.js';
+import ContextMenuCustomTemplate from './samples/contextmenu/contextmenu-custom-template.js';
+import ContextMenuHeader from './samples/contextmenu/contextmenu-header.js';
+import ContextMenuMultiLevel from './samples/contextmenu/contextmenu-multi-level.js';
+import ContextMenuRadioButtons from './samples/contextmenu/contextmenu-radiobuttons.js';
+import ContextMenuSeparatorLabel from './samples/contextmenu/contextmenu-separator-label.js';
+
 import DatePickerOverview from './samples/datepicker/datepicker-overview.js';
 import DialogOverview from './samples/dialog/dialog-overview.js';
 import DockPanelOverview from './samples/dockpanel/dockpanel-overview.js';
@@ -22,12 +30,12 @@ import DropDownButtonOverview from './samples/dropdownbutton/dropdownbutton-over
 
 import GridOverview from './samples/grid/grid-overview.js';
 // Data
-import GridAddRowDynamically from './samples/grid/grid-add-row-dynamically.js';
-import GridDynamicUpdate from './samples/grid/grid-dynamic-update.js';
+import GridAddRowDynamically from './samples/grid/data/grid-add-row-dynamically.js';
+import GridDynamicUpdate from './samples/grid/data/grid-dynamic-update.js';
 // Editing
-import GridBatchEditing from './samples/grid/grid-batch-editing.js';
-import GridFormEditing from './samples/grid/grid-form-editing.js';
-import GridInlineEditing from './samples/grid/grid-inline-editing.js';
+import GridBatchEditing from './samples/grid/editing/grid-batch-editing.js';
+import GridFormEditing from './samples/grid/editing/grid-form-editing.js';
+import GridInlineEditing from './samples/grid/editing/grid-inline-editing.js';
 // Editors 
 import GridEditorsButton from './samples/grid/editing/editors/grid-editors-button.js';
 import GridEditorsCheckBox from './samples/grid/editing/editors/grid-editors-checkbox.js';
@@ -38,10 +46,10 @@ import GridEditorsRadioButton from './samples/grid/editing/editors/grid-editors-
 import GridEditorsRating from './samples/grid/editing/editors/grid-editors-rating.js';
 import GridEditorsText from './samples/grid/editing/editors/grid-editors-text.js';
 // Filtering
-import GridFiltering from './samples/grid/grid-filtering.js';
-import GridInlineFilter from './samples/grid/grid-inline-filter.js';
+import GridFiltering from './samples/grid/filtering/grid-filtering.js';
+import GridInlineFilter from './samples/grid/filtering/grid-inline-filter.js';
 // Grouping 
-import GridDynamicGrouping from './samples/grid/grid-dynamic-grouping.js';
+import GridDynamicGrouping from './samples/grid/grouping/grid-dynamic-grouping.js';
 // Layout
 import GridAutoSizeColumns from './samples/grid/layout/grid-autosize-columns.js';
 import GridCellTemplates from './samples/grid/layout/grid-cell-templates.js';
@@ -55,12 +63,13 @@ import GridRowCustomToolbar from './samples/grid/layout/grid-row-custom-toolbar.
 import GridShowHideColumns from './samples/grid/layout/grid-show-hide-columns.js';
 import GridShowHideHeaderFooter from './samples/grid/layout/grid-show-hide-header-footer.js';
 // Miscellaneous
-import GridExport from './samples/grid/grid-export.js';
-import GridVirtualization from './samples/grid/grid-virtualization.js';
+import GridExport from './samples/grid/miscellaneous/grid-export.js';
+import GridVirtualization from './samples/grid/miscellaneous/grid-virtualization.js';
 // Pagination
-import GridPagination from './samples/grid/grid-pagination.js';
+import GridPagination from './samples/grid/pagination/grid-pagination.js';
 //Sorting
-import GridSorting from './samples/grid/grid-sorting.js';
+import GridSortingOverview from './samples/grid/sorting/grid-sorting-overview.js';
+import GridMultiColumnSorting from './samples/grid/sorting/grid-multi-column-sorting.js';
 // Styling
 import GridCellsDifferentColors from './samples/grid/styling/grid-cells-different-colors.js';
 import GridColumnsDifferentColors from './samples/grid/styling/grid-columns-different-colors.js';
@@ -114,7 +123,15 @@ import ListViewTooltip from './samples/listview/utility/listview-tooltip.js';
 import ListViewFastLoad from './samples/listview/virtualization/listview-fast-load.js';
 
 import LoadingOverview from './samples/loading/loading-overview.js';
+
 import MenuOverview from './samples/menu/menu-overview.js';
+import MenuCheckBox from './samples/menu/menu-checkbox.js';
+import MenuCustomTemplate from './samples/menu/menu-custom-template.js';
+import MenuRadioButtons from './samples/menu/menu-radiobuttons.js';
+import MenuSeparatorLabel from './samples/menu/menu-separator-label.js';
+import MenuShortcuts from './samples/menu/menu-shortcuts.js';
+import MenuVertical from './samples/menu/menu-vertical.js';
+
 import NumericOverview from './samples/numeric/numeric-overview.js';
 import PaginatorOverview from './samples/paginator/paginator-overview.js';
 
@@ -245,7 +262,7 @@ class App extends Component {
         this.state = {
             ctrlSize: { width: 300, height: 400 },
             currentScrollAppearance: IntegralUIComponentAppearance.Dynamic,
-            currentResourcePath: '../../integralui-web/icons',
+            currentResourcePath: 'integralui-web/icons',
             currentSelection: null,
             currentTheme: IntegralUITheme.Office,
             fullList: [],
@@ -260,7 +277,19 @@ class App extends Component {
                 { text: 'Calendar', link: '/calendar' },
                 { text: 'Card', link: '/card' },
                 { text: 'CheckBox', link: '/checkbox' },
-                { text: 'ContextMenu', link: '/contextmenu' },
+                { 
+                    id: 'cmnu',
+                    text: 'ContextMenu', 
+                    items: [
+                        { id: 'cmnu-ovw', pid: 'cmnu', text: 'Overview', link: '/contextmenu/overview' },
+                        { id: 'cmnu-cstpl', pid: 'cmnu', text: 'Custom Menu Template', link: '/contextmenu/custom-template' },
+                        { id: 'cmnu-cbox', pid: 'cmnu', text: 'Menu with Check Boxes', link: '/contextmenu/checkbox' },
+                        { id: 'cmnu-rbtn', pid: 'cmnu', text: 'Menu with Header', link: '/contextmenu/header' },
+                        { id: 'cmnu-rbtn', pid: 'cmnu', text: 'Menu with Radio Buttons', link: '/contextmenu/radiobuttons' },
+                        { id: 'cmnu-rbtn', pid: 'cmnu', text: 'Multi-Level Context Menu', link: '/contextmenu/multi-level' },
+                        { id: 'cmnu-seplbl', pid: 'cmnu', text: 'Separator with Label', link: '/contextmenu/separator-label' }
+                    ]
+                },
                 { text: 'DatePicker', link: '/datepicker' },
                 { text: 'Dialog', link: '/dialog' },
                 { text: 'DockPanel', link: '/dockpanel' },
@@ -270,18 +299,25 @@ class App extends Component {
                     text: 'Grid', 
                     items: [
                         { id: 'grd-ovw', pid: 'grd', text: 'Overview', link: '/grid/overview' },
-                        { id: 'grd-ardyn', pid: 'grd', text: 'Add Rows Dynamically', link: '/grid/add-row-dynamically' },
-                        { id: 'grd-dyngrp', pid: 'grd', text: 'Dynamic Grouping', link: '/grid/dynamic-grouping' },
-                        { id: 'grd-dynupd', pid: 'grd', text: 'Dynamic Update', link: '/grid/dynamic-update' },
+                        { 
+                            id: 'grd-data', 
+                            pid: 'grd', 
+                            text: 'Data', 
+                            type: 'group',
+                            items: [
+                                { id: 'grd-ardyn', pid: 'grd-data', text: 'Add Rows Dynamically', link: '/grid/data/add-row-dynamically' },
+                                { id: 'grd-dynupd', pid: 'grd-data', text: 'Dynamic Update', link: '/grid/data/dynamic-update' }
+                            ]
+                        },
                         { 
                             id: 'grd-editing', 
                             pid: 'grd', 
                             text: 'Editing', 
                             type: 'group',
                             items: [
-                                { id: 'grd-bhedt', pid: 'grd-editing', text: 'Batch Editing', link: '/grid/batch-editing' },
-                                { id: 'grd-frmedt', pid: 'grd-editing', text: 'Form Editing', link: '/grid/form-editing' },
-                                { id: 'grd-inedt', pid: 'grd-editing', text: 'Inline Editing', link: '/grid/inline-editing' },
+                                { id: 'grd-bhedt', pid: 'grd-editing', text: 'Batch Editing', link: '/grid/editing/batch-editing' },
+                                { id: 'grd-frmedt', pid: 'grd-editing', text: 'Form Editing', link: '/grid/editing/form-editing' },
+                                { id: 'grd-inedt', pid: 'grd-editing', text: 'Inline Editing', link: '/grid/editing/inline-editing' },
                                 { 
                                     id: 'grd-editors', 
                                     pid: 'grd-editing', 
@@ -300,7 +336,15 @@ class App extends Component {
                                 }
                             ]   
                         },
-                        { id: 'grd-expt', pid: 'grd', text: 'Export', link: '/grid/export' },
+                        { 
+                            id: 'grd-grouping', 
+                            pid: 'grd', 
+                            text: 'Grouping', 
+                            type: 'group',
+                            items: [
+                                { id: 'grd-dyngrp', pid: 'grd-grouping', text: 'Dynamic Grouping', link: '/grid/grouping/dynamic-grouping' }
+                            ]
+                        },
                         { 
                             id: 'grd-layout', 
                             pid: 'grd', 
@@ -320,10 +364,36 @@ class App extends Component {
                                 { id: 'grd-shhf', pid: 'grd-layout', text: 'Show/Hide Header and Footer', link: '/grid/layout/show-hide-header-footer' }
                             ]
                         },
-                        { id: 'grd-fltr', pid: 'grd', text: 'Filtering', link: '/grid/filtering' },
-                        { id: 'grd-inflt', pid: 'grd', text: 'Inline Filter', link: '/grid/inline-filter' },
-                        { id: 'grd-pgn', pid: 'grd', text: 'Pagination', link: '/grid/pagination' },
-                        { id: 'grd-sort', pid: 'grd', text: 'Sorting', link: '/grid/sorting' },
+                        { 
+                            id: 'grd-filtering', 
+                            pid: 'grd', 
+                            text: 'Filtering', 
+                            type: 'group',
+                            items: [
+                                { id: 'grd-fltr', pid: 'grd-filtering', text: 'Filtering', link: '/grid/filtering/filtering-overview' },
+                                { id: 'grd-inflt', pid: 'grd-filtering', text: 'Inline Filter', link: '/grid/filtering/inline-filter' }
+                            ]
+                        },
+                        { 
+                            id: 'grd-misc', 
+                            pid: 'grd', 
+                            text: 'Miscellaneous', 
+                            type: 'group',
+                            items: [
+                                { id: 'grd-expt', pid: 'grd-misc', text: 'Export', link: '/grid/miscellaneous/export' },
+                                { id: 'grd-virt', pid: 'grd-misc', text: 'Virtualization', link: '/grid/miscellaneous/virtualization' }
+                            ]
+                        },
+                        { 
+                            id: 'grd-sorting', 
+                            pid: 'grd', 
+                            text: 'Sorting', 
+                            type: 'group',
+                            items: [
+                                { id: 'grd-sort', pid: 'grd-sorting', text: 'Overview', link: '/grid/sorting/sorting-overview' },
+                                { id: 'grd-multi-sort', pid: 'grd-sorting', text: 'Multi Column Sorting', link: '/grid/sorting/multi-column-sorting' }
+                            ]
+                        },
                         { 
                             id: 'grd-styling', 
                             pid: 'grd', 
@@ -344,8 +414,7 @@ class App extends Component {
                                 { id: 'grd-cmnu', pid: 'grd-utility', text: 'Context Menu', link: '/grid/utility/contextmenu' },
                                 { id: 'grd-ttps', pid: 'grd-utility', text: 'Tooltips', link: '/grid/utility/tooltips' }
                             ]
-                        },
-                        { id: 'grd-virt', pid: 'grd', text: 'Virtualization', link: '/grid/virtualization' }
+                        }
                     ]
                 },
                 { text: 'GroupBox', link: '/groupbox' },
@@ -561,7 +630,19 @@ class App extends Component {
                     ]
                 },
                 { text: 'Loading', link: '/loading/overview' },
-                { text: 'Menu', link: '/menu' },
+                { 
+                    id: 'mnu',
+                    text: 'Menu', 
+                    items: [
+                        { id: 'mnu-ovw', pid: 'mnu', text: 'Overview', link: '/menu/overview' },
+                        { id: 'mnu-cstpl', pid: 'mnu', text: 'Custom Menu Template', link: '/menu/custom-template' },
+                        { id: 'mnu-cbox', pid: 'mnu', text: 'Menu with Check Boxes', link: '/menu/checkbox' },
+                        { id: 'mnu-rbtn', pid: 'mnu', text: 'Menu with Radio Buttons', link: '/menu/radiobuttons' },
+                        { id: 'mnu-shcut', pid: 'mnu', text: 'Menu with Shortcuts', link: '/menu/shortcuts' },
+                        { id: 'mnu-seplbl', pid: 'mnu', text: 'Separator with Label', link: '/menu/separator-label' },
+                        { id: 'mnu-vert', pid: 'mnu', text: 'Vertical Menu', link: '/menu/vertical' }
+                    ]
+                },
                 { text: 'Numeric', link: '/numeric' },
                 { text: 'Paginator', link: '/paginator' },
                 { 
@@ -959,16 +1040,23 @@ class App extends Component {
                             <Route path="/calendar"><CalendarOverview /></Route>
                             <Route path="/card"><CardOverview /></Route>
                             <Route path="/checkbox"><CheckBoxOverview /></Route>
-                            <Route path="/contextmenu"><ContextMenuOverview /></Route>
+                            <Route path="/contextmenu/overview"><ContextMenuOverview /></Route>
+                            <Route path="/contextmenu/checkbox"><ContextMenuCheckBoxes /></Route>
+                            <Route path="/contextmenu/custom-template"><ContextMenuCustomTemplate /></Route>
+                            <Route path="/contextmenu/header"><ContextMenuHeader /></Route>
+                            <Route path="/contextmenu/multi-level"><ContextMenuMultiLevel /></Route>
+                            <Route path="/contextmenu/radiobuttons"><ContextMenuRadioButtons /></Route>
+                            <Route path="/contextmenu/separator-label"><ContextMenuSeparatorLabel /></Route>
                             <Route path="/datepicker"><DatePickerOverview /></Route>
                             <Route path="/dialog"><DialogOverview /></Route>
                             <Route path="/dockpanel"><DockPanelOverview /></Route>
                             <Route path="/dropdownbutton"><DropDownButtonOverview /></Route>
                             <Route path="/grid/overview"><GridOverview /></Route>
-                            <Route path="/grid/add-row-dynamically"><GridAddRowDynamically /></Route>
-                            <Route path="/grid/batch-editing"><GridBatchEditing /></Route>
-                            <Route path="/grid/dynamic-grouping"><GridDynamicGrouping /></Route>
-                            <Route path="/grid/dynamic-update"><GridDynamicUpdate /></Route>
+                            <Route path="/grid/data/add-row-dynamically"><GridAddRowDynamically /></Route>
+                            <Route path="/grid/data/dynamic-update"><GridDynamicUpdate /></Route>
+                            <Route path="/grid/editing/batch-editing"><GridBatchEditing /></Route>
+                            <Route path="/grid/editing/form-editing"><GridFormEditing /></Route>
+                            <Route path="/grid/editing/inline-editing"><GridInlineEditing /></Route>
                             <Route path="/grid/editing/editors/editors-button"><GridEditorsButton /></Route>
                             <Route path="/grid/editing/editors/editors-checkbox"><GridEditorsCheckBox /></Route>
                             <Route path="/grid/editing/editors/editors-datepicker"><GridEditorsDatePicker /></Route>
@@ -977,11 +1065,9 @@ class App extends Component {
                             <Route path="/grid/editing/editors/editors-radiobutton"><GridEditorsRadioButton /></Route>
                             <Route path="/grid/editing/editors/editors-rating"><GridEditorsRating /></Route>
                             <Route path="/grid/editing/editors/editors-text"><GridEditorsText /></Route>
-                            <Route path="/grid/export"><GridExport /></Route>
-                            <Route path="/grid/filtering"><GridFiltering /></Route>
-                            <Route path="/grid/form-editing"><GridFormEditing /></Route>
-                            <Route path="/grid/inline-editing"><GridInlineEditing /></Route>
-                            <Route path="/grid/inline-filter"><GridInlineFilter /></Route>
+                            <Route path="/grid/grouping/dynamic-grouping"><GridDynamicGrouping /></Route>
+                            <Route path="/grid/filtering/filtering-overview"><GridFiltering /></Route>
+                            <Route path="/grid/filtering/inline-filter"><GridInlineFilter /></Route>
                             <Route path="/grid/layout/autosize-columns"><GridAutoSizeColumns /></Route>
                             <Route path="/grid/layout/cell-templates"><GridCellTemplates /></Route>
                             <Route path="/grid/layout/column-alignment"><GridColumnAlignment /></Route>
@@ -993,14 +1079,16 @@ class App extends Component {
                             <Route path="/grid/layout/row-custom-toolbar"><GridRowCustomToolbar /></Route>
                             <Route path="/grid/layout/show-hide-columns"><GridShowHideColumns /></Route>
                             <Route path="/grid/layout/show-hide-header-footer"><GridShowHideHeaderFooter /></Route>
-                            <Route path="/grid/pagination"><GridPagination /></Route>
-                            <Route path="/grid/sorting"><GridSorting /></Route>
+                            <Route path="/grid/miscellaneous/export"><GridExport /></Route>
+                            <Route path="/grid/miscellaneous/virtualization"><GridVirtualization /></Route>
+                            <Route path="/grid/pagination/pagination-overview"><GridPagination /></Route>
+                            <Route path="/grid/sorting/sorting-overview"><GridSortingOverview /></Route>
+                            <Route path="/grid/sorting/multi-column-sorting"><GridMultiColumnSorting /></Route>
                             <Route path="/grid/styling/cells-different-colors"><GridCellsDifferentColors /></Route>
                             <Route path="/grid/styling/columns-different-colors"><GridColumnsDifferentColors /></Route>
                             <Route path="/grid/styling/rows-different-colors"><GridRowsDifferentColors /></Route>
                             <Route path="/grid/utility/contextmenu"><GridContextMenu /></Route>
                             <Route path="/grid/utility/tooltips"><GridTooltips /></Route>
-                            <Route path="/grid/virtualization"><GridVirtualization /></Route>
                             <Route path="/groupbox"><GroupBoxOverview /></Route>
                             <Route path="/label"><LabelOverview /></Route>
                             <Route path="/listbar"><ListBarOverview /></Route>
@@ -1042,7 +1130,13 @@ class App extends Component {
                             <Route path="/listview/utility/listview-tooltip"><ListViewTooltip /></Route>
                             <Route path="/listview/virtualization/listview-fast-load"><ListViewFastLoad /></Route>
                             <Route path="/loading/overview"><LoadingOverview /></Route>
-                            <Route path="/menu"><MenuOverview /></Route>
+                            <Route path="/menu/overview"><MenuOverview /></Route>
+                            <Route path="/menu/checkbox"><MenuCheckBox /></Route>
+                            <Route path="/menu/custom-template"><MenuCustomTemplate /></Route>
+                            <Route path="/menu/radiobuttons"><MenuRadioButtons /></Route>
+                            <Route path="/menu/separator-label"><MenuSeparatorLabel /></Route>
+                            <Route path="/menu/shortcuts"><MenuShortcuts /></Route>
+                            <Route path="/menu/vertical"><MenuVertical /></Route>
                             <Route path="/numeric"><NumericOverview /></Route>
                             <Route path="/paginator"><PaginatorOverview /></Route>
                             <Route path="/pivotgrid/overview"><PivotGridOverview /></Route>

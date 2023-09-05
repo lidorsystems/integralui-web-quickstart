@@ -13,8 +13,8 @@
             }
 
             [id="tabstrip-new-tab"]{
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
             }
         </style>
     </head>
@@ -46,7 +46,7 @@
        
         const ctrl = document.querySelector('#tabstrip-new-tab');
 
-        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.contentAnimation = IntegralUIAnimationType.Fade;
         ctrl.customStyle = iuiTabStripNewTabStyle;
         ctrl.scrollMode = IntegralUITabScrollMode.OutBound;
         ctrl.selectedTab = null;
@@ -104,8 +104,8 @@
 
                 // Once the loading animation is active you can load tab from a custom data source (local or remote), like a JSON file
                 setTimeout(function(){
-                    let newTabIndex = ctrl.tabs.indexOf(tab.data);
-                    let newTab = { id: ctrl.tabs.length, text: "Tab " + ctrl.tabs.length }
+                    let newTabIndex = tabs.indexOf(tab.data);
+                    let newTab = { id: tabs.length, text: "Tab " + tabs.length }
 
                     // Create new Tab Element
                     const tabElems = ctrl.querySelectorAll('iui-tab');
@@ -113,7 +113,7 @@
                     ctrl.insertBefore(ctrlTab, tabElems[tabElems.length - 1]);
 
                     // Add the new Tab object to the TabStrip
-                    ctrl.tabs.splice(newTabIndex, 0, newTab);
+                    tabs.splice(newTabIndex, 0, newTab);
 
                     ctrl.selectedTab = newTab;
                     isLoading = false;

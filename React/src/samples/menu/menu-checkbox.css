@@ -1,0 +1,5 @@
+[id="menu-checkbox"] {
+    --iui-menuitem-root-margin: 0 10px 0 3px;
+    --iui-menuitem-width: 200px;
+    --iui-menuitem-checkbox-margin: 4px 8px 4px 3px;
+}

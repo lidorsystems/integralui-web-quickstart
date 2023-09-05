@@ -14,8 +14,8 @@ export const iuiGridShowHideColumnsStyle = css`
     }
 
     iui-dropdownbutton {
-        --dropdownbutton-float: right;
-        --dropdownbutton-height: 16px;
+        --iui-dropdownbutton-float: right;
+        --iui-dropdownbutton-height: 16px;
         opacity: 0;
     }
 
@@ -33,6 +33,6 @@ export const iuiGridShowHideColumnsStyle = css`
         vertical-align: top;
     }
     .checked-icon {
-        background: url(assets/icons/check-mark.ico);
+        background: url(app/integralui/icons/check-mark.ico);
     }
 `;

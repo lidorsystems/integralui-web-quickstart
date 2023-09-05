@@ -20,8 +20,8 @@
             }
 
             [id="tabstrip-tab-groups"]{
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
             }
         </style>
     </head>
@@ -55,7 +55,7 @@
        
         const ctrl = document.querySelector('#tabstrip-tab-groups');
 
-        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.contentAnimation = IntegralUIAnimationType.Fade;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
 

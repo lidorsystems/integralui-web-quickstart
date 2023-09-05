@@ -1,0 +1,18 @@
+<h2>ContextMenu / Header</h2>
+<div class="sample-block">
+    <iui-contextmenu #contextmenu
+        [customStyle]="customStyle"
+        [settings]="menuSettings"
+        [theme]="currentTheme"
+        (menuClick)="menuItemClick($event)"
+    >
+        <div class="cmnu-header-block" id="menu-block">
+            <span>Right click to open the context menu</span>
+        </div>
+    </iui-contextmenu>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>An example of Context Menu with header as first menu item. Having a header can help in describing what the context menu options are for.</p>
+    <p><span class="initial-space"></span>The header appears when menu item <strong>type</strong> field is set to <span class="code-name">'header'</span>. It is fully customizable with CSS.</p>
+    <p><span class="initial-space"></span>Tn addition, you can create custom template for headers, where you can add different HTML elements and CSS. In this case, the header has a label and blue background.</p>
+</div>

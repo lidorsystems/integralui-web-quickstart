@@ -1,15 +1,15 @@
 [id="listbox-dragdrop-events"]{
-    --listbox-display: inline-block;
-    --listbox-height: 100%;
-    --listbox-width: 45%;
+    --iui-listbox-display: inline-block;
+    --iui-listbox-height: 100%;
+    --iui-listbox-width: 45%;
 }
 [id="listbox-dragdrop-events-log"] {
-    --listbox-border: 0;
-    --listbox-margin: 0;
-    --listbox-height: calc(100% - 41px);
+    --iui-listbox-border: 0;
+    --iui-listbox-margin: 0;
+    --iui-listbox-height: calc(100% - 41px);
     
-    --listitem-padding: 5px 0;
-    --listitem-white-space: normal;
+    --iui-listitem-padding: 5px 0;
+    --iui-listitem-white-space: normal;
 }
 .sample-block-listbox-dragdrop-events {
     height: 400px;

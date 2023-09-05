@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
 
 import IntegralUIButtonComponent from 'integralui-web/wrappers/react.integralui.button.js';
+import IntegralUICheckBoxComponent from 'integralui-web/wrappers/react.integralui.checkbox.js';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service.js';
 import IntegralUITreeGridComponent from 'integralui-web/wrappers/react.integralui.treegrid.js';
 import { IntegralUIEditMode, IntegralUITheme, IntegralUIVisibility } from 'integralui-web/components/integralui.enums.js';
 
-import gridData from './treegrid-batch-editing-data.json';
+import treegridData from './treegrid-batch-editing-data.json';
 import './treegrid-batch-editing.css';
 import { iuiTreeGridBatchEditingStyle } from './treegrid-batch-editing.style.js';
 
@@ -25,13 +26,6 @@ class TreeGridBatchEditing extends Component {
 
         this._commonService = new IntegralUICommonService();
 
-        this.shipModeList = [
-            { id: 1, text: "None", value: -1 },
-            { id: 2, text: "Delivery Truck", value: 0 },
-            { id: 3, text: "Regular Air", value: 1 },
-            { id: 4, text: "Express Air", value: 2 }
-        ];
-
         this.state = {
             columns: [],
             ctrlSize: { height: 400 },
@@ -39,14 +33,15 @@ class TreeGridBatchEditing extends Component {
             currentResourcePath: '../../integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
             isAnimationAllowed: true,
+            isValidationInUse: true,
             rows: []
         }
         
-        this.gridRef = React.createRef();
+        this.treegridRef = React.createRef();
     }
 
     componentDidMount(){
-        this.convertJSONData(gridData);
+        this.convertJSONData(treegridData);
     }
 
     //
@@ -55,7 +50,7 @@ class TreeGridBatchEditing extends Component {
 
     // Editing -----------------------------------------------------------------------------------
 
-    gridDataChanged(e){
+    treegridDataChanged(e){
         // Update the Total value when Quantity or Price changes
         if (e.detail.data){
             e.detail.data.forEach(row => {
@@ -76,10 +71,14 @@ class TreeGridBatchEditing extends Component {
         return filtered.length > 0 ? filtered[0] : null;
     }
 
+    treegridDataInvalid(e){
+        alert("Some data fields are invalid!");
+    }
+
     saveChanges(keep){
         // Calling endEdit will complete the editing process
         // If called with true, it will save any changes
-        this.gridRef.current.endEdit(keep);
+        this.treegridRef.current.endEdit(keep);
     }
 
     // Templates ---------------------------------------------------------------------------------
@@ -103,8 +102,12 @@ class TreeGridBatchEditing extends Component {
             let column = Object.assign({ headerAlignment: 'center' }, obj);
 
             column.editorSetting = { 
-                visible:IntegralUIVisibility.None
+                visible: IntegralUIVisibility.None
             }
+
+            // Set callback function for ShipMode, uses Custom data validation
+            if (column.id === 8 && column.validation)
+                column.validation.rules[0].callback = this.validateShipMode;
 
             columnList.push(column);
         });
@@ -155,6 +158,14 @@ class TreeGridBatchEditing extends Component {
         this.setState({ columns: columnList, rows: rowList });
     }
 
+    useValidationChanged(e){
+        this.setState({ isValidationInUse: e.detail.checked });
+    }
+
+    validateShipMode(value){
+        return value >= 0;
+    }
+
     // Update ------------------------------------------------------------------------------------
 
     render() {
@@ -162,12 +173,14 @@ class TreeGridBatchEditing extends Component {
             <div>
                 <h2>TreeGrid / Batch Editing</h2>
                 <div className="sample-block" id="treegrid-batch-editing">
-                    <IntegralUITreeGridComponent ref={this.gridRef}
+                    <div align="right">
+                        <IntegralUICheckBoxComponent allowFocus={false} checked={this.state.isValidationInUse} resourcePath={this.state.currentResourcePath} theme={this.state.currentTheme} checkedChanged={(e) => this.useValidationChanged(e)}>Use Validation</IntegralUICheckBoxComponent><br/>
+                    </div>
+                    <IntegralUITreeGridComponent ref={this.treegridRef}
                         allowAnimation={this.state.isAnimationAllowed} 
+                        editMode={this.state.currentEditMode}
                         columns={this.state.columns} 
                         customStyle={iuiTreeGridBatchEditingStyle}
-                        editMode={this.state.currentEditMode}
-                        expandColumnIndex={this.state.expandColumnIndex}
                         headerTemplate={this.currentHeaderTemplate}
                         resourcePath={this.state.currentResourcePath}
                         rowHeight={30}
@@ -175,7 +188,9 @@ class TreeGridBatchEditing extends Component {
                         showFooter={false}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme}
-                        dataChanged={(e) => this.gridDataChanged(e)}
+                        useValidation={this.state.isValidationInUse}
+                        dataChanged={(e) => this.treegridDataChanged(e)}
+                        dataInvalid={(e) => this.treegridDataInvalid(e)}
                     ></IntegralUITreeGridComponent>
                     <div className="sample-block-panel">
                         <IntegralUIButtonComponent allowFocus={true} allowAnimation={this.state.isAnimationAllowed} theme={this.state.currentTheme} onClick={() => this.saveChanges(true)}>Save Changes</IntegralUIButtonComponent>
@@ -188,9 +203,10 @@ class TreeGridBatchEditing extends Component {
                             <li>remove a row from a button in the last column, this will highlight the row</li>
                             <li>cancel any changes made within a row from a button in the last column</li>
                         </ul>
-                        <p><span className="initial-space"></span>Any changes to cell values are highlight (orange color), so you can easily see what is changed within the TreeGrid. However, these changes are only temporary and if not saved they will be cancelled. Using the last column you can remove a row or if changes are made to cancel them within that row. Finally to complete the editing process, you can save all changes or cancel them using the buttons below the grid.</p>
+                        <p><span className="initial-space"></span>Any changes to cell values are highlight (orange color), so you can easily see what is changed within the TreeGrid. However, these changes are only temporary and if not saved they will be cancelled. Using the last column you can remove a row or if changes are made to cancel them within that row. Finally to complete the editing process, you can save all changes or cancel them using the buttons below the treegrid.</p>
                         <p><span className="initial-space"></span>You can edit dates using keyboard, Left/Right arrow keys changes dates by day. In addition, holding the SHIFT key will change a date by 30 days.</p>
                         <p><span className="initial-space"></span>When changes are saved, the <span className="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity, Price and Shipping Cost values.</p>
+                        <p><span className="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
                     </div>
                 </div>
             </div>

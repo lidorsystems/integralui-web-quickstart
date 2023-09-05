@@ -1,6 +1,6 @@
 [id="treeview-export"]{
-    --treeview-display: inline-block;
-    --treeview-width: calc(60% - 200px);
+    --iui-treeview-display: inline-block;
+    --iui-treeview-width: calc(60% - 200px);
 }
 [id="treeview-export-result-block"]{
     border: thin solid #d9d9d9;
@@ -16,7 +16,7 @@
     vertical-align: top;
     width: 170px;
 
-    --button-margin: 10px 5px;
+    --iui-button-margin: 10px 5px;
 }
 .treeview-export-panel label {
     display: block;

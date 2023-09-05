@@ -1,7 +1,6 @@
 <h2>TreeView / Filtering Overview</h2>
 <div class="sample-block">
     <iui-dropdownfilter id="treeview-dropdownfilter"
-        [allowAnimation]="true"
         [dropDownAdjustment]="filterAdjustment"
         [resourcePath]="currentResourcePath"
         [size]="filterSize"
@@ -12,7 +11,6 @@
     ></iui-dropdownfilter>
     <iui-button [allowAnimation]="true" [theme]="currentTheme" (click)="onFilterClicked()">Filter</iui-button>
     <iui-treeview #treeview id="treeview-filtering-overview"
-        [allowAnimation]="true"
         [allowFilter]="true"
         [items]="items"
         [resourcePath]="currentResourcePath"

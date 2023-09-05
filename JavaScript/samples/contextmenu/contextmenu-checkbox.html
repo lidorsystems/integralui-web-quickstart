@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .cmnu-checkbox-block {
+                background: white;
+                border: thin solid gray;
+                width: 800px;
+                height: 300px;
+            }
+            .cmnu-checkbox-block span {
+                color: #808080;
+                cursor: default;
+                display: block;
+                margin: 140px auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ContextMenu / Check Boxes</h2>
+        <div class="sample-block">
+            <iui-contextmenu id="contextmenu-checkbox" resource-path="../../node_modules/integralui-web/icons"> 
+                <div class="cmnu-checkbox-block" id="menu-block">
+                    <span>Right click to open the context menu</span>
+                </div>
+            </iui-contextmenu>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of a Context Menu with Check Boxes. Opening the <strong>'Toolbars'</strong> menu will show three menu items with check boxes.</p>
+                <p><span class="initial-space"></span>Each item can have a checkbox, by setting the followiing fields:</p>
+                <ul class="feature-points">
+                    <li><span class="code-name">allowCheckBox</span> - Determines whether checkbox is visible or not</li>
+                    <li><span class="code-name">checked</span> - specifies whether the checkbox is checked or not</li>
+                </ul>
+                <p><span class="initial-space"></span>Whenever menu checkbox is clicked, the <span class="code-name">checkedChanged</span> event is fired, which you can handle in your code and add specific action.</p>
+                <p><span class="initial-space"></span>Clicking on the checkbox will not close the parent menu. This allows you to check multiples menu items without closing. To close the menu, click on the menu label or anywhere outside of the menu space.</p>
+                <p><span class="initial-space"></span>Check boxes are fully customizable via CSS.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module">
+        import { iuiContextMenuCheckBoxStyle } from './contextmenu-checkbox.style.js';
+
+        const ctrl = document.querySelector('#contextmenu-checkbox');
+
+        ctrl.customStyle = iuiContextMenuCheckBoxStyle;
+
+        ctrl.settings = {
+            items: [
+                { id: 31, text: "Auto Preview", icon: "icons-medium empty" },
+                { id: 32, type: "separator" },
+                {
+                    id: 33, 
+                    text: "Toolbars", 
+                    icon: "icons-medium empty",
+                    items: [
+                        { id: 331, pid: 33, text: "Standard", allowCheckBox: true, checked: true },
+                        { id: 332, pid: 33, text: "Advanced", allowCheckBox: true },
+                        { id: 333, pid: 33, text: "Web", allowCheckBox: true },
+                        { id: 334, pid: 33, type: "separator" },
+                        { id: 335, pid: 33, text: "Customize ...", icon: "icons-medium empty" }
+                    ]
+                },
+                { id: 34, text: "StatusBar", allowCheckBox: true },
+                { id: 35, type: "separator" },
+                { id: 36, text: "Refresh", icon: "icons-medium empty" }
+            ]
+        }
+
+        // Events --------------------------------------------------------------------------------
+
+        let onMenuChecked = function(e){
+            console.log(e.detail.item.text + " is now " + e.detail.checked);
+        }
+
+        ctrl.addEventListener("checkedChanged", (e) => onMenuChecked(e));
+
+    </script>
+</html>

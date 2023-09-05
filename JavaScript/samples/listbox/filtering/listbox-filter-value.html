@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-filter-value"]{
+                --iui-listbox-display: inline-block;
+            }
+            .listbox-filter-value-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 200px;
+
+                --iui-rating-border: 0;
+            }
+            .listbox-filter-value-panel label {
+                display: block;
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Filter by Value</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-filter-value"
+                allow-filter="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                show-groups="true"
+            ></iui-listbox>
+            <div class="listbox-filter-value-panel">
+                <label>Filter by Rating:</label>
+                <iui-rating id="rating" division="2" max="5" resource-path="../../../node_modules/integralui-web/icons"></iui-rating>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This example shows a list of movies with different ratings. Using the Rating component on the right side of the ListBox, you can filter list by sliding the rating value. The list will show only movies that have a rating less or equal to the current rating value.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.rating.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiListBoxFilterValueStyle } from './listbox-filter-value.style.js';
+
+        //
+        // Filter Value Panel settings
+        //
+        let currentFilterValue = 10;
+
+        const ctrlRating = document.querySelector('#rating');
+        ctrlRating.allowFocus = false;
+        ctrlRating.value = currentFilterValue;
+
+        let ratingChanged = function(e){
+            currentFilterValue = e.detail.value;
+            applyFilter();
+        }   
+
+        ctrlRating.addEventListener("valueChanged", (e) => ratingChanged(e));
+
+        let applyFilter = function(){
+            // Filter ListBox based on search value
+            if (currentFilterValue){
+                let params = {
+                    conditions: { 
+                        value: currentFilterValue,
+                        operation: '<=' // Less than
+                    }
+                }
+
+                listbox.filter(params);
+            }
+            // Reset the filter
+            else
+                listbox.filter();
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-filter-value');
+
+        listbox.animateInit = true;
+        listbox.customStyle = iuiListBoxFilterValueStyle;
+        listbox.groups = [
+            { name: "sci-fi" },
+            { name: "adventure" },
+            { name: "action" },
+            { name: "drama" },
+            { name: "music" },
+            { name: "comedy" },
+            { name: "biography" },
+            { name: "crime" },
+            { name: "western" },
+            { name: "horror" },
+            { name: "romance" }
+        ];
+
+        listbox.items = [
+            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", value: 4.0 },
+            { id: 2, icon: "adventure", text: "Cast Away", year: "2000", value: 1.7  },
+            { id: 3, icon: "action", text: "Gladiator", year: "2000", value: 8.5 },
+            { id: 4, icon: "drama", text: "Malèna", year: "2000", value: 7.5 },
+            { id: 5, icon: "music", text: "Moulin Rouge", year: "2001", value: 4.6 },
+            { id: 6, icon: "comedy", text: "Snatch", year: "2000", value: 8.3  },
+            { id: 7, icon: "biography", text: "A Beautiful Mind", year: "2001", value: 3.2  },
+            { id: 8, icon: "crime", text: "Black Hawk Down", year: "2001", value: 7.7 },
+            { id: 9, icon: "western", text: "Django Unchained", year: "2012", value: 8.5  },
+            { id: 10, icon: "sci-fi", text: "Man of Steel", year: "2013", value: 7.2 },
+            { id: 11, icon: "horror", text: "The Ring", year: "2002", value: 1.1 },
+            { id: 12, icon: "romance", text: "40 Days and 40 Nights", year: "2002", value: 5.6 },
+            { id: 13, icon: "sci-fi", text: "Minority Report", year: "2002", value: 7.7 },
+            { id: 14, icon: "comedy", text: "Scary Movie 3", year: "2003", value: 5.5 },
+            { id: 15, icon: "music", text: "Walk the Line", year: "2005", value: 7.9  },
+            { id: 16, icon: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", value: 5.4 },
+            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", value: 7.0  },
+            { id: 18, icon: "horror", text: "American Psycho", year: "2000", value: 2.6 },
+            { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", value: 8.1 },
+            { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", value: 6.2 }
+        ];
+
+        listbox.size = { width: 500, height: 400 }
+    
+        let ratingValueChanged = function(e, item){
+            item.value = e.detail.value;
+        }
+
+        // Apply grouping
+        listbox.items.forEach(item => item.group = item.icon);
+        
+        // Templates -----------------------------------------------------------------------------
+
+        listbox.itemTemplate = (item) => { 
+            if (item.type === 'group')
+                return html`
+                    <div class="lbox-ovw-item-content">
+                        <span class="lbox-ovw-icons ${item.name}"></span>
+                        <span class="lbox-ovw-name">${item.name}</span>
+                    </div>
+                `;
+            else
+                return html`
+                    <div class="lbox-ovw-item-content">
+                        <span class="lbox-ovw-title">${item.text}</span>
+                        <span class="lbox-ovw-year">${item.year}</span>
+                        <iui-rating .allowFocus="${false}" division="2" max="5" resource-path="../../../node_modules/integralui-web/icons" .value=${item.value} @valueChanged="${(e) => ratingValueChanged(e, item)}"></iui-rating>
+                    </div>
+                `;
+        };
+    </script>
+</html>

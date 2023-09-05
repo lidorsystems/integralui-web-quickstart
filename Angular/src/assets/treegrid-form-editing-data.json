@@ -9,6 +9,14 @@
                 "editOnFocus": true,
                 "selected": true
             },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "OrderID is required",
+                        "rule": "Required"
+                    }
+                ]
+            },
             "contentAlignment": "center", 
             "width": 60
         },
@@ -21,6 +29,14 @@
                 "editOnFocus": true,
                 "selected": true
             },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Customer is required",
+                        "rule": "Required"
+                    }
+                ]
+            },
             "width": 180
         },
         { 
@@ -31,6 +47,14 @@
                 "allowChange": "lost-focus",
                 "editOnFocus": true,
                 "selected": true
+            },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Product Name is required",
+                        "rule": "Required"
+                    }
+                ]
             },
             "width": 300
         },
@@ -52,7 +76,44 @@
                     "day": "2-digit"
                 }
             },
+            "validation": {
+                "adjustment": { "top": -8 },
+                "rules": [
+                    {
+                        "message": "Order Date must be after 01 Jan 2019",
+                        "rule": "Range",
+                        "min": "2019-01-01T00:00:00.000Z"
+                    }
+                ]
+            },
             "width": 150
+        },
+        { 
+            "id": 12, 
+            "contentAlignment": "center", 
+            "title": "Ship Mode", 
+            "headerAlignment": "center", 
+            "editorType": "DropDownList",
+            "editorSettings": {
+                "allowAnimation": true,
+                "dropDownAdjustment": { "top": 10 },
+                "items": [
+                    { "text": "None", "value": -1 },
+                    { "text": "Delivery Truck", "value": 0 },
+                    { "text": "Regular Air", "value": 1 },
+                    { "text": "Express Air", "value": 2 }
+                ]
+            },
+            "validation": {
+                "position": "below",
+                "rules": [
+                    {
+                        "message": "Please specify the Ship Mode",
+                        "rule": "Custom"
+                    }
+                ]
+            },
+            "width": 200
         },
         { 
             "id": 6, 
@@ -71,6 +132,16 @@
                 "type": "number"
             },
             "contentAlignment": "right", 
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Quantity must be greater than 0",
+                        "rule": "Compare",
+                        "operation": ">",
+                        "value": 0
+                    }
+                ]
+            },
             "width": 80
         },
         { 
@@ -88,6 +159,16 @@
                     }
                 }, 
                 "type": "number"
+            },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Price must be greater than 0",
+                        "rule": "Compare",
+                        "operation": ">",
+                        "value": 0
+                    }
+                ]
             }
         },
         { 
@@ -114,7 +195,7 @@
             "Order Date": "2019-08-19T00:00:00.000Z",
             "Quantity": 6,
             "Price": 38.94,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 35,
             "Ship Date": "2019-08-26T00:00:00.000Z"
         },
@@ -125,7 +206,7 @@
             "Order Date": "2019-09-07T00:00:00.000Z",
             "Quantity": 49,
             "Price": 208.16,
-            "Ship Mode": "Delivery Truck",
+            "Ship Mode": 0,
             "Shipping Cost": 68.02,
             "Ship Date": "2019-09-14T00:00:00.000Z"
         },
@@ -136,7 +217,7 @@
             "Order Date": "2019-11-28T00:00:00.000Z",
             "Quantity": 27,
             "Price": 8.69,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 2.99,
             "Ship Date": "2019-12-04T00:00:00.000Z"
         },
@@ -147,7 +228,7 @@
             "Order Date": "2020-01-10T00:00:00.000Z",
             "Quantity": 30,
             "Price": 195.99,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 3.99,
             "Ship Date": "2020-01-17T00:00:00.000Z"
         },
@@ -158,7 +239,7 @@
             "Order Date": "2020-03-03T00:00:00.000Z",
             "Quantity": 19,
             "Price": 21.78,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 5.94,
             "Ship Date": "2020-03-11T00:00:00.000Z"
         },
@@ -169,7 +250,7 @@
             "Order Date": "2020-04-15T00:00:00.000Z",
             "Quantity": 21,
             "Price": 6.64,
-            "Ship Mode": "Express Air",
+            "Ship Mode": 2,
             "Shipping Cost": 4.95,
             "Ship Date": "2020-04-22T00:00:00.000Z"
         },
@@ -180,7 +261,7 @@
             "Order Date": "2020-06-11T00:00:00.000Z",
             "Quantity": 12,
             "Price": 7.3,
-            "Ship Mode": "Delivery Truck",
+            "Ship Mode": 0,
             "Shipping Cost": 7.72,
             "Ship Date": "2020-06-18T00:00:00.000Z"
         },
@@ -191,7 +272,7 @@
             "Order Date": "2020-07-05T00:00:00.000Z",
             "Quantity": 22,
             "Price": 42.76,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 6.220,
             "Ship Date": "2020-07-12T00:00:00.000Z"
         },
@@ -202,7 +283,7 @@
             "Order Date": "2020-09-09T00:00:00.000Z",
             "Quantity": 19,
             "Price": 138.14,
-            "Ship Mode": "Express Air",
+            "Ship Mode": 2,
             "Shipping Cost": 27.5,
             "Ship Date": "2020-09-16T00:00:00.000Z"
         },
@@ -213,7 +294,7 @@
             "Order Date": "2020-09-12T00:00:00.000Z",
             "Quantity": 44,
             "Price": 4.98,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 8.33,
             "Ship Date": "2020-09-19T00:00:00.000Z"
         },
@@ -224,7 +305,7 @@
             "Order Date": "2020-10-27T00:00:00.000Z",
             "Quantity": 45,
             "Price": 4.28,
-            "Ship Mode": "Delivery Truck",
+            "Ship Mode": 0,
             "Shipping Cost": 6.18,
             "Ship Date": "2020-11-03T00:00:00.000Z"
         },
@@ -235,7 +316,7 @@
             "Order Date": "2020-12-11T00:00:00.000Z",
             "Quantity": 32,
             "Price": 3.95,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 2,
             "Ship Date": "2020-12-20T00:00:00.000Z"
         },
@@ -246,7 +327,7 @@
             "Order Date": "2021-02-15T00:00:00.000Z",
             "Quantity": 27,
             "Price": 21.78,
-            "Ship Mode": "Express Air",
+            "Ship Mode": 2,
             "Shipping Cost": 5.94,
             "Ship Date": "2021-02-24T00:00:00.000Z"
         },
@@ -257,7 +338,7 @@
             "Order Date": "2021-03-01T00:00:00.000Z",
             "Quantity": 31,
             "Price": 47.98,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 3.61,
             "Ship Date": "2021-03-10T00:00:00.000Z"
         },
@@ -268,7 +349,7 @@
             "Order Date": "2021-05-07T00:00:00.000Z",
             "Quantity": 15,
             "Price": 5.28,
-            "Ship Mode": "Delivery Truck",
+            "Ship Mode": 0,
             "Shipping Cost": 2.99,
             "Ship Date": "2021-05-16T00:00:00.000Z"
         },
@@ -279,7 +360,7 @@
             "Order Date": "2021-06-11T00:00:00.000Z",
             "Quantity": 46,
             "Price": 39.89,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 3.04,
             "Ship Date": "2021-06-23T00:00:00.000Z"
         },
@@ -290,7 +371,7 @@
             "Order Date": "2021-08-07T00:00:00.000Z",
             "Quantity": 16,
             "Price": 15.74,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 1.39,
             "Ship Date": "2021-08-14T00:00:00.000Z"
         },
@@ -301,7 +382,7 @@
             "Order Date": "2021-08-11T00:00:00.000Z",
             "Quantity": 44,
             "Price": 100.98,
-            "Ship Mode": "Delivery Truck",
+            "Ship Mode": 0,
             "Shipping Cost": 26.22,
             "Ship Date": "2021-08-18T00:00:00.000Z"
         },
@@ -312,7 +393,7 @@
             "Order Date": "2021-09-21T00:00:00.000Z",
             "Quantity": 11,
             "Price": 71.37,
-            "Ship Mode": "Express Air",
+            "Ship Mode": 2,
             "Shipping Cost": 69,
             "Ship Date": "2021-09-28T00:00:00.000Z"
         },
@@ -323,7 +404,7 @@
             "Order Date": "2021-10-30T00:00:00.000Z",
             "Quantity": 15,
             "Price": 65.99,
-            "Ship Mode": "Regular Air",
+            "Ship Mode": 1,
             "Shipping Cost": 5.26,
             "Ship Date": "2021-11-07T00:00:00.000Z"
         }

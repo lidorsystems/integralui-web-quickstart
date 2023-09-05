@@ -59,7 +59,7 @@ class DockPanelOverview extends Component {
         let panels = this.state.panels.map((panel, index) => {
             return (
                 <IntegralUIDockPanelComponent key={index} data={panel} dock={panel.dock} size={panel.size} theme={this.state.currentTheme} dockChanged={(e) => this.panelDockChanged(e)}>
-                    <IntegralUIPanelComponent allowDrag={true} contentAlignment={{ vertical: 'middle' }}>
+                    <IntegralUIPanelComponent allowDrag={true} contentAlignment={{ horizontal: 'center', vertical: 'middle' }}>
                         {panel.text} - {panel.dock}
                     </IntegralUIPanelComponent>
                 </IntegralUIDockPanelComponent>

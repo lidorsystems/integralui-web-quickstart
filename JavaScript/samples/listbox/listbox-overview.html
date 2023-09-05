@@ -6,22 +6,16 @@
           <title>IntegralUI Web - Quick Start</title>
         <link rel="stylesheet" href="../../index.css" />
         <style type="text/css">
-            [id="button-overview"] iui-button {
-                --button-padding: 10px;
-            }
         </style>
     </head>
     <body>
         <h2>ListBox / Overview</h2>
         <div class="sample-block">
             <iui-listbox id="listbox-overview"
-                allow-animation="true"
                 allow-drag="true"
                 allow-drop="true"
                 resource-path="../../node_modules/integralui-web/icons"
                 selection-mode="MultiExtended"
-                show-groups="true"
-                theme="Office"
             ></iui-listbox>
             <div class="feature-help">
                 <p><span class="initial-space"></span><strong><span class="code-name">IntegralUI</span> ListBox</strong> is a native Web Component that represents a list of custom HTML elements that you can reorder dynamically during run-time using drag drop operations.</p>
@@ -63,6 +57,7 @@
 
         const ctrl = document.querySelector('#listbox-overview');
 
+        ctrl.animateInit = true;
         ctrl.customStyle = iuiListBoxOverviewStyle;
         ctrl.groups = [
             { name: "sci-fi", expanded: false },
@@ -75,7 +70,7 @@
             { name: "crime" },
             { name: "western" },
             { name: "horror" },
-            { name: "romance" }
+            { name: "romance", expanded: false }
         ];
 
         ctrl.items = [
@@ -102,6 +97,7 @@
         ];
 
         ctrl.itemTemplate = currentItemTemplate;
+        ctrl.showGroups = true;
         ctrl.size = { width: 500, height: 400 }
     
         let ratingValueChanged = function(e, item){
@@ -110,5 +106,6 @@
 
         // Apply grouping
         ctrl.items.forEach(item => item.group = item.icon);
+
     </script>
 </html>

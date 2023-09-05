@@ -12,13 +12,13 @@
                 font-size: 1.1em;
             }
             [id="tabstrip-spacing"]{
-                --tabstrip-display: inline-block;
-                --tabstrip-width: calc(100% - 175px);
+                --iui-tabstrip-display: inline-block;
+                --iui-tabstrip-width: calc(100% - 175px);
 
-                --tab-header-border-radius: 7px 7px 0 0;
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
-                --tab-header-padding: 9px;
+                --iui-tab-header-border-radius: 7px 7px 0 0;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-padding: 9px;
             }
 
             .tabstrip-spacing-panel {
@@ -27,8 +27,8 @@
                 vertical-align: top;
                 width: 150px;
  
-                --numeric-display: block;
-                --numeric-margin: 5px 0;
+                --iui-numeric-display: block;
+                --iui-numeric-margin: 5px 0;
            }
             .tabstrip-placement-panel label {
                 display: block;
@@ -83,7 +83,7 @@
    
         const ctrl = document.querySelector('#tabstrip-spacing');
 
-        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.contentAnimation = IntegralUIAnimationType.Slide;
         ctrl.selectedTab = null;
         ctrl.size = { height: 300 };
 

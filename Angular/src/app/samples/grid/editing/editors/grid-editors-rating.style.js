@@ -5,14 +5,14 @@ export const iuiGridEditorsRatingStyle = css`
         margin-top: 4px;
     }
     .iui-rating {
-        --rating-cursor: pointer;
-        --rating-height: 22px;
-        --rating-margin: 3px 0 0 0;
+        --iui-rating-cursor: pointer;
+        --iui-rating-height: 22px;
+        --iui-rating-margin: 3px 0 0 0;
 
-        --rating-content-image: url(assets/resources/rating/star-2-empty.png);
-        --rating-content-image-height: 22px;
+        --iui-rating-content-image: url(assets/resources/rating/star-2-empty.png);
+        --iui-rating-content-image-height: 22px;
 
-        --rating-value-image: url(assets/resources/rating/star-2-full.png);
-        --rating-value-image-height: 22px;
+        --iui-rating-value-image: url(assets/resources/rating/star-2-full.png);
+        --iui-rating-value-image-height: 22px;
     }`
 ;

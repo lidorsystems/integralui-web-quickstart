@@ -8,11 +8,11 @@
         <style type="text/css">
             /* Changes to the tree item layout*/
             [id="treeview-radiobuttons"] {
-                --treeitem-expand-box-margin: 3px 5px 0 0;
-                --treeitem-padding: 2px 0;
+                --iui-treeitem-expand-box-margin: 3px 5px 0 0;
+                --iui-treeitem-padding: 2px 0;
 
-                --radio-button-margin: 0;
-                --radio-button-padding: 0;
+                --iui-radio-button-margin: 0;
+                --iui-radio-button-padding: 0;
             }
         </style>
     </head>
@@ -20,7 +20,6 @@
         <h2>TreeView / Items with Radio Buttons</h2>
         <div class="sample-block">
             <iui-treeview id="treeview-radiobuttons"
-                allow-animation="true"
                 resource-path="../../../node_modules/integralui-web/icons"
                 theme="Office"
             ></iui-treeview>
@@ -42,6 +41,7 @@
 
         const treeview = document.querySelector('#treeview-radiobuttons');
 
+        treeview.allowAnimation = false;
         treeview.items = [
             { 
                 id: 1,

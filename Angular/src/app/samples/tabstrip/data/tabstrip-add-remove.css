@@ -15,9 +15,9 @@
     display: inline-block;
     width: calc(100% - 225px);
 
-    --tab-header-hovered-background: #d9edfd;
-    --tab-header-hovered-border-color: #8cb1d1;
-    --tab-header-padding: 9px;
+    --iui-tab-header-hovered-background: #d9edfd;
+    --iui-tab-header-hovered-border-color: #8cb1d1;
+    --iui-tab-header-padding: 9px;
 }
 .tabstrip-addremove-panel {
     display: inline-block;
@@ -25,8 +25,8 @@
     vertical-align: top;
     width: 200px;
 
-    --button-display: block;
-    --button-margin: 5px 0;
+    --iui-button-display: block;
+    --iui-button-margin: 5px 0;
 }
 .tabstrip-addremove-panel label {
     display: block;
@@ -39,9 +39,9 @@
     display: inline-block;
 }
 .inline-block {
-    --button-display: inline-block;
-    --button-vertical-align: middle;
+    --iui-button-display: inline-block;
+    --iui-button-vertical-align: middle;
 
-    --numeric-display: inline-block;
-    --numeric-vertical-align: middle;
+    --iui-numeric-display: inline-block;
+    --iui-numeric-vertical-align: middle;
 }

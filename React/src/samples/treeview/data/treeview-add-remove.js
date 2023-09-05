@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums.js';
+import { IntegralUITheme, IntegralUIToastType } from 'integralui-web/components/integralui.enums.js';
 
 import IntegralUIButtonComponent from 'integralui-web/wrappers/react.integralui.button.js';
 import IntegralUINumericComponent from 'integralui-web/wrappers/react.integralui.numeric.js';
+import IntegralUIToasterComponent from 'integralui-web/wrappers/react.integralui.toaster.js';
 import IntegralUITreeViewComponent from 'integralui-web/wrappers/react.integralui.treeview.js';
 
 import './treeview-add-remove.css';
@@ -27,6 +28,11 @@ class TreeViewAddRemove extends Component {
 
         this.itemCount = 0;
         this.treeRef = React.createRef();
+        this.toasterRef = React.createRef();
+    }
+
+    getSelectedItem(){
+        return this.treeRef.current.selectedItem;
     }
 
     //
@@ -34,83 +40,80 @@ class TreeViewAddRemove extends Component {
     //
 
     // Add Button
-    onAddClicked(e){
+    async onAddClicked(e){
         let newItem = this.createNewItem();
 
-        this.treeRef.current.addItem(newItem);
-        this.updateContent(newItem);
+        this.initContent();
+
+        await this.treeRef.current.addItem(newItem);
+        this.updateSelection(newItem);
     }
 
     // Add Child Button
-    onAddChildClicked(e){
+    async onAddChildClicked(e){
         let newItem = this.createNewItem();
 
-        this.treeRef.current.addItem(newItem, this.state.currentSelection);
-        this.updateContent();
+        this.initContent();
+
+        await this.treeRef.current.addItem(newItem, this.state.currentSelection);
     }
 
     // Insert After Button
-    onInsertAfterClicked(e){
+    async onInsertAfterClicked(e){
         if (!this.state.currentSelection)
             this.onAddClicked(e);
         else {
             let newItem = this.createNewItem();
 
-            this.treeRef.current.insertItemAfter(newItem, this.state.currentSelection);
-            this.updateContent();
+            this.initContent();
+
+            await this.treeRef.current.insertItemAfter(newItem, this.state.currentSelection);
+            this.updateSelection(newItem);
         }
     }
 
     // Insert Before Button
-    onInsertBeforeClicked(e){
+    async onInsertBeforeClicked(e){
         if (!this.state.currentSelection)
             this.onAddClicked(e);
         else {
             let newItem = this.createNewItem();
 
-            this.treeRef.current.insertItemBefore(newItem, this.state.currentSelection);
-            this.updateContent();
+            this.initContent();
+
+            await this.treeRef.current.insertItemBefore(newItem, this.state.currentSelection);
+            this.updateSelection(newItem);
         }
     }
 
     // Insert At Button
-    onInsertAtClicked(e){
+    async onInsertAtClicked(e){
         let parent = this.treeRef.current.getItemParent(this.state.currentSelection);
-        let childCount = parent && parent.items ? parent.items.length : this.treeRef.current.ctrlRef.current.items.length;
+        let newItem = this.createNewItem();
 
-        let insertPos = this.state.insertAtValue >= childCount && childCount > 0 ? childCount - 1 : this.state.insertAtValue;
+        this.initContent();
 
-        if (insertPos >= 0 && insertPos < childCount){
-            let newItem = this.createNewItem();
-
-            this.treeRef.current.insertItemAt(newItem, insertPos, parent);
-            this.updateContent(newItem);
-        }
+        await this.treeRef.current.insertItemAt(newItem, this.state.insertAtValue, parent);
+        this.updateSelection(newItem);
     }
 
-    onInsertAtValueChanged(e){
+    async onInsertAtValueChanged(e){
         this.setState({ insertAtValue: e.detail.value });
     }
 
     // Remove Button
-    onRemoveClicked(e){
+    async onRemoveClicked(e){
         let selItem = this.state.currentSelection;
         if (selItem){
-            this.treeRef.current.removeItem(selItem);
-            this.updateContent(this.treeRef.current.getPrevItem(selItem));
+            await this.treeRef.current.removeItem(selItem);
+            this.updateSelection(this.treeRef.current.getPrevItem(selItem));
         }
     }
 
     // Remove At Button
-    onRemoveAtClicked(e){
+    async onRemoveAtClicked(e){
         let parent = this.treeRef.current.getItemParent(this.state.currentSelection);
-        let childCount = parent && parent.items ? parent.items.length : this.treeRef.current.ctrlRef.current.items.length;
-        let removePos = this.state.removeAtValue >= childCount && childCount > 0 ? childCount - 1 : this.state.removeAtValue;
-
-        if (removePos >= 0 && removePos < childCount){
-            this.treeRef.current.removeItemAt(removePos, parent);
-            this.updateContent();
-        }
+        await this.treeRef.current.removeItemAt(this.state.removeAtValue, parent);
     }
 
     onRemoveAtValueChanged(e){
@@ -118,15 +121,14 @@ class TreeViewAddRemove extends Component {
     }
 
     // Clear Button
-    onClearClicked(e){
+    async onClearClicked(e){
         let parent = this.treeRef.current.getItemParent(this.state.currentSelection);
-        this.treeRef.current.clearItems(parent);
+        await this.treeRef.current.clearItems(parent);
 
         if (!parent)
             this.itemCount = 0;
 
-        this.setState({ currentSelection: null });
-        this.treeRef.current.updateLayout();
+        this.updateSelection();
     }
 
     createNewItem(){
@@ -136,19 +138,55 @@ class TreeViewAddRemove extends Component {
         return { id: this.itemCount, text: "Item " + this.itemCount }
     }
 
-    updateContent(item){
-        if (item)
-            this.setState({ currentSelection: item });
+    // Events ------------------------------------------------------------------------------------
 
-        this.treeRef.current.updateLayout();
+    treeClear(){
+        this.toasterRef.current.show({ text: 'The tree is cleared', type: IntegralUIToastType.Success });
+
+        this.updateContent();
     }
 
-    onItemsChanged(){
-        this.setState({ isTreeEmpty: this.treeRef.current.props.items.length === 0 });
+    treeItemAdded(e){
+        if (e.detail.item){
+            let message = 'The ' + e.detail.item.text + ' is added to the tree';
+            message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+            this.toasterRef.current.show({ text: message, type: IntegralUIToastType.Success });
+        }
+
+        this.updateContent();
     }
 
-    onItemSelectionChanged(e){
+    treeItemRemoved(e){
+        if (e.detail.item){
+            let message = 'The ' + e.detail.item.text + ' is removed from the tree';
+            message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+            this.toasterRef.current.show({ text: message, type: IntegralUIToastType.Success });
+        }
+        else 
+            this.toasterRef.current.show({ text: 'EMPTY ITEM', type: IntegralUIToastType.Error });
+
+        this.updateContent();
+    }
+
+    treeSelectionChanged(e){
         this.setState({ currentSelection: e.detail.item });
+    }
+
+    // Update ------------------------------------------------------------------------------------
+
+    initContent(){
+        if (this.state.items.length === 0)
+            this.setState({ isTreeEmpty: false });
+    }
+
+    updateSelection(item){
+        this.setState({ currentSelection: item });
+    }
+
+    updateContent(){
+        this.setState({ isTreeEmpty: this.treeRef.current.props.items.length === 0 });
     }
 
     render() {
@@ -157,17 +195,17 @@ class TreeViewAddRemove extends Component {
             <div>
                 <h2>TreeView / Add-Remove Items from Code</h2>
                 <div className="sample-block">
-                    <div id="treeview-addremove" style={{ display: this.state.items.length > 0 ? 'inline-block' : 'none' }}>
+                    <div id="treeview-addremove" style={{ display: !this.state.isTreeEmpty ? 'inline-block' : 'none' }}>
                         <IntegralUITreeViewComponent ref={this.treeRef}
                             items={this.state.items}
                             resourcePath={this.state.currentResourcePath}
                             selectedItem={this.state.currentSelection}
                             size={this.state.ctrlSize}
                             theme={this.state.currentTheme}
-                            itemAdded={() => this.onItemsChanged()}
-                            itemRemoved={() => this.onItemsChanged()}
-                            clear={() => this.onItemsChanged()}
-                            selectionChanged={(e) => this.onItemSelectionChanged(e)}
+                            clear={() => this.treeClear()}
+                            itemAdded={(e) => this.treeItemAdded(e)}
+                            itemRemoved={(e) => this.treeItemRemoved(e)}
+                            selectionChanged={(e) => this.treeSelectionChanged(e)}
                         ></IntegralUITreeViewComponent>
                     </div>
                     <div className="treeview-addremove-empty-block" style={{ display: this.state.isTreeEmpty ? 'inline-block' : 'none' }}>TreeView is empty.</div>
@@ -185,6 +223,7 @@ class TreeViewAddRemove extends Component {
                         </div>
                         <IntegralUIButtonComponent allowAnimation={this.state.isAnimationAllowed} theme={this.state.currentTheme} onClick={() => this.onClearClicked(0)}>Clear</IntegralUIButtonComponent>
                     </div>
+                    <IntegralUIToasterComponent duration={3000} ref={this.toasterRef}></IntegralUIToasterComponent>
                     <div className="feature-help">
                         <p><span className="initial-space"></span>An example that demonstrates adding and removal od items manually from code using buttons.</p>
                         <p><span className="initial-space"></span>You can add items at the end, before or after a specific item (in this case the selected item) or at specific position.</p>

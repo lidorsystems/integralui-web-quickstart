@@ -1,6 +1,6 @@
 [id="listbox-export"]{
-    --listbox-display: inline-block;
-    --listbox-width: calc(60% - 200px);
+    --iui-listbox-display: inline-block;
+    --iui-listbox-width: calc(60% - 200px);
 }
 [id="listbox-export-result-block"]{
     border: thin solid #d9d9d9;
@@ -16,7 +16,7 @@
     vertical-align: top;
     width: 170px;
 
-    --button-margin: 10px 5px;
+    --iui-button-margin: 10px 5px;
 }
 .listbox-export-panel label {
     display: block;

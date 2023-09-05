@@ -14,7 +14,7 @@ export const iuiGridEditorsDropDownListStyle = css`
 
     /* DropDownList */
     .iui-select {
-        --select-margin: 7px 0 0 0;
+        --iui-select-margin: 7px 0 0 0;
     }
     .iui-list li {
         background: #fcfcfc;

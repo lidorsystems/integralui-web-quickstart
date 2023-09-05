@@ -2,7 +2,7 @@
 <div class="sample-block" id="dockpanel-overview">
     <iui-dockarea [size]="ctrlSize">
         <iui-dockpanel *ngFor="let panel of panels" [data]="panel" [dock]="panel.dock" [size]="panel.size" [theme]="currentTheme" (dockChanged)="panelDockChanged($event)">
-            <iui-panel [allowDrag]="true" [contentAlignment]="{ vertical: 'middle' }">
+            <iui-panel [allowDrag]="true" [contentAlignment]="{ horizontal: 'center', vertical: 'middle' }">
                 {{panel.text}} - {{panel.dock}}
             </iui-panel>
         </iui-dockpanel>

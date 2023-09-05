@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .cmnu-header-block {
+                background: white;
+                border: thin solid gray;
+                width: 800px;
+                height: 300px;
+            }
+            .cmnu-header-block span {
+                color: #808080;
+                cursor: default;
+                display: block;
+                margin: 140px auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ContextMenu / Header</h2>
+        <div class="sample-block">
+            <iui-contextmenu id="contextmenu-header" theme="Office"> 
+                <div class="cmnu-header-block" id="menu-block">
+                    <span>Right click to open the context menu</span>
+                </div>
+            </iui-contextmenu>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example of Context Menu with header as first menu item. Having a header can help in describing what the context menu options are for.</p>
+                <p><span class="initial-space"></span>The header appears when menu item <strong>type</strong> field is set to <span class="code-name">'header'</span>. It is fully customizable with CSS.</p>
+                <p><span class="initial-space"></span>Tn addition, you can create custom template for headers, where you can add different HTML elements and CSS. In this case, the header has a label and blue background.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module">
+        import { iuiContextMenuHeaderStyle } from './contextmenu-header.style.js';
+
+        const ctrl = document.querySelector('#contextmenu-header');
+        const block = document.querySelector('#menu-block');
+
+        ctrl.customStyle = iuiContextMenuHeaderStyle;
+
+        ctrl.settings = {
+            items: [
+                { id: 1, text: "Context Menu", type: "header" },
+                { 
+                    id: 2,
+                    text: "New",
+                    icon: "icons-medium new-document",
+                    items: [
+                        { id: 21, pid: 2, text: "Project", icon: "icons-medium solution" },
+                        { id: 22, pid: 2, text: "Window", icon: "icons-medium empty" }
+                    ]
+                },
+                { id: 3, text: "Open", icon: "icons-medium empty" },
+                { id: 4, text: "Save As...", icon: "icons-medium save" },
+                { id: 5, text: "Save All", icon: "icons-medium empty" },
+                { id: 6, type: "separator", icon: "icons-medium empty" },
+                { 
+                    id: 7, 
+                    text: "Social", 
+                    icon: "icons-medium people",
+                    items: [
+                        { id: 71, pid: 7, text: "Facebook", icon: "icons-medium facebook" },
+                        { id: 72, pid: 7, text: "Google Plus", icon: "icons-medium google-plus" },
+                        { id: 73, pid: 7, text: "Twitter", icon: "icons-medium twitter" }
+                    ]
+                },
+                { id: 8, text: "Favorites", icon: "icons-medium empty" },
+                { id: 9, type: "separator", icon: "icons-medium empty" },
+                { id: 10, text: "Page Setup", icon: "icons-medium empty" },
+                { id: 11, text: "Print", icon: "icons-medium print" },
+            ]
+        }
+
+        // Events --------------------------------------------------------------------------------
+
+        ctrl.addEventListener("menuClick", (e) => menuItemClick(e));
+
+        let menuItemClick = function(e){
+            if (e.detail.item && !e.detail.item.items)
+                alert("Menu item: " + e.detail.item.text + " is clicked.");
+        }
+    </script>
+</html>

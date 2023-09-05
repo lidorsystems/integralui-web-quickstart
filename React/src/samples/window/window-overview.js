@@ -57,7 +57,7 @@ class WindowOverview extends Component {
                         visible={true}
                     >
                         <div slot="content">
-                            <IntegralUIPanelComponent contentAlignment={{ vertical: 'middle' }}>
+                            <IntegralUIPanelComponent contentAlignment={{ horizontal: 'center', vertical: 'middle' }}>
                                 Content of Window 1
                             </IntegralUIPanelComponent>
                         </div>
@@ -74,7 +74,7 @@ class WindowOverview extends Component {
                         visible={true}
                     >
                         <div slot="content">
-                            <IntegralUIPanelComponent contentAlignment={{ vertical: 'middle' }}>
+                            <IntegralUIPanelComponent contentAlignment={{ horizontal: 'center', vertical: 'middle' }}>
                                 Content of Window 2
                             </IntegralUIPanelComponent>
                         </div>

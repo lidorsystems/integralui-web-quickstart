@@ -110,7 +110,7 @@ class SideBarTooltip extends Component {
                     >
                         {tabs}
                     </IntegralUISideBarComponent>
-                    <IntegralUIPanelComponent id="sample-block-sidebar-content" contentAlignment = {{ vertical: 'middle' }}>
+                    <IntegralUIPanelComponent id="sample-block-sidebar-content" contentAlignment = {{ horizontal: 'center', vertical: 'middle' }}>
                         Sample Content Block
                     </IntegralUIPanelComponent>
                 </div>

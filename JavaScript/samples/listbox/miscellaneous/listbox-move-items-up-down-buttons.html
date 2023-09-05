@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-move-up-down"] {
+                --iui-listitem-content-transform: scale(1);
+                --iui-listitem-content-hovered-transform: scale(1);
+
+                --iui-listitem-hovered-background: transparent;
+                --iui-listitem-hovered-border-color: transparent;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Move Items with Up-Down Buttons</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-move-up-down"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>This example shows a ListBox with custom content, where a list of device drivers is displayed with general information. In addition, each item has up down buttons on right side, which allows you to reorder items.</p>
+                <p><span class="initial-space"></span>During reordering if animations are allowed, moving an item to a new position is accompanied with move animation.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { classMap } from '../../../node_modules/integralui-web/external/class-map.js';
+        import { IntegralUIMoveDirection, IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { iuiListBoxUpDownButtonStyle } from './listbox-move-items-up-down-buttons.style.js';
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-move-up-down');
+
+        listbox.items = [
+            { 
+                id: 1,
+                category: 'Disk drives',
+                date: '21 Jun 2022',
+                driverName: 'TOSHIBA DT01ACA100 ATA Device',
+                icon: 'disk',
+                version: '6.1.7600.16385'
+            },
+            { 
+                id: 2,
+                checked: true,
+                category: 'Display adapters',
+                date: '05 Nov 2022',
+                driverName: 'NVIDIA GeForce GT 730',
+                icon: 'pc',
+                version: '10.18.13.5891'
+            },
+            { 
+                id: 3,
+                category: 'Network',
+                date: '17 Mar 2021',
+                driverName: 'Realtek PCIe GBE Family Controller',
+                icon: 'network',
+                version: '7.82.317.2021'
+            },
+            { 
+                id: 4,
+                category: 'Sound',
+                date: '14 Mar 2021',
+                driverName: 'Realtek High Defintion Audio',
+                icon: 'sound',
+                version: '6.0.1.7200'
+            },
+            { 
+                id: 5,
+                category: 'Universal Serial Bus controllers',
+                date: '12 Feb 2021',
+                driverName: 'Intel USB 3.0 Root Hub',
+                icon: 'usb',
+                version: '3.0.0.16'
+            }
+        ];
+        
+        listbox.customStyle = iuiListBoxUpDownButtonStyle;
+        listbox.selectionMode = IntegralUISelectionMode.None;
+        listbox.size = { width: 420, height: 550 }
+
+        // Templates -----------------------------------------------------------------------------
+
+        listbox.itemTemplate = (item) => { 
+            return html`<div class="driver">
+                    <div class="driver-selection">
+                        <span class=${classMap(getCheckBoxClass(item))} @mousedown="${(e) => checkItem(e, item)}"></span>
+                    </div>
+                    <div class="driver-info">
+                        <span class="icons-medium ${item.icon}"></span>
+                        <div class="driver-name">
+                            <span class="driver-category">${item.category}</span><br/>
+                            <span>${item.driverName}</span>
+                        </div>
+                    </div>
+                    <div class="driver-action">
+                        <iui-button allow-animation="true" .allowFocus="${false}" .customStyle="${iuiListBoxUpDownButtonStyle}" @click="${() => moveUp(item)}">
+                            <span class="move-button move-up-button"></span>
+                        </iui-button>
+                        <iui-button allow-animation="true" .allowFocus="${false}" .customStyle="${iuiListBoxUpDownButtonStyle}" @click="${() => moveDown(item)}">
+                            <span class="move-button move-down-button"></span>
+                        </iui-button>
+                    </div>
+                </div>`;
+        }
+
+        let checkItem = function(e, item){
+            if (e.which === 1 && item){
+                item.checked = item.checked !== undefined ? !item.checked : true;
+                listbox.refresh();
+            }
+
+            e.stopPropagation();
+        }
+
+        let getCheckBoxClass = function(item){
+            let cbClass = { 'lbox-item-cbox': true };
+
+            if (item.checked)
+                cbClass['lbox-item-cbox-checked'] = true;
+
+            return cbClass;
+        }
+
+        let moveDown = function(item){
+            listbox.moveItem(item, IntegralUIMoveDirection.Down);
+        }
+
+        let moveUp = function(item){
+            listbox.moveItem(item, IntegralUIMoveDirection.Up);
+        }
+
+    </script>
+</html>

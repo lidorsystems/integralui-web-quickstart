@@ -8,14 +8,14 @@ export const iuiGridRowCustomToolbarStyle = css`
         margin-top: 4px;
     }
     .iui-rating {
-        --rating-cursor: pointer;
-        --rating-margin: 4px 0 0 0;
+        --iui-rating-cursor: pointer;
+        --iui-rating-margin: 4px 0 0 0;
     }
     
     /* DropDownList */
     .iui-select {
-        --select-margin: 5px 0 0 0;
-        --header-expand-box-margin: 0 2px;
+        --iui-select-margin: 5px 0 0 0;
+        --iui-header-expand-box-margin: 0 2px;
     }
     .iui-list li {
         background: #fcfcfc;

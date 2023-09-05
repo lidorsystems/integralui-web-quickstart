@@ -32,15 +32,20 @@ export class PopOverOverviewSample {
     public customStyle: any = iuiPopOverOverviewStyle;
     public isPopoverActive: boolean = false;
     public popoverSettings: any = {
+        animation: {
+            delay: 0,
+            duration: 250,
+            translateValue: 25
+        },
         activation: 'manual',
         autoPopDelay: 3000,
         closeButton: true,
         enabled: true,
         header: true,
-        initialDelay: 100,
+        initialDelay: 0,
         position: 'right',
         showMarker: true,
-        title: 'PopOver Title'
+        title: 'PopOver Title',
     }
 
     //
@@ -55,10 +60,6 @@ export class PopOverOverviewSample {
             </div>
         `;
     };
-
-    ngAfterViewInit(){
-        this.popover.nativeElement.contentTemplate = this.currentContentTemplate;
-    }
 
     btnOk(){
         this.closePopup();

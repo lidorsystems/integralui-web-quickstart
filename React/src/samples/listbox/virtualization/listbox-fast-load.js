@@ -42,14 +42,18 @@ class ListBoxFastLoad extends Component {
     }
 
     addItems(){
+        let list = [];
         for (let i = 0; i < this.state.numItems; i++){
             let item = {
                 id: i + 1,
                 text : 'Item ' + (i + 1).toString()
             };
 
-            this.listRef.current.addItem(item);
+            list.push(item);
+
         }
+
+        this.listRef.current.addItem(list);
     }
 
     numItemsChanged(e){
@@ -63,6 +67,7 @@ class ListBoxFastLoad extends Component {
                 <h2>ListBox / Fast Load</h2>
                 <div className="sample-block">
                     <IntegralUIListBoxComponent id="listbox-fast-load" ref={this.listRef}
+                        allowAnimation={false}
                         allowDrag={true}
                         allowDrop={true}
                         allowFocus={true}

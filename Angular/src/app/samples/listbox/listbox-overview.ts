@@ -7,7 +7,8 @@ import { iuiListBoxOverviewStyle } from './listbox-overview.style';
 
 @Component({
     selector: '',
-    templateUrl: './listbox-overview.html'
+    templateUrl: './listbox-overview.html',
+    styleUrls: ['./listbox-overview.css']
 })
 export class ListBoxOverview {
     @ViewChild('listbox', { static: false }) listbox!: ElementRef;

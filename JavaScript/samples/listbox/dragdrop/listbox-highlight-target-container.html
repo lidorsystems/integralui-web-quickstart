@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Highlight Target Container on Drag Enter</h2>
+        <div class="sample-block-listbox-dragenter">
+            <iui-listbox id="listbox-dragenter" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this demo, whenever drag and drop starts or the ListBox space is entered during drag drop, its border appearance changes to blue color. When drag and drop ends or item is dragged out of the ListBox space, the border changes back to normal.</p>
+                <p><span class="initial-space"></span>To change appearance during run-time, the following built-in methods are in use: <span class="code-name">setClass</span> and <span class="code-name">removeClass</span>.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiListBoxDragEnterStyle } from './listbox-highlight-target-container.style.js';
+
+        //
+        // Sample settings
+        //
+            
+        // ListBox settings
+        const ctrl = document.querySelector('#listbox-dragenter');
+        
+        ctrl.allowDrag = true;
+        ctrl.allowDrop = true;
+        ctrl.customStyle = iuiListBoxDragEnterStyle;
+
+        ctrl.items = [
+            { id: 111, text: "DiRT 3", group: "Driving/Racing" },
+            { id: 112, text: "Ridge Racer Unbounded", group: "Driving/Racing" },
+            { id: 113, text: "TrackMania 2", group: "Driving/Racing" },
+            { id: 121, text: "Dark Souls 2", group: "Role-Playing" },
+            { id: 122, text: "Mass Effect 3", group: "Role-Playing" },
+            { id: 123, text: "The Elder Scrolls V: Skyrim", group: "Role-Playing" },
+            { id: 124, text: "Divinity: Original Sin", group: "Role-Playing" },
+            { id: 125, text: "Fallout: New Vegas", group: "Role-Playing" },
+            { id: 131, text: "Diablo 3", group: "Action" },
+            { id: 132, text: "Gears of War", group: "Action" },
+            { id: 133, text: "F.E.A.R.", group: "Action" },
+            { id: 134, text: "Path of Exile", group: "Action" },
+            { id: 135, text: "Grand Theft Auto IV", group: "Action" },
+            { id: 136, text: "Divine Divinity", group: "Action" },
+            { id: 137, text: "The Witcher 2", group: "Action" },
+            { id: 141, text: "Battlefield: Bad Company 2", group: "Shooter" },
+            { id: 142, text: "Call of Duty: Black Ops", group: "Shooter" },
+            { id: 143, text: "BioShock Infinite", group: "Shooter" },
+            { id: 144, text: "Crysis 2", group: "Shooter" },
+            { id: 211, text: "FIFA 14", group: "Sports" },
+            { id: 212, text: "Madden NFL 25", group: "Sports" },
+            { id: 221, text: "Assassin's Creed IV", group: "Adventure" },
+            { id: 222, text: "Tomb Raider", group: "Adventure" },
+            { id: 223, text: "Metal Gear Solid V", group: "Adventure" },
+            { id: 311, text: "Battlefield 4", group: "First-Person" },
+            { id: 312, text: "Call of Duty: Ghosts", group: "First-Person" },
+            { id: 313, text: "Killzone: Shadow Fall", group: "First-Person" },
+            { id: 321, text: "Rayman Legends", group: "Platformer" },
+            { id: 322, text: "Rogue Legacy", group: "Platformer" },
+            { id: 323, text: "1001 Spikes", group: "Platformer" },
+            { id: 333, text: "Final Fantasy XIV Online", group: "MMO" }
+        ];
+
+        ctrl.size = { width: 500, height: 400 }
+
+        // Events --------------------------------------------------------------------------------
+
+        ctrl.addEventListener("dragStart", (e) => listDragEnter(e));
+        ctrl.addEventListener("dragEnter", (e) => listDragEnter(e));
+        ctrl.addEventListener("dragLeave", (e) => listDragLeave(e));
+        ctrl.addEventListener("dragEnd", (e) => listDragLeave(e));
+
+        let listDragEnter = function(e){
+            ctrl.setClass('listbox-dragenter');
+        }
+        
+        let listDragLeave = function(e){
+            ctrl.removeClass('listbox-dragenter');
+        }
+
+    </script>
+</html>

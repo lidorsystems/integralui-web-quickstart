@@ -18,8 +18,8 @@ export const iuiGridDynamicUpdateStyle = css`
     }
 
     iui-dropdownbutton {
-        --dropdownbutton-float: right;
-        --dropdownbutton-height: 16px;
+        --iui-dropdownbutton-float: right;
+        --iui-dropdownbutton-height: 16px;
         opacity: 0;
     }
 
@@ -33,6 +33,6 @@ export const iuiGridDynamicUpdateStyle = css`
         padding: 0;
     }
     .iui-select {
-        --select-margin: 12px 0 0 0;
+        --iui-select-margin: 12px 0 0 0;
     }
 `;

@@ -1,5 +1,5 @@
 [id="treegrid-export"] {
-    --treegrid-display: inline-block;
+    --iui-treegrid-display: inline-block;
 }
 .sbp-trg-expt {
     display: inline-block;
@@ -8,6 +8,6 @@
 }
 
 .sbp-trg-expt iui-button {
-    --button-display: block;
-    --button-margin: 5px 0;
+    --iui-button-display: block;
+    --iui-button-margin: 5px 0;
 }

@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="treeview-sorting-overview"]{
-                --treeview-display: inline-block;
+                --iui-treeview-display: inline-block;
             }
 
             .treeview-sorting-overview-panel {
@@ -16,8 +16,8 @@
                 vertical-align: top;
                 width: 170px;
 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
             }
             .treeview-sorting-overview-panel label {
                 display: block;
@@ -59,11 +59,11 @@
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
     <script type="module">
-        import { IntegralUIAnimationType, IntegralUISortOrder } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUISortOrder } from '../../../node_modules/integralui-web/components/integralui.enums.js';
        
         let currentResourcePath = '../../../node_modules/integralui-web/icons';
 
-        // Multi Select Panel
+        // Sorting Panel
         const ctrlSorting = document.querySelector('#sorting-overview');
 
         ctrlSorting.resourcePath = currentResourcePath;

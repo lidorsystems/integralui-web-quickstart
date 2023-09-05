@@ -1,29 +1,29 @@
 [id="radiogroup-2"] {
-    --radio-button-margin: 20px 0 0 0;
-    --radio-button-btn-border-radius: 3px;
-    --radio-button-btn-checked-border-color: #0ba131;
-    --radio-button-btn-checked-content-background: #0ba131;
-    --radio-button-btn-content-border-radius: 3px;
+    --iui-radio-button-margin: 20px 0 0 0;
+    --iui-radio-button-btn-border-radius: 3px;
+    --iui-radio-button-btn-checked-border-color: #0ba131;
+    --iui-radio-button-btn-checked-content-background: #0ba131;
+    --iui-radio-button-btn-content-border-radius: 3px;
 
-    --radio-button-btn-hovered-border-color: #0ba131;
-    --radio-button-btn-checked-hovered-border-color: #08bf36;
-    --radio-button-btn-checked-content-hovered-background: #08bf36;
+    --iui-radio-button-btn-hovered-border-color: #0ba131;
+    --iui-radio-button-btn-checked-hovered-border-color: #08bf36;
+    --iui-radio-button-btn-checked-content-hovered-background: #08bf36;
 }
 
 [id="radiogroup-3"] {
-    --radio-button-btn-border: 0;
-    --radio-button-margin: 20px 0 0 0;
+    --iui-radio-button-btn-border: 0;
+    --iui-radio-button-margin: 20px 0 0 0;
 
-    --radio-button-btn-checked-border-color: transparent;
-    --radio-button-btn-checked-content-background: #a10b0b;
-    --radio-button-btn-content-background: #646464;
-    --radio-button-btn-content-height: 16px;
-    --radio-button-btn-content-opacity: 0.5;
-    --radio-button-btn-content-transform: scale(0.6);
-    --radio-button-btn-content-width: 16px;
+    --iui-radio-button-btn-checked-border-color: transparent;
+    --iui-radio-button-btn-checked-content-background: #a10b0b;
+    --iui-radio-button-btn-content-background: #646464;
+    --iui-radio-button-btn-content-height: 16px;
+    --iui-radio-button-btn-content-opacity: 0.5;
+    --iui-radio-button-btn-content-transform: scale(0.6);
+    --iui-radio-button-btn-content-width: 16px;
 
-    --radio-button-btn-hovered-border-color: transparent;
-    --radio-button-btn-content-hovered-background: #c90e0e;
-    --radio-button-btn-checked-hovered-border-color: transparent;
-    --radio-button-btn-checked-content-hovered-background: #c90e0e;
+    --iui-radio-button-btn-hovered-border-color: transparent;
+    --iui-radio-button-btn-content-hovered-background: #c90e0e;
+    --iui-radio-button-btn-checked-hovered-border-color: transparent;
+    --iui-radio-button-btn-checked-content-hovered-background: #c90e0e;
 }

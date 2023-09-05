@@ -1,9 +1,9 @@
 [id="listview-dropdownfilter"]{
-    --dropdownfilter-display: inline-block;
-    --dropdownfilter-padding: 4px;
-    --dropdownfilter-vertical-align: top;
+    --iui-dropdownfilter-display: inline-block;
+    --iui-dropdownfilter-padding: 4px;
+    --iui-dropdownfilter-vertical-align: top;
 
-    --dropdownfilter-operation-top: 6px;
+    --iui-dropdownfilter-operation-top: 6px;
 }
 
 .listview-filtering-overview-panel {
@@ -12,8 +12,8 @@
     vertical-align: top;
     width: 170px;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .listview-filtering-overview-panel label {
     display: block;

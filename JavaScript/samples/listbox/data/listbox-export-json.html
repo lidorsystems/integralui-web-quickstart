@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="listbox-export"]{
-                --listbox-display: inline-block;
-                --listbox-width: calc(60% - 200px);
+                --iui-listbox-display: inline-block;
+                --iui-listbox-width: calc(60% - 200px);
             }
             [id="listbox-export-result-block"]{
                 border: thin solid #d9d9d9;
@@ -24,7 +24,7 @@
                 vertical-align: top;
                 width: 170px;
 
-                --button-margin: 10px 5px;
+                --iui-button-margin: 10px 5px;
            }
             .listbox-export-panel label {
                 display: block;
@@ -39,10 +39,8 @@
         <h2>ListBox / Export to JSON</h2>
         <div class="sample-block">
             <iui-listbox id="listbox-export"
-                allow-animation="true"
                 resource-path="../../../node_modules/integralui-web/icons"
                 show-groups="true"
-                theme="Office"
             ></iui-listbox>
             <div class="listbox-export-panel">
                 <iui-checkbox id="listbox-export-groups" checked="true">Show Groups</iui-checkbox>
@@ -107,6 +105,7 @@
 
         const listbox = document.querySelector('#listbox-export');
 
+        listbox.animateInit = true;
         listbox.selectionMode = IntegralUISelectionMode.MultiExtended;
         listbox.size = { height: 300 };
 

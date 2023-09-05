@@ -7,12 +7,12 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="listbox-multiselect"]{
-                --listbox-display: inline-block;
-                --listbox-width: calc(60% - 200px);
+                --iui-listbox-display: inline-block;
+                --iui-listbox-width: calc(60% - 200px);
             }
             [id="list-multiselect"]{
-                --list-display: inline-block;
-                --list-width: calc(40% - 10px);
+                --iui-list-display: inline-block;
+                --iui-list-width: calc(40% - 10px);
             }
 
             .listbox-multiselect-panel {
@@ -21,8 +21,8 @@
                 vertical-align: top;
                 width: 170px;
 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
             }
             .listbox-multiselect-panel label {
                 display: block;
@@ -71,7 +71,7 @@
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
     <script type="module">
         import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
-        import { IntegralUIAnimationType, IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+        import { IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
        
         let currentResourcePath = '../../../node_modules/integralui-web/icons';
 

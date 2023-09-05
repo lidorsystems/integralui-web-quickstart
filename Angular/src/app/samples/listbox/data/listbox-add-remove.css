@@ -8,6 +8,8 @@
 }
 [id="listbox-addremove"]{
     display: inline-block;
+
+    --iui-listitem-border-color: #e5e5e5;
 }
 .listbox-addremove-panel {
     display: inline-block;
@@ -15,8 +17,8 @@
     vertical-align: top;
     width: 200px;
 
-    --button-display: block;
-    --button-margin: 5px 0;
+    --iui-button-display: block;
+    --iui-button-margin: 5px 0;
 }
 .listbox-addremove-panel label {
     display: block;
@@ -29,9 +31,9 @@
     display: inline-block;
 }
 .inline-block {
-    --button-display: inline-block;
-    --button-vertical-align: middle;
+    --iui-button-display: inline-block;
+    --iui-button-vertical-align: middle;
 
-    --numeric-display: inline-block;
-    --numeric-vertical-align: middle;
+    --iui-numeric-display: inline-block;
+    --iui-numeric-vertical-align: middle;
 }

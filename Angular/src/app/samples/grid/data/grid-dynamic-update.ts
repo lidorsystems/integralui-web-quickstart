@@ -434,7 +434,7 @@ export class GridDynamicUpdate {
                         .theme="${this.currentTheme}" 
                         @expandedChanged="${(e: any) => this.dropDownExpandedChanged(e, column)}"
                     >
-                        <img src="assets/icons/menu-button.ico" />
+                        <img src="app/integralui/icons/menu-button.ico" />
                     </iui-dropdownbutton>
                     <span class="header-label-fixed">${column.title}</span>
                 </div>

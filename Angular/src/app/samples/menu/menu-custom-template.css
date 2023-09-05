@@ -1,0 +1,17 @@
+[id="menu-custom-template"] {
+    --iui-menuitem-root-margin: 0 10px 0 3px;
+    --iui-menuitem-padding: 5px;
+    --iui-menuitem-width: 200px;
+
+    --iui-menuitem-content-template-display: block;
+}
+
+[id="menu-custom-template-panel"] {
+    --iui-panel-font-size: 1rem;
+    --iui-panel-margin: 10px 0;
+    --iui-panel-height: 300px;
+}
+.menu-custom-template-block {
+    transform: scale(2.5);
+    transition: transform 0.1s ease-in-out;
+}

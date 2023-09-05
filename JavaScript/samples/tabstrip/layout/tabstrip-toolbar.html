@@ -61,10 +61,10 @@
             }
 
             [id="tabstrip-toolbar"]{
-                --tab-header-border-radius: 7px 7px 0 0;
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
-                --tab-header-padding: 9px;
+                --iui-tab-header-border-radius: 7px 7px 0 0;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-padding: 9px;
             }
         </style>
     </head>
@@ -74,7 +74,14 @@
             <iui-tabstrip id="tabstrip-toolbar"
                 allow-animation="true"
                 resource-path="../../../node_modules/integralui-web/icons"
-            ></iui-tabstrip>
+            >
+                <div class="tbs-toolbar" slot="toolbar-right">
+                    <div class="tbs-toolbar-button tbs-tool-watch"><span></span></div>
+                    <div class="tbs-toolbar-button tbs-tool-charts"><span></span></div>
+                    <div class="tbs-toolbar-separator"><span></span></div>
+                    <div class="tbs-toolbar-button tbs-tool-favorite"><span></span></div>
+                </div>
+            </iui-tabstrip>
             <div class="feature-help">
                 <p><span class="initial-space"></span>A demo of a TabStrip with tabs on left and toolbar buttons on right side.</p>
                 <p><span class="initial-space"></span>TabStrip has a built-in support to add custom content on left or right side. In this case, the right side contains a custom toolbar with buttons. You can modify the content, by using the slot name <span class="code-name">'iui-tabstrip-toolbar-right'</span>.</p>
@@ -91,7 +98,7 @@
        
         const ctrl = document.querySelector('#tabstrip-toolbar');
 
-        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.contentAnimation = IntegralUIAnimationType.Slide;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
 
@@ -139,57 +146,34 @@
         }
 
         //
-        // Create a toolbar
+        // Toolbar
         //
 
-        let addRightPanel = function(){
-            let toolbarIcons = ['tbs-tool-watch', 'tbs-tool-charts', '', 'tbs-tool-favorite'];
-            let ctrlRightPanel = document.createElement('div');
+        let setToolbarEvents = function(){
+            const toolButtons = document.querySelectorAll('.tbs-toolbar-button');
 
-            ctrlRightPanel.classList.add('tbs-toolbar');
-            ctrlRightPanel.setAttribute('slot', 'toolbar-right');
-
-            toolbarIcons.forEach((icon, index) => {
-                let btnElem = document.createElement('div');
-
-                let btnClass = index === 2 ? 'tbs-toolbar-separator' : 'tbs-toolbar-button';
-
-                btnElem.classList.add(btnClass);
-                if (icon !== '')
-                    btnElem.classList.add(icon);
-
-                let spanElem = document.createElement('span');
-                btnElem.appendChild(spanElem);
-
-                btnElem.addEventListener("click", () => toolbarButtonClicked(index));
-
-                ctrlRightPanel.appendChild(btnElem);
+            toolButtons.forEach((btn, index) => {
+                btn.addEventListener("click", () => toolbarButtonClicked(index));
             });
-
-
-            ctrl.appendChild(ctrlRightPanel);
         }
 
         let toolbarButtonClicked = function(index){
-            // Skip if a click is made over the separator
-            if (index !== 2){
-                let strMsg = "";
-                switch (index){
-                    case 1:
-                        strMsg = "Charts";
-                        break;
+            let strMsg = "";
+            switch (index){
+                case 1:
+                    strMsg = "Charts";
+                    break;
 
-                    case 3:
-                        strMsg = "Favorite";
-                        break;
+                case 2:
+                    strMsg = "Favorite";
+                    break;
 
-                    default:
-                        strMsg = "Watch";
-                        break;
-                }
-
-                alert(strMsg + " button clicked!");
+                default:
+                    strMsg = "Watch";
+                    break;
             }
+
+            alert(strMsg + " button clicked!");
         }
 
         //
@@ -197,7 +181,7 @@
         //
 
         addTabs();
-        addRightPanel();
+        setToolbarEvents();
 
     </script>
 </html>

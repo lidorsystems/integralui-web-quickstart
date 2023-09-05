@@ -1,8 +1,8 @@
 .sample-block-show-hide-header-footer iui-checkbox {
-    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-3.png);
-    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-3.png);
-    --checkbox-btn-width: 32px;
-    --checkbox-btn-height: 14px;
+    --iui-checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-3.png);
+    --iui-checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-3.png);
+    --iui-checkbox-btn-width: 32px;
+    --iui-checkbox-btn-height: 14px;
 }
 
 .sample-block-show-hide-header-footer .control-panel {

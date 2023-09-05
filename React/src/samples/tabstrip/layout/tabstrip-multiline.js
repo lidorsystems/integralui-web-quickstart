@@ -97,7 +97,7 @@ class TabStripMultilineTabs extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-multiline"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         displayMode={this.state.currentDisplayMode}
                         navigation={this.state.currentNavigation} 
                         resourcePath={this.state.currentResourcePath}

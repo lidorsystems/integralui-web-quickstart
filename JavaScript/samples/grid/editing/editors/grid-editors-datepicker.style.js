@@ -14,8 +14,8 @@ export const iuiGridEditorsDatePickerStyle = css`
 
     /* DatePicker */
     .iui-datepicker {
-        --datepicker-margin: 8px 0 0 0;
-        --header-expand-box-margin: 0;
+        --iui-datepicker-margin: 8px 0 0 0;
+        --iui-header-expand-box-margin: 0;
     }
     
     /* Flags */
@@ -86,8 +86,8 @@ export const iuiGridEditorsDatePickerStyle = css`
 
     /*
     .iui-calendar {
-        --calendar-animation-cell-enter-background-100: #5fc965; 
-        --calendar-animation-cell-enter-border-color-100: #51c458;
+        --iui-calendar-animation-cell-enter-background-100: #5fc965; 
+        --iui-calendar-animation-cell-enter-border-color-100: #51c458;
     }
     .iui-calendar-cell {
         border-color: #e5e5e5;

@@ -1,0 +1,16 @@
+<h2>ContextMenu / Multi-Level</h2>
+<div class="sample-block">
+    <iui-contextmenu #contextmenu
+        [customStyle]="customStyle"
+        [settings]="menuSettings"
+        [theme]="currentTheme"
+        (menuClick)="menuItemClick($event)"
+    >
+        <div class="cmnu-multi-level-block" id="menu-block">
+            <span>Right click to open the context menu</span>
+        </div>
+    </iui-contextmenu>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>An example of Context Menu with sub-menus in multiple levels. Clicking on menu item, will show a message box, stating the menu item that was clicked. The message box will appear only if the menu item don't have any child menus.</p>
+</div>

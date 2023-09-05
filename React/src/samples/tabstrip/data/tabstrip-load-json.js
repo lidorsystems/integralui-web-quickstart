@@ -53,7 +53,7 @@ class TabStripLoadJSON extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-loadjson"
                         allowAnimation={this.state.currentAlignment}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}
                         tabAlignment={this.state.currentAlignment}

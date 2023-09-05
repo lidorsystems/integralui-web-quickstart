@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            .sample-block-listbox-load-more {
+                position: relative;
+                width: 500px;
+            }
+
+            [id="listbox-load-more"] {
+                --iui-listbox-display: inline-block;
+                --iui-listitem-border-color: #f5f5f5;
+            }
+            .listbox-load-more-panel {
+                bottom: 0;
+                display: block;
+                margin: 10px 200px 10px 200px;
+                opacity: 0.4;
+                transition: opacity 0.25s ease-in-out;
+                position: absolute;
+                z-index: 9;
+
+                --iui-button-width: 100px;
+            }
+
+            .listbox-load-more-panel:hover {
+                opacity: 1;
+            }
+
+            .listbox-loading {
+                background: white;
+                bottom: 8px;
+                display: none;
+                height: 60px;
+                left: 0;
+                opacity: 0.6;
+                pointer-events: none;
+                position: absolute;
+                width: 100%;
+                z-index: 999;
+            }
+            .listbox-loading span {
+                display: inline-block;
+                background-image: url(../../../resources/circular.png);
+                margin: 6px 0;
+                margin-left: calc(50% - 24px);
+                width: 48px;
+                height: 48px;
+
+                animation-name: listbox-loading;
+                animation-delay: 0s;
+                animation-direction: normal;
+                animation-duration: 1s;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+                animation-play-state: running;
+                animation-timing-function: linear; 
+            }
+            @keyframes listbox-loading {
+                0% { 
+                    transform: rotate(0deg);
+                }
+                100% { 
+                    transform: rotate(360deg);
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Load More Button</h2>
+        <div class="sample-block">
+            <div class="sample-block-listbox-load-more">
+                <iui-listbox id="listbox-load-more"
+                    allow-animation="true"
+                    theme="Office"
+                ></iui-listbox>
+                <div class="listbox-loading">
+                    <span></span>
+                </div>
+                <div class="listbox-load-more-panel">
+                    <iui-button id="load">Load More</iui-button>
+                </div>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>As demo shows, a semi-transparent Load More Button is placed at the end of the list. With button click, a new data is added to the list. You can repeat this process until all data is fully loaded, after which this button will disappear.</p>
+                <p><span class="initial-space"></span>In addition, loading new items into the list accompanied with 'add' animations.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+            
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        //
+        // Control Panel
+        //
+
+        let currentItemCount = 0;
+        let isListLoading = false;
+
+        // Loading Icon
+        const loadingElem = document.querySelector('.listbox-loading');
+
+        loadingElem.style.display = 'none';
+
+        // Load More Button
+        const btnLoadMore = document.querySelector('#load');
+        btnLoadMore.addEventListener("click", (e) => onLoadMoreClicked(e));
+
+        const btnLoadMorePanel = document.querySelector('.listbox-load-more-panel');
+
+        let onLoadMoreClicked = function(e){
+            if (listbox.items.length < data.length){
+                listbox.suspendLayout();
+
+                btnLoadMorePanel.style.display = 'none';
+                
+                setTimeout(function(){
+                    loadingElem.style.display = 'block';
+                    isListLoading = true;
+
+                    setTimeout(async function(){
+                        // Load data into the ListBox
+                        let newList = data.slice(currentItemCount, currentItemCount + 5);
+                        await listbox.addItem(newList);
+
+                        // Resume and update the list layout
+                        listbox.resumeLayout();
+
+                        loadingElem.style.display = 'none';
+                        btnLoadMorePanel.style.display = 'block';
+                        isListLoading = false;
+
+                        currentItemCount += 5;
+
+                        if (currentItemCount >= data.length)
+                            btnLoadMorePanel.style.display = 'none';
+                    }, 500);
+                }, 100);
+            }
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-load-more');
+
+        let data = [
+            { id: 1, genre: "sci-fi", text: "Star Trek", year: "2009", rating: 8 },
+            { id: 2, genre: "adventure", text: "Cast Away", year: "2000", rating: 7  },
+            { id: 3, genre: "action", text: "Gladiator", year: "2000", rating: 8 },
+            { id: 4, genre: "drama", text: "Malèna", year: "2000", rating: 7 },
+            { id: 5, genre: "music", text: "Moulin Rouge", year: "2001", rating: 7 },
+            { id: 6, genre: "comedy", text: "Snatch", year: "2000", rating: 8  },
+            { id: 7, genre: "biography", text: "A Beautiful Mind", year: "2001", rating: 8  },
+            { id: 8, genre: "crime", text: "Black Hawk Down", year: "2001", rating: 7 },
+            { id: 9, genre: "western", text: "Django Unchained", year: "2012", rating: 8  },
+            { id: 10, genre: "sci-fi", text: "Man of Steel", year: "2013", rating: 7 },
+            { id: 11, genre: "horror", text: "The Ring", year: "2002", rating: 7 },
+            { id: 12, genre: "romance", text: "40 Days and 40 Nights", year: "2002", rating: 5 },
+            { id: 13, genre: "sci-fi", text: "Minority Report", year: "2002", rating: 7 },
+            { id: 14, genre: "comedy", text: "Scary Movie 3", year: "2003", rating: 5 },
+            { id: 15, genre: "music", text: "Walk the Line", year: "2005", rating: 7  },
+            { id: 16, genre: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6 },
+            { id: 17, genre: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
+            { id: 18, genre: "horror", text: "American Psycho", year: "2000", rating: 7 },
+            { id: 19, genre: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 8 },
+            { id: 20, genre: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 8 }
+        ];
+        
+        listbox.resourcePath = currentResourcePath;
+        listbox.size = { width: 500, height: 400 }
+
+        // Initialization ------------------------------------------------------------------------
+
+        let init = function(){
+            listbox.items = data.slice(0, 5);
+            currentItemCount = listbox.items.length;
+        }
+
+        init();
+
+    </script>
+</html>

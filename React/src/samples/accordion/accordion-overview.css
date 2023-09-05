@@ -4,7 +4,7 @@
     padding: 10px;
 }
 [id="accordion-overview"] {
-    --header-expand-box-top: 2px;
-    --header-expand-box-right: 2px;
+    --iui-header-expand-box-top: 2px;
+    --iui-header-expand-box-right: 2px;
 }
 

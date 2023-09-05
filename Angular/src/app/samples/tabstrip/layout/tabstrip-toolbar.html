@@ -1,22 +1,19 @@
 <h2>TabStrip / Tabs with Toolbar</h2>
 <div class="sample-block">
-    <div *ngIf="this.tabs.length > 0">
-        <iui-tabstrip id="tabstrip-toolbar"
-            [allowAnimation]="true"
-            [animation]="currentAnimation"
-            [resourcePath]="currentResourcePath"
-            [size]="ctrlSize"
-            [tabSpacing]="currentTabSpacing"
-        > 
-            <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text">
-                <div class="tbs-tool-tab-content">{{tab.body}}</div>
-            </iui-tab>
-            <div class="tbs-toolbar" slot="toolbar-right">
-                <div *ngFor="let icon of toolbarIcons; let i = index" [ngClass]="getToolButtonClass(i, icon)" (click)="toolbarButtonClicked(i)"><span></span></div>
-            </div>
-        </iui-tabstrip>
-    </div>
-    <div *ngIf="this.tabs.length === 0" class="empty-block">All Tabs are Deleted.</div>
+    <iui-tabstrip id="tabstrip-toolbar"
+        [allowAnimation]="true"
+        [contentAnimation]="currentAnimation"
+        [resourcePath]="currentResourcePath"
+        [size]="ctrlSize"
+        [tabSpacing]="currentTabSpacing"
+    > 
+        <iui-tab *ngFor="let tab of tabs; let i = index" [data]="tab" [text]="tab.text">
+            <div class="tbs-tool-tab-content">{{tab.body}}</div>
+        </iui-tab>
+        <div class="tbs-toolbar" slot="toolbar-right">
+            <div *ngFor="let icon of toolbarIcons; let i = index" [ngClass]="getToolButtonClass(i, icon)" (click)="toolbarButtonClicked(i)"><span></span></div>
+        </div>
+    </iui-tabstrip>
     <div class="feature-help">
         <p><span class="initial-space"></span>A demo of a TabStrip with tabs on left and toolbar buttons on right side.</p>
         <p><span class="initial-space"></span>TabStrip has a built-in support to add custom content on left or right side. In this case, the right side contains a custom toolbar with buttons. You can modify the content, by using the slot name <span class="code-name">'iui-tabstrip-toolbar-right'</span>.</p>

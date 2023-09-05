@@ -1,6 +1,6 @@
 [id="pivotgrid-export"] {
-    --pivotgrid-display: inline-block;
-    --pivotgrid-width: calc(100% - 180px);
+    --iui-pivotgrid-display: inline-block;
+    --iui-pivotgrid-width: calc(100% - 180px);
 }
 .sbp-pgrd-expt {
     display: inline-block;
@@ -10,6 +10,6 @@
 }
 
 .sbp-pgrd-expt iui-button {
-    --button-display: block;
-    --button-margin: 5px 0;
+    --iui-button-display: block;
+    --iui-button-margin: 5px 0;
 }

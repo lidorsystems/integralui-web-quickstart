@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-custom-filter"]{
+                --iui-listbox-display: inline-block;
+            }
+            .listbox-custom-filter-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 200px;
+
+                --iui-button-display: block;
+                --iui-button-margin: 50px auto 0 auto;
+                --iui-button-width: 150px;
+
+                --iui-rating-display: inline-block;
+                --iui-rating-border: 0;
+
+                --iui-select-display: inline-block;
+                --iui-select-width: 100px;
+            }
+            .listbox-custom-filter-panel label {
+                display: inline-block;
+                margin: 10px 0;
+                text-align: right;
+                width: 60px;
+            }
+            .listbox-custom-filter-panel label:first-of-type {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Custom Filter</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-custom-filter"
+                allow-filter="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+                show-groups="true"
+            ></iui-listbox>
+            <div class="listbox-custom-filter-panel">
+                <label>Rating:</label>
+                <iui-rating id="rating" division="2" max="5"></iui-rating>
+                <div style="margin:10px 0;text-align:center">
+                    <iui-radiogroup id="listbox-custom-filter-radio">
+                        <iui-radiobutton checked="true">And</iui-radiobutton>
+                        <iui-radiobutton>Or</iui-radiobutton>
+                    </iui-radiogroup>
+                </div>
+                <label>Year:</label>
+                <iui-select id="listbox-custom-filter-year" allow-animation="true" resource-path="../../../node_modules/integralui-web/icons" theme="Office"></iui-select>
+                <iui-button id="apply-filter">Filter</iui-button>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>As demo shows, on the right side there is Rating component, Radio Buttons where you can specify how conditions are applied using AND/OR logic operators and a Select component from where you can select the year as filtering value.</p>
+                <p><span class="initial-space"></span>Depending on the rating and year values, and whether filters are inclusive or exclusive, the list is filtered and shows only items that pass the matching condition set in a custom callback function.</p>
+                <p><span class="initial-space"></span>Using Rating component inside items, you can change the current rating and apply the filter again and test it with different values.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiobutton.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.radiogroup.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.rating.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
+    <script type="module">
+        import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
+        import { iuiListBoxCustomFilterStyle } from './listbox-custom-filter.style.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        //
+        // Multiple Filters Panel settings
+        //
+        let currentRatingValue = 10;
+        let currentYearValue = 0;
+        let isFilterInclusive = true;
+
+        const ctrlRating = document.querySelector('#rating');
+        ctrlRating.allowFocus = false;
+        ctrlRating.resourcePath = currentResourcePath;
+        ctrlRating.value = currentRatingValue;
+
+        let ratingChanged = function(e){
+            currentRatingValue = e.detail.value;
+        }   
+
+        ctrlRating.addEventListener("valueChanged", (e) => ratingChanged(e));
+
+        // And/Or Radio Group
+        const ctrlRadio = document.querySelector('#listbox-custom-filter-radio');
+
+        ctrlRadio.resourcePath = currentResourcePath;
+
+        let onRadioChecked = function(e){
+            isFilterInclusive = e.detail.index > 0 ? false : true;
+        }
+
+        ctrlRadio.addEventListener("buttonChecked", (e) => onRadioChecked(e));
+
+
+        // Select Year
+        const ctrlSelect = document.querySelector('#listbox-custom-filter-year');
+        ctrlSelect.items = [];
+
+        ctrlSelect.addEventListener("selectedIndexChanged", (e) => yearChanged(e));
+
+        let yearChanged = function(e){
+            currentYearValue = parseInt(e.detail.item.text);
+        }
+
+        // Filter Button
+        const btnFilter = document.querySelector('#apply-filter');
+        btnFilter.addEventListener("click", (e) => onFilterClicked(e));
+
+        let onFilterClicked = function(e){
+            applyFilter();
+        }
+
+        // Filtering
+        let customFilter = function(value, item){
+            if (isFilterInclusive && currentYearValue > 0)
+                return item.rating <= currentRatingValue && item.year <= currentYearValue;
+            else
+                return item.rating <= currentRatingValue || item.year <= currentYearValue;
+        }
+
+        let applyFilter = function(){
+            if (currentRatingValue){
+                let params = { callback: customFilter }
+
+                listbox.filter(params);
+            }
+            // Reset the filter
+            else
+                listbox.filter();
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-custom-filter');
+
+        listbox.animateInit = true;
+        listbox.customStyle = iuiListBoxCustomFilterStyle;
+        listbox.groups = [
+            { name: "sci-fi" },
+            { name: "adventure" },
+            { name: "action" },
+            { name: "drama" },
+            { name: "music" },
+            { name: "comedy" },
+            { name: "biography" },
+            { name: "crime" },
+            { name: "western" },
+            { name: "horror" },
+            { name: "romance" }
+        ];
+
+        listbox.items = [
+            { id: 1, icon: "sci-fi", text: "Star Trek", year: "2009", rating: 8.0 },
+            { id: 2, icon: "adventure", text: "Cast Away", year: "2000", rating: 7.7  },
+            { id: 3, icon: "action", text: "Gladiator", year: "2000", rating: 6.5 },
+            { id: 4, icon: "drama", text: "Malèna", year: "2000", rating: 7.5 },
+            { id: 5, icon: "music", text: "Moulin Rouge", year: "2001", rating: 7.6 },
+            { id: 6, icon: "comedy", text: "Snatch", year: "2000", rating: 8.3  },
+            { id: 7, icon: "biography", text: "A Beautiful Mind", year: "2001", rating: 3.2  },
+            { id: 8, icon: "crime", text: "Black Hawk Down", year: "2001", rating: 7.7 },
+            { id: 9, icon: "western", text: "Django Unchained", year: "2012", rating: 8.5  },
+            { id: 10, icon: "sci-fi", text: "Man of Steel", year: "2013", rating: 5.3 },
+            { id: 11, icon: "horror", text: "The Ring", year: "2002", rating: 7.1 },
+            { id: 12, icon: "romance", text: "40 Days and 40 Nights", year: "2002", rating: 5.6 },
+            { id: 13, icon: "sci-fi", text: "Minority Report", year: "2002", rating: 7.7 },
+            { id: 14, icon: "comedy", text: "Scary Movie 3", year: "2003", rating: 2.5 },
+            { id: 15, icon: "music", text: "Walk the Line", year: "2005", rating: 7.9  },
+            { id: 16, icon: "romance", text: "How to Lose a Guy in 10 Days", year: "2003", rating: 6.4 },
+            { id: 17, icon: "crime", text: "The Dark Knight", year: "2008", rating: 9.0  },
+            { id: 18, icon: "horror", text: "American Psycho", year: "2000", rating: 7.6 },
+            { id: 19, icon: "drama", text: "The Grand Budapest Hotel", year: "2014", rating: 5.1 },
+            { id: 20, icon: "comedy", text: "The Wolf of Wall Street", year: "2013", rating: 6.2 }
+        ];
+
+        listbox.size = { width: 500, height: 400 }
+    
+        let ratingValueChanged = function(e, item){
+            item.rating = e.detail.value;
+        }
+
+        // Apply grouping
+        listbox.items.forEach(item => item.group = item.icon);
+        
+        // Templates -----------------------------------------------------------------------------
+
+        listbox.itemTemplate = (item) => { 
+            if (item.type === 'group')
+                return html`
+                    <div class="lbox-ovw-item-content">
+                        <span class="lbox-ovw-icons ${item.name}"></span>
+                        <span class="lbox-ovw-name">${item.name}</span>
+                    </div>
+                `;
+            else
+                return html`
+                    <div class="lbox-ovw-item-content">
+                        <span class="lbox-ovw-title">${item.text}</span>
+                        <span class="lbox-ovw-year">${item.year}</span>
+                        <iui-rating .allowFocus="${false}" division="2" max="5" resource-path="../../../node_modules/integralui-web/icons" .value=${item.rating} @valueChanged="${(e) => ratingValueChanged(e, item)}"></iui-rating>
+                    </div>
+                `;
+        };
+        
+        // Initialization ------------------------------------------------------------------------
+
+        let yearList = [];
+
+        let isYearPresent = function(year){
+            let filtered = yearList.filter(value => value === year);
+            return filtered.length > 0 ? true : false;
+        }
+
+        listbox.items.forEach(item => {
+            if (!isYearPresent(item.year))
+                yearList.push(item.year);
+        });
+
+        yearList.sort();
+        yearList.forEach(year => ctrlSelect.items.push({ text: year }));
+
+    </script>
+</html>

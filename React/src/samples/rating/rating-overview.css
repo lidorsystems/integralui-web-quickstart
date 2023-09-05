@@ -1,4 +1,4 @@
 [id="rating-2"] {
-    --rating-content-image: url(../../resources/rating/brick-empty.png);
-    --rating-value-image: url(../../resources/rating/brick-full.png);
+    --iui-rating-content-image: url(../../resources/rating/brick-empty.png);
+    --iui-rating-value-image: url(../../resources/rating/brick-full.png);
 }

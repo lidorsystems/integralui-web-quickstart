@@ -8,7 +8,7 @@ export const iuiGridAutoSizeColumnsStyle = css`
         margin-top: 4px;
     }
     .iui-rating {
-        --rating-cursor: pointer;
-        --rating-margin: 4px 0 0 0;
+        --iui-rating-cursor: pointer;
+        --iui-rating-margin: 4px 0 0 0;
     }`
 ;

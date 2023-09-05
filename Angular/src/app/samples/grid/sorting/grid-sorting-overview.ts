@@ -63,7 +63,6 @@ export class GridSortingOverview {
             { id: 31, pid: 3, text: "France", cells: [{ cid: 2, text: "France" }, { cid: 3, value: 66109000 }, { cid: 4, value: new Date(2015, 2, 1) }, { cid: 6, value: 640427 }, { cid: 7, text: "Paris" }] },
             { id: 32, pid: 3, text: "Germany", cells: [{ cid: 2, text: "Germany" }, { cid: 3, value: 80925000 }, { cid: 4, value: new Date(2014, 5, 30) }, { cid: 6, value: 348672 }, { cid: 7, text: "Berlin" }] },
             { id: 33, pid: 3, text: "Italy", cells: [{ cid: 2, text: "Italy" }, { cid: 3, value: 60788845 }, { cid: 4, value: new Date(2014, 10, 30) }, { cid: 6, value: 294140 }, { cid: 7, text: "Rome" }] },
-            { id: 34, pid: 3, text: "Macedonia", cells: [{ cid: 2, text: "Macedonia" }, { cid: 3, value: 2065769 }, { cid: 4, value: new Date(2013, 11, 31) }, { cid: 6, value: 25433}, { cid: 7, text: "Skopje" }] },
             { id: 41, pid: 4, text: "Canada", cells: [{ cid: 2, text: "Canada" }, { cid: 3, value: 35702707 }, { cid: 4, value: new Date(2015, 0, 1) }, { cid: 6, value: 9093507 }, { cid: 7, text: "Ottawa" }] },
             { id: 42, pid: 4, text: "Mexico", cells: [{ cid: 2, text: "Mexico" }, { cid: 3, value: 121005815 }, { cid: 4, value: new Date(2015, 6, 1) }, { cid: 6, value: 1943945 }, { cid: 7, text: "Mexico City" }] },
             { id: 43, pid: 4, text: "USA", cells: [{ cid: 2, text: "USA" }, { cid: 3, value: 320651000 }, { cid: 4, value: new Date(2015, 3, 7) }, { cid: 6, value: 9161966 }, { cid: 7, text: "Washington" }] },
@@ -134,15 +133,19 @@ export class GridSortingOverview {
 
     onColumnClick(e: any){
         if (e.detail.column){
-            if (e.detail.column !== this.prevColumn){
-                if (this.sorting === IntegralUISortOrder.None)
-                    this.sorting = IntegralUISortOrder.Ascending;
-            }
-            else {
-                if (this.sorting === IntegralUISortOrder.Ascending)
-                    this.sorting = IntegralUISortOrder.Descending;
-                else
-                    this.sorting = IntegralUISortOrder.Ascending;
+            // Only change the order is a different column is clicked
+            if (e.detail.column === this.prevColumn){
+                switch (this.sorting){
+                    case IntegralUISortOrder.Ascending:
+                        this.sorting = IntegralUISortOrder.Descending;
+                        break;
+                    case IntegralUISortOrder.Descending:
+                        this.sorting = IntegralUISortOrder.None;
+                        break;
+                    default:
+                        this.sorting = IntegralUISortOrder.Ascending;
+                        break;
+                }
             }
 
             this.sortColumn = e.detail.column;

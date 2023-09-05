@@ -4,10 +4,10 @@
     position: relative;
 }
 [id="sample-block-loading-content"]{
-    --panel-background: white;
-    --panel-border-color: #d5d5d5;
-    --panel-height: calc(100% - 2px);
+    --iui-panel-background: white;
+    --iui-panel-border-color: #d5d5d5;
+    --iui-panel-height: calc(100% - 2px);
 
-    --button-margin: 100px 0 0 0;
-    --button-width: 150px;
+    --iui-button-margin: 100px 0 0 0;
+    --iui-button-width: 150px;
 }

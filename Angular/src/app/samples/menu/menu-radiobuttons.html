@@ -1,0 +1,22 @@
+<h2>Menu / Radio Buttons</h2>
+<div class="sample-block">
+    <iui-menu #menu id="menu-radiobuttons"
+        [customStyle]="customStyle"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [theme]="currentTheme"
+        (checkedChanged)="onMenuRadioChecked($event)"
+    ></iui-menu>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of a Menu with Radio Buttons. Under the <strong>'View'</strong> menu, there are sub-menus with radio buttons. Opening these sub-menus will show a set of radio buttons and check boxes. If <strong>'Off'</strong> radio button is active, menu items with check boxes below will become disabled.</p>
+        <p><span class="initial-space"></span>Each item can have a radio button, by setting the following fields:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowRadioButton</span> - determines whether radio button is visible or not</li>
+            <li><span class="code-name">checked</span> - specifies whether the radio button is checked or not</li>
+            <li><span class="code-name">radioGroup</span> - specifies the group to which the radio button belongs</li>
+        </ul>
+        <p><span class="initial-space"></span>Whenever menu radio button is clicked, the <span class="code-name">checkedChanged</span> event is fired, which you can handle in your code and add specific action.</p>
+        <p><span class="initial-space"></span>Clicking on the radio button will not close the parent menu. This allows you to change the active radio button without closing. To close the menu, click on the menu label or anywhere outside of the menu space.</p>
+        <p><span class="initial-space"></span>Radio Buttons are fully customizable via CSS.</p>
+    </div>
+</div>

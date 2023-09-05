@@ -1,0 +1,21 @@
+<h2>Menu / CheckBox</h2>
+<div class="sample-block">
+    <iui-menu #menu id="menu-checkbox"
+        [customStyle]="customStyle"
+        [items]="items"
+        [resourcePath]="currentResourcePath"
+        [theme]="currentTheme"
+        (checkedChanged)="onMenuChecked($event)"
+    ></iui-menu>
+    <div class="feature-help">
+        <p><span class="initial-space"></span>An example of a Menu with Check Boxes. Under the <strong>'View'</strong> menu, you will find a menu item with a check box. In addition, opening the <strong>'Toolbars'</strong> menu will show three menu items with check boxes.</p>
+        <p><span class="initial-space"></span>Each item can have a checkbox, by setting the followiing fields:</p>
+        <ul class="feature-points">
+            <li><span class="code-name">allowCheckBox</span> - Determines whether checkbox is visible or not</li>
+            <li><span class="code-name">checked</span> - specifies whether the checkbox is checked or not</li>
+        </ul>
+        <p><span class="initial-space"></span>Whenever menu checkbox is clicked, the <span class="code-name">checkedChanged</span> event is fired, which you can handle in your code and add specific action.</p>
+        <p><span class="initial-space"></span>Clicking on the checkbox will not close the parent menu. This allows you to check multiples menu items without closing. To close the menu, click on the menu label or anywhere outside of the menu space.</p>
+        <p><span class="initial-space"></span>Check boxes are fully customizable via CSS.</p>
+    </div>
+</div>

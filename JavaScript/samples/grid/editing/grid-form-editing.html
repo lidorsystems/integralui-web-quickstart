@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-	<head>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	  	<title>IntegralUI Web - Grid / Form Editing</title>
-		<link rel="stylesheet" href="../../../index.css" />
-		<style type="text/css">
-		</style>
-	</head>
-	<body>
-		<h2>Grid / Form Editing</h2>
-		<div class="sample-block">
-			<iui-grid id="grid-form-editing"
-                allow-animation="true"
-				resource-path="../../../node_modules/integralui-web/icons"
-				theme="Office"
-			></iui-grid>
-			<div class="feature-help">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Grid / Form Editing</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>Grid / Form Editing</h2>
+        <div class="sample-block">
+            <div align="right">
+                <iui-checkbox id="use-validation">Use Validation</iui-checkbox><br/>
+            </div>
+            <iui-grid id="grid-form-editing"></iui-grid>
+            <div class="feature-help">
                 <p><span class="initial-space"></span>When <strong>Form Editing</strong> mode is activated, you can select a row and:</p>
                 <ul class="feature-points">
                     <li>hover over cell in first column and click on Pencil icon to show a Form and start editing</li>
@@ -27,33 +26,57 @@
                 <p><span class="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will update the Form with cell values from the selected row. In the process, any changes not saved are cancelled. Clicking again on the Pencil icon, will close the Form.</p>
                 <p><span class="initial-space"></span>You can also activate the editing Form by double-clicking a row. In this case, the editing is activated by handling the <strong>rowDblClick</strong> event and calling the <strong>beginEdit</strong> method.</p>
                 <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+                <p><span class="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
             </div>
-		</div>
-	</body>
+        </div>
+    </body>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.checkbox.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.datepicker.js"></script>
-	<script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.grid.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.select.js"></script>
-	<script type="module">
+    <script type="module">
         import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
         import IntegralUICommonService from '../../../node_modules/integralui-web/services/integralui.common.service.js';
         import { IntegralUIEditMode, IntegralUITheme } from '../../../node_modules/integralui-web/components/integralui.enums.js';
 
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+        let currentTheme = IntegralUITheme.Office;
+
         let _commonService = new IntegralUICommonService();
 
-		//
-		// Grid settings
-		//
+        //
+        // CheckBox
+        //
 
-		const grid = document.querySelector('#grid-form-editing');
+        const ctrlCheck = document.querySelector('#use-validation');
 
-		grid.columns = [];
+        ctrlCheck.checked = true;
+        ctrlCheck.resourcePath = currentResourcePath;
+        ctrlCheck.theme = currentTheme;
+    
+        ctrlCheck.addEventListener("checkedChanged", (e) => useValidationChanged(e));
+
+        let useValidationChanged = function(e){
+            grid.useValidation = e.detail.checked;
+        }
+
+        //
+        // Grid settings
+        //
+
+        const grid = document.querySelector('#grid-form-editing');
+
+        grid.columns = [];
         grid.rows = [];
 
         grid.allowFocus = false;
         grid.editMode = IntegralUIEditMode.Form;
         grid.showFooter = false;
-		grid.size = { height: 465 }
+        grid.resourcePath = currentResourcePath;
+        grid.size = { height: 500 }
+        grid.theme = currentTheme;
+        grid.useValidation = true;
 
         grid.dataFields = {
             column: {
@@ -61,25 +84,13 @@
             }
         }
 
-        let shipModeList = [
-            { id: 1, text: "None", value: -1 },
-            { id: 2, text: "Delivery Truck", value: 0 },
-            { id: 3, text: "Regular Air", value: 1 },
-            { id: 4, text: "Express Air", value: 2 }
-        ];
-
         // Templates -----------------------------------------------------------------------------
-
-        //
-        // Currently when using templates, the LitElement binding syntax is required
-        // for properties, methods and events
-        //
 
         let currentHeaderTemplate = (column) => { 
             return html`<span class="header-label">${column.title}</span>`;
         };
 
-		grid.headerTemplate = currentHeaderTemplate;
+        grid.headerTemplate = currentHeaderTemplate;
 
         // Data ----------------------------------------------------------------------------------
 
@@ -94,6 +105,10 @@
             // Load other columns from the data source
             data.columns.forEach(obj => {
                 let column = Object.assign({ headerAlignment: 'center' }, obj);
+
+                // Set callback function for ShipMode, uses Custom data validation
+                if (column.id === 12 && column.validation)
+                    column.validation.rules[0].callback = validateShipMode;
 
                 columnList.push(column);
             });
@@ -145,9 +160,14 @@
             grid.rows = rowList;
         }
 
+        let validateShipMode = function(value){
+            return value >= 0;
+        }
+
         // Editing -------------------------------------------------------------------------------
 
         grid.addEventListener("dataChanged", (e) => gridDataChanged(e));
+        grid.addEventListener("dataInvalid", (e) => gridDataInvalid(e));
         grid.addEventListener("rowDblClick", (e) => gridRowDblClick(e));
 
         let gridDataChanged = function(e){
@@ -164,6 +184,10 @@
             }
         }
 
+        let gridDataInvalid = function(e){
+            alert("Some data fields are invalid!");
+        }
+
         let getCellById = function(row, id){
             let filtered = row.cells.filter(cell => cell.cid === id);
 
@@ -177,8 +201,8 @@
         // Initialize ----------------------------------------------------------------------------
  
         fetch("grid-form-editing-data.json") 
-			.then(response => response.json()) 
-			.then(data => {
+            .then(response => response.json()) 
+            .then(data => {
                 // Suspend the grid layout from updates, to increase performance
                 grid.suspendLayout();
 
@@ -189,5 +213,5 @@
                 grid.resumeLayout();
             });
 
-	</script>
+    </script>
 </html>

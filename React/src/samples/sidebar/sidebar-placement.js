@@ -101,7 +101,7 @@ class SideBarPlacement extends Component {
                     >
                         {tabs}
                     </IntegralUISideBarComponent>
-                    <IntegralUIPanelComponent id="sample-block-sidebar-placement-panel" contentAlignment = {{ vertical: 'middle' }}>
+                    <IntegralUIPanelComponent id="sample-block-sidebar-placement-panel" contentAlignment = {{ horizontal: 'center', vertical: 'middle' }}>
                         <div className="sample-block-sidebar-control-panel">
                             <label>Placement: </label>
                             <IntegralUIRadioGroupComponent theme={this.state.currentTheme} buttonChecked={(e) => this.onPlacementChecked(e)}>

@@ -1,4 +1,4 @@
 /* Changes to the tree item layout*/
 [id="treeview-overview"] {
-    --treeitem-expand-box-margin: 4px 5px 0 0;
+    --iui-treeitem-expand-box-margin: 4px 5px 0 0;
 }

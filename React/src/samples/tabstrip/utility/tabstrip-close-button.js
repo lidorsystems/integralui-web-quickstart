@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { html } from 'integralui-web/external/lit-element.js';
 
-import { IntegralUIAnimationType, IntegralUIObjectState } from 'integralui-web/components/integralui.enums.js';
+import { IntegralUIAnimationType } from 'integralui-web/components/integralui.enums.js';
 
 import IntegralUITabComponent from 'integralui-web/wrappers/react.integralui.tab.js';
 import IntegralUITabStripComponent from 'integralui-web/wrappers/react.integralui.tabstrip.js';
@@ -103,7 +103,7 @@ class TabStripCloseButton extends Component {
                     { tabs.length > 0 && 
                         <IntegralUITabStripComponent id="tabstrip-close-button"
                             allowAnimation={this.state.isAnimationAllowed}
-                            animation={this.state.currentAnimation}
+                            contentAnimation={this.state.currentAnimation}
                             customStyle={iuiTabStripCloseButtonStyle}
                             resourcePath={this.state.currentResourcePath}
                             selectedTab={this.state.currentSelection}

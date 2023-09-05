@@ -1,5 +1,5 @@
 [id="treeview-dragdrop-two-trees"] {
-    --treeview-float: left;
-    --treeview-margin: 0 20px 0 0;
-    --treeitem-expand-box-margin: 4px 5px 0 0;
+    --iui-treeview-float: left;
+    --iui-treeview-margin: 0 20px 0 0;
+    --iui-treeitem-expand-box-margin: 4px 5px 0 0;
 }

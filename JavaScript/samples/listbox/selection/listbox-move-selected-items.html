@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-move-sel-items"]{
+                --iui-listbox-display: inline-block;
+                --iui-listbox-width: calc(50% - 50px);
+            }
+            [id="listbox-move-sel-items-2"]{
+                --iui-listbox-display: inline-block;
+                --iui-listbox-width: calc(50% - 50px);
+            }
+
+            [id="listbox-move-sel-items-panel"] {
+                --iui-panel-background: transparent;
+                --iui-panel-border-color: transparent;
+                --iui-panel-display: inline-block;
+                --iui-panel-height: 298px;
+                --iui-panel-margin: 0 10px;
+                --iui-panel-vertical-align: top;
+                --iui-panel-width: 48px;
+
+                --iui-button-display: block;
+                --iui-button-margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Move Selected Items</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-move-sel-items"></iui-listbox>
+            <iui-panel id="listbox-move-sel-items-panel">
+                <iui-button id="listbox-move-button-left">&lt;&lt;</iui-button>
+                <iui-button id="listbox-move-button-right">&gt;&gt;</iui-button>
+            </iui-panel>
+            <iui-listbox id="listbox-move-sel-items-2"></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, you can move selected items in dual ListBox. During movement, items are removed from the first list and then added to the second list, and vice versa, dependiogn on which button is used.</p>
+                <p><span class="initial-space"></span>In both lists, you can select multiple items using mouse or touch and press and holding CTRL or SHIFT keys.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.panel.js"></script>
+    <script type="module">
+        import { IntegralUISelectionMode } from '../../../node_modules/integralui-web/components/integralui.enums.js';
+       
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        //
+        // Control Panel
+        //
+        const ctrlPanel = document.querySelector('#listbox-move-sel-items-panel');
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
+
+        // Move Left Button
+        const btnMoveLeft = document.querySelector('#listbox-move-button-left');
+        btnMoveLeft.allowFocus = false;
+
+        btnMoveLeft.addEventListener("click", (e) => oonMoveLeftClicked(e));
+
+        let oonMoveLeftClicked = function(e){
+            suspendLayout();
+
+            let selList = listbox2.getList('selected');
+
+            selList.forEach(item => {
+                listbox2.removeItem(item);
+                listbox.addItem(item);
+
+            });
+
+            resumeLayout();
+        }
+
+        // Move Right Button
+        const btnMoveRight = document.querySelector('#listbox-move-button-right');
+        btnMoveRight.allowFocus = false;
+
+        btnMoveRight.addEventListener("click", (e) => oonMoveRightClicked(e));
+
+        let oonMoveRightClicked = function(e){
+            //suspendLayout();
+
+            let selList = listbox.getList('selected');
+
+            //selList.forEach(item => {
+                listbox.removeItem(selList);
+                listbox2.addItem(selList);
+
+            //});
+
+            //resumeLayout();
+        }
+
+        let suspendLayout = function(){
+            listbox.suspendLayout();
+            listbox2.suspendLayout();
+        }
+
+        let resumeLayout = function(){
+            listbox.resumeLayout();
+            listbox2.resumeLayout();
+        }
+
+        //
+        // Left ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-move-sel-items');
+
+        listbox.items = [
+            { id: 11, text: "Milk" },
+            { id: 12, text: "Butter" },
+            { id: 13, text: "Cheese" },
+            { id: 14, text: "Yogurt" },
+            { id: 211, text: "BlackBerries" },
+            { id: 212, text: "CranBerries" },
+            { id: 213, text: "StrawBerries" },
+            { id: 241, text: "Oranges" },
+            { id: 242, text: "Lemons" },
+            { id: 261, text: "Avocados" },
+            { id: 262, text: "Bananas" },
+            { id: 263, text: "Dates" },
+            { id: 31, text: "Barley" },
+            { id: 32, text: "Farro" },
+            { id: 33, text: "Millet" },
+            { id: 34, text: "Rice" },
+            { id: 41, text: "Beef" },
+            { id: 42, text: "Chicken" },
+            { id: 43, text: "Turkey" },
+            { id: 44, text: "Pork" },
+            { id: 45, text: "Lamb" },
+            { id: 51, text: "Biscuits" },
+            { id: 52, text: "Cakes" },
+            { id: 53, text: "Candies" },
+            { id: 54, text: "Muffins" },
+            { id: 55, text: "Pastries" },
+            { id: 61, text: "Asparagus" },
+            { id: 62, text: "Broccoli" },
+            { id: 63, text: "Carrots" },
+            { id: 64, text: "Corn" },
+            { id: 65, text: "Lettuce" },
+            { id: 66, text: "Onions" },
+            { id: 67, text: "Pumpkin" },
+            { id: 68, text: "Tomatoes" },
+            { id: 69, text: "Zucchini" }
+        ];
+
+        listbox.name = "ListBox 1";
+        listbox.selectionMode = IntegralUISelectionMode.MultiExtended;
+        listbox.size = { height: 300 };
+
+        //
+        // Right ListBox settings
+        //
+
+        const listbox2 = document.querySelector('#listbox-move-sel-items-2');
+
+        listbox2.name = "ListBox 2";
+        listbox2.items = [];
+        listbox2.selectionMode = IntegralUISelectionMode.MultiExtended;
+        listbox2.size = { height: 300 };
+
+    </script>
+</html>

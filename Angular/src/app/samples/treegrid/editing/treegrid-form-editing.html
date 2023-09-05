@@ -1,18 +1,23 @@
-<h2 class="feature-title">Grid / Form Editing</h2>
+<h2 class="feature-title">TreeGrid / Form Editing</h2>
 <div class="feature-content" id="treegrid-form-editing" #application>
+    <div align="right">
+        <iui-checkbox [allowFocus]="false" [checked]="isValidationInUse" [resourcePath]="currentResourcePath" [theme]="currentTheme" (checkedChanged)="useValidationChanged($event)">Use Validation</iui-checkbox><br/>
+    </div>
     <iui-treegrid #treegrid
         [allowAnimation]="true"
         [allowFocus]="false"
         [editMode]="currentEditMode"
         [columns]="columns"
-        [dataFields]="gridFields"
+        [dataFields]="treegridFields"
         [resourcePath]="currentResourcePath"
         [rows]="rows"
         [showFooter]="false"
         [size]="ctrlSize"
         [theme]="currentTheme"
-        (dataChanged)="gridDataChanged($event)"
-        (rowDblClick)="gridRowDblClick($event)"
+        [useValidation]="isValidationInUse"
+        (dataChanged)="treegridDataChanged($event)"
+        (dataInvalid)="treegridDataInvalid($event)"
+        (rowDblClick)="treegridRowDblClick($event)"
     ></iui-treegrid>
     <div class="feature-help">
         <p><span class="initial-space"></span>When <strong>Form Editing</strong> mode is activated, you can select a row and:</p>
@@ -25,5 +30,6 @@
         <p><span class="initial-space"></span>Clicking the Pencil icon on a different row than the one edited, will update the Form with cell values from the selected row. In the process, any changes not saved are cancelled. Clicking again on the Pencil icon, will close the Form.</p>
         <p><span class="initial-space"></span>You can also activate the editing Form by double-clicking a row. In this case, the editing is activated by handling the <strong>rowDblClick</strong> event and calling the <strong>beginEdit</strong> method.</p>
         <p><span class="initial-space"></span>When changes are saved, the <span class="code-name">dataChanged</span> event is fired, which you can handle in your code. In this example, handling this event updates the Total value, as a result of changes from Quantity and Price values.</p>
+        <p><span class="initial-space"></span>In addition, <strong>Data Validation</strong> is enabled. Depending on the rule and data field value a check is made whenever new value is entered. If the new value don't pass the validation rule, a message will pop up stating a requirement. In order data to be saved all fields must have a valid value.</p><br/>
     </div>
 </div>

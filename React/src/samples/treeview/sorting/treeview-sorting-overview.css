@@ -1,5 +1,5 @@
 [id="treeview-sorting-overview"]{
-    --treeview-display: inline-block;
+    --iui-treeview-display: inline-block;
 }
 
 .treeview-sorting-overview-panel {
@@ -8,8 +8,8 @@
     vertical-align: top;
     width: 170px;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .treeview-sorting-overview-panel label {
     display: block;

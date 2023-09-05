@@ -16,7 +16,7 @@
                 height: 100%;
             }
             [id="window-overview-1"], [id="window-overview-2"] {
-                --window-icon-margin: 2px 0 0 2px;
+                --iui-window-icon-margin: 2px 0 0 2px;
             }
 		</style>
 	</head>
@@ -83,7 +83,7 @@
 
         let panel1 = win1.querySelector('iui-panel');
         if (panel1)
-            panel1.contentAlignment = { vertical: 'middle' }
+            panel1.contentAlignment = { horizontal: 'center', vertical: 'middle' }
 
         // Window 2
         const win2 = document.querySelector('#window-overview-2');
@@ -93,6 +93,6 @@
 
         let panel2 = win2.querySelector('iui-panel');
         if (panel2)
-            panel2.contentAlignment = { vertical: 'middle' }
+            panel2.contentAlignment = { horizontal: 'center', vertical: 'middle' }
 	</script>
 </html>

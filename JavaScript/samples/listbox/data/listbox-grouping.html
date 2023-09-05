@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="listbox-grouping"] {
-                --listbox-display: inline-block;
+                --iui-listbox-display: inline-block;
             }
             .listbox-grouping-panel {
                 display: inline-block;
@@ -15,10 +15,10 @@
                 vertical-align: top;
                 width: 300px;
 
-                --select-display: block;
+                --iui-select-display: block;
 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
             }
             .listbox-grouping-panel label {
                 display: block;
@@ -33,9 +33,7 @@
         <h2>ListBox / Grouping</h2>
         <div class="sample-block">
             <iui-listbox id="listbox-grouping"
-                allow-animation="true"
                 show-groups="true"
-                theme="Office"
             ></iui-listbox>
             <div class="listbox-grouping-panel">
                 <label>Group by: </label>
@@ -141,6 +139,8 @@
 
         const listbox = document.querySelector('#listbox-grouping');
 
+        listbox.animateInit = true;
+        
         listbox.items = [
             { id: 1, genre: "sci-fi", text: "Star Trek", year: "2009", rating: 8 },
             { id: 2, genre: "adventure", text: "Cast Away", year: "2000", rating: 7  },

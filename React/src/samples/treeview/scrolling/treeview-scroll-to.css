@@ -1,6 +1,6 @@
 [id="treeview-scrollto"]{
-    --treeview-display: inline-block;
-    --treeview-width: calc(100% - 330px);
+    --iui-treeview-display: inline-block;
+    --iui-treeview-width: calc(100% - 330px);
 }
 
 .treeview-scrollto-panel {
@@ -9,7 +9,7 @@
     vertical-align: top;
     width: 300px;
 
-    --select-display: block;
+    --iui-select-display: block;
 }
 .treeview-scrollto-panel label {
     display: block;

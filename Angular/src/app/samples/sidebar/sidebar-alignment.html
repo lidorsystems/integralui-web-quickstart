@@ -15,7 +15,7 @@
             <div class="sdb-alg-tab-content">{{tab.body}}</div>
         </iui-tab>
     </iui-sidebar>
-    <iui-panel id="sample-block-sidebar-alignment-panel" [contentAlignment] = "{ vertical: 'middle' }">
+    <iui-panel id="sample-block-sidebar-alignment-panel" [contentAlignment] = "{ horizontal: 'center', vertical: 'middle' }">
         <div class="sample-block-sidebar-control-panel">
             <label>Alignment: </label>
             <iui-radiogroup id="alignment" [resourcePath]="currentResourcePath" (buttonChecked)="onAlignmentChecked($event)">

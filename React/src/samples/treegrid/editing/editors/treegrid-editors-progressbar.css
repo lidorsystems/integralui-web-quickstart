@@ -1,8 +1,8 @@
 [id="treegrid-editors-progressbar"] iui-treegrid {
-    --editor-progress-background: #f5f5f5;
-    --editor-progress-border: 0;
-    --editor-progress-margin: 9px 0 0 0;
-    --editor-progress-padding: 0;
-    --editor-progress-content-background: #48c548;
-    --editor-progress-label-top: -3px;
+    --iui-editor-progress-background: #f5f5f5;
+    --iui-editor-progress-border: 0;
+    --iui-editor-progress-margin: 9px 0 0 0;
+    --iui-editor-progress-padding: 0;
+    --iui-editor-progress-content-background: #48c548;
+    --iui-editor-progress-label-top: -3px;
 }

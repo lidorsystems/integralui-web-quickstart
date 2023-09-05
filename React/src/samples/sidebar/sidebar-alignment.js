@@ -81,7 +81,7 @@ class SideBarAlignment extends Component {
                     >
                         {tabs}
                     </IntegralUISideBarComponent>
-                    <IntegralUIPanelComponent id="sample-block-sidebar-alignment-panel" contentAlignment = {{ vertical: 'middle' }}>
+                    <IntegralUIPanelComponent id="sample-block-sidebar-alignment-panel" contentAlignment = {{ horizontal: 'center', vertical: 'middle' }}>
                         <div className="sample-block-sidebar-control-panel">
                             <label>Alignment: </label>
                             <IntegralUIRadioGroupComponent theme={this.state.currentTheme} buttonChecked={(e) => this.onAlignmentChecked(e)}>

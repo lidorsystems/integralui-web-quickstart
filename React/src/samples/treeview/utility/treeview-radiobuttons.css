@@ -1,7 +1,7 @@
 [id="treeview-radiobuttons"] {
-    --treeitem-expand-box-margin: 3px 5px 0 0;
-    --treeitem-padding: 2px 0;
+    --iui-treeitem-expand-box-margin: 3px 5px 0 0;
+    --iui-treeitem-padding: 2px 0;
 
-    --radio-button-margin: 0;
-    --radio-button-padding: 0;
+    --iui-radio-button-margin: 0;
+    --iui-radio-button-padding: 0;
 }

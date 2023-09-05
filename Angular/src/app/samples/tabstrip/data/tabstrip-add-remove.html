@@ -3,7 +3,7 @@
     <div id="tabstrip-addremove" [ngStyle]="{ display: tabs.length > 0 ? 'inline-block' : 'none' }">
         <iui-tabstrip
             [allowAnimation]="true"
-            [animation]="currentAnimation"
+            [contentAnimation]="currentAnimation"
             [resourcePath]="currentResourcePath"
             [scrollMode]="currentScrollMode"
             [selectedTab]="currentSelection"

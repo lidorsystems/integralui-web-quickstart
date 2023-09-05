@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+        <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../index.css" />
+        <style type="text/css">
+            .cmnu-separator-label-block {
+                background: white;
+                border: thin solid gray;
+                width: 800px;
+                height: 300px;
+            }
+            .cmnu-separator-label-block span {
+                color: #808080;
+                cursor: default;
+                display: block;
+                margin: 140px auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ContextMenu / Separator with Label</h2>
+        <div class="sample-block">
+            <iui-contextmenu id="contextmenu-separator-label"> 
+                <div class="cmnu-separator-label-block" id="menu-block">
+                    <span>Right click to open the context menu</span>
+                </div>
+            </iui-contextmenu>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>An example where separators have customizable labels. Each separator can have cuistom appearance set in CSS shared among all menus or you can set separators in different colors and other settings with inline styles.</p>
+                <p><span class="initial-space"></span>Once Context Menu appears, you will find separators in <i>Blue</i> and <i>Green</i> colors with different settings. The blue separator uses general CSS settings, while the green separator uses inline styles.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module">
+        import { iuiContextMenuSeparatorLabelStyle } from './contextmenu-separator-label.style.js';
+
+        const ctrl = document.querySelector('#contextmenu-separator-label');
+
+        ctrl.customStyle = iuiContextMenuSeparatorLabelStyle;
+
+        ctrl.settings = {
+            items: [
+                {
+                    id: 11, 
+                    pid: 1,
+                    text: "New", 
+                    icon: "icons-medium new-document",
+                    items: [
+                        { id: 111, pid: 11, text: "Project", icon: "icons-medium empty" },
+                        { id: 112, pid: 11, text: "Window", icon: "icons-medium empty" }
+                    ]
+                },
+                { id: 12, pid: 1, text: "Open", icon: "icons-medium empty" },
+                { id: 13, pid: 1, text: "Save As...", icon: "icons-medium save" },
+                { id: 14, pid: 1, text: "Save All", icon: "icons-medium empty" },
+                { id: 15, pid: 1, text: "Printing", type: "separator" },
+                { id: 16, pid: 1, text: "Page Setup", icon: "icons-medium empty" },
+                { id: 17, pid: 1, text: "Print", icon: "icons-medium print" },
+                { 
+                    id: 18, 
+                    pid: 1, 
+                    text: "General", 
+                    style: {
+                        content: {
+                            background: 'white',
+                            borderColor: 'transparent',
+                            color: '#008000',
+                            fontWeight: 'normal',
+                            margin: '0 25%',
+                            textAlign: 'center'
+                        },
+                        line: {
+                            background: '#008000'
+                        }
+                    },
+                    type: "separator"
+                },
+                { id: 19, pid: 1, text: "Exit", icon: "icons-medium empty" }
+            ]
+        }
+
+        // Events --------------------------------------------------------------------------------
+
+        ctrl.addEventListener("menuClick", (e) => menuItemClick(e));
+
+        let menuItemClick = function(e){
+            if (e.detail.item && !e.detail.item.items)
+                alert("Menu item: " + e.detail.item.text + " is clicked.");
+        }
+    </script>
+</html>

@@ -80,7 +80,7 @@ class TabStripPlacement extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-placement"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}
                         tabStripPlacement={this.state.currentPlacement} 

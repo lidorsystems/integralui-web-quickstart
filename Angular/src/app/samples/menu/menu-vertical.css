@@ -1,0 +1,5 @@
+[id="menu-vertical"] {
+    --iui-menuitem-root-padding: 10px 6px 10px 4px;
+    --iui-menuitem-padding: 5px 6px 5px 4px;
+    --iui-menuitem-width: 200px;
+}

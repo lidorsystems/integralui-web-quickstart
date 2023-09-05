@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+            [id="listbox-multiple-filters"]{
+                --iui-listbox-display: inline-block;
+            }
+
+            .listbox-multiple-filters-panel {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                width: 170px;
+
+                --iui-dropdownfilter-display: inline-block;
+                --iui-dropdownfilter-margin: 0 0 10px 0;
+                --iui-dropdownfilter-operation-top: 6px;
+                --iui-dropdownfilter-padding: 4px;
+
+                --iui-button-display: block;
+                --iui-button-margin: 10px auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Multiple Filters</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-multiple-filters"
+                allow-filter="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-listbox>
+            <div class="listbox-multiple-filters-panel">
+                <div class="listbox-multiple-filters-group"></div>
+                <iui-button id="add-filter">+ Add Filter +</iui-button>
+                <br/>
+                <iui-button id="apply-filter">Filter</iui-button>
+            </div>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this demo, you can add multiple filters using the 'Add Filter' button. Whenever this button is clicked, a <strong>dropdown filter</strong> will appear where you can select the filtering operation (clicking the icon on the left) and provide the search value. You can have up to 5 different filters all combined with AND operator.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.button.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.dropdownfilter.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+
+        import IntegralUIDropDownFilter from '../../../node_modules/integralui-web/components/integralui.dropdownfilter.js';
+
+        let currentResourcePath = '../../../node_modules/integralui-web/icons';
+
+        //
+        // Custom Filter Panel settings
+        //
+
+        let filterCount = 0;
+        let filterSettings = [];
+        let formulaNodes = ['a', 'b', 'c', 'd', 'e'];
+
+        let getFilterSettings = function(name){
+            let filtered = filterSettings.filter(obj => obj.name === name);
+            return filtered.length > 0 ? filtered[0] : null;
+
+        }
+
+        let onFilterChange = function(e, name){
+            let currentFilter = getFilterSettings(name);
+            if (currentFilter)
+                currentFilter.value = e.detail.value;
+        }
+
+        let onFilterOperationChanged = function(e, name){
+            let currentFilter = getFilterSettings(name);
+            if (currentFilter)
+                currentFilter.operation = e.detail.operation;
+        }
+
+        let onFilterValueChanged = function(e, name){
+            let currentFilter = getFilterSettings(name);
+            if (currentFilter){
+                currentFilter.operation = e.detail.filter.operation;
+                currentFilter.value = e.detail.value;
+            }
+       }
+
+        // Filter Group
+        const filterGroup = document.querySelector('.listbox-multiple-filters-group');
+
+        const addFilter = document.querySelector('#add-filter');
+        addFilter.addEventListener("click", (e) => onAddFilterClicked(e));
+
+        let onAddFilterClicked = function(e){
+            filterCount++;
+
+            // DropDown Filter
+            let ctrlDropDownFilter = document.createElement('iui-dropdownfilter', { is: IntegralUIDropDownFilter });
+            ctrlDropDownFilter.resourcePath = currentResourcePath;
+            ctrlDropDownFilter.name = 'Filter' + filterCount;
+            ctrlDropDownFilter.dropDownAdjustment = { left: 148, top: -1 }
+
+            filterSettings.push({
+                name: ctrlDropDownFilter.name,
+                operation: '[]',
+                value: ''
+            })
+
+            ctrlDropDownFilter.addEventListener("change", (e) => onFilterChange(e, ctrlDropDownFilter.name));
+            ctrlDropDownFilter.addEventListener("operationChanged", (e) => onFilterOperationChanged(e, ctrlDropDownFilter.name));
+            ctrlDropDownFilter.addEventListener("valueChanged", (e) => onFilterValueChanged(e, ctrlDropDownFilter.name));
+
+            filterGroup.appendChild(ctrlDropDownFilter);
+        }
+
+
+        // Filter Button
+        const btnFilter = document.querySelector('#apply-filter');
+        btnFilter.addEventListener("click", (e) => onFilterClicked(e));
+
+
+        let onFilterClicked = function(e){
+            applyFilter();
+        }
+
+        
+        let applyFilter = function(){
+            let formula = '';
+            let filterConditions = [];
+
+            for (let i = 0; i < filterSettings.length; i++){
+                filterConditions.push({ 
+                    value: filterSettings[i].value,
+                    operation: filterSettings[i].operation
+                });
+
+                // Create filtering formula if there are multiple conditions
+                formula += formulaNodes[i];
+                if (i > 0)
+                    formula = '(' + formula + ')';
+                if (i < filterSettings.length - 1)
+                    formula += ' & ';
+            }
+
+            formula = '(' + formula + ')';
+
+            let params = {
+                caseSensitive: false
+            }
+
+            if (filterConditions.length === 1)
+                params.conditions = filterConditions[0];
+            else {
+                params.conditions = filterConditions;
+                params.formula = formula;
+            }
+
+            listbox.filter(params);
+        }
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-multiple-filters');
+
+        listbox.animateInit = true;
+        listbox.items = [
+            { id: 11, text: "Milk", group: "Dairy" },
+            { id: 12, text: "Butter", group: "Dairy" },
+            { id: 13, text: "Cheese", group: "Dairy" },
+            { id: 14, text: "Yogurt", group: "Dairy" },
+            { id: 211, text: "BlackBerries", group: "Fruits" },
+            { id: 212, text: "CranBerries", group: "Fruits" },
+            { id: 213, text: "StrawBerries", group: "Fruits" },
+            { id: 241, text: "Oranges", group: "Fruits" },
+            { id: 242, text: "Lemons", group: "Fruits" },
+            { id: 261, text: "Avocados", group: "Fruits" },
+            { id: 262, text: "Bananas", group: "Fruits" },
+            { id: 263, text: "Dates", group: "Fruits" },
+            { id: 31, text: "Barley", group: "Grains" },
+            { id: 32, text: "Farro", group: "Grains" },
+            { id: 33, text: "Millet", group: "Grains" },
+            { id: 34, text: "Rice", group: "Grains" },
+            { id: 41, text: "Beef", group: "Meat" },
+            { id: 42, text: "Chicken", group: "Meat" },
+            { id: 43, text: "Turkey", group: "Meat" },
+            { id: 44, text: "Pork", group: "Meat" },
+            { id: 45, text: "Lamb", group: "Meat" },
+            { id: 51, text: "Biscuits", group: "Sweets" },
+            { id: 52, text: "Cakes", group: "Sweets" },
+            { id: 53, text: "Candies", group: "Sweets" },
+            { id: 54, text: "Muffins", group: "Sweets" },
+            { id: 55, text: "Pastries", group: "Sweets" },
+            { id: 61, text: "Asparagus", group: "Vegetables" },
+            { id: 62, text: "Broccoli", group: "Vegetables" },
+            { id: 63, text: "Carrots", group: "Vegetables" },
+            { id: 64, text: "Corn", group: "Vegetables" },
+            { id: 65, text: "Lettuce", group: "Vegetables" },
+            { id: 66, text: "Onions", group: "Vegetables" },
+            { id: 67, text: "Pumpkin", group: "Vegetables" },
+            { id: 68, text: "Tomatoes", group: "Vegetables" },
+            { id: 69, text: "Zucchini", group: "Vegetables" }
+        ];
+
+        listbox.size = { width: 350, height: 300 };
+
+        // Initialization ------------------------------------------------------------------------
+
+    </script>
+</html>

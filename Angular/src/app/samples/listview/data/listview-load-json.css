@@ -1,9 +1,9 @@
 [id="listview-load-json"] {
-    --listitem-background: transparent;
-    --listitem-hovered-background: transparent;
-    --listitem-selected-background: transparent;
+    --iui-listitem-background: transparent;
+    --iui-listitem-hovered-background: transparent;
+    --iui-listitem-selected-background: transparent;
 
-    --listitem-border-color: transparent;
-    --listitem-hovered-border-color: transparent;
-    --listitem-selected-border-color: transparent;
+    --iui-listitem-border-color: transparent;
+    --iui-listitem-hovered-border-color: transparent;
+    --iui-listitem-selected-border-color: transparent;
 }

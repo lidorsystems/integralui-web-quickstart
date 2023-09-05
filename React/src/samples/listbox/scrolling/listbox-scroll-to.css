@@ -1,5 +1,5 @@
 [id="listbox-scrollto"]{
-    --listbox-display: inline-block;
+    --iui-listbox-display: inline-block;
 }
 
 .listbox-scrollto-panel {
@@ -8,7 +8,7 @@
     vertical-align: top;
     width: 300px;
 
-    --select-display: block;
+    --iui-select-display: block;
 }
 .listbox-scrollto-panel label {
     display: block;

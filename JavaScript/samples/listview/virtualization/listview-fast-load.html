@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../../../index.css" />
         <style type="text/css">
             [id="listview-fast-load"]{
-                --listview-display: inline-block;
+                --iui-listview-display: inline-block;
             }
 
             .listview-fast-load-panel {
@@ -16,11 +16,11 @@
                 vertical-align: top;
                 width: 200px;
 
-                --button-display: block;
-                --button-margin: 5px 0;
+                --iui-button-display: block;
+                --iui-button-margin: 5px 0;
                 
-                --radio-button-display: block;
-                --radio-button-margin: 5px 0;
+                --iui-radio-button-display: block;
+                --iui-radio-button-margin: 5px 0;
 
             }
             .listview-fast-load-panel label {
@@ -133,6 +133,7 @@
 
         const listview = document.querySelector('#listview-fast-load');
         
+        listview.allowAnimation = false;
         listview.allowDrag = true;
         listview.allowDrop = true;
         listview.allowFocus = true;
@@ -145,15 +146,18 @@
         // Methods -------------------------------------------------------------------------------
         //
 
-        let addItems = function(parent, level){
+        let addItems = function(){
+            let list = [];
             for (let i = 0; i < numItems.value; i++){
                 let item = {
                     id: i + 1,
                     text : 'Item ' + (i + 1).toString()
                 };
 
-                listview.addItem(item, parent);
+                list.push(item);
             }
+
+            listview.addItem(list);
         }
     </script>
 </html>

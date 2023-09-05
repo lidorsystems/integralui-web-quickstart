@@ -12,7 +12,7 @@
                 font-size: 1.1em;
             }
             [id="tabstrip-diffclrs"]{
-                --tab-header-padding: 9px;
+                --iui-tab-header-padding: 9px;
             }
         </style>
     </head>
@@ -36,7 +36,7 @@
        
         const ctrl = document.querySelector('#tabstrip-diffclrs');
 
-        ctrl.animation = IntegralUIAnimationType.Fade;
+        ctrl.contentAnimation = IntegralUIAnimationType.Fade;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
 

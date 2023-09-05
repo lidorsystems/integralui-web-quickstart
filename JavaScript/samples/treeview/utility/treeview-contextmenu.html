@@ -8,8 +8,8 @@
         <style type="text/css">
             /* Changes to the tree item layout*/
             [id="treeview-contextmenu"] {
-                --treeitem-expand-box-margin: 2px 5px 0 0;
-                --treeitem-padding: 2px 0;
+                --iui-treeitem-expand-box-margin: 2px 5px 0 0;
+                --iui-treeitem-padding: 2px 0;
             }
         </style>
     </head>
@@ -17,7 +17,6 @@
         <h2>TreeView / Items with Context Menu</h2>
         <div class="sample-block">
             <iui-treeview id="treeview-contextmenu"
-                allow-animation="true"
                 item-display="Full"
                 resource-path="../../../node_modules/integralui-web/icons"
                 theme="Office"
@@ -27,7 +26,7 @@
             </div>
         </div>
     </body>
-    <script type="module" src="../../../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.contextmenu.js"></script>
     <script type="module" src="../../../node_modules/integralui-web/components/integralui.treeview.js"></script>
     <script type="module">
         import { html } from '../../../node_modules/integralui-web/external/lit-element.js';
@@ -159,7 +158,6 @@
 
 
         // Add/Remove methods
-
         let createNewItem = function(){
             itemCount++;
 

@@ -14,7 +14,7 @@
             <div class="sdb-plt-tab-content">{{tab.body}}</div>
         </iui-tab>
     </iui-sidebar>
-    <iui-panel id="sample-block-sidebar-placement-panel" [contentAlignment] = "{ vertical: 'middle' }">
+    <iui-panel id="sample-block-sidebar-placement-panel" [contentAlignment] = "{ horizontal: 'center', vertical: 'middle' }">
         <div class="sample-block-sidebar-control-panel">
             <label>Placement: </label>
             <iui-radiogroup id="placement" [resourcePath]="currentResourcePath" (buttonChecked)="onPlacementChecked($event)">

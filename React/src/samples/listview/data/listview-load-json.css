@@ -1,17 +1,17 @@
 /* Changes to the Button */
 [id="listview-button-load-json"] {
-    --button-margin: 185px 190px;
-    --button-position: absolute;
-    --button-width: 120px;
-    --button-z-index: 1;
+    --iui-button-margin: 185px 190px;
+    --iui-button-position: absolute;
+    --iui-button-width: 120px;
+    --iui-button-z-index: 1;
 }
 
 [id="listview-load-json"] {
-    --listitem-background: transparent;
-    --listitem-hovered-background: transparent;
-    --listitem-selected-background: transparent;
+    --iui-listitem-background: transparent;
+    --iui-listitem-hovered-background: transparent;
+    --iui-listitem-selected-background: transparent;
 
-    --listitem-border-color: transparent;
-    --listitem-hovered-border-color: transparent;
-    --listitem-selected-border-color: transparent;
+    --iui-listitem-border-color: transparent;
+    --iui-listitem-hovered-border-color: transparent;
+    --iui-listitem-selected-border-color: transparent;
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { html } from 'integralui-web/external/lit-element';
 
 import 'integralui-web/components/integralui.button';
+import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.grid';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
 import { IntegralUIEditMode, IntegralUITheme, IntegralUIVisibility } from 'integralui-web/components/integralui.enums';
@@ -24,6 +25,7 @@ export class GridBatchEditing {
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public gridStyle: any = iuiGridBatchEditingStyle;
+    public isValidationInUse: boolean = true;
     public rows: Array<any> = [];
 
     constructor(private http: HttpClient){
@@ -52,9 +54,9 @@ export class GridBatchEditing {
         data.columns.forEach((obj: any) => {
             let column = Object.assign({ headerAlignment: 'center' }, obj);
 
-            column.editorSetting = { 
-                visible:IntegralUIVisibility.None
-            }
+            // Set callback function for ShipMode, uses Custom data validation
+            if (column.id === 8 && column.validation)
+                column.validation.rules[0].callback = this.validateShipMode;
 
             this.columns.push(column);
         });
@@ -119,6 +121,14 @@ export class GridBatchEditing {
         });
     }
 
+    useValidationChanged(e: any){
+        this.isValidationInUse = e.detail.checked;
+    }
+
+    validateShipMode(value: number){
+        return value >= 0;
+    }
+
     // Editing -----------------------------------------------------------------------------------
 
     gridDataChanged(e: any){
@@ -134,6 +144,10 @@ export class GridBatchEditing {
                     totalCell.value = quantityCell.value * priceCell.value + shippingCostCell.value;
             });
         }
+    }
+
+    gridDataInvalid(e: any){
+        alert("Some data fields are invalid!");
     }
 
     getCellById(row: any, id: any){

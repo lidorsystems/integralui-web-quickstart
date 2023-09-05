@@ -1,4 +1,4 @@
-import { css } from 'integralui-web/external/lit-element';
+import { css } from 'integralui-web/external/lit-element.js';
 
 export const iuiMenuOverviewStyle = css`
     .icons-medium {

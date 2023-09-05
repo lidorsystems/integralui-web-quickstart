@@ -70,9 +70,9 @@ class TabStripDisplayMode extends Component {
             <div>
                 <h2>TabStrip / Display Mode</h2>
                 <div className="sample-block">
-                <IntegralUITabStripComponent id="tabstrip-dplmode"
+                    <IntegralUITabStripComponent id="tabstrip-dplmode"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         displayMode={this.state.currentDisplayMode}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}

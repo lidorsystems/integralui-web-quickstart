@@ -12,12 +12,12 @@
                 position: relative;
             }
             [id="sample-block-sidebar-content"]{
-                --panel-background: white;
-                --panel-border-color: #d5d5d5;
-                --panel-color: #808080;
-                --panel-font-size: 1.5rem;
-                --panel-font-style: italic;
-                --panel-height: calc(100% - 2px);
+                --iui-panel-background: white;
+                --iui-panel-border-color: #d5d5d5;
+                --iui-panel-color: #808080;
+                --iui-panel-font-size: 1.5rem;
+                --iui-panel-font-style: italic;
+                --iui-panel-height: calc(100% - 2px);
             }
             .sdb-ovw-tab-content {
                 padding: 5px;
@@ -69,7 +69,7 @@
 
         const ctrlPanel = document.querySelector('#sample-block-sidebar-content');
 
-        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
         ctrlPanel.theme = currentTheme;
 
         //

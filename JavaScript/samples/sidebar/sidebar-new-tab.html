@@ -12,12 +12,12 @@
                 position: relative;
             }
             [id="sample-block-sidebar-content"]{
-                --panel-background: white;
-                --panel-border-color: #d5d5d5;
-                --panel-color: #808080;
-                --panel-font-size: 1.5rem;
-                --panel-font-style: italic;
-                --panel-height: calc(100% - 2px);
+                --iui-panel-background: white;
+                --iui-panel-border-color: #d5d5d5;
+                --iui-panel-color: #808080;
+                --iui-panel-font-size: 1.5rem;
+                --iui-panel-font-style: italic;
+                --iui-panel-height: calc(100% - 2px);
             }
             .sdbr-new-tab-content {
                 padding: 5px;
@@ -25,8 +25,8 @@
                 font-size: 1.1em;
             }
             [id="tabstrip-new-tab"]{
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
             }
         </style>
     </head>
@@ -50,7 +50,6 @@
     <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
     <script type="module">
         import { html } from '../../node_modules/integralui-web/external/lit-element.js';
-        import { styleMap } from '../../node_modules/integralui-web/external/style-map.js';
 
         import { iuiSideBarNewTabStyle } from './sidebar-new-tab.style.js';
         import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
@@ -64,7 +63,7 @@
 
         const ctrlPanel = document.querySelector('#sample-block-sidebar-content');
 
-        ctrlPanel.contentAlignment = { vertical: 'middle' }
+        ctrlPanel.contentAlignment = { horizontal: 'center', vertical: 'middle' }
         ctrlPanel.theme = currentTheme;
 
         //

@@ -1,0 +1,22 @@
+<h2>ContextMenu / Custom Template</h2>
+<div class="sample-block">
+    <iui-contextmenu #contextmenu
+        [customStyle]="customStyle"
+        [enabled]="menuSettings.enabled"
+        [itemTemplate]="currentItemTemplate"
+        [settings]="menuSettings"
+        [theme]="currentTheme"
+    >
+        <iui-panel id="contextmenu-custom-template-panel" [contentAlignment]="panelContentAlignment">
+            <div class="contextmenu-custom-template-block" [ngStyle]="{ transform: 'scale(' + currentZoomValue / 100 + ')' }">
+                Sample Content Block
+            </div>
+        </iui-panel>
+    </iui-contextmenu>
+</div>
+<div class="feature-help">
+    <p><span class="initial-space"></span>An example of a Context Menu with custom template. Instead of just label, the <strong>'Zoom'</strong> menu item has a set of buttons for zoom-in and zoom-out and label that shows current zoom value in middle.</p>
+    <p><span class="initial-space"></span>Clicking on these buttons, will change the view below, in range from 25% to 500%. Appearance of these buttons is done using custom CSS and functionality set in code by handling events from the custom menu template.</p>
+    <p><span class="initial-space"></span>In addition, to close the menu you can click on <strong>'Zoom'</strong> label or any other menu item or outside the menu space. However the menu will remain active while buttons are clicked, this is set in code by handling events.</p>
+    <p><span class="initial-space"></span>You can create custom templates that can be shared between all menus or each menu item can have a different template, based on condtions set in your code. To create templates, you can use any custom HTML elements and arrange them in custom layouts.</p>
+</div>

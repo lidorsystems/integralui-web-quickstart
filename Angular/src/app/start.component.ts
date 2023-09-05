@@ -52,7 +52,19 @@ export class StartComponent {
             { text: 'Calendar', link: '/calendar-overview' },
             { text: 'Card', link: '/card-overview' },
             { text: 'CheckBox', link: '/checkbox-overview' },
-            { text: 'ContextMenu', link: '/contextmenu-overview' },
+            { 
+                id: 'cmnu',
+                text: 'ContextMenu', 
+                items: [
+                    { id: 'cmnu-ovw', pid: 'cmnu', text: 'Overview', link: '/contextmenu/overview' },
+                    { id: 'cmnu-cstpl', pid: 'cmnu', text: 'Custom Menu Template', link: '/contextmenu/custom-template' },
+                    { id: 'cmnu-cbox', pid: 'cmnu', text: 'Menu with Check Boxes', link: '/contextmenu/checkbox' },
+                    { id: 'cmnu-rbtn', pid: 'cmnu', text: 'Menu with Header', link: '/contextmenu/header' },
+                    { id: 'cmnu-rbtn', pid: 'cmnu', text: 'Menu with Radio Buttons', link: '/contextmenu/radiobuttons' },
+                    { id: 'cmnu-rbtn', pid: 'cmnu', text: 'Multi-Level Context Menu', link: '/contextmenu/multi-level' },
+                    { id: 'cmnu-seplbl', pid: 'cmnu', text: 'Separator with Label', link: '/contextmenu/separator-label' }
+                ]
+            },
             { text: 'DatePicker', link: '/datepicker-overview' },
             { text: 'Dialog', link: '/dialog-overview' },
             { text: 'DockPanel', link: '/dockpanel-overview' },
@@ -136,7 +148,7 @@ export class StartComponent {
                         text: 'Pagination', 
                         type: 'group',
                         items: [
-                            { id: 'grd-pgn-overview', pid: 'grd-pagination', text: 'Fast Load', link: '/grid/pagination/pagination-overview' }
+                            { id: 'grd-pgn-overview', pid: 'grd-pagination', text: 'Overview', link: '/grid/pagination/pagination-overview' }
                         ]
                     },
                     { 
@@ -145,7 +157,8 @@ export class StartComponent {
                         text: 'Sorting', 
                         type: 'group',
                         items: [
-                            { id: 'grd-sort', pid: 'grd-sorting', text: 'Overview', link: '/grid/sorting/sorting-overview' }
+                            { id: 'grd-sort', pid: 'grd-sorting', text: 'Overview', link: '/grid/sorting/sorting-overview' },
+                            { id: 'grd-multi-sort', pid: 'grd-sorting', text: 'Multi Column Sorting', link: '/grid/sorting/multi-column-sorting' }
                         ]
                     },
                     { 
@@ -393,7 +406,19 @@ export class StartComponent {
                 ]
             },
             { text: 'Loading', link: '/loading/loading-overview' },
-            { text: 'Menu', link: '/menu-overview' },
+            { 
+                id: 'mnu',
+                text: 'Menu', 
+                items: [
+                    { id: 'mnu-ovw', pid: 'mnu', text: 'Overview', link: '/menu/overview' },
+                    { id: 'mnu-cstpl', pid: 'mnu', text: 'Custom Menu Template', link: '/menu/custom-template' },
+                    { id: 'mnu-cbox', pid: 'mnu', text: 'Menu with Check Boxes', link: '/menu/checkbox' },
+                    { id: 'mnu-rbtn', pid: 'mnu', text: 'Menu with Radio Buttons', link: '/menu/radiobuttons' },
+                    { id: 'mnu-shcut', pid: 'mnu', text: 'Menu with Shortcuts', link: '/menu/shortcuts' },
+                    { id: 'mnu-seplbl', pid: 'mnu', text: 'Separator with Label', link: '/menu/separator-label' },
+                    { id: 'mnu-vert', pid: 'mnu', text: 'Vertical Menu', link: '/menu/vertical' }
+                ]
+            },
             { text: 'Numeric', link: '/numeric-overview' },
             { text: 'Paginator', link: '/paginator-overview' },
             { 

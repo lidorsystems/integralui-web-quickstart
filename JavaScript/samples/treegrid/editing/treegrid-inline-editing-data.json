@@ -10,6 +10,14 @@
                 "selected": true
             },
             "contentAlignment": "center", 
+            "validation": {
+                "rules": [
+                    {
+                        "message": "OrderID is required",
+                        "rule": "Required"
+                    }
+                ]
+            },
             "width": 60
         },
         { 
@@ -21,6 +29,14 @@
                 "editOnFocus": true,
                 "selected": true
             },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Customer is required",
+                        "rule": "Required"
+                    }
+                ]
+            },
             "width": 150
         },
         { 
@@ -31,6 +47,14 @@
                 "allowChange": "lost-focus",
                 "editOnFocus": true,
                 "selected": true
+            },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Product Name is required",
+                        "rule": "Required"
+                    }
+                ]
             },
             "width": 250
         },
@@ -52,6 +76,16 @@
                     "day": "2-digit"
                 }
             },
+            "validation": {
+                "adjustment": { "top": -8 },
+                "rules": [
+                    {
+                        "message": "Order Date must be after 01 Jan 2019",
+                        "rule": "Range",
+                        "min": "2019-01-01T00:00:00.000Z"
+                    }
+                ]
+            },
             "width": 150
         },
         { 
@@ -70,6 +104,16 @@
                 "type": "number"
             },
             "contentAlignment": "right", 
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Quantity must be greater than 0",
+                        "rule": "Compare",
+                        "operation": ">",
+                        "value": 0
+                    }
+                ]
+            },
             "width": 80
         },
         { 
@@ -87,6 +131,16 @@
                     }
                 }, 
                 "type": "number"
+            },
+            "validation": {
+                "rules": [
+                    {
+                        "message": "Price must be greater than 0",
+                        "rule": "Compare",
+                        "operation": ">",
+                        "value": 0
+                    }
+                ]
             },
             "width": 80
         },

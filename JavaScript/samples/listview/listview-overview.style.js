@@ -60,8 +60,8 @@ export const iuiListViewOverviewStyle = css`
 
     /* Changes to the Rating component */
     .iui-listview iui-rating {
-        --rating-border-color: transparent;
-        --rating-cursor: pointer;
-        --rating-margin: auto;
+        --iui-rating-border-color: transparent;
+        --iui-rating-cursor: pointer;
+        --iui-rating-margin: auto;
     }
 `;

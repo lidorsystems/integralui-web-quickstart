@@ -55,7 +55,7 @@ class TabStripScrollTo extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-scrollto" ref={this.tabstripRef}
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         scrollMode={this.state.currentScrollMode}
                         selectedTab={this.state.currentSelection}

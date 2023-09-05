@@ -2,15 +2,15 @@ import { css } from 'integralui-web/external/lit-element';
 
 export const iuiListViewCardsStyle = css`
     .iui-listview {
-        --listitem-animate-border: 0;
+        --iui-listitem-animate-border: 0;
 
-        --listitem-content-overflow: visible;
-        --listitem-selected-background: transparent;
-        --listitem-selected-border-color: #808080;
-        --listitem-selected-color: white;
+        --iui-listitem-content-overflow: visible;
+        --iui-listitem-selected-background: transparent;
+        --iui-listitem-selected-border-color: #808080;
+        --iui-listitem-selected-color: white;
 
-        --draglist-active-border-color: transparent;
-        --draglist-active-box-shadow: none;
+        --iui-draglist-active-border-color: transparent;
+        --iui-draglist-active-box-shadow: none;
     }
 
     .lview-ovw-title-large {
@@ -130,9 +130,9 @@ export const iuiListViewCardsStyle = css`
 
     /* Changes to the Rating component inside the Card */
     .iui-listview iui-rating {
-        --rating-border-color: transparent;
-        --rating-cursor: pointer;
-        --rating-margin: auto;
+        --iui-rating-border-color: transparent;
+        --iui-rating-cursor: pointer;
+        --iui-rating-margin: auto;
     }
 
     /* List item */

@@ -102,7 +102,7 @@ class TabStripNewTab extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-new-tab" ref={this.tabStripRef}
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         customStyle={iuiTabStripNewTabStyle}
                         resourcePath={this.state.currentResourcePath}
                         scrollMode={this.state.currentScrollMode} 

@@ -2,8 +2,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import 'integralui-web/components/integralui.button';
 import 'integralui-web/components/integralui.numeric';
+import 'integralui-web/components/integralui.toaster';
 import 'integralui-web/components/integralui.treeview';
-import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { IntegralUITheme, IntegralUIToastType } from 'integralui-web/components/integralui.enums';
 
 @Component({
     selector: '',
@@ -12,12 +13,14 @@ import { IntegralUITheme } from 'integralui-web/components/integralui.enums';
 })
 export class TreeViewAddRemove {
     @ViewChild('treeview', { static: false }) treeview!: ElementRef;
+    @ViewChild('toaster', { static: false }) toaster!: ElementRef;
 
     public ctrlSize: any = { width: 350, height: 310 };
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public items: Array<any> = [];
 
+    public isTreeEmpty: boolean = true;
     public insertAtValue: number = 0;
     public inlineCtrlSize: any = { width: 90 }
     private itemCount: number = 0;
@@ -29,16 +32,19 @@ export class TreeViewAddRemove {
     onAddClicked(){
         let newItem = this.createNewItem();
 
+        this.initContent();
+
         this.treeview.nativeElement.addItem(newItem);
-        this.updateContent(newItem);
+        this.updateSelection(newItem);
     }
 
     // Add Child Button
     onAddChildClicked(){
         let newItem = this.createNewItem();
 
+        this.initContent();
+
         this.treeview.nativeElement.addItem(newItem, this.treeview.nativeElement.selectedItem);
-        this.updateContent(newItem);
     }
 
     // Insert After Button
@@ -48,8 +54,10 @@ export class TreeViewAddRemove {
         else {
             let newItem = this.createNewItem();
 
+            this.initContent();
+
             this.treeview.nativeElement.insertItemAfter(newItem, this.treeview.nativeElement.selectedItem);
-            this.updateContent();
+            this.updateSelection(newItem);
         }
     }
 
@@ -60,8 +68,10 @@ export class TreeViewAddRemove {
         else {
             let newItem = this.createNewItem();
 
+            this.initContent();
+
             this.treeview.nativeElement.insertItemBefore(newItem, this.treeview.nativeElement.selectedItem);
-            this.updateContent();
+            this.updateSelection(newItem);
         }
     }
 
@@ -76,7 +86,7 @@ export class TreeViewAddRemove {
             let newItem = this.createNewItem();
 
             this.treeview.nativeElement.insertItemAt(newItem, insertPos, parent);
-            this.updateContent(newItem);
+            this.updateSelection(newItem);
         }
     }
 
@@ -93,7 +103,7 @@ export class TreeViewAddRemove {
                 newSelItem = this.treeview.nativeElement.getNextItem(selItem);
                 
             this.treeview.nativeElement.removeItem(selItem);
-            this.updateContent(newSelItem);
+            this.updateSelection(newSelItem);
         }
     }
 
@@ -105,7 +115,6 @@ export class TreeViewAddRemove {
 
         if (removePos >= 0 && removePos < childCount){
             this.treeview.nativeElement.removeItemAt(removePos, parent);
-            this.updateContent();
         }
     }
 
@@ -121,8 +130,7 @@ export class TreeViewAddRemove {
         if (!parent)
             this.itemCount = 0;
 
-        this.treeview.nativeElement.selectedItem = null;
-        this.treeview.nativeElement.updateLayout();
+        this.updateSelection();
     }
 
     createNewItem(){
@@ -132,10 +140,50 @@ export class TreeViewAddRemove {
         return { id: this.itemCount, text: "Item " + this.itemCount }
     }
 
-    updateContent(item?: any){
-        if (item)
-            this.treeview.nativeElement.selectedItem = item;
+    // Events ------------------------------------------------------------------------------------
+    
+    treeClear(e: any){
+        this.toaster.nativeElement.show({ text: 'The list is cleared', type: IntegralUIToastType.Success });
 
-        this.treeview.nativeElement.updateLayout();
+        this.updateContent();
+    }
+
+    treeItemAdded(e: any){
+        if (e.detail.item){
+            let message = 'The ' + e.detail.item.text + ' is added to the list';
+            message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+            this.toaster.nativeElement.show({ text: message, type: IntegralUIToastType.Success });
+        }
+
+        this.updateContent();
+    }
+
+    treeItemRemoved(e: any){
+        if (e.detail.item){
+            let message = 'The ' + e.detail.item.text + ' is removed from the list';
+            message += e.detail.index >= 0 ? ', at position ' + e.detail.index : '';
+
+            this.toaster.nativeElement.show({ text: message, type: IntegralUIToastType.Success });
+        }
+        else 
+            this.toaster.nativeElement.show({ text: 'EMPTY ITEM', type: IntegralUIToastType.Error });
+
+        this.updateContent();
+    }
+
+    // Update ------------------------------------------------------------------------------------
+
+    initContent(){
+        if (this.items.length === 0)
+            this.isTreeEmpty = false;
+    }
+
+    updateSelection(item?: any){
+        this.treeview.nativeElement.selectedItem = item;
+    }
+
+    updateContent(item?: any){
+        this.isTreeEmpty = this.items.length === 0 ? true : false;;
     }
 }

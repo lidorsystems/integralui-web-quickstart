@@ -1,6 +1,6 @@
 [id="listview-fast-load"]{
-    --listview-display: inline-block;
-    --listitem-transition-duration: 0s;
+    --iui-listview-display: inline-block;
+    --iui-listitem-transition-duration: 0s;
 }
 
 .listview-fast-load-panel {
@@ -9,8 +9,8 @@
     vertical-align: top;
     width: 200px;
 
-    --button-display: block;
-    --button-margin: 5px 0;
+    --iui-button-display: block;
+    --iui-button-margin: 5px 0;
 }
 .listview-fast-load-panel label {
     display: block;

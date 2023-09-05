@@ -1,8 +1,8 @@
 [id="listview-overview"] {
-    --listitem-border-color: #e5e5e5;
-    --listitem-hovered-background: transparent;
-    --listitem-selected-background: transparent;
+    --iui-listitem-border-color: #e5e5e5;
+    --iui-listitem-hovered-background: transparent;
+    --iui-listitem-selected-background: transparent;
 
-    --listitem-selected-color: #355f82;
-    --listitem-selected-font-weight: bold;
+    --iui-listitem-selected-color: #355f82;
+    --iui-listitem-selected-font-weight: bold;
 }

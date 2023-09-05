@@ -74,7 +74,7 @@ class TabStripGroups extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-tab-groups"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         selectedTab={this.state.currentSelection}
                         size={this.state.ctrlSize}

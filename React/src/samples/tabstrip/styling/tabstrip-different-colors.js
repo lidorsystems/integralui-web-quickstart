@@ -67,7 +67,7 @@ class TabStripDifferentColors extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-diffclrs"
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme} 

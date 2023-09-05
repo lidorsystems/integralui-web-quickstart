@@ -14,8 +14,8 @@ export const iuiGridEditorsDatePickerStyle = css`
 
     /* DatePicker */
     .iui-datepicker {
-        --datepicker-margin: 8px 0 0 0;
-        --header-expand-box-margin: 0;
+        --iui-datepicker-margin: 8px 0 0 0;
+        --iui-header-expand-box-margin: 0;
     }
     
     /* Flags */

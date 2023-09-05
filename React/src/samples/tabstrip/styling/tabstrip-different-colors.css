@@ -4,5 +4,5 @@
     font-size: 1.1em;
 }
 [id="tabstrip-diffclrs"]{
-    --tab-header-padding: 9px;
+    --iui-tab-header-padding: 9px;
 }

@@ -16,7 +16,7 @@ class TabStripContextMenu extends Component {
 
         this.state = {
             ctrlSize: { width: 600, height: 300 },
-            currentAnimation: IntegralUIAnimationType.Fade,
+            currentAnimation: IntegralUIAnimationType.Slide,
             currentResourcePath: '../../integralui-web/icons',
             currentSelection: null,
             currentTabSpacing: 3,
@@ -158,7 +158,7 @@ class TabStripContextMenu extends Component {
                 <div className="sample-block">
                     <IntegralUITabStripComponent id="tabstrip-contextmenu" ref={this.tabstripRef}
                         allowAnimation={this.state.isAnimationAllowed}
-                        animation={this.state.currentAnimation}
+                        contentAnimation={this.state.currentAnimation}
                         customStyle={iuiTabContextMenuStyle}
                         resourcePath={this.state.currentResourcePath}
                         selectedTab={this.state.currentSelection}

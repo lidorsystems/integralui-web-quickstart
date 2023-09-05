@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+          <title>IntegralUI Web - Quick Start</title>
+        <link rel="stylesheet" href="../../../index.css" />
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <h2>ListBox / Auto Sized</h2>
+        <div class="sample-block">
+            <iui-listbox id="listbox-autosized"
+                auto-size="true"
+                resource-path="../../../node_modules/integralui-web/icons"
+            ></iui-listbox>
+            <div class="feature-help">
+                <p><span class="initial-space"></span>In this example, ListBox height is determined by its content. Whenever group expands or collapses, it also updates the listbox height.</p>
+                <p><span class="initial-space"></span>This feature is useful with small lists, because virtualziation is disabled and vertical scrollbar will remain hidden.</p>
+                <p><span class="initial-space"></span>In addition, animation during initialization is executed, which moves items from left side into the view.</p>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="../../../node_modules/integralui-web/components/integralui.listbox.js"></script>
+    <script type="module">
+
+        //
+        // ListBox settings
+        //
+
+        const listbox = document.querySelector('#listbox-autosized');
+
+        //listbox.allowAnimation = false;
+        listbox.groups = [
+            { name: "Driving/Racing" },
+            { name: "Role-Playing", expanded: false },
+            { name: "Action", expanded: false },
+            { name: "Shooter" },
+            { name: "Sports", expanded: false },
+            { name: "Adventure" }
+        ];
+
+        listbox.items = [
+            { id: 111, text: "DiRT 3", group: "Driving/Racing" },
+            { id: 112, text: "Ridge Racer Unbounded", group: "Driving/Racing" },
+            { id: 121, text: "Dark Souls 2", group: "Role-Playing" },
+            { id: 122, text: "Mass Effect 3", group: "Role-Playing" },
+            { id: 123, text: "The Elder Scrolls V: Skyrim", group: "Role-Playing" },
+            { id: 131, text: "Diablo 3", group: "Action" },
+            { id: 132, text: "Gears of War", group: "Action" },
+            { id: 134, text: "Path of Exile", group: "Action" },
+            { id: 135, text: "Grand Theft Auto IV", group: "Action" },
+            { id: 142, text: "Call of Duty: Black Ops", group: "Shooter" },
+            { id: 143, text: "BioShock Infinite", group: "Shooter" },
+            { id: 144, text: "Crysis 2", group: "Shooter" },
+            { id: 211, text: "FIFA 14", group: "Sports" },
+            { id: 212, text: "Madden NFL 25", group: "Sports" },
+            { id: 221, text: "Assassin's Creed IV", group: "Adventure" },
+            { id: 222, text: "Tomb Raider", group: "Adventure" }
+        ];
+        
+        listbox.animateInit = true;
+        listbox.showGroups = true;
+        listbox.size = { width: 500 }
+
+    </script>
+</html>

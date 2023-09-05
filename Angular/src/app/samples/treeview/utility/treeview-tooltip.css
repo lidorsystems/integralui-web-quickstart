@@ -1,4 +1,4 @@
 [id="treeview-tooltip"] {
-    --treeitem-expand-box-margin: 3px 5px 0 0;
-    --treeitem-padding: 2px 0;
+    --iui-treeitem-expand-box-margin: 3px 5px 0 0;
+    --iui-treeitem-padding: 2px 0;
 }

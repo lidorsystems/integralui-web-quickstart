@@ -1,29 +1,29 @@
 /* CheckBox 2 */
 [id="checkbox-ovw-2"] {
-    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked.png);
-    --checkbox-btn-indeterminate-background-image: url(src/assets/resources/checkbox/checkbox-indeterminate.png);
-    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked.png);
+    --iui-checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked.png);
+    --iui-checkbox-btn-indeterminate-background-image: url(src/assets/resources/checkbox/checkbox-indeterminate.png);
+    --iui-checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked.png);
 }
 
 /* CheckBox 3 */
 [id="checkbox-ovw-3"] {
-    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-5.png);
-    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-5.png);
-    --checkbox-btn-width: 39px;
-    --checkbox-btn-height: 14px;
+    --iui-checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-5.png);
+    --iui-checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-5.png);
+    --iui-checkbox-btn-width: 39px;
+    --iui-checkbox-btn-height: 14px;
 }
 
 /* CheckBox 4 */
 [id="checkbox-ovw-4"] {
-    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-4.png);
-    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-4.png);
+    --iui-checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-4.png);
+    --iui-checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-4.png);
 }
 
 /* CheckBox 5 */
 [id="checkbox-ovw-5"] {
-    --checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-3.png);
-    --checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-3.png);
-    --checkbox-btn-width: 32px;
-    --checkbox-btn-height: 14px;
+    --iui-checkbox-btn-checked-background-image: url(src/assets/resources/checkbox/checkbox-checked-3.png);
+    --iui-checkbox-btn-unchecked-background-image: url(src/assets/resources/checkbox/checkbox-unchecked-3.png);
+    --iui-checkbox-btn-width: 32px;
+    --iui-checkbox-btn-height: 14px;
 }
 

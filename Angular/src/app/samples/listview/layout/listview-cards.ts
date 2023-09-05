@@ -73,7 +73,7 @@ export class ListViewCards {
                     <div class="lview-ovw-icon-large">
                         <span class="lview-ovw-icons ${item.icon}"></span>
                     </div><br />
-                    <iui-rating .allowFocus="${false}" division="2" max="5" .customStyle="${iuiListViewCardsStyle}" resource-path="assets/icons" .value=${item.rating} @valueChanged="${(e: any) => this.ratingValueChanged(e, item)}"></iui-rating>
+                    <iui-rating .allowFocus="${false}" division="2" max="5" .customStyle="${iuiListViewCardsStyle}" resource-path="app/integralui/icons" .value=${item.rating} @valueChanged="${(e: any) => this.ratingValueChanged(e, item)}"></iui-rating>
                 </div>
                 <div slot="back-content" @mousedown="${(e: any) => this.flipCard(e, item)}">
                     <span>${item.description}</span>

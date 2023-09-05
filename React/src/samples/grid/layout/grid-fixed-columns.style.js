@@ -8,8 +8,8 @@ export const iuiGridFixedColumnsStyle = css`
 
 
     iui-dropdownbutton {
-        --dropdownbutton-float: right;
-        --dropdownbutton-height: 16px;
+        --iui-dropdownbutton-float: right;
+        --iui-dropdownbutton-height: 16px;
         opacity: 0;
     }
     .iui-header-label {

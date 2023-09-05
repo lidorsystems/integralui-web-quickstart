@@ -148,7 +148,7 @@ class TabStripAddRemove extends Component {
                     <div id="tabstrip-addremove" style={{ display: tabs.length > 0 ? 'inline-block' : 'none' }}>
                         <IntegralUITabStripComponent
                             allowAnimation={this.state.isAnimationAllowed}
-                            animation={this.state.currentAnimation}
+                            contentAnimation={this.state.currentAnimation}
                             resourcePath={this.state.currentResourcePath}
                             scrollMode={this.state.currentScrollMode}
                             selectedTab={this.state.currentSelection}

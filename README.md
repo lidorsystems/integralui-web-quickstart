@@ -6,7 +6,7 @@ This application contains samples for each component included in the [IntegralUI
 
 This app requires the following library:
 
-[IntegralUI Web](https://github.com/lidorsystems/integralui-web) - v23.1 and above
+[IntegralUI Web](https://github.com/lidorsystems/integralui-web) - v23.3 and above
 
 
 ## Installation

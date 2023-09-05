@@ -43,7 +43,7 @@
             </div>
         </div>
     </body>
-    <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script>
+    <!-- <script type="module" src="../../node_modules/integralui-web/components/integralui.tab.js"></script> -->
     <script type="module" src="../../node_modules/integralui-web/components/integralui.tabstrip.js"></script>
     <script type="module">
         import IntegralUITab from '../../node_modules/integralui-web/components/integralui.tab.js';
@@ -52,7 +52,7 @@
        
         const ctrl = document.querySelector('#tabstrip-overview');
 
-        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.contentAnimation = IntegralUIAnimationType.Slide;
         ctrl.customStyle = iuiTabStripOverviewStyle;
         ctrl.scrollMode = IntegralUITabScrollMode.None;
         ctrl.selectedTab = null;

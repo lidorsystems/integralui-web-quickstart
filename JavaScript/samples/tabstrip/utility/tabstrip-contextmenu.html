@@ -12,10 +12,10 @@
                 font-size: 1.1em;
             }
             [id="tabstrip-contextmenu"]{
-                --tab-header-border-radius: 7px 7px 0 0;
-                --tab-header-hovered-background: #d9edfd;
-                --tab-header-hovered-border-color: #8cb1d1;
-                --tab-header-padding: 9px;
+                --iui-tab-header-border-radius: 7px 7px 0 0;
+                --iui-tab-header-hovered-background: #d9edfd;
+                --iui-tab-header-hovered-border-color: #8cb1d1;
+                --iui-tab-header-padding: 9px;
             }
         </style>
     </head>
@@ -60,7 +60,7 @@
      
         const ctrl = document.querySelector('#tabstrip-contextmenu');
 
-        ctrl.animation = IntegralUIAnimationType.Slide;
+        ctrl.contentAnimation = IntegralUIAnimationType.Slide;
         ctrl.selectedTab = null;
         ctrl.size = { width: 600, height: 300 };
 
@@ -183,11 +183,21 @@
         // Remove Tabs ---------------------------------------------------------------------------
 
         let removeTab = function(){
-            const tabElems = ctrl.querySelectorAll('iui-tab');
-            let currentTabElem = tabElems[ctrl.selectedIndex];
-            currentTabElem.remove();
+            if (ctrl.selectedTab){
+                let tabIndex = ctrl.tabs.indexOf(ctrl.selectedTab);
 
-            ctrl.removeTab(ctrl.selectedTab);
+                // Remove the tab
+                const tabElems = ctrl.querySelectorAll('iui-tab');
+                let currentTabElem = tabElems[ctrl.selectedIndex];
+                currentTabElem.remove();
+
+                ctrl.removeTab(ctrl.selectedTab);
+
+                // Set selection to a new tab 
+                let newSelIndex = tabIndex < ctrl.tabs.length ? tabIndex : ctrl.tabs.length - 1;
+                let newSelTab = newSelIndex >= 0 && newSelIndex < ctrl.tabs.length ? ctrl.tabs[newSelIndex] : null;
+                ctrl.selectedTab = newSelTab;
+            }
         }
 
         // ContextMenu events --------------------------------------------------------------------

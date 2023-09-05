@@ -1,0 +1,7 @@
+[id="menu-shortcuts"] {
+    --iui-menuitem-root-margin: 0 10px 0 3px;
+    --iui-menuitem-root-width: 55px;
+    --iui-menuitem-width: 200px;
+
+    --iui-menuitem-label-width: calc(100% - 140px);
+}

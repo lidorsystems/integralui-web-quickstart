@@ -1,5 +1,5 @@
 [id="listview-dragdrop-overview"]{
-    --listview-display: inline-block;
+    --iui-listview-display: inline-block;
 }
 .sample-block-ddlvw-overview-panel {
     margin-top: 20px;
@@ -13,8 +13,8 @@
     vertical-align: top;
     width: 150px;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .sample-block-ddlvw-control-panel label {
     display: block;

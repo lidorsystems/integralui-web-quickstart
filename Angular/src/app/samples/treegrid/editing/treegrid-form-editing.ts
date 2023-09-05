@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { html } from 'integralui-web/external/lit-element';
 
+import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.treegrid';
 import IntegralUICommonService from 'integralui-web/services/integralui.common.service';
 import { IntegralUIEditMode, IntegralUITheme, IntegralUIVisibility } from 'integralui-web/components/integralui.enums';
@@ -25,9 +26,10 @@ export class TreeGridFormEditing {
     public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Form;
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
+    public isValidationInUse: boolean = true;
     public rows: Array<any> = [];
 
-    public gridFields: any = {
+    public treegridFields: any = {
         column: {
             headerText: 'title'
         }
@@ -40,7 +42,7 @@ export class TreeGridFormEditing {
     ngAfterViewInit(){
         this.treegrid.nativeElement.headerTemplate = this.currentHeaderTemplate;
 
-        // Load data into the Grid from a JSON file
+        // Load data into the TreeGrid from a JSON file
         this.loadFromJSON();
     }
 
@@ -59,9 +61,9 @@ export class TreeGridFormEditing {
         data.columns.forEach((obj: any) => {
             let column = Object.assign({ headerAlignment: 'center' }, obj);
 
-            column.editorSetting = { 
-                visible:IntegralUIVisibility.None
-            }
+            // Set callback function for ShipMode, uses Custom data validation
+            if (column.id === 12 && column.validation)
+                column.validation.rules[0].callback = this.validateShipMode;
 
             this.columns.push(column);
         });
@@ -115,20 +117,28 @@ export class TreeGridFormEditing {
 
         // Use HTTP service to get data from the specified JSON file
         self.http.get("./assets/treegrid-form-editing-data.json").subscribe((data: any) => {
-            // Suspend the grid layout from updates, to increase performance
+            // Suspend the treegrid layout from updates, to increase performance
             self.treegrid.nativeElement.suspendLayout();
 
-            // Load data into the grid
+            // Load data into the treegrid
             self.convertJSONData(data);
     
-            // Resume and update the grid layout
+            // Resume and update the treegrid layout
             self.treegrid.nativeElement.resumeLayout();
         });
     }
 
+    useValidationChanged(e: any){
+        this.isValidationInUse = e.detail.checked;
+    }
+
+    validateShipMode(value: number){
+        return value >= 0;
+    }
+
     // Editing -----------------------------------------------------------------------------------
 
-    gridDataChanged(e: any){
+    treegridDataChanged(e: any){
         // Update the Total value when Quantity or Price changes
         if (e.detail.data){
             let row = e.detail.data;
@@ -142,13 +152,17 @@ export class TreeGridFormEditing {
         }
     }
 
+    treegridDataInvalid(e: any){
+        alert("Some data fields are invalid!");
+    }
+
     getCellById(row: any, id: any){
         let filtered = row.cells.filter((cell: any) => cell.cid === id);
 
         return filtered.length > 0 ? filtered[0] : null;
     }
 
-    gridRowDblClick(e: any){
+    treegridRowDblClick(e: any){
         this.treegrid.nativeElement.beginEdit(e.detail.row);
     }
 

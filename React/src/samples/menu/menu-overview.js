@@ -19,7 +19,6 @@ class MenuOverview extends Component {
             ctrlSize: { width: 700 },
             currentResourcePath: 'integralui-web/icons',
             currentTheme: IntegralUITheme.Office,
-            isAnimationAllowed: false,
             items: [
                 { 
                     id: 1, 
@@ -116,15 +115,13 @@ class MenuOverview extends Component {
                 <h2>Menu / Overview</h2>
                 <div className="sample-block">
                     <IntegralUIMenuComponent id="menu-overview"
-                        allowAnimation={this.state.isAnimationAllowed}
                         customStyle={iuiMenuOverviewStyle}
                         items={this.state.items}
                         resourcePath={this.state.currentResourcePath}
                         size={this.state.ctrlSize}
                         theme={this.state.currentTheme}
                         menuClick={(e) => this._menuItemClick(e)}
-                        > 
-                    </IntegralUIMenuComponent>
+                    ></IntegralUIMenuComponent>
                     <div className="feature-help">
                         <p><span className="initial-space"></span><strong><span className="code-name">IntegralUI</span> Menu</strong> is a native Web Component that allows you to create static and dynamic menus. You can populate the menu directly in your HTML or using a custom data source, either locally or remotely.</p>
                         <p><span className="initial-space"></span>In this example, we have a menu with four root menu items. Each menu has an icon, label and expand mark if there are child items. Whenever mouse cursor hovers over a menu item, an animation will start showing a window with child items. By clicking on menu item, a message box will appear, stating the menu item that was clicked.</p>

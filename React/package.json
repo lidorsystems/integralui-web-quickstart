@@ -1,6 +1,6 @@
 {
   "name": "integralui-web-quickstart-react",
-  "version": "23.1.0",
+  "version": "23.3.0",
   "author": "Lidor Systems",
   "license": "SEE LICENSE in LICENSE.md",
   "private": true,
@@ -14,11 +14,11 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2",
-    "integralui-web": "~23.1.0"
+    "integralui-web": "~23.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

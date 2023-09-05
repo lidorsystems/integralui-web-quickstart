@@ -1,5 +1,5 @@
 [id="listbox-grouping"] {
-    --listbox-display: inline-block;
+    --iui-listbox-display: inline-block;
 }
 .listbox-grouping-panel {
     display: inline-block;
@@ -7,10 +7,10 @@
     vertical-align: top;
     width: 300px;
 
-    --select-display: block;
+    --iui-select-display: block;
 
-    --radio-button-display: block;
-    --radio-button-margin: 5px 0;
+    --iui-radio-button-display: block;
+    --iui-radio-button-margin: 5px 0;
 }
 .listbox-grouping-panel label {
     display: block;

@@ -4,7 +4,7 @@ import { html } from 'integralui-web/external/lit-element';
 import 'integralui-web/components/integralui.checkbox';
 import 'integralui-web/components/integralui.tooltip';
 import 'integralui-web/components/integralui.treegrid';
-import { IntegralUICheckState, IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums';
+import { IntegralUICheckState, IntegralUIEditMode, IntegralUIEditorType, IntegralUITheme } from 'integralui-web/components/integralui.enums';
 import { iuiTreeGridCustomHeaderFooterStyle } from './treegrid-custom-header-footer.style';
 
 @Component({
@@ -17,6 +17,7 @@ export class TreeGridCustomHeaderFooter {
 
     public columns: Array<any> = [];
     public ctrlSize: any = { width: 800, height: 400 };
+    public currentEditMode: IntegralUIEditMode = IntegralUIEditMode.Custom;
     public currentResourcePath: string = 'assets/icons';
     public currentTheme: IntegralUITheme = IntegralUITheme.Office;
     public customStyle: any = iuiTreeGridCustomHeaderFooterStyle;
